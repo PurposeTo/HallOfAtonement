@@ -16,4 +16,20 @@ public class NewBehaviourScript : MonoBehaviour
     {
         
     }
+
+    class Ass
+    {
+        protected void Pokakat()
+        {
+            System.Console.WriteLine("Kakay");
+        }
+    }
+
+    class Hands : Ass
+    {
+        private void ZagrestyGovna()
+        { 
+
+        }
+    }
 }
