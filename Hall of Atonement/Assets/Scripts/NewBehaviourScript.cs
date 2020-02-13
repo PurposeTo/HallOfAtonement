@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class NewBehaviourScript : StatusEffect
 {
-    // Start is called before the first frame update
-    void Start()
+    public override string Name => throw new System.NotImplementedException();
+
+    public override string Description => throw new System.NotImplementedException();
+
+    public override void Action(CharacterStats stats)
     {
-        
+        throw new System.NotImplementedException();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnAdd()
     {
-        
+        throw new System.NotImplementedException();
     }
 }
