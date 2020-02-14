@@ -42,8 +42,8 @@ public abstract class CharacterStats : UnitStats
     private readonly float maxAttackSpeed = 50f; //максимальное значение скорости атаки
     private protected virtual float BaseAttackSpeed { get; } = 0.5f; //базовое значение скорости атаки
 
-    private readonly float minCriticalMultilpie = 1.1f; //минимальное значение множителя критической атаки
-    private protected virtual float BaseCriticalMultilpie { get; } = 2f; //базовое значение множителя критической атаки
+    private readonly float minCriticalMultiplier = 1.1f; //минимальное значение множителя критической атаки
+    private protected virtual float BaseCriticalMultiplier { get; } = 2f; //базовое значение множителя критической атаки
     private readonly float minCriticalChance = 0f; //минимальное значение скорости поворот
     private readonly float maxCriticalChance = 100f; //минимальное значение скорости поворот
     private protected virtual float BaseCriticalChance { get; } = 1f; //базовое значение скорости поворот
@@ -60,7 +60,7 @@ public abstract class CharacterStats : UnitStats
     public Stat faceEuler = new Stat(60f); //Угол лицевой стороны существа. Все действия игрок совершает лицом к объекту действий!
     public Stat attackDamage;
     public Stat attackSpeed; //(Кол-во атак в секунду)
-    public Stat criticalMultilpie; //Крит. множитель атаки
+    public Stat criticalMultiplier; //Крит. множитель атаки
     public Stat criticalChance;
     //public Stat armor; //Нет базового значения
     public Stat evasionChance; //Нет базового значения
@@ -85,9 +85,10 @@ public abstract class CharacterStats : UnitStats
     //Инициализация статов в зависимости от атрибутов
     private protected override void StatInitialization()
     {
+        //Разделить отдельно для ловкости и силы!
         maxHealthPoint = new Stat(BaseMaxHealthPoint + (strength.GetValue() * hpForStrenght));
         healthPointRegen = new Stat(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
-        CurrentHealthPoint = maxHealthPoint.GetValue();
+        CurrentHealthPoint = maxHealthPoint.GetValue(); //Перенести в Start
 
         movementSpeed = new Stat(BaseMovementSpeed +
             (strength.GetValue() * movementSpeedForStrenght) + (agility.GetValue() * movementSpeedForAgility), minMovementSpeed, maxMovementSpeed);
@@ -98,7 +99,7 @@ public abstract class CharacterStats : UnitStats
             (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
         attackSpeed = new Stat(BaseAttackSpeed +
             (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility), 0.01f, maxAttackSpeed);
-        criticalMultilpie = new Stat(BaseCriticalMultilpie, minCriticalMultilpie);
+        criticalMultiplier = new Stat(BaseCriticalMultiplier, minCriticalMultiplier);
         criticalChance = new Stat(BaseCriticalChance, minCriticalChance, maxCriticalChance);
 
         armor = new Stat(agility.GetValue() * armorForAgility);
@@ -109,7 +110,7 @@ public abstract class CharacterStats : UnitStats
     public override void TakeDamage(CharacterStats killerStats, float damage)
     {
         //Если вероятность уворотов больше нуля И если рандом говорит о том, что нужно увернуться
-        if (evasionChance.GetValue() > 0f && Random.Range(0f, 100f) <= evasionChance.GetValue())
+        if (evasionChance.GetValue() > 0f && Random.Range(1f, 100f) <= evasionChance.GetValue())
         {
             Debug.Log(transform.name + " dodge the damage!"); //Задоджили урон!
         }

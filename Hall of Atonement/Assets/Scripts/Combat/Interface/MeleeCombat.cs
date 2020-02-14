@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MeleeCombat : MonoBehaviour, IAttacker
+public class MeleeCombat : MonoBehaviour, IMelee
 {
     private protected CharacterCombat combat;
 
