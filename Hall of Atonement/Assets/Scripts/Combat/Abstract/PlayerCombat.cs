@@ -113,6 +113,6 @@ public abstract class PlayerCombat : CharacterCombat
         }
 
         targetToAttack = target;
-        Attack();
+        PreAttack();
     }
 }

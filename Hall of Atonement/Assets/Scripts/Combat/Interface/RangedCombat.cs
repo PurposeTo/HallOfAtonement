@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-public class RangedCombat : MonoBehaviour, IAttacker
+public class RangedCombat : MonoBehaviour, IRanged
 {
     private protected CharacterCombat combat;
 
     public Transform weapon;
 
-    Ray2D ray;
+    private Ray2D ray;
 
     public void Attack()
     {

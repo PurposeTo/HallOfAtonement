@@ -28,7 +28,7 @@ public abstract class EnemyCombat : CharacterCombat
         if (Vector2.Distance(target.transform.position, transform.position) <= AttackRange)
         {
             targetToAttack = target;
-            Attack();
+            PreAttack();
 
         }
         else
