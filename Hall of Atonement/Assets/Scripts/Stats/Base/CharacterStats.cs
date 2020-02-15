@@ -117,9 +117,7 @@ public abstract class CharacterStats : UnitStats
         }
         else //Получаем урон
         {
-<<<<<<< Updated upstream
             base.TakeDamage(killerStats, damage);
-=======
             //Cнижаем урон броней
             damage = ReduceDamageFromArmor(damage);
 
@@ -135,8 +133,6 @@ public abstract class CharacterStats : UnitStats
             {
                 CurrentHealthPoint -= damage;
             }
-
->>>>>>> Stashed changes
         }
         return damage;
     }
