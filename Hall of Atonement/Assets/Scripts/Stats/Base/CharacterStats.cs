@@ -117,22 +117,7 @@ public abstract class CharacterStats : UnitStats
         }
         else //Получаем урон
         {
-            base.TakeDamage(killerStats, damage);
-            //Cнижаем урон броней
-            damage = ReduceDamageFromArmor(damage);
-
-            Debug.Log(transform.name + " takes " + damage + " damage.");
-
-            if (CurrentHealthPoint - damage <= 0f) //Если из за полученного урона здоровье будет равно или ниже нуля
-            {
-                CurrentHealthPoint = 0f;
-
-                Die(killerStats);
-            }
-            else
-            {
-                CurrentHealthPoint -= damage;
-            }
+            damage = base.TakeDamage(killerStats, damage);
         }
         return damage;
     }
