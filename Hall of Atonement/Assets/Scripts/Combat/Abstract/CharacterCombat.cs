@@ -41,7 +41,7 @@ public abstract class CharacterCombat : MonoBehaviour
         if (targetToAttack != null)
         {
             //Посмотреть на цель
-            if (controller.TurnFaceToTarget(targetToAttack, myStats.rotationSpeed.GetValue(), myStats.faceEuler.GetValue()))
+            if (controller.TurnFaceToTarget(targetToAttack, myStats.rotationSpeed.GetValue(), myStats.faceEuler))
             {
                 if (attackCooldown <= 0f)
                 {

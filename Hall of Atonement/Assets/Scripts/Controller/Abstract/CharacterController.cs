@@ -23,7 +23,7 @@ public abstract class CharacterController : MonoBehaviour
 
     private protected virtual void FixedUpdate()
     {
-        Movement(inputVector, myStats.movementSpeed.GetValue(), myStats.rotationSpeed.GetValue(), myStats.faceEuler.GetValue());
+        Movement(inputVector, myStats.movementSpeed.GetValue(), myStats.rotationSpeed.GetValue(), myStats.faceEuler);
     }
 
 

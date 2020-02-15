@@ -57,7 +57,7 @@ public abstract class CharacterStats : UnitStats
     public Stat healthPointRegen;
     public Stat movementSpeed;
     public Stat rotationSpeed;
-    public Stat faceEuler = new Stat(60f); //Угол лицевой стороны существа. Все действия игрок совершает лицом к объекту действий!
+    public readonly float faceEuler = 60f; //Угол лицевой стороны существа. Все действия игрок совершает лицом к объекту действий!
     public Stat attackDamage;
     public Stat attackSpeed; //(Кол-во атак в секунду)
     public Stat criticalMultiplier; //Крит. множитель атаки
@@ -68,8 +68,9 @@ public abstract class CharacterStats : UnitStats
 
     private protected override void Start()
     {
-        base.Start();
         rb2D = GetComponent<Rigidbody2D>();
+        base.Start();
+        CurrentHealthPoint = maxHealthPoint.GetValue();
     }
 
 
@@ -88,7 +89,7 @@ public abstract class CharacterStats : UnitStats
         //Разделить отдельно для ловкости и силы!
         maxHealthPoint = new Stat(BaseMaxHealthPoint + (strength.GetValue() * hpForStrenght));
         healthPointRegen = new Stat(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
-        CurrentHealthPoint = maxHealthPoint.GetValue(); //Перенести в Start
+
 
         movementSpeed = new Stat(BaseMovementSpeed +
             (strength.GetValue() * movementSpeedForStrenght) + (agility.GetValue() * movementSpeedForAgility), minMovementSpeed, maxMovementSpeed);
@@ -116,7 +117,26 @@ public abstract class CharacterStats : UnitStats
         }
         else //Получаем урон
         {
+<<<<<<< Updated upstream
             base.TakeDamage(killerStats, damage);
+=======
+            //Cнижаем урон броней
+            damage = ReduceDamageFromArmor(damage);
+
+            Debug.Log(transform.name + " takes " + damage + " damage.");
+
+            if (CurrentHealthPoint - damage <= 0f) //Если из за полученного урона здоровье будет равно или ниже нуля
+            {
+                CurrentHealthPoint = 0f;
+
+                Die(killerStats);
+            }
+            else
+            {
+                CurrentHealthPoint -= damage;
+            }
+
+>>>>>>> Stashed changes
         }
         return damage;
     }
