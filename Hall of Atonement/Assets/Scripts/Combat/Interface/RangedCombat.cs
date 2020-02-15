@@ -29,9 +29,9 @@ public class RangedCombat : MonoBehaviour, IRanged
             Debug.Log(gameObject.name + " попал в: " + hit.collider.gameObject.name);
 
                 //Это что то имеет Статы?
-                if (hit.collider.gameObject.GetComponent<UnitStats>())
+                if (hit.collider.gameObject.TryGetComponent(out UnitStats targetStats))
                 {
-                    combat.DoDamage(hit.collider.gameObject.GetComponent<UnitStats>());
+                combat.DoDamage(targetStats);
             }
         }
         //}
