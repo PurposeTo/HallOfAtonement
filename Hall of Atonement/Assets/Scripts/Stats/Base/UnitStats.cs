@@ -31,6 +31,26 @@ public abstract class UnitStats : MonoBehaviour
     }
 
 
-    public abstract void TakeDamage(CharacterStats killerStats, float damage);
+    public virtual float TakeDamage(CharacterStats killerStats, float damage)
+    {
+        damage = ReduceDamageFromArmor(damage);
+
+        Debug.Log(transform.name + " takes " + damage + " damage.");
+
+        if (CurrentHealthPoint - damage <= 0f) //Если из за полученного урона здоровье будет равно или ниже нуля
+        {
+            damage = CurrentHealthPoint; //Нанесенный урон = оставшемуся здоровью
+            CurrentHealthPoint = 0f;
+
+            Die(killerStats);
+        }
+        else
+        {
+            CurrentHealthPoint -= damage;
+        }
+        return damage;
+    }
+
+
     public abstract void Die(CharacterStats killerStats);
 }

@@ -107,7 +107,7 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public override void TakeDamage(CharacterStats killerStats, float damage)
+    public override float TakeDamage(CharacterStats killerStats, float damage)
     {
         //Если вероятность уворотов больше нуля И если рандом говорит о том, что нужно увернуться
         if (evasionChance.GetValue() > 0f && Random.Range(1f, 100f) <= evasionChance.GetValue())
@@ -116,23 +116,9 @@ public abstract class CharacterStats : UnitStats
         }
         else //Получаем урон
         {
-            //снижаем урон броней
-            damage = ReduceDamageFromArmor(damage);
-
-            Debug.Log(transform.name + " takes " + damage + " damage.");
-
-            if (CurrentHealthPoint - damage <= 0f) //Если из за полученного урона здоровье будет равно или ниже нуля
-            {
-                CurrentHealthPoint = 0f;
-
-                Die(killerStats);
-            }
-            else
-            {
-                CurrentHealthPoint -= damage;
-            }
-
+            base.TakeDamage(killerStats, damage);
         }
+        return damage;
     }
 
 
