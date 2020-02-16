@@ -108,7 +108,7 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public override float TakeDamage(CharacterStats killerStats, float damage)
+    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage)
     {
         //Если вероятность уворотов больше нуля И если рандом говорит о том, что нужно увернуться
         if (evasionChance.GetValue() > 0f && Random.Range(1f, 100f) <= evasionChance.GetValue())
@@ -117,7 +117,7 @@ public abstract class CharacterStats : UnitStats
         }
         else //Получаем урон
         {
-            damage = base.TakeDamage(killerStats, damage);
+            damage = base.TakeDamage(killerStats, damageType, damage);
         }
         return damage;
     }

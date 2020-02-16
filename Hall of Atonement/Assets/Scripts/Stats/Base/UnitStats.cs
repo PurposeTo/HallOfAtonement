@@ -31,8 +31,17 @@ public abstract class UnitStats : MonoBehaviour
     }
 
 
-    public virtual float TakeDamage(CharacterStats killerStats, float damage)
+    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage)
     {
+        /*if (damageType is PhysicalDamage)
+        {
+
+        }
+        else if (damageType is EffectDamage)
+        {
+
+        }*/
+
         damage = ReduceDamageFromArmor(damage);
 
         Debug.Log(transform.name + " takes " + damage + " damage.");
