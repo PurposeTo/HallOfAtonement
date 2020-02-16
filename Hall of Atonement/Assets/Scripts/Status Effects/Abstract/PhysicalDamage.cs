@@ -1,3 +1,7 @@
-﻿public abstract class PhysicalDamage : DamageType
+﻿public class PhysicalDamage : DamageType
 {
+    public PhysicalDamage(float damage) : base(damage)
+    { 
+    
+    }
 }

@@ -1,3 +1,7 @@
-﻿public abstract class PoisonDamage : EffectDamage
+﻿public class PoisonDamage : EffectDamage
 {
+    public PoisonDamage(float damage) : base(damage)
+    {
+
+    }
 }

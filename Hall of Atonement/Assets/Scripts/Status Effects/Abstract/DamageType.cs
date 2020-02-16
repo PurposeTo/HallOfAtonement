@@ -1,6 +1,9 @@
-﻿using UnityEngine;
-
-public abstract class DamageType : MonoBehaviour
+﻿public abstract class DamageType
 {
-    private protected float Damage { get; set; }
+    public float Damage { get; private set; }
+
+    public DamageType(float damage)
+    {
+        Damage = damage;
+    }
 }

@@ -1,3 +1,7 @@
-﻿public abstract class FireDamage : EffectDamage
+﻿public class FireDamage : EffectDamage
 {
+    public FireDamage(float damage) : base(damage)
+    {
+
+    }
 }
