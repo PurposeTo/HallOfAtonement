@@ -2,10 +2,17 @@
 
 public class Burn : MonoBehaviour, IDamageLogic
 {
-    private UnitStats victim;
+    private UnitStats targetStats;
     private FireDamage fireDamage;
     private float damage = 5f; //возможно перенести в конструктор Burn()
     private CharacterStats ownerStats;
+
+
+    public Burn()
+    {
+        ownerStats = null;
+    }
+
 
     public Burn(CharacterStats ownerStats)
     {
@@ -20,12 +27,13 @@ public class Burn : MonoBehaviour, IDamageLogic
 
     void Start()
     {
-        victim = gameObject.GetComponent<UnitStats>();
+        targetStats = gameObject.GetComponent<UnitStats>();
+        HangStatusEffect();
     }
 
     void Update()
     {
-        StatusEffectDamage(victim, ownerStats, fireDamage);
+        StatusEffectDamage(targetStats, ownerStats, fireDamage);
         //если повешен скрипт Burn, то у жертвы вызвать HangStatusEffect() в течение некоторого времени
         //скрипт вешается, когда коллайдер огня или коллайдер оружия (бб)/луча, которые вызывают эффект горения сталкивается с коллайдером жертвы
 
@@ -33,8 +41,8 @@ public class Burn : MonoBehaviour, IDamageLogic
         //WaitForSeconds
     }
 
-    public void StatusEffectDamage(UnitStats targetStats, CharacterStats killerStats, FireDamage fireDamage)
+    public void StatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats, FireDamage fireDamage)
     {
-        targetStats.TakeDamage(killerStats, fireDamage, fireDamage.Damage * Time.deltaTime);
+        targetStats.TakeDamage(ownerStats, fireDamage, fireDamage.Damage * Time.deltaTime);
     }
 }
