@@ -16,9 +16,6 @@ public abstract class PlayerCombat : CharacterCombat
     {
         base.Start();
 
-        myStats = (PlayerStats)myStats;
-        controller = (PlayerController)controller;
-
         mainCamera = Camera.main.gameObject;
         //mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, cameraRange);
         mainCamera.GetComponent<Camera>().orthographicSize = cameraSize;

@@ -13,9 +13,6 @@ public class PlayerController : CharacterController
         isOnAndroidMobile = RuntimePlatformDefinition();
 
         base.Start();
-
-        myStats = (PlayerStats)myStats;
-        combat = (PlayerCombat)combat;
     }
 
 
@@ -33,7 +30,7 @@ public class PlayerController : CharacterController
 
         if (isOnAndroidMobile)
         {
-            if (joystick.Horizontal >= Mathf.Abs(0.2f))
+            if (Mathf.Abs(joystick.Horizontal) >= 0.2f)
             {
                 horizontalInput = joystick.Horizontal;
             }
@@ -42,7 +39,7 @@ public class PlayerController : CharacterController
                 horizontalInput = 0f;
             }
 
-            if (joystick.Vertical >= Mathf.Abs(0.2f))
+            if (Mathf.Abs(joystick.Vertical) >= 0.2f)
             {
                 verticalInput = joystick.Vertical;
             }
