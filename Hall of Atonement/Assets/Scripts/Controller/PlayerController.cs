@@ -54,20 +54,15 @@ public class PlayerController : CharacterController
 
         if (isOnAndroidMobile)
         {
-            if (Mathf.Abs(joystick.Horizontal) >= 0.2f)
-            {
-                horizontalInput = joystick.Horizontal;
-            }
-            else
+            horizontalInput = joystick.Horizontal;
+            verticalInput = joystick.Vertical;
+
+            if (Mathf.Abs(horizontalInput) < 0.2f)
             {
                 horizontalInput = 0f;
             }
 
-            if (Mathf.Abs(joystick.Vertical) >= 0.2f)
-            {
-                verticalInput = joystick.Vertical;
-            }
-            else
+            if (Mathf.Abs(verticalInput) < 0.2f)
             {
                 verticalInput = 0f;
             }
