@@ -48,9 +48,9 @@ public abstract class CharacterController : MonoBehaviour
 
 
     //Если есть цель, то игрок должен повернуться лицом к цели, прежде чем начнет атаковть.
-    public bool TurnFaceToTarget(GameObject targetAttack, float rotationSpeed, float faceEuler)
+    public bool TurnFaceToTarget(GameObject focusTarget, float rotationSpeed, float faceEuler)
     {
-        Vector3 difference = (targetAttack.transform.position - transform.position).normalized;
+        Vector3 difference = (focusTarget.transform.position - transform.position).normalized;
 
         // Вычисляем кватерион нужного поворота. Вектор forward говорит вокруг какой оси поворачиваться
         Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: difference);

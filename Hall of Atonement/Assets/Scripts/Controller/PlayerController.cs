@@ -4,6 +4,8 @@
 [RequireComponent(typeof(PlayerStats))]
 public class PlayerController : CharacterController
 {
+    private bool isWantToAttack = false;
+
     private bool isOnAndroidMobile; //Игра запущена на андроиде?
 
     public Joystick joystick;
@@ -19,6 +21,28 @@ public class PlayerController : CharacterController
     private void Update()
     {
         inputVector = GetInputVector();
+
+        if (Input.GetKey(KeyCode.Space)) //Если нажата кнопка атаки
+        {
+            isWantToAttack = true;
+        }
+        else //Если НЕ нажата кнопка атаки
+        {
+            isWantToAttack = false;
+            combat.targetToAttack = null;
+        }
+    }
+
+
+    private protected override void FixedUpdate()
+    {
+        if (isWantToAttack)
+        {
+            //Искать цель
+            combat.SearchingTargetToAttack(combat.targetToAttack);
+        }
+
+        base.FixedUpdate();
     }
 
 

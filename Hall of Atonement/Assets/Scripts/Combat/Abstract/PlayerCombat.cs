@@ -5,8 +5,6 @@ public abstract class PlayerCombat : CharacterCombat
 {
     private GameObject mainCamera;
 
-    [HideInInspector] public bool isWantToAttack = false;
-
     private float cameraSize = 5f; //Размер ортографической камеры
 
     private Vector2 attackZone = Vector2.zero; //Дальность прицеливания. Зависит от дальности камеры
@@ -28,33 +26,6 @@ public abstract class PlayerCombat : CharacterCombat
         //Вычисляем ширину экрана
         float screenWidth = screenHeight * screenRatio;
         attackZone = new Vector2(screenWidth, screenHeight);
-    }
-
-
-    private protected virtual void FixedUpdate()
-    {
-        if (isWantToAttack)
-        {
-            //Искать цель
-            SearchingTargetToAttack(targetToAttack);
-        }
-    }
-
-
-    private protected override void Update()
-    {
-        base.Update();
-
-
-        if (Input.GetKey(KeyCode.Space)) //Если нажата кнопка атаки
-        {
-            isWantToAttack = true;
-        }
-        else //Если НЕ нажата кнопка атаки
-        {
-            isWantToAttack = false;
-            targetToAttack = null;
-        }
     }
 
 
