@@ -2,9 +2,7 @@
 
 public class MeleeCombat : MonoBehaviour, IMelee
 {
-    private protected CharacterCombat combat;
-
-    public void Attack()
+    public void Attack(CharacterCombat combat)
     {
         print(gameObject.name + " использует ближнюю атаку!");
 
@@ -16,10 +14,5 @@ public class MeleeCombat : MonoBehaviour, IMelee
         //{
         //    combat.DoDamage(hit.gameObject.GetComponent<CharacterStats>());
         //}
-    }
-
-    private protected virtual void Start()
-    {
-        combat = gameObject.GetComponent<CharacterCombat>();
     }
 }

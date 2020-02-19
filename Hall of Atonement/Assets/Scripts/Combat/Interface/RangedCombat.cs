@@ -2,13 +2,11 @@
 
 public class RangedCombat : MonoBehaviour, IRanged
 {
-    private protected CharacterCombat combat;
-
     public Transform weapon;
 
     private Ray2D ray;
 
-    public void Attack()
+    public void Attack(CharacterCombat combat)
     {
         print(gameObject.name + " использует дальнюю атаку!");
 
@@ -35,11 +33,5 @@ public class RangedCombat : MonoBehaviour, IRanged
             }
         }
         //}
-    }
-
-
-    private protected virtual void Start()
-    {
-        combat = gameObject.GetComponent<CharacterCombat>();
     }
 }

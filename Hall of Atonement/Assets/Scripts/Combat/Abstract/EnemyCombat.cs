@@ -6,15 +6,6 @@ public abstract class EnemyCombat : CharacterCombat
     public virtual float AttackRange { get; } = 5f;
 
 
-    private protected override void Start()
-    {
-        base.Start();
-
-        myStats = (EnemyStats)myStats;
-        controller = (EnemyAI)controller;
-    }
-
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

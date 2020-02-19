@@ -47,7 +47,7 @@ public abstract class CharacterCombat : MonoBehaviour
             {
                 if (attackCooldown <= 0f)
                 {
-                    Attacker.Attack();
+                    Attacker.Attack(this);
                     attackCooldown = 1f / myStats.attackSpeed.GetValue(); //После атаки включить кулдаун
                 }
             }
@@ -56,7 +56,7 @@ public abstract class CharacterCombat : MonoBehaviour
         {
             if (attackCooldown <= 0f)
             {
-                Attacker.Attack();
+                Attacker.Attack(this);
                 attackCooldown = 1f / myStats.attackSpeed.GetValue(); //После атаки включить кулдаун
             }
         }
