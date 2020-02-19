@@ -141,7 +141,7 @@ public abstract class CharacterStats : UnitStats
     public virtual void GetExperience(int amount)
     {
         //множитель получаемого опыта
-        level.AddExperience(amount * (int)(mastery.GetValue() * experieneMultiplierForMastery));
+        level.AddExperience((int)(amount * (1 + (mastery.GetValue() * experieneMultiplierForMastery))));
     }
 
 
