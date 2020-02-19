@@ -6,16 +6,9 @@ public class PlayerController : CharacterController
 {
     private bool isWantToAttack = false;
 
-    private bool isOnAndroidMobile; //Игра запущена на андроиде?
-
     public Joystick joystick;
 
-    private protected override void Start()
-    {
-        isOnAndroidMobile = RuntimePlatformDefinition();
-
-        base.Start();
-    }
+    private readonly RuntimePlatform currentRuntimePlatform = Application.platform;
 
 
     private void Update()
@@ -52,49 +45,37 @@ public class PlayerController : CharacterController
         float verticalInput;
         Vector2 inputVector;
 
-        if (isOnAndroidMobile)
+        switch (currentRuntimePlatform)
         {
-            horizontalInput = joystick.Horizontal;
-            verticalInput = joystick.Vertical;
+            case RuntimePlatform.Android:
+                horizontalInput = joystick.Horizontal;
+                verticalInput = joystick.Vertical;
 
-            if (Mathf.Abs(horizontalInput) < 0.2f)
-            {
-                horizontalInput = 0f;
-            }
+                if (Mathf.Abs(horizontalInput) < 0.2f)
+                {
+                    horizontalInput = 0f;
+                }
 
-            if (Mathf.Abs(verticalInput) < 0.2f)
-            {
-                verticalInput = 0f;
-            }
+                if (Mathf.Abs(verticalInput) < 0.2f)
+                {
+                    verticalInput = 0f;
+                }
+                break;
+
+            case RuntimePlatform.WindowsEditor:
+                    horizontalInput = Input.GetAxis("Horizontal");
+                    verticalInput = Input.GetAxis("Vertical");
+                    break;
+            default:
+                horizontalInput = 0;
+                verticalInput = 0;
+                Debug.LogError("Unknown platform!");
+                break;
         }
-        else
-        {
-            horizontalInput = Input.GetAxis("Horizontal");
-            verticalInput = Input.GetAxis("Vertical");
-        }
-
 
         inputVector = new Vector2(horizontalInput, verticalInput);
         inputVector = Vector2.ClampMagnitude(inputVector, 1);
 
         return inputVector;
-    }
-
-
-    private bool RuntimePlatformDefinition()
-    {
-        bool togle = false;
-        //Позже bool заменить на множество переключателей
-
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            togle = true;
-        }
-        else if (Application.platform == RuntimePlatform.WindowsEditor)
-        {
-            togle = false;
-        }
-
-        return togle;
     }
 }
