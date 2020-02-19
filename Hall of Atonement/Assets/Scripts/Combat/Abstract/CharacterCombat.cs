@@ -5,7 +5,6 @@ public abstract class CharacterCombat : MonoBehaviour
 {
     private protected CharacterStats myStats;
     private protected CharacterController controller;
-    private protected virtual DamageType damageType { get; set; }
 
     [HideInInspector] public GameObject targetToAttack = null;
 
@@ -18,12 +17,12 @@ public abstract class CharacterCombat : MonoBehaviour
     {
         myStats = GetComponent<CharacterStats>();
         controller = GetComponent<CharacterController>();
-        damageType = new PhysicalDamage(myStats.attackDamage.GetValue()); //сейчас все атакуют физ.уроном!!!
     }
 
 
     private protected virtual void Update()
     {
+
         if (attackCooldown > 0f) //Если кулдаун больше нуля, то уменьшить
         {
             attackCooldown -= Time.deltaTime;
@@ -69,7 +68,7 @@ public abstract class CharacterCombat : MonoBehaviour
         //Формула, которая повысит урон в случае, если скорость атак будет быстрее чем обновление кадров
         float attackSpeedMultiplie = (Mathf.Abs(attackCooldown) / (1f/ myStats.attackSpeed.GetValue())) + 1f;
 
-        float damage = attackSpeedMultiplie * damageType.Damage;
+        float damage = attackSpeedMultiplie * myStats.DamageType.Damage;
 
         //Если Крит. шанс больше нуля И если рандом говорит о том, что нужно критануть
         if (myStats.criticalChance.GetValue() > 0f && Random.Range(1f, 100f) <= myStats.criticalChance.GetValue())
@@ -80,6 +79,6 @@ public abstract class CharacterCombat : MonoBehaviour
         //Есть ли модификатор атаки?
 
 
-        targetStats.TakeDamage(myStats, damageType, damage);
+        targetStats.TakeDamage(myStats, myStats.DamageType, damage);
     }
 }

@@ -59,6 +59,8 @@ public abstract class CharacterStats : UnitStats
     public Stat rotationSpeed;
     public readonly float faceEuler = 60f; //Угол лицевой стороны существа. Все действия игрок совершает лицом к объекту действий!
     public Stat attackDamage;
+    public virtual DamageType DamageType { get; private protected set; }
+
     public Stat attackSpeed; //(Кол-во атак в секунду)
     public Stat criticalMultiplier; //Крит. множитель атаки
     public Stat criticalChance;
@@ -98,6 +100,8 @@ public abstract class CharacterStats : UnitStats
 
         attackDamage = new Stat(BaseAttackDamage +
             (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
+        DamageType = new PhysicalDamage(attackDamage.GetValue()); //сейчас все атакуют физ.уроном!!!
+
         attackSpeed = new Stat(BaseAttackSpeed +
             (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility), 0.01f, maxAttackSpeed);
         criticalMultiplier = new Stat(BaseCriticalMultiplier, minCriticalMultiplier);
