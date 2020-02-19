@@ -5458,6 +5458,8 @@ MonoBehaviour:
     baseValue: 0
   agility:
     baseValue: 0
+  mastery:
+    baseValue: 0
   healthPointRegen:
     baseValue: 0
   movementSpeed:
@@ -5466,6 +5468,7 @@ MonoBehaviour:
     baseValue: 0
   attackDamage:
     baseValue: 0
+  UnitDamageType: 0
   attackSpeed:
     baseValue: 0
   criticalMultiplier:
@@ -7595,11 +7598,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GuardianMelee
       objectReference: {fileID: 0}
-    - target: {fileID: 4929494448373210674, guid: 1b047e7e2c7c4b948bccfb7e5f5685d9,
-        type: 3}
-      propertyPath: attackPoint
-      value: 
-      objectReference: {fileID: 2014819748}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b047e7e2c7c4b948bccfb7e5f5685d9, type: 3}
 --- !u!4 &1760722739 stripped
@@ -8312,12 +8310,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2087143339040961576, guid: 435d2e81ff0df9e46a9e69ea2d9608df,
     type: 3}
   m_PrefabInstance: {fileID: 1975821157}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2014819748 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4271721898303154683, guid: 1b047e7e2c7c4b948bccfb7e5f5685d9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1760722738}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2016622238
 PrefabInstance:

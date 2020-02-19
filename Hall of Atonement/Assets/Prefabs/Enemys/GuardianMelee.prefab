@@ -189,6 +189,8 @@ MonoBehaviour:
     baseValue: 0
   agility:
     baseValue: 0
+  mastery:
+    baseValue: 0
   healthPointRegen:
     baseValue: 0
   movementSpeed:
@@ -197,6 +199,7 @@ MonoBehaviour:
     baseValue: 0
   attackDamage:
     baseValue: 0
+  UnitDamageType: 0
   attackSpeed:
     baseValue: 0
   criticalMultiplier:
@@ -217,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c78f794ea1d02504b99ebb57c648ae99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPoint: {fileID: 0}
+  attackPoint: {fileID: 4271721898303154683}
   attackRadius: 0.8
 --- !u!114 &4090534045881115762
 MonoBehaviour:

@@ -70,6 +70,18 @@ public abstract class CharacterStats : UnitStats
     public Stat rotationSpeed;
     public readonly float faceEuler = 60f; //Угол лицевой стороны существа. Все действия игрок совершает лицом к объекту действий!
     public Stat attackDamage;
+
+    public enum ContainerDamageTypes
+    {
+        PhysicalDamage,
+        FireDamage,
+        IceDamage,
+        BleedingDamage,
+        PoisonDamage
+    }
+
+    public ContainerDamageTypes UnitDamageType;
+
     public virtual DamageType DamageType { get; private protected set; }
 
     public Stat attackSpeed; //(Кол-во атак в секунду)
@@ -83,7 +95,7 @@ public abstract class CharacterStats : UnitStats
     {
         rb2D = GetComponent<Rigidbody2D>();
         base.Start();
-        CurrentHealthPoint = maxHealthPoint.GetValue();
+        ChangeDamageType(UnitDamageType);
     }
 
 
@@ -91,8 +103,7 @@ public abstract class CharacterStats : UnitStats
     {
         moveEvasion = Mathf.Lerp(0f, 20f, rb2D.velocity.magnitude / maxMovementSpeed);
 
-        CurrentHealthPoint += healthPointRegen.GetValue() * Time.fixedDeltaTime;
-        HealthPointClamp();
+        Healing(healthPointRegen.GetValue() * Time.fixedDeltaTime);
     }
 
 
@@ -111,7 +122,6 @@ public abstract class CharacterStats : UnitStats
 
         attackDamage = new Stat(BaseAttackDamage +
             (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
-        DamageType = new PhysicalDamage(attackDamage.GetValue()); //сейчас все атакуют физ.уроном!!!
 
         attackSpeed = new Stat(BaseAttackSpeed +
             (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility), 0.01f, maxAttackSpeed);
@@ -120,6 +130,38 @@ public abstract class CharacterStats : UnitStats
 
         armor = new Stat(agility.GetValue() * armorForAgility);
         evasionChance = new Stat((mastery.GetValue() * evasionForMastery) + agility.GetValue() * evasionForAgility, minEvasionChance, maxEvasionChance);
+    }
+
+
+    public void ChangeDamageType(ContainerDamageTypes type)
+    {
+        switch (type)
+        {
+            case ContainerDamageTypes.PhysicalDamage:
+                Debug.Log(gameObject.name + " choise the PhysicalDamage!");
+                DamageType = new PhysicalDamage(attackDamage.GetValue());
+                break;
+            case ContainerDamageTypes.FireDamage:
+                Debug.Log(gameObject.name + " choise the FireDamage!");
+                DamageType = new FireDamage(attackDamage.GetValue());
+                break;
+            case ContainerDamageTypes.IceDamage:
+                Debug.Log(gameObject.name + " choise the IceDamage!");
+                DamageType = new IceDamage(attackDamage.GetValue());
+
+                break;
+            case ContainerDamageTypes.BleedingDamage:
+                Debug.Log(gameObject.name + " choise the BleedingDamage!");
+                DamageType = new BleedingDamage(attackDamage.GetValue());
+                break;
+            case ContainerDamageTypes.PoisonDamage:
+                Debug.Log(gameObject.name + " choise the PoisonDamage!");
+                DamageType = new PoisonDamage(attackDamage.GetValue());
+                break;
+            default:
+                Debug.LogError(gameObject.name + " : error in Damage Type!");
+                break;
+        }
     }
 
 
@@ -138,16 +180,20 @@ public abstract class CharacterStats : UnitStats
     }
 
 
+    public void Healing(float amount)
+    {
+        CurrentHealthPoint += amount;
+        if (CurrentHealthPoint > maxHealthPoint.GetValue())
+        {
+            CurrentHealthPoint = maxHealthPoint.GetValue();
+        }
+    }
+
+
     public virtual void GetExperience(int amount)
     {
         //множитель получаемого опыта
         level.AddExperience((int)(amount * (1 + (mastery.GetValue() * experieneMultiplierForMastery))));
-    }
-
-
-    public virtual void HealthPointClamp()
-    {
-        CurrentHealthPoint = Mathf.Clamp(CurrentHealthPoint, 0, maxHealthPoint.GetValue());
     }
 
     public override void Die(CharacterStats killerStats)

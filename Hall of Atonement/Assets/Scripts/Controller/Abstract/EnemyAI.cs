@@ -17,7 +17,7 @@ public abstract class EnemyAI : CharacterController
 
         maxStopRadius = gameObject.GetComponent<EnemyCombat>().AttackRange;
         LookRadius = Mathf.Clamp(LookRadius, maxStopRadius + 2f, float.MaxValue);
-        minStopRadius = maxStopRadius / 2f;
+        minStopRadius = Mathf.Clamp(maxStopRadius / 2f, 1.1f, float.MaxValue);
     }
 
 

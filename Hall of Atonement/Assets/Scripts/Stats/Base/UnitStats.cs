@@ -13,6 +13,8 @@ public abstract class UnitStats : MonoBehaviour
     private protected virtual void Start()
     {
         StatInitialization();
+        CurrentHealthPoint = maxHealthPoint.GetValue();
+
     }
 
 
@@ -27,24 +29,24 @@ public abstract class UnitStats : MonoBehaviour
     private protected virtual void StatInitialization()
     {
         maxHealthPoint = new Stat(BaseMaxHealthPoint);
-        CurrentHealthPoint = maxHealthPoint.GetValue();
     }
 
 
     public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage)
     {
-        /*if (damageType is PhysicalDamage)
-        {
 
+        if (damageType is PhysicalDamage)
+        {
+            damage = ReduceDamageFromArmor(damage);
         }
+        /*
         else if (damageType is EffectDamage)
         {
 
         }*/
 
-        damage = ReduceDamageFromArmor(damage);
 
-        Debug.Log(transform.name + " takes " + damage + " damage.");
+        Debug.Log(transform.name + " takes " + damage + " " + killerStats.DamageType);
 
         if (CurrentHealthPoint - damage <= 0f) //Если из за полученного урона здоровье будет равно или ниже нуля
         {
