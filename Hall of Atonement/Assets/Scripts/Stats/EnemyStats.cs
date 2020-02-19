@@ -5,7 +5,7 @@ public class EnemyStats : CharacterStats
 {
     private float strenghtFromLvl = 1f;
     private float agilityFromLvl = 1f;
-
+    private float masteryFromLvl = 1f;
 
     private protected override float BaseMovementSpeed { get; } = 3f;
     private protected override float BaseRotationSpeed { get; } = 360f;
@@ -38,6 +38,7 @@ public class EnemyStats : CharacterStats
 
         strength = new Attribute((int)(level.GetLvl() * strenghtFromLvl));
         agility = new Attribute((int)(level.GetLvl() * agilityFromLvl));
+        mastery = new Attribute((int)(level.GetLvl() * masteryFromLvl));
 
         base.StatInitialization();
     }

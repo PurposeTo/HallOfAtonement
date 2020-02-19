@@ -9,6 +9,7 @@ public abstract class CharacterStats : UnitStats
     public LevelSystem level = new LevelSystem();
     public Attribute strength = new Attribute();
     public Attribute agility = new Attribute();
+    public Attribute mastery = new Attribute();
 
     //Зависимость статов от Силы
     private readonly float hpForStrenght = 20f;
@@ -25,7 +26,17 @@ public abstract class CharacterStats : UnitStats
     private readonly float attackDamageForAgility = 0.75f;
     private readonly float attackSpeedForAgility = 0.15f;
     private readonly float armorForAgility = 0.5f;
-    private readonly float evasionForAgility = 0.1f;
+    private readonly float evasionForAgility = 0.05f;
+
+
+    //Зависимость статов от Мастерства
+    private readonly float evasionForMastery = 0.1f;
+    private readonly float criticalChanceForMastery = 1f;
+    private readonly float criticalMultiplierForMastery = 10f;
+    private readonly float experieneMultiplierForMastery = 0.1f;
+    //private readonly float улучшение баффов
+
+
 
     private protected override float BaseMaxHealthPoint { get; } = 100f; //базовое значение максимального кол-ва здоровья
     private protected virtual float BaseHealthPointRegen { get; } = 0.2f; //базовое значение регенерации здоровья
@@ -42,10 +53,10 @@ public abstract class CharacterStats : UnitStats
     private readonly float maxAttackSpeed = 50f; //максимальное значение скорости атаки
     private protected virtual float BaseAttackSpeed { get; } = 0.5f; //базовое значение скорости атаки
 
-    private readonly float minCriticalMultiplier = 1.1f; //минимальное значение множителя критической атаки
-    private protected virtual float BaseCriticalMultiplier { get; } = 2f; //базовое значение множителя критической атаки
+    private readonly float minCriticalMultiplier = 110f; //минимальное значение множителя критической атаки
+    private protected virtual float BaseCriticalMultiplier { get; } = 2f; //базовое значение множителя критической атаки.
     private readonly float minCriticalChance = 0f; //минимальное значение скорости поворот
-    private readonly float maxCriticalChance = 100f; //минимальное значение скорости поворот
+    private readonly float maxCriticalChance = 1.1f; //минимальное значение скорости поворот.
     private protected virtual float BaseCriticalChance { get; } = 1f; //базовое значение скорости поворот
 
     private readonly float minEvasionChance = 0f; //минимальное значение скорости уворота
@@ -88,7 +99,7 @@ public abstract class CharacterStats : UnitStats
     //Инициализация статов в зависимости от атрибутов
     private protected override void StatInitialization()
     {
-        //Разделить отдельно для ловкости и силы!
+        //Разделить отдельно для ловкости, силы и мастерства!
         maxHealthPoint = new Stat(BaseMaxHealthPoint + (strength.GetValue() * hpForStrenght));
         healthPointRegen = new Stat(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
 
@@ -104,11 +115,11 @@ public abstract class CharacterStats : UnitStats
 
         attackSpeed = new Stat(BaseAttackSpeed +
             (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility), 0.01f, maxAttackSpeed);
-        criticalMultiplier = new Stat(BaseCriticalMultiplier, minCriticalMultiplier);
-        criticalChance = new Stat(BaseCriticalChance, minCriticalChance, maxCriticalChance);
+        criticalMultiplier = new Stat(BaseCriticalMultiplier + (mastery.GetValue() * criticalMultiplierForMastery), minCriticalMultiplier);
+        criticalChance = new Stat(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery), minCriticalChance, maxCriticalChance);
 
         armor = new Stat(agility.GetValue() * armorForAgility);
-        evasionChance = new Stat(agility.GetValue() * evasionForAgility, minEvasionChance, maxEvasionChance);
+        evasionChance = new Stat((mastery.GetValue() * evasionForMastery) + agility.GetValue() * evasionForAgility, minEvasionChance, maxEvasionChance);
     }
 
 
@@ -130,7 +141,7 @@ public abstract class CharacterStats : UnitStats
     public virtual void GetExperience(int amount)
     {
         //множитель получаемого опыта
-        level.AddExperience(amount);
+        level.AddExperience(amount * (int)(mastery.GetValue() * experieneMultiplierForMastery));
     }
 
 
