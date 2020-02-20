@@ -13,7 +13,7 @@
 *.asset
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
-!/[Aa]ssets/**/*.meta
+#!/[Aa]ssets/**/*.meta
 
 # Images
 *.jpg
@@ -81,9 +81,9 @@ ExportedObj/
 *.VC.db
 
 # Unity3D generated meta files
-#*.pidb.meta
-#*.pdb.meta
-#*.mdb.meta
+# *.pidb.meta
+# *.pdb.meta
+# *.mdb.meta
 
 # Unity3D generated file on crash reports
 sysinfo.txt

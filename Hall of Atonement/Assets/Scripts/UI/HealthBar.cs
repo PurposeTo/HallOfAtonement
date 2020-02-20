@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+    public CharacterStats MyStats;
     public Slider HealthSlider;
     public Slider HealthChangeSlider;
+    public Text HealthPointText;
+    public Text HealthRegenText;
 
     private float maxSliderValue = 100f;
 
@@ -23,29 +26,46 @@ public class HealthBar : MonoBehaviour
         HealthSlider.value = maxSliderValue;
         HealthChangeSlider.maxValue = maxSliderValue;
         HealthChangeSlider.value = maxSliderValue;
+        ShowHealthPoinOnText();
+    }
 
+    //Сделать по нормальному!
+    private void Update()
+    {
+        HealthRegenText.text = "+" + System.Math.Round(MyStats.healthPointRegen.GetValue(), 1) + " ";
     }
 
 
-    public void DecreaseHealthBar(UnitStats myStats)
+    private void ShowHealthPoinOnText()
     {
-        HealthSlider.value = myStats.CurrentHealthPoint / myStats.maxHealthPoint.GetValue() * maxSliderValue;
+        HealthPointText.text = (int)System.Math.Truncate(MyStats.CurrentHealthPoint) + "/" 
+            + (int)System.Math.Truncate(MyStats.maxHealthPoint.GetValue());
+    }
+
+
+    public void DecreaseHealthBar()
+    {
+        HealthSlider.value = MyStats.CurrentHealthPoint / MyStats.maxHealthPoint.GetValue() * maxSliderValue;
 
         if (RoutineChangeHealth == null)
         {
             RoutineChangeHealth = StartCoroutine(ChangeHealthFill());
         }
+
+
     }
 
 
-    public void IncreaseHealthBar(UnitStats myStats)
+    public void IncreaseHealthBar()
     {
-        HealthSlider.value = myStats.CurrentHealthPoint / myStats.maxHealthPoint.GetValue() * maxSliderValue;
+        HealthSlider.value = MyStats.CurrentHealthPoint / MyStats.maxHealthPoint.GetValue() * maxSliderValue;
 
         if (RoutineChangeHealth == null)
         {
             HealthChangeSlider.value = HealthChangeSlider.value;
         }
+
+        ShowHealthPoinOnText();
     }
 
     private IEnumerator ChangeHealthFill()
@@ -67,6 +87,7 @@ public class HealthBar : MonoBehaviour
             {
                 break;
             }
+            ShowHealthPoinOnText();
             yield return null;
         }
 

@@ -141,7 +141,7 @@ MonoBehaviour:
     baseValue: 0
   armor:
     baseValue: 0
-  healthBar: {fileID: 997885385485755906}
+  healthBar: {fileID: 6545963410155622273}
   level:
     level: 1
     experience: 0
@@ -378,6 +378,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8114679683082545686, guid: 6edcbcb70f30ef04781fc311313e05e2,
+        type: 3}
+      propertyPath: MyStats
+      value: 
+      objectReference: {fileID: 7712651456998013983}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6edcbcb70f30ef04781fc311313e05e2, type: 3}
 --- !u!224 &997885385579473903 stripped
@@ -386,9 +391,9 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3047473668330431895}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &997885385485755906 stripped
+--- !u!114 &6545963410155622273 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2851902673825792917, guid: 6edcbcb70f30ef04781fc311313e05e2,
+  m_CorrespondingSourceObject: {fileID: 8114679683082545686, guid: 6edcbcb70f30ef04781fc311313e05e2,
     type: 3}
   m_PrefabInstance: {fileID: 3047473668330431895}
   m_PrefabAsset: {fileID: 0}

@@ -6,8 +6,6 @@ public abstract class CharacterStats : UnitStats
 {
     public HealthBar healthBar;
 
-    private protected Rigidbody2D rb2D;
-
     public LevelSystem level = new LevelSystem();
     public Attribute strength = new Attribute();
     public Attribute agility = new Attribute();
@@ -62,8 +60,7 @@ public abstract class CharacterStats : UnitStats
     private protected virtual float BaseCriticalChance { get; } = 1f; //базовое значение скорости поворот
 
     private readonly float minEvasionChance = 0f; //минимальное значение скорости уворота
-    private readonly float maxEvasionChance = 70f; //минимальное значение скорости уворота
-    private float moveEvasion = 0f; //Вероятность уворота при движении
+    private readonly float maxEvasionChance = 70f; //минимальное значение скорости уворота\
 
 
     //public Stat maxHealthPoint;
@@ -93,18 +90,14 @@ public abstract class CharacterStats : UnitStats
     public Stat evasionChance; //Нет базового значения
 
 
-    private protected override void Start()
+    private protected virtual void Start()
     {
-        rb2D = GetComponent<Rigidbody2D>();
-        base.Start();
         ChangeDamageType(UnitDamageType);
     }
 
 
     private protected virtual void FixedUpdate()
     {
-        moveEvasion = Mathf.Lerp(0f, 20f, rb2D.velocity.magnitude / maxMovementSpeed);
-
         Healing(healthPointRegen.GetValue() * Time.fixedDeltaTime);
     }
 
@@ -179,7 +172,7 @@ public abstract class CharacterStats : UnitStats
             damage = base.TakeDamage(killerStats, damageType, damage);
         }
 
-        healthBar.DecreaseHealthBar(this);
+        healthBar.DecreaseHealthBar();
 
         return damage;
     }
@@ -193,7 +186,7 @@ public abstract class CharacterStats : UnitStats
             CurrentHealthPoint = maxHealthPoint.GetValue();
         }
 
-        healthBar.IncreaseHealthBar(this);
+        healthBar.IncreaseHealthBar();
     }
 
 

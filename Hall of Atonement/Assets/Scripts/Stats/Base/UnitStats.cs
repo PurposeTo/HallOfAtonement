@@ -10,11 +10,10 @@ public abstract class UnitStats : MonoBehaviour
     public Stat armor; //Нет базового значения
 
 
-    private protected virtual void Start()
+    private protected virtual void Awake()
     {
         StatInitialization();
         CurrentHealthPoint = maxHealthPoint.GetValue();
-
     }
 
 
