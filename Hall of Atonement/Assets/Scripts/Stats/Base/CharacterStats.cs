@@ -5,6 +5,7 @@
 public abstract class CharacterStats : UnitStats
 {
     public HealthBar healthBar;
+    public LvlBar lvlBar;
 
     public LevelSystem level = new LevelSystem();
     public Attribute strength = new Attribute();
@@ -190,17 +191,27 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public virtual void GetExperience(int amount)
+    public virtual void GetExperience(int amount, out bool isLvlUp)
     {
+        isLvlUp = false;
+        float currentLvl = level.GetLvl();
+
         //множитель получаемого опыта
         level.AddExperience((int)(amount * (1 + (mastery.GetValue() * experieneMultiplierForMastery))));
+
+        //Если уровень повысился
+        if (currentLvl < level.GetLvl())
+        {
+            isLvlUp = true;
+            lvlBar.ShowLvl();
+        }
     }
 
     public override void Die(CharacterStats killerStats)
     {
         if (killerStats != null && killerStats != this)
         {
-            killerStats.GetExperience(level.GetAllExperience()); //При смерти отдаем опыт
+            killerStats.GetExperience(level.GetAllExperience(), out _); //При смерти отдаем опыт
         }
 
         Debug.Log(transform.name + " Умер!");

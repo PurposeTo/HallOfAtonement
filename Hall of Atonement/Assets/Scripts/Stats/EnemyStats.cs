@@ -18,14 +18,13 @@ public class EnemyStats : CharacterStats
     }
 
 
-    public override void GetExperience(int amount)
+    public override void GetExperience(int amount, out bool isLvlUp)
     {
-        float currentLvl = level.GetLvl();
-        base.GetExperience((int)(amount / 1.5));
+        base.GetExperience((int)(amount / 1.5), out isLvlUp);
 
 
         //Если уровень повысился
-        if (currentLvl < level.GetLvl())
+        if (isLvlUp)
         {
             StatInitialization();
         }

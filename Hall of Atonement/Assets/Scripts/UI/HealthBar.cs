@@ -51,8 +51,6 @@ public class HealthBar : MonoBehaviour
         {
             RoutineChangeHealth = StartCoroutine(ChangeHealthFill());
         }
-
-
     }
 
 

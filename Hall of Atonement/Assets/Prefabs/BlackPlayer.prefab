@@ -99,6 +99,7 @@ MonoBehaviour:
   armor:
     baseValue: 0
   healthBar: {fileID: 2364517879466908021}
+  lvlBar: {fileID: 302654953987578668}
   level:
     level: 0
     experience: 0
@@ -379,6 +380,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6088419495006218319, guid: 6edcbcb70f30ef04781fc311313e05e2,
+        type: 3}
+      propertyPath: MyStats
+      value: 
+      objectReference: {fileID: 5786376024464304843}
     - target: {fileID: 8114679683082545686, guid: 6edcbcb70f30ef04781fc311313e05e2,
         type: 3}
       propertyPath: MyStats
@@ -392,6 +398,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5786376025329480547}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &302654953987578668 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6088419495006218319, guid: 6edcbcb70f30ef04781fc311313e05e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 5786376025329480547}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6489e9a6e643f84c89e1668a5e16deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2364517879466908021 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8114679683082545686, guid: 6edcbcb70f30ef04781fc311313e05e2,

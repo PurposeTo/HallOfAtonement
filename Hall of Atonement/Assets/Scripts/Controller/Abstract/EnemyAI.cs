@@ -6,7 +6,7 @@ public abstract class EnemyAI : CharacterController
 {
     private protected GameObject targetToMove = null;
 
-    [SerializeField] private protected virtual float LookRadius { get; set; } = 10f; //Расстояние, на котором враг заметит игрока
+    [SerializeField] private protected virtual float LookRadius { get; set; } = 8f; //Расстояние, на котором враг заметит игрока
     private float minStopRadius; //Расстояние, на котором враг остановится
     private float maxStopRadius; //Расстояние, на котором враг опять начнет преследовать игрока
 
