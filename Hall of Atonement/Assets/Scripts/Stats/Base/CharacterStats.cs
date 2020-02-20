@@ -4,6 +4,8 @@
 [RequireComponent(typeof(CharacterController))]
 public abstract class CharacterStats : UnitStats
 {
+    public HealthBar healthBar;
+
     private protected Rigidbody2D rb2D;
 
     public LevelSystem level = new LevelSystem();
@@ -176,6 +178,9 @@ public abstract class CharacterStats : UnitStats
         {
             damage = base.TakeDamage(killerStats, damageType, damage);
         }
+
+        healthBar.DecreaseHealthBar(this);
+
         return damage;
     }
 
@@ -187,6 +192,8 @@ public abstract class CharacterStats : UnitStats
         {
             CurrentHealthPoint = maxHealthPoint.GetValue();
         }
+
+        healthBar.IncreaseHealthBar(this);
     }
 
 
