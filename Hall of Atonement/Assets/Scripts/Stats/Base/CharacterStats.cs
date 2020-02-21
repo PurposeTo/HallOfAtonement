@@ -54,14 +54,9 @@ public abstract class CharacterStats : UnitStats
     private readonly float maxAttackSpeed = 50f; //максимальное значение скорости атаки
     private protected virtual float BaseAttackSpeed { get; } = 0.5f; //базовое значение скорости атаки
 
-    private readonly float minCriticalMultiplier = 110f; //минимальное значение множителя критической атаки
+    private readonly float minCriticalMultiplier = 1.1f; //минимальное значение множителя критической атаки
     private protected virtual float BaseCriticalMultiplier { get; } = 2f; //базовое значение множителя критической атаки.
-    private readonly float minCriticalChance = 0f; //минимальное значение скорости поворот
-    private readonly float maxCriticalChance = 1.1f; //минимальное значение скорости поворот.
     private protected virtual float BaseCriticalChance { get; } = 1f; //базовое значение скорости поворот
-
-    private readonly float minEvasionChance = 0f; //минимальное значение скорости уворота
-    private readonly float maxEvasionChance = 70f; //минимальное значение скорости уворота\
 
 
     //public Stat maxHealthPoint;
@@ -86,9 +81,9 @@ public abstract class CharacterStats : UnitStats
 
     public Stat attackSpeed; //(Кол-во атак в секунду)
     public Stat criticalMultiplier; //Крит. множитель атаки
-    public Stat criticalChance;
+    public PercentStat criticalChance;
     //public Stat armor; //Нет базового значения
-    public Stat evasionChance; //Нет базового значения
+    public PercentStat evasionChance; //Нет базового значения
 
 
     private protected virtual void Start()
@@ -122,10 +117,10 @@ public abstract class CharacterStats : UnitStats
         attackSpeed = new Stat(BaseAttackSpeed +
             (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility), 0.01f, maxAttackSpeed);
         criticalMultiplier = new Stat(BaseCriticalMultiplier + (mastery.GetValue() * criticalMultiplierForMastery), minCriticalMultiplier);
-        criticalChance = new Stat(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery), minCriticalChance, maxCriticalChance);
+        criticalChance = new PercentStat(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery));
 
         armor = new Stat(agility.GetValue() * armorForAgility);
-        evasionChance = new Stat((mastery.GetValue() * evasionForMastery) + agility.GetValue() * evasionForAgility, minEvasionChance, maxEvasionChance);
+        evasionChance = new PercentStat((mastery.GetValue() * evasionForMastery) + agility.GetValue() * evasionForAgility);
     }
 
 
