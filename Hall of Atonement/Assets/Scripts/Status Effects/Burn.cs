@@ -3,46 +3,51 @@
 public class Burn : MonoBehaviour, IDamageLogic
 {
     private UnitStats targetStats;
-    private FireDamage fireDamage;
-    private float damage = 5f; //возможно перенести в конструктор Burn()
-    private CharacterStats ownerStats;
+    private CharacterStats ownerStats = null;
+    private DamageType damageType;
+
+    private readonly float baseDamagePerSecond = 2f;  //возможно перенести в конструктор Burn()
+    private readonly float baseBurningTime = 3f;
+
+    private float currentDamagePerSecond;
+    private float currentBurningTime;
 
 
-    public Burn()
-    {
-        ownerStats = null;
-    }
+    //4. Растопить лед
 
-
-    public Burn(CharacterStats ownerStats)
-    {
-        this.ownerStats = ownerStats;
-    }
-
-    public void HangStatusEffect()
-    {
-        fireDamage = new FireDamage(damage);
-        Debug.Log(gameObject.name + ": \"I am burning!\"");
-    }
 
     void Start()
     {
+        damageType = new FireDamage();
+        Debug.Log(gameObject.name + ": \"I am burning!\"");
         targetStats = gameObject.GetComponent<UnitStats>();
-        HangStatusEffect();
     }
+
 
     void Update()
     {
-        StatusEffectDamage(targetStats, ownerStats, fireDamage);
-        //если повешен скрипт Burn, то у жертвы вызвать HangStatusEffect() в течение некоторого времени
-        //скрипт вешается, когда коллайдер огня или коллайдер оружия (бб)/луча, которые вызывают эффект горения сталкивается с коллайдером жертвы
-
-        //StartCoroutine
-        //WaitForSeconds
+        StatusEffectDamage(targetStats, ownerStats, damageType);
     }
 
-    public void StatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats, FireDamage fireDamage)
+
+    public void StatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats, DamageType fireDamage)
     {
-        targetStats.TakeDamage(ownerStats, fireDamage, fireDamage.Damage * Time.deltaTime);
+        if(currentBurningTime > 0f)
+        {
+            targetStats.TakeDamage(ownerStats, fireDamage, currentDamagePerSecond * Time.deltaTime, out bool _);
+            currentBurningTime -= Time.deltaTime;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+
+    public void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
+    {
+        this.ownerStats = ownerStats;
+        currentBurningTime = baseBurningTime;
+        currentDamagePerSecond += baseDamagePerSecond * amplificationAmount;
     }
 }

@@ -130,24 +130,24 @@ public abstract class CharacterStats : UnitStats
         {
             case ContainerDamageTypes.PhysicalDamage:
                 Debug.Log(gameObject.name + " choise the PhysicalDamage!");
-                DamageType = new PhysicalDamage(attackDamage.GetValue());
+                DamageType = new PhysicalDamage();
                 break;
             case ContainerDamageTypes.FireDamage:
                 Debug.Log(gameObject.name + " choise the FireDamage!");
-                DamageType = new FireDamage(attackDamage.GetValue());
+                DamageType = new FireDamage();
                 break;
             case ContainerDamageTypes.IceDamage:
                 Debug.Log(gameObject.name + " choise the IceDamage!");
-                DamageType = new IceDamage(attackDamage.GetValue());
+                DamageType = new IceDamage();
 
                 break;
             case ContainerDamageTypes.BleedingDamage:
                 Debug.Log(gameObject.name + " choise the BleedingDamage!");
-                DamageType = new BleedingDamage(attackDamage.GetValue());
+                DamageType = new BleedingDamage();
                 break;
             case ContainerDamageTypes.PoisonDamage:
                 Debug.Log(gameObject.name + " choise the PoisonDamage!");
-                DamageType = new PoisonDamage(attackDamage.GetValue());
+                DamageType = new PoisonDamage();
                 break;
             default:
                 Debug.LogError(gameObject.name + " : error in Damage Type!");
@@ -156,16 +156,19 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage)
+    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, out bool isEvaded)
     {
+        isEvaded = false;
+
         //Если вероятность уворотов больше нуля И если рандом говорит о том, что нужно увернуться
         if (evasionChance.GetValue() > 0f && Random.Range(1f, 100f) <= evasionChance.GetValue())
         {
+            isEvaded = true;
             Debug.Log(transform.name + " dodge the damage!"); //Задоджили урон!
         }
         else //Получаем урон
         {
-            damage = base.TakeDamage(killerStats, damageType, damage);
+            damage = base.TakeDamage(killerStats, damageType, damage, out isEvaded);
         }
 
         healthBar.DecreaseHealthBar();

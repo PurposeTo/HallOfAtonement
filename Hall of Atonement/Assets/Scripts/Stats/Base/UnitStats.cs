@@ -31,8 +31,9 @@ public abstract class UnitStats : MonoBehaviour
     }
 
 
-    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage)
+    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, out bool isEvaded)
     {
+        isEvaded = false;
 
         if (damageType is PhysicalDamage)
         {

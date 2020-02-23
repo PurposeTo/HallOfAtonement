@@ -68,7 +68,7 @@ public abstract class CharacterCombat : MonoBehaviour
         //Формула, которая повысит урон в случае, если скорость атак будет быстрее чем обновление кадров
         float attackSpeedMultiplie = (Mathf.Abs(attackCooldown) / (1f/ myStats.attackSpeed.GetValue())) + 1f;
 
-        float damage = attackSpeedMultiplie * myStats.DamageType.Damage;
+        float damage = attackSpeedMultiplie * myStats.attackDamage.GetValue();
 
         //Если Крит. шанс больше нуля И если рандом говорит о том, что нужно критануть
         if (myStats.criticalChance.GetValue() > 0f && Random.Range(1f, 100f) <= myStats.criticalChance.GetValue())
@@ -79,6 +79,26 @@ public abstract class CharacterCombat : MonoBehaviour
         //Есть ли модификатор атаки?
 
 
-        targetStats.TakeDamage(myStats, myStats.DamageType, damage);
+        targetStats.TakeDamage(myStats, myStats.DamageType, damage, out bool isEvaded);
+
+        if (!isEvaded)
+        {
+            if (myStats.DamageType is FireDamage)
+            {
+                //Если у цели нет 100% сопротивления к огню
+
+                Burn burn = targetStats.gameObject.GetComponent<Burn>();
+
+                if (burn == null)
+                {
+                    burn = targetStats.gameObject.AddComponent<Burn>();
+                }
+
+                //Сделать зависимость силы эффекта от урона или от mastery
+                burn.AmplifyEffect(myStats, 1f);
+
+                //Проверить, есть ли на цели лед. Если есть, то разморозить.
+            }
+        }
     }
 }

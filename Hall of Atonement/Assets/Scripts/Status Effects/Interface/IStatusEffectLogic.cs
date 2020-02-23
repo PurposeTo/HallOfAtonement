@@ -1,6 +1,5 @@
 ﻿interface IStatusEffectLogic
 {
-    void HangStatusEffect();
 }
 
 interface IAttackModifier : IStatusEffectLogic
@@ -20,7 +19,9 @@ interface IStatsModifier : IStatusEffectLogic
 
 interface IDamageLogic : IStatusEffectLogic
 {
-    void StatusEffectDamage(UnitStats targetStats, CharacterStats killerStats, FireDamage fireDamage);
+    void StatusEffectDamage(UnitStats targetStats, CharacterStats killerStats, DamageType damageType);
+
+    void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount);
 }
 
 interface IHealLogic : IStatusEffectLogic

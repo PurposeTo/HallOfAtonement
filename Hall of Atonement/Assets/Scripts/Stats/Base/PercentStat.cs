@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PercentStat : Stat
 {
     //Этот класс всегда в диапазоне от 0 до 100.
