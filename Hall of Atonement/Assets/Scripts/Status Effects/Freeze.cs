@@ -2,9 +2,9 @@
 
 class Freeze : MonoBehaviour, IDamageLogic
 {
-    public void HangStatusEffect()
+    public void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
     {
-        Debug.Log(gameObject.name + ": \"!\"");
+        throw new System.NotImplementedException();
     }
 
     public void StatusEffectDamage(UnitStats targetStats, CharacterStats killerStats, DamageType damageType)
