@@ -41,7 +41,7 @@ public abstract class CharacterStats : UnitStats
 
 
     private protected override float BaseMaxHealthPoint { get; } = 100f; //базовое значение максимального кол-ва здоровья
-    private protected virtual float BaseHealthPointRegen { get; } = 0.2f; //базовое значение регенерации здоровья
+    private protected virtual float BaseHealthPointRegen { get; } = 0.5f; //базовое значение регенерации здоровья
     //public float CurrentHealthPoint { get; private protected set; }
 
     private readonly float minMovementSpeed = 1.6f; //минимальное значение скорости
