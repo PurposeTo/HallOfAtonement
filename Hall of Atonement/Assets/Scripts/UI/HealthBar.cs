@@ -7,15 +7,14 @@ public class HealthBar : MonoBehaviour
 {
     public CharacterStats MyStats;
     public Slider HealthSlider;
-    public Slider HealthChangeSlider;
+    public Slider decreasingValueSlider;
     public Text HealthPointText;
     public Text HealthRegenText;
 
     private float maxSliderValue = 100f;
 
-    private float speedHealthChange = 15f;
-
-    private float delayBeforeChange = 0.3f;
+    private readonly float rateOfDecrease = 15f;
+    private readonly float delayBeforeChange = 0.3f;
 
     private Coroutine RoutineChangeHealth = null;
 
@@ -24,12 +23,12 @@ public class HealthBar : MonoBehaviour
     {
         HealthSlider.maxValue = maxSliderValue;
         HealthSlider.value = maxSliderValue;
-        HealthChangeSlider.maxValue = maxSliderValue;
-        HealthChangeSlider.value = maxSliderValue;
+        decreasingValueSlider.maxValue = maxSliderValue;
+        decreasingValueSlider.value = maxSliderValue;
         ShowHealthPoinOnText();
     }
 
-    //Сделать по нормальному!
+    //Сделать по нормальному! (Скорее всего значение регенерации вообще не будет показываться, так что можно не менять)
     private void Update()
     {
         HealthRegenText.text = "+" + System.Math.Round(MyStats.healthPointRegen.GetValue(), 1) + " ";
@@ -60,7 +59,7 @@ public class HealthBar : MonoBehaviour
 
         if (RoutineChangeHealth == null)
         {
-            HealthChangeSlider.value = HealthChangeSlider.value;
+            decreasingValueSlider.value = decreasingValueSlider.value;
         }
 
         ShowHealthPoinOnText();
@@ -72,14 +71,14 @@ public class HealthBar : MonoBehaviour
 
         while (true)
         {
-            if (HealthChangeSlider.value < HealthSlider.value)
+            if (decreasingValueSlider.value > HealthSlider.value)
             {
-                HealthChangeSlider.value = HealthChangeSlider.value;
-                break;
+                decreasingValueSlider.value = Mathf.MoveTowards(decreasingValueSlider.value, HealthSlider.value, rateOfDecrease * Time.deltaTime);
             }
-            else if (HealthChangeSlider.value > HealthSlider.value)
+            else if (decreasingValueSlider.value < HealthSlider.value)
             {
-                HealthChangeSlider.value = Mathf.MoveTowards(HealthChangeSlider.value, HealthSlider.value, speedHealthChange * Time.deltaTime);
+                decreasingValueSlider.value = decreasingValueSlider.value;
+                break;
             }
             else
             {
