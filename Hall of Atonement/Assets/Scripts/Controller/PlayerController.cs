@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerCombat))]
 [RequireComponent(typeof(PlayerStats))]
@@ -6,12 +7,26 @@ public class PlayerController : CharacterController
 {
     private bool isWantToAttack = false;
 
-    public Joystick joystick;
+    [SerializeField] private Joystick joystick;
+    [SerializeField] private Button attackButton;
 
     private readonly RuntimePlatform currentRuntimePlatform = Application.platform;
 
 
-    private void Update()
+    private protected override void Start()
+    {
+        base.Start();
+        attackButton.onClick.AddListener(Test);
+    }
+
+
+    private void Test()
+    {
+        print("Кря");
+    }
+
+
+    private protected virtual void Update()
     {
         inputVector = GetInputVector();
 
