@@ -3,6 +3,8 @@
 [RequireComponent(typeof(EnemyAI))]
 public class EnemyStats : CharacterStats
 {
+    private readonly float hpRegenForStrenght = 0.3f;
+
     private float strenghtFromLvl = 1f;
     private float agilityFromLvl = 1f;
     private float masteryFromLvl = 1f;
@@ -10,11 +12,18 @@ public class EnemyStats : CharacterStats
     private protected override float BaseMovementSpeed { get; } = 3f;
     private protected override float BaseRotationSpeed { get; } = 360f;
 
+    public Stat healthPointRegen;
 
     private protected override void Start()
     {
         base.Start();
         GameManager.instance.enemys.Add(gameObject);
+    }
+
+
+    private protected virtual void Update()
+    {
+        Healing(healthPointRegen.GetValue() * Time.deltaTime);
     }
 
 
@@ -40,6 +49,7 @@ public class EnemyStats : CharacterStats
         mastery = new Attribute((int)(level.GetLvl() * masteryFromLvl));
 
         base.StatInitialization();
+        healthPointRegen = new Stat(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
     }
 
 

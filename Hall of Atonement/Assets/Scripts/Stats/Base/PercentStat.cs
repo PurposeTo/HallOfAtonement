@@ -10,4 +10,39 @@ public class PercentStat : Stat
     public PercentStat() : this(0f) { }
 
     public PercentStat(float baseValue) : base(baseValue, 0f, 100f) { }
+
+
+    //Вернуть значение по закону убывающей полезности
+    public override float GetValue()
+    {
+        float finalValue = 1f - baseValue;
+
+        statModifiers.ForEach(x => finalValue *= (1f - x));
+
+        finalValue = 1f - finalValue;
+
+        return finalValue >= 0f ? finalValue : 0f;
+    }
+
+
+    public override void AddModifier(float modifier)
+    {
+        if (modifier > 100f)
+        {
+            Debug.LogError("Too much modifier to add!");
+            modifier = 100f;
+        }
+        base.AddModifier(modifier);
+    }
+
+
+    public override void RemoveModifier(float modifier)
+    {
+        if (modifier > 100f)
+        {
+            Debug.LogError("Too much modifier to add!");
+            modifier = 100f;
+        }
+        base.RemoveModifier(modifier);
+    }
 }

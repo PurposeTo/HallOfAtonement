@@ -109,8 +109,6 @@ MonoBehaviour:
     baseValue: 0
   mastery:
     baseValue: 0
-  healthPointRegen:
-    baseValue: 0
   movementSpeed:
     baseValue: 0
   rotationSpeed:

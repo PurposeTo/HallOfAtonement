@@ -6940,11 +6940,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GuardianRange
       objectReference: {fileID: 0}
-    - target: {fileID: 6621735330723185656, guid: f20e519afd5254c4fa22013c1ded30eb,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 519420031}
     - target: {fileID: 6621735331386828822, guid: f20e519afd5254c4fa22013c1ded30eb,
         type: 3}
       propertyPath: m_AnchorMax.x

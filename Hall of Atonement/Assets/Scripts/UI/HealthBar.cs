@@ -9,7 +9,6 @@ public class HealthBar : MonoBehaviour
     public Slider HealthSlider;
     public Slider decreasingValueSlider;
     public Text HealthPointText;
-    public Text HealthRegenText;
 
     private float maxSliderValue = 100f;
 
@@ -21,17 +20,17 @@ public class HealthBar : MonoBehaviour
 
     public void Start()
     {
+        Initialization();
+    }
+
+
+    private void Initialization() 
+    {
         HealthSlider.maxValue = maxSliderValue;
         HealthSlider.value = maxSliderValue;
         decreasingValueSlider.maxValue = maxSliderValue;
         decreasingValueSlider.value = maxSliderValue;
         ShowHealthPoinOnText();
-    }
-
-    //Сделать по нормальному! (Скорее всего значение регенерации вообще не будет показываться, так что можно не менять)
-    private void Update()
-    {
-        HealthRegenText.text = "+" + System.Math.Round(MyStats.healthPointRegen.GetValue(), 1) + " ";
     }
 
 

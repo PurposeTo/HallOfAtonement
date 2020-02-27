@@ -22,7 +22,8 @@ public class Attribute
 	{
 		int finalValue = baseValue;
 		attributeModifiers.ForEach(x => finalValue += x);
-		return finalValue;
+
+		return finalValue >= 0 ? finalValue : 0;
 	}
 
 

@@ -14,7 +14,6 @@ public abstract class CharacterStats : UnitStats
 
     //Зависимость статов от Силы
     private readonly float hpForStrenght = 20f;
-    private readonly float hpRegenForStrenght = 0.1f;
     private readonly float attackDamageForStrenght = 3f;
     private readonly float attackSpeedForStrenght = -0.05f;
     private readonly float movementSpeedForStrenght = -0.15f;
@@ -61,10 +60,9 @@ public abstract class CharacterStats : UnitStats
 
 
     //public Stat maxHealthPoint;
-    public Stat healthPointRegen;
     public Stat movementSpeed;
     public Stat rotationSpeed;
-    public readonly float faceEuler = 60f; //Угол лицевой стороны существа. Все действия игрок совершает лицом к объекту действий!
+    public float faceEuler = 60f; //Угол лицевой стороны существа. Все действия игрок совершает лицом к объекту действий!
     public Stat attackDamage;
 
     public enum ContainerDamageTypes
@@ -93,19 +91,11 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    private protected virtual void FixedUpdate()
-    {
-        Healing(healthPointRegen.GetValue() * Time.fixedDeltaTime);
-    }
-
-
     //Инициализация статов в зависимости от атрибутов
     private protected override void StatInitialization()
     {
         //Разделить отдельно для ловкости, силы и мастерства!
         maxHealthPoint = new Stat(BaseMaxHealthPoint + (strength.GetValue() * hpForStrenght));
-        healthPointRegen = new Stat(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
-
 
         movementSpeed = new Stat(BaseMovementSpeed +
             (strength.GetValue() * movementSpeedForStrenght) + (agility.GetValue() * movementSpeedForAgility), minMovementSpeed, maxMovementSpeed);
