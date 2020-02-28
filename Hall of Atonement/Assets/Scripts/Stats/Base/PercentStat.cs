@@ -15,11 +15,11 @@ public class PercentStat : Stat
     //Вернуть значение по закону убывающей полезности
     public override float GetValue()
     {
-        float finalValue = 100f - baseValue;
+        float finalValue = 1f - (baseValue / 100f);
 
-        statModifiers.ForEach(x => finalValue *= (100f - x));
+        statModifiers.ForEach(x => finalValue *= 1f - (x / 100f));
 
-        finalValue = 100f - finalValue;
+        finalValue = 100f * (1f - finalValue);
 
         return finalValue >= 0f ? finalValue : 0f;
     }
