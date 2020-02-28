@@ -62,7 +62,7 @@ public abstract class CharacterStats : UnitStats
     //public Stat maxHealthPoint;
     public Stat movementSpeed;
     public Stat rotationSpeed;
-    public float faceEuler = 60f; //Угол лицевой стороны существа. Все действия игрок совершает лицом к объекту действий!
+    public readonly float faceEuler = 60f; //Угол лицевой стороны существа. Все действия игрок совершает лицом к объекту действий!
     public Stat attackDamage;
 
     public enum ContainerDamageTypes

@@ -12,11 +12,14 @@ public abstract class CharacterCombat : MonoBehaviour
 
     private protected IAttacker Attacker { get; set; }
 
+    private IDamageReducerAndStatusEffectFactory statusEffectFactory;
+
 
     private protected virtual void Start()
     {
         myStats = GetComponent<CharacterStats>();
         controller = GetComponent<CharacterController>();
+        statusEffectFactory = new DamageReducerAndStatusEffectFactory();
     }
 
 
@@ -83,21 +86,10 @@ public abstract class CharacterCombat : MonoBehaviour
 
         if (!isEvaded)
         {
-            if (myStats.DamageType is FireDamage)
+            if (myStats.DamageType is EffectDamage)
             {
-                //Если у цели нет 100% сопротивления к огню
-
-                Burn burn = targetStats.gameObject.GetComponent<Burn>();
-
-                if (burn == null)
-                {
-                    burn = targetStats.gameObject.AddComponent<Burn>();
-                }
-
-                //Сделать зависимость силы эффекта от урона или от mastery
-                burn.AmplifyEffect(myStats, 1f);
-
-                //Проверить, есть ли на цели лед. Если есть, то разморозить.
+                IStatusEffectProduct statusEffect = statusEffectFactory.CreateStatusEffectProduct(myStats.DamageType);
+                statusEffect.HangStatusEffect(targetStats, myStats);
             }
         }
     }
