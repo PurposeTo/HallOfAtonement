@@ -13,20 +13,29 @@ public class Burn : MonoBehaviour, IDamageLogic
     private float currentBurningTime;
 
 
-    //4. Растопить лед
-
-
     void Start()
     {
-        damageType = new FireDamage();
-        Debug.Log(gameObject.name + ": \"I am burning!\"");
-        targetStats = gameObject.GetComponent<UnitStats>();
+        Initialization();
     }
 
 
     void Update()
     {
         StatusEffectDamage(targetStats, ownerStats, damageType);
+    }
+
+
+    private void Initialization()
+    {
+        damageType = new FireDamage();
+        Debug.Log(gameObject.name + ": \"I am burning!\"");
+        targetStats = gameObject.GetComponent<UnitStats>();
+
+        //Проверить, есть ли на цели лед. Если есть, то разморозить.
+        if (targetStats.gameObject.TryGetComponent(out Freeze freeze))
+        {
+            freeze.SelfDestruction();
+        }
     }
 
 

@@ -14,12 +14,6 @@
 
             //Сделать зависимость силы эффекта от урона или от mastery
             burn.AmplifyEffect(ownerStats, 1f);
-
-            //Проверить, есть ли на цели лед. Если есть, то разморозить.
-            if (targetStats.gameObject.TryGetComponent(out Freeze freeze))
-            {
-                freeze.SelfDestruction();
-            }
         }
     }
 }
