@@ -11,4 +11,10 @@ class Freeze : MonoBehaviour, IDamageLogic
     {
         throw new System.NotImplementedException();
     }
+
+    public void SelfDestruction()
+    {
+        // Нанести весь урон от льда
+        Destroy(this);
+    }
 }

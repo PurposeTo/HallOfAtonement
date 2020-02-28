@@ -141,6 +141,14 @@ MonoBehaviour:
     baseValue: 0
   armor:
     baseValue: 0
+  fireResistance:
+    baseValue: 0
+  iceResistance:
+    baseValue: 0
+  poisonResistance:
+    baseValue: 0
+  bleedingResistance:
+    baseValue: 0
   healthBar: {fileID: 6545963410155622273}
   lvlBar: {fileID: 9094074290199432664}
   level:
@@ -152,15 +160,14 @@ MonoBehaviour:
     baseValue: 0
   mastery:
     baseValue: 0
-  healthPointRegen:
-    baseValue: 0
   movementSpeed:
     baseValue: 0
   rotationSpeed:
     baseValue: 0
+  faceEuler: 60
   attackDamage:
     baseValue: 0
-  UnitDamageType: 1
+  UnitDamageType: 0
   attackSpeed:
     baseValue: 0
   criticalMultiplier:
@@ -168,6 +175,8 @@ MonoBehaviour:
   criticalChance:
     baseValue: 0
   evasionChance:
+    baseValue: 0
+  healthPointRegen:
     baseValue: 0
 --- !u!114 &7712651456998013980
 MonoBehaviour:

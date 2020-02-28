@@ -8,20 +8,19 @@ public abstract class UnitStats : MonoBehaviour
     public Stat maxHealthPoint;
     public float CurrentHealthPoint { get; private protected set; }
     public Stat armor; //Нет базового значения
+    public PercentStat fireResistance;
+    public PercentStat iceResistance;
+    public PercentStat poisonResistance;
+    public PercentStat bleedingResistance;
+
+    IDamageReducerAndStatusEffectFactory damageReducerFactory;
 
 
     private protected virtual void Awake()
     {
         StatInitialization();
         CurrentHealthPoint = maxHealthPoint.GetValue();
-    }
-
-
-    private protected float ReduceDamageFromArmor(float damage)
-    {
-        damage *= 1f - (0.04f * armor.GetValue() / (0.94f + (0.04f * armor.GetValue())));
-
-        return damage;
+        damageReducerFactory = new DamageReducerAndStatusEffectFactory();
     }
 
 
@@ -35,16 +34,9 @@ public abstract class UnitStats : MonoBehaviour
     {
         isEvaded = false;
 
-        if (damageType is PhysicalDamage)
-        {
-            damage = ReduceDamageFromArmor(damage);
-        }
-        /*
-        else if (damageType is EffectDamage)
-        {
-
-        }*/
-
+        //снизить урон от определенного типа урона
+        IDamageReducerProduct damageReducer = damageReducerFactory.CreateDamageReducerProduct(damageType);
+        damage = damageReducer.ReduceDamage(this, damage);
 
         Debug.Log(transform.name + " takes " + damage + " " + killerStats.DamageType);
 
