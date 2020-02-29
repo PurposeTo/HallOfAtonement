@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DamageReducerAndStatusEffectFactory : IDamageReducerAndStatusEffectFactory
+public class DamageReducerFactory : IDamageReducerFactory
 {
     public IDamageReducerProduct CreateDamageReducerProduct(DamageType damageType)
     {
@@ -11,13 +11,5 @@ public class DamageReducerAndStatusEffectFactory : IDamageReducerAndStatusEffect
             Debug.LogError("Try to use unknown damage type");
             return null;
         }
-    }
-
-
-    public IStatusEffectProduct CreateStatusEffectProduct(DamageType damageType)
-    {
-        if (damageType is FireDamage) { return new BurnEffect(); }
-        //else if (damageType is IceDamage) { return new IceEffect(); }
-        else { return null; }
     }
 }

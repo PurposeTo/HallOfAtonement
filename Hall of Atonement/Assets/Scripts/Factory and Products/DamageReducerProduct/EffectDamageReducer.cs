@@ -9,8 +9,10 @@ public class EffectDamageReducer : IDamageReducerProduct
         this.effectDamage = effectDamage;
     }
 
-    public float ReduceDamage(UnitStats targetStats, float damage)
+    public float ReduceDamage(UnitStats targetStats, float damage, out bool isBlocked)
     {
+        isBlocked = false;
+
         float effectDamageResistance;
         if (effectDamage is FireDamage)
         {
@@ -33,6 +35,12 @@ public class EffectDamageReducer : IDamageReducerProduct
             Debug.LogError("Unknown damage type for reduce damage");
             effectDamageResistance = 0f;
         }
+
+        if (effectDamageResistance == 1f)
+        {
+            isBlocked = true;
+        }
+
         return damage *= (1f - effectDamageResistance);
     }
 }

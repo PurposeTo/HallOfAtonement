@@ -82,6 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 0}
+  attackButton: {fileID: 0}
 --- !u!114 &5786376024464304843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,6 +98,14 @@ MonoBehaviour:
   maxHealthPoint:
     baseValue: 0
   armor:
+    baseValue: 0
+  fireResistance:
+    baseValue: 0
+  iceResistance:
+    baseValue: 0
+  poisonResistance:
+    baseValue: 0
+  bleedingResistance:
     baseValue: 0
   healthBar: {fileID: 2364517879466908021}
   lvlBar: {fileID: 302654953987578668}

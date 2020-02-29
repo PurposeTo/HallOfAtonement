@@ -43,7 +43,7 @@ public class Burn : MonoBehaviour, IDamageLogic
     {
         if(currentBurningTime > 0f)
         {
-            targetStats.TakeDamage(ownerStats, fireDamage, currentDamagePerSecond * Time.deltaTime, out bool _);
+            targetStats.TakeDamage(ownerStats, fireDamage, currentDamagePerSecond * Time.deltaTime, out bool _, out bool _);
             currentBurningTime -= Time.deltaTime;
         }
         else

@@ -147,9 +147,10 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, out bool isEvaded)
+    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, out bool isEvaded, out bool isBlocked)
     {
         isEvaded = false;
+        isBlocked = false;
 
         //Если вероятность уворотов больше нуля И если рандом говорит о том, что нужно увернуться
         if (evasionChance.GetValue() > 0f && Random.Range(1f, 100f) <= evasionChance.GetValue())
@@ -159,10 +160,14 @@ public abstract class CharacterStats : UnitStats
         }
         else //Получаем урон
         {
-            damage = base.TakeDamage(killerStats, damageType, damage, out isEvaded);
+            damage = base.TakeDamage(killerStats, damageType, damage, out isEvaded, out isBlocked);
+
+            if (!isBlocked) 
+            {
+                healthBar.DecreaseHealthBar();
+            }
         }
 
-        healthBar.DecreaseHealthBar();
 
         return damage;
     }

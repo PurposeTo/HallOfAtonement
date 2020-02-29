@@ -12,14 +12,14 @@ public abstract class CharacterCombat : MonoBehaviour
 
     private protected IAttacker Attacker { get; set; }
 
-    private IDamageReducerAndStatusEffectFactory statusEffectFactory;
+    private IDamageReducerFactory statusEffectFactory;
 
 
     private protected virtual void Start()
     {
         myStats = GetComponent<CharacterStats>();
         controller = GetComponent<CharacterController>();
-        statusEffectFactory = new DamageReducerAndStatusEffectFactory();
+        statusEffectFactory = new DamageReducerFactory();
     }
 
 
@@ -79,18 +79,26 @@ public abstract class CharacterCombat : MonoBehaviour
             damage *= myStats.criticalMultiplier.GetValue(); //То увеличить урон
         }
 
-        //Есть ли модификатор атаки?
 
-
-        targetStats.TakeDamage(myStats, myStats.DamageType, damage, out bool isEvaded);
+        targetStats.TakeDamage(myStats, myStats.DamageType, damage, out bool isEvaded, out bool isBlocked);
 
         if (!isEvaded)
         {
-            if (myStats.DamageType is EffectDamage)
+            if (!isBlocked) //Если урон не был полностью заблокирован 
             {
-                IStatusEffectProduct statusEffect = statusEffectFactory.CreateStatusEffectProduct(myStats.DamageType);
-                statusEffect.HangStatusEffect(targetStats, myStats);
+                if (myStats.DamageType is EffectDamage)
+                {
+                    StatusEffectFactory statusEffectFactory = new StatusEffectFactory();
+                    statusEffectFactory.HangStatusEffect(myStats.DamageType, targetStats, myStats);
+                }
             }
+
+
+            /*
+             * Есть ли модификатор атаки?
+             * 
+             * Если у цели есть модификатор атаки, который должен навесить дебафф, то сам подификатор проверяет, может ли он это сделать.
+             */
         }
     }
 }

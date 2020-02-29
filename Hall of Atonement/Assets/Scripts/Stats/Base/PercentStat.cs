@@ -15,7 +15,7 @@ public class PercentStat : Stat
     //Вернуть значение по закону убывающей полезности
     public override float GetValue()
     {
-        float finalValue = 1f - (baseValue / 1f);
+        float finalValue = 1f - baseValue;
 
         statModifiers.ForEach(x => finalValue *= 1f - x);
 

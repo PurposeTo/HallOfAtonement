@@ -13,14 +13,14 @@ public abstract class UnitStats : MonoBehaviour
     public PercentStat poisonResistance;
     public PercentStat bleedingResistance;
 
-    IDamageReducerAndStatusEffectFactory damageReducerFactory;
+    IDamageReducerFactory damageReducerFactory;
 
 
     private protected virtual void Awake()
     {
         StatInitialization();
         CurrentHealthPoint = maxHealthPoint.GetValue();
-        damageReducerFactory = new DamageReducerAndStatusEffectFactory();
+        damageReducerFactory = new DamageReducerFactory();
     }
 
 
@@ -30,13 +30,16 @@ public abstract class UnitStats : MonoBehaviour
     }
 
 
-    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, out bool isEvaded)
+    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, out bool isEvaded, out bool isBlocked)
     {
         isEvaded = false;
+        isBlocked = false;
 
         //снизить урон от определенного типа урона
         IDamageReducerProduct damageReducer = damageReducerFactory.CreateDamageReducerProduct(damageType);
-        damage = damageReducer.ReduceDamage(this, damage);
+        damage = damageReducer.ReduceDamage(this, damage, out isBlocked);
+
+        damage = Mathf.Clamp(damage, 0f, float.MaxValue);
 
         Debug.Log(transform.name + " takes " + damage + " " + killerStats.DamageType);
 
