@@ -3,7 +3,7 @@
     public void HangStatusEffect(UnitStats targetStats, CharacterStats ownerStats)
     {
         //Если у цели нет 100% сопротивления к огню
-        if (targetStats.fireResistance.GetValue() != 100f)
+        if (targetStats.fireResistance.GetValue() != 1f)
         {
             Burn burn = targetStats.gameObject.GetComponent<Burn>();
 

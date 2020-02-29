@@ -33,6 +33,6 @@ public class EffectDamageReducer : IDamageReducerProduct
             Debug.LogError("Unknown damage type for reduce damage");
             effectDamageResistance = 0f;
         }
-        return damage *= (100f - effectDamageResistance) / 100f;
+        return damage *= (1f - effectDamageResistance);
     }
 }

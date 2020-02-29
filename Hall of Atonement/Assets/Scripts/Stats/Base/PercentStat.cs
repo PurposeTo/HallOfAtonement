@@ -9,17 +9,17 @@ public class PercentStat : Stat
     
     public PercentStat() : this(0f) { }
 
-    public PercentStat(float baseValue) : base(baseValue, 0f, 100f) { }
+    public PercentStat(float baseValue) : base(baseValue, 0f, 1f) { }
 
 
     //Вернуть значение по закону убывающей полезности
     public override float GetValue()
     {
-        float finalValue = 1f - (baseValue / 100f);
+        float finalValue = 1f - (baseValue / 1f);
 
-        statModifiers.ForEach(x => finalValue *= 1f - (x / 100f));
+        statModifiers.ForEach(x => finalValue *= 1f - x);
 
-        finalValue = 100f * (1f - finalValue);
+        finalValue = 1f - finalValue;
 
         return finalValue >= 0f ? finalValue : 0f;
     }
@@ -27,10 +27,10 @@ public class PercentStat : Stat
 
     public override void AddModifier(float modifier)
     {
-        if (modifier > 100f)
+        if (modifier > 1f)
         {
             Debug.LogError("Too much modifier to add!");
-            modifier = 100f;
+            modifier = 1f;
         }
         base.AddModifier(modifier);
     }
@@ -38,10 +38,10 @@ public class PercentStat : Stat
 
     public override void RemoveModifier(float modifier)
     {
-        if (modifier > 100f)
+        if (modifier > 1f)
         {
             Debug.LogError("Too much modifier to add!");
-            modifier = 100f;
+            modifier = 1f;
         }
         base.RemoveModifier(modifier);
     }
