@@ -21,7 +21,7 @@ public class Burn : MonoBehaviour, IDamageLogic
 
     void Update()
     {
-        StatusEffectDamage(targetStats, ownerStats, damageType);
+        DoStatusEffectDamage(targetStats, ownerStats, damageType);
     }
 
 
@@ -39,7 +39,7 @@ public class Burn : MonoBehaviour, IDamageLogic
     }
 
 
-    public void StatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats, DamageType fireDamage)
+    public void DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats, DamageType fireDamage)
     {
         if(currentBurningTime > 0f)
         {
