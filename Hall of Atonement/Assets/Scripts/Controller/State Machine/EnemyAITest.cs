@@ -11,10 +11,10 @@ public class EnemyAITest : MonoBehaviour
 {
     private GameObject focusTarget;
 
-    private EnemyAIStateMachine EnemyAIStateMachine { get; set; }
+    public EnemyAIStateMachine EnemyAIStateMachine { get; set; }
 
-    private EnemyAIPatrolling enemyAIPatrolling;
-    private EnemyAIHunting enemyAIHunting;
+    public EnemyAIPatrolling EnemyAIPatrolling { get; private set; }
+    public EnemyAIHunting EnemyAIHunting { get; private set; }
 
     private void Start()
     {
@@ -25,10 +25,10 @@ public class EnemyAITest : MonoBehaviour
 
     private void Initialization()
     {
-        enemyAIPatrolling = GetComponent<EnemyAIPatrolling>();
-        enemyAIHunting = GetComponent<EnemyAIHunting>();
+        EnemyAIPatrolling = GetComponent<EnemyAIPatrolling>();
+        EnemyAIHunting = GetComponent<EnemyAIHunting>();
 
-        EnemyAIStateMachine = enemyAIPatrolling;
+        EnemyAIStateMachine = EnemyAIPatrolling;
     }
 
 
@@ -36,12 +36,10 @@ public class EnemyAITest : MonoBehaviour
     {
         focusTarget = EnemyAIStateMachine.SearchingTarget();
 
-        if (focusTarget == null) { EnemyAIStateMachine = enemyAIPatrolling; }
-        else { EnemyAIStateMachine = enemyAIHunting; }
+        if (focusTarget == null) { EnemyAIStateMachine.Patrolling(this); }
+        else { EnemyAIStateMachine.Hunting(this, focusTarget); }
 
-        EnemyAIStateMachine.DoAction(focusTarget);
-
-        //Do Action - после окончания всех своих дел вызовет событие, на которое мы подпишемся. 
+        //Класс-состояние после окончания всех своих дел вызовет событие, на которое мы подпишемся. 
         //В событии будет указанно, что нам необходимо опять решить, что нужно делать
     }
 }

@@ -6,7 +6,9 @@ public abstract class EnemyAIStateMachine : MonoBehaviour
 {
     private protected float ViewingRadius { get; set; } = 10f;
 
-    public abstract void DoAction(GameObject focusTarget);
+    public abstract void Patrolling(EnemyAITest enemyAI);
+
+    public abstract void Hunting(EnemyAITest enemyAI, GameObject focusTarget);
 
     public GameObject SearchingTarget() { return null; }
 }

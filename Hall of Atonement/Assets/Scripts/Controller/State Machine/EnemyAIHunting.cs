@@ -6,20 +6,26 @@ public class EnemyAIHunting : EnemyAIStateMachine
 {
     private float timer = 3f;
 
-    private Coroutine doHuntingRoutine;
+    private Coroutine huntingRoutine;
 
 
-    public override void DoAction(GameObject focusTarget)
+    public override void Hunting(EnemyAITest enemyAI, GameObject focusTarget)
     {
 
-        doHuntingRoutine = StartCoroutine(DoHunting(focusTarget));
+        huntingRoutine = StartCoroutine(HuntingEnumerator(focusTarget));
 
-        //Вызвать событие, говорящее о том, что мы закончили
+        //Когда закончим, вызвать событие, говорящее о том, что мы закончили
 
     }
 
 
-    private IEnumerator DoHunting(GameObject focusTarget) //Хочу потом переопределять этот метод, в зависимости от типа атаки
+    public override void Patrolling(EnemyAITest enemyAI)
+    {
+        enemyAI.EnemyAIStateMachine = enemyAI.EnemyAIPatrolling;
+    }
+
+
+    private IEnumerator HuntingEnumerator(GameObject focusTarget) //Хочу потом переопределять этот метод, в зависимости от типа атаки
     {
         float timerCounter = timer;
 
@@ -37,6 +43,6 @@ public class EnemyAIHunting : EnemyAIStateMachine
             timerCounter -= Time.deltaTime;
         }
 
-        doHuntingRoutine = null;
+        huntingRoutine = null;
     }
 }

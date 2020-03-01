@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class EnemyAIPatrolling : EnemyAIStateMachine
 {
-    public override void DoAction(GameObject focusTarget)
+    public override void Hunting(EnemyAITest enemyAI, GameObject focusTarget)
     {
-        Patrolling();
-
-        //Вызвать событие, говорящее о том, что мы закончили
+        enemyAI.EnemyAIStateMachine = enemyAI.EnemyAIHunting;
     }
 
-    private void Patrolling() //Хочу потом переопределять этот метод, в зависимости от типа Enemy
+    public override void Patrolling(EnemyAITest enemyAI) //Хочу потом переопределять этот метод, в зависимости от типа Enemy
     {
         //Патрулировать
+
+        //После патрулирования вызвать событие и сказать, что мы закончили
     }
 }
