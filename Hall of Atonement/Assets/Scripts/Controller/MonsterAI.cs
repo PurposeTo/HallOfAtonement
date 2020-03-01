@@ -67,7 +67,7 @@ public class MonsterAI : EnemyAI
         //Если цель найдена, идти к ней И атаковать ее, если она достаточно близко
 
         //плавное сглаживание вектора
-        inputVector = Vector2.MoveTowards(inputVector, MoveToTarget(target), 10f * Time.fixedDeltaTime);
+        inputVector = Vector2.MoveTowards(inputVector, GetDirectionVectorToTarget(target), 10f * Time.fixedDeltaTime);
 
         if (target != null)
         {

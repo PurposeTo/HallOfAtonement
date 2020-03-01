@@ -38,7 +38,7 @@ public abstract class EnemyAI : CharacterController
     private protected abstract GameObject SearchingTarget();
 
 
-    private protected Vector2 MoveToTarget(GameObject targetMove)
+    private protected Vector2 GetDirectionVectorToTarget(GameObject targetMove)
     {
         Vector2 newInputVector;
 
