@@ -20,7 +20,7 @@ public class LevelSystem
 
         this.level = level;
         this.experience = experience;
-        experienceToNextLevel = (level+1) * 10;
+        experienceToNextLevel = CalculateExperienceToNextLevel(level);
     }
 
 
@@ -31,7 +31,7 @@ public class LevelSystem
         {
             experience -= experienceToNextLevel; //Сначала вычесть, так как experienceToNextLevel зависит от уровня!
             level++;
-            experienceToNextLevel = (level + 1) * 10;
+            experienceToNextLevel = CalculateExperienceToNextLevel(level);
         }
     }
 
@@ -52,5 +52,11 @@ public class LevelSystem
     public int GetLvl()
     {
         return level;
+    }
+
+
+    private int CalculateExperienceToNextLevel(int level)
+    {
+        return (level + 1) * 10;
     }
 }
