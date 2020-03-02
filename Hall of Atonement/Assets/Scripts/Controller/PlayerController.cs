@@ -28,7 +28,7 @@ public class PlayerController : CharacterController
 
     private protected virtual void Update()
     {
-        inputVector = GetInputVector();
+        InputVector = GetInputVector();
 
         if (Input.GetKey(KeyCode.Space)) //Если нажата кнопка атаки
         {
@@ -37,7 +37,7 @@ public class PlayerController : CharacterController
         else //Если НЕ нажата кнопка атаки
         {
             isWantToAttack = false;
-            combat.targetToAttack = null;
+            Combat.targetToAttack = null;
         }
     }
 
@@ -47,7 +47,7 @@ public class PlayerController : CharacterController
         if (isWantToAttack)
         {
             //Искать цель
-            combat.SearchingTargetToAttack(combat.targetToAttack);
+            Combat.SearchingTargetToAttack(Combat.targetToAttack);
         }
 
         base.FixedUpdate();

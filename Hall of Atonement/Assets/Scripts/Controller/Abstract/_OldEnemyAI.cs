@@ -2,7 +2,7 @@
 
 
 [RequireComponent(typeof(EnemyStats))]
-public abstract class EnemyAI : CharacterController
+public abstract class _OldEnemyAI : CharacterController
 {
     private protected GameObject targetToMove = null;
 
@@ -38,7 +38,7 @@ public abstract class EnemyAI : CharacterController
     private protected abstract GameObject SearchingTarget();
 
 
-    private protected Vector2 GetDirectionVectorToTarget(GameObject targetMove)
+    private protected Vector2 GetMovingVectorOnHunting(GameObject targetMove) // Логика, как стоит двигаться при атаке
     {
         Vector2 newInputVector;
 
@@ -46,7 +46,7 @@ public abstract class EnemyAI : CharacterController
         {
             Vector2 direction = (targetMove.transform.position - transform.position); //Расстояние до цели
 
-            if (rb2D.velocity.magnitude > 1f)
+            if (Rb2D.velocity.magnitude > 1f)
             {
                 //Если мы движемся, то двигаться пока расстояние до цели > minStopRadius
                 if (direction.magnitude > minStopRadius)

@@ -19,6 +19,7 @@ public abstract class CharacterCombat : MonoBehaviour
     {
         myStats = GetComponent<CharacterStats>();
         controller = GetComponent<CharacterController>();
+        Attacker = GetComponent<IAttacker>();
         statusEffectFactory = new DamageReducerFactory();
     }
 

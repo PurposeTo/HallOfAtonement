@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(EnemyAI))]
-public abstract class EnemyCombat : CharacterCombat
+public class EnemyCombat : CharacterCombat
 {
-    public virtual float AttackRange { get; } = 5f;
+    public virtual float AttackRange { get; } = 6f;
+
+    private protected override void Start()
+    {
+        base.Start();
+    }
 
 
     private void OnDrawGizmosSelected()
@@ -20,7 +24,6 @@ public abstract class EnemyCombat : CharacterCombat
         {
             targetToAttack = target;
             PreAttack();
-
         }
         else
         {

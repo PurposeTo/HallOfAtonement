@@ -2,11 +2,6 @@
 
 [RequireComponent(typeof(RangedCombat))]
 public class RangedPlayerCombat : PlayerCombat
-{    
-    private protected override void Start()
-    {
-        base.Start();
-
-        Attacker = gameObject.GetComponent<RangedCombat>();
-    }
+{
+    //Этот класс необходим ради [RequireComponent(typeof(RangedCombat))]
 }

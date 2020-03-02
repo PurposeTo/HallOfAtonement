@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 
-[RequireComponent(typeof(CharacterController))]
 public abstract class CharacterStats : UnitStats
 {
     public HealthBar healthBar;

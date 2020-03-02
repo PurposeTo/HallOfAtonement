@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &598791293083587058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468446209180550095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f750731d1c5e10448aa6b051706fefa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetToAttack: {fileID: 0}
+--- !u!114 &7223878020725764250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468446209180550095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81e8896f6fd039943b675022623bde76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 7468446208715802244}
+--- !u!1001 &2312662466749506517
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2408474554221648910, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408474554221648910, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408474554351416190, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408474554351416190, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169422102031917080, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169422102031917080, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169422102031917080, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169422102031917080, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169422102031917080, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169422102031917080, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169422102031917080, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169422102031917080, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169422102031917080, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169422102031917080, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169422102031917080, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169422102031917082, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_Name
+      value: Monster Range
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 197425a1e958f4a4387d5f714b8adc80, type: 3}
+--- !u!1 &7468446209180550095 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5169422102031917082, guid: 197425a1e958f4a4387d5f714b8adc80,
+    type: 3}
+  m_PrefabInstance: {fileID: 2312662466749506517}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7468446208715802244 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5169422102497191249, guid: 197425a1e958f4a4387d5f714b8adc80,
+    type: 3}
+  m_PrefabInstance: {fileID: 2312662466749506517}
+  m_PrefabAsset: {fileID: 0}

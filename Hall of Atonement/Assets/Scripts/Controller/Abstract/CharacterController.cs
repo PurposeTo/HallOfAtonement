@@ -4,46 +4,48 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class CharacterController : MonoBehaviour
 {
-    private protected Rigidbody2D rb2D;
+    public Rigidbody2D Rb2D { get; private protected set; }
 
-    private protected CharacterStats myStats;
-    private protected CharacterCombat combat;
-
-    private protected Vector2 inputVector = Vector2.zero;
+    public CharacterStats MyStats { get; private protected set; }
+    public CharacterCombat Combat { get; private protected set; }
+    public Vector2 InputVector { get => inputVector; set => inputVector = value; }
+    private Vector2 inputVector = Vector2.zero;
 
 
     private protected virtual void Start()
     {
-        rb2D = GetComponent<Rigidbody2D>();
+        Rb2D = GetComponent<Rigidbody2D>();
 
-        myStats = GetComponent<CharacterStats>();
-        combat = GetComponent<CharacterCombat>();
+        MyStats = GetComponent<CharacterStats>();
+        Combat = GetComponent<CharacterCombat>();
     }
 
 
     private protected virtual void FixedUpdate()
     {
-        Movement(inputVector, myStats.movementSpeed.GetValue(), myStats.rotationSpeed.GetValue(), myStats.faceEuler);
+        Rb2D.velocity = MoveCharacter(inputVector, MyStats.movementSpeed.GetValue(), MyStats.rotationSpeed.GetValue(), MyStats.faceEuler);
     }
 
 
-    private protected void Movement(Vector2 inputVector, float movementSpeed, float rotationSpeed, float faceEuler)
+    private protected Vector2 MoveCharacter(Vector2 inputVector, float movementSpeed, float rotationSpeed, float faceEuler)
     {
-        if (combat.targetToAttack == null) //Если нет цели атаки, то двигаться ТОЛЬКО лицом вперед
+        if (Combat.targetToAttack == null) //Если нет цели атаки, то двигаться ТОЛЬКО лицом вперед
         {
-            if (TurnFaceToTarget(inputVector, rotationSpeed, faceEuler)) //Повернулся ли игрок в нужную сторону? См. FaceTarget
+            if (TurnFaceToTarget(inputVector, rotationSpeed, faceEuler)) //Повернулся ли персонаж в нужную сторону? См. FaceTarget
             {
-                rb2D.velocity = inputVector * movementSpeed;
+                inputVector *= movementSpeed;
             }
-            else //Если нет, то остановиться
+            else //Если нет, то стоять до тех пор, пока не повернется
             {
-                rb2D.velocity = Vector2.zero;
+                inputVector = Vector2.zero;
             }
         }
         else //Если есть цель атаки, то двигаться свободно
         {
-            rb2D.velocity = inputVector * movementSpeed;
+            inputVector *= movementSpeed;
         }
+
+         return inputVector;
     }
 
 
@@ -56,7 +58,7 @@ public abstract class CharacterController : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: difference);
 
         // Применяем поворот вокруг оси Z        
-        rb2D.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+        Rb2D.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
 
         //Достигли нужного поворота?
         //Если будет разброс:
@@ -78,7 +80,7 @@ public abstract class CharacterController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: difference);
 
             // Применяем поворот вокруг оси Z
-            rb2D.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+            Rb2D.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
 
             //Если достигли нужного поворота к лицевой части существа
             //Если не достигли нужного поворота, то нужно остановиться
@@ -87,7 +89,7 @@ public abstract class CharacterController : MonoBehaviour
         }
         else //Если InputVector ноль, значит игрок остановился и все Ок
         {
-            rb2D.angularVelocity = 0f;
+            Rb2D.angularVelocity = 0f;
             return true;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-public class GuardianAI : EnemyAI
+public class GuardianAI : _OldEnemyAI
 {
     private protected override GameObject SearchingTarget()
     {
@@ -20,11 +20,11 @@ public class GuardianAI : EnemyAI
         //Если цель найдена, идти к ней И атаковать ее, если она достаточно близко
 
         //плавное сглаживание вектора
-        inputVector = Vector2.MoveTowards(inputVector, GetDirectionVectorToTarget(target), 10f * Time.fixedDeltaTime);
+        InputVector = Vector2.MoveTowards(InputVector, GetMovingVectorOnHunting(target), 10f * Time.fixedDeltaTime);
 
         if (target != null)
         {
-            combat.SearchingTargetToAttack(target);
+            Combat.SearchingTargetToAttack(target);
         }
 
         return target;

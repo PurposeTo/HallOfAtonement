@@ -3,10 +3,5 @@
 [RequireComponent(typeof(MeleeCombat))]
 public class MeleePlayerCombat : PlayerCombat
 {
-    private protected override void Start()
-    {
-        base.Start();
-
-        Attacker = gameObject.GetComponent<MeleeCombat>();
-    }
+    //Этот класс необходим ради [RequireComponent(typeof(MeleeCombat))]
 }

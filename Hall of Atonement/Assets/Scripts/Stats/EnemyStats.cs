@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(EnemyAI))]
 public class EnemyStats : CharacterStats
 {
+    public float ViewingRadius { get; private set; } = 6f;
+
     private readonly float hpRegenForStrenght = 0.3f;
+    public Stat healthPointRegen;
 
     private float strenghtFromLvl = 1f;
     private float agilityFromLvl = 1f;
@@ -12,7 +14,13 @@ public class EnemyStats : CharacterStats
     private protected override float BaseMovementSpeed { get; } = 3f;
     private protected override float BaseRotationSpeed { get; } = 360f;
 
-    public Stat healthPointRegen;
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, ViewingRadius);
+    }
+
 
     private protected override void Start()
     {

@@ -3,43 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(EnemyAIStateMachine))]
+[RequireComponent(typeof(EnemyStats))]
+//[RequireComponent(typeof(EnemyCombat))]
 [RequireComponent(typeof(EnemyAIPatrolling))]
 [RequireComponent(typeof(EnemyAIHunting))]
-
-public class EnemyAITest : MonoBehaviour
+public class EnemyAI : CharacterController
 {
     private GameObject focusTarget;
 
+    public EnemyStats MyEnemyStats { get; private protected set; }
+    public IEnemyMode EnemyMode { get; private set; } // Ищет цель в зависимости от Monster/Guardian
     public EnemyAIStateMachine EnemyAIStateMachine { get; set; }
-
     public EnemyAIPatrolling EnemyAIPatrolling { get; private set; }
     public EnemyAIHunting EnemyAIHunting { get; private set; }
 
-    private void Start()
+
+    private protected override void Start()
     {
+        base.Start();
+        MyEnemyStats = (EnemyStats)MyStats;
+
         Initialization();
-        DecideWhatToDo();
     }
 
 
     private void Initialization()
     {
+        EnemyMode = gameObject.GetComponent<IEnemyMode>();
         EnemyAIPatrolling = GetComponent<EnemyAIPatrolling>();
         EnemyAIHunting = GetComponent<EnemyAIHunting>();
 
         EnemyAIStateMachine = EnemyAIPatrolling;
+        EnemyAIStateMachine.Patrolling(this);
     }
 
 
-    private void DecideWhatToDo()
+    public void DecideWhatToDo()
     {
-        focusTarget = EnemyAIStateMachine.SearchingTarget();
+
+        focusTarget = EnemyMode.SearchingTarget(MyEnemyStats.ViewingRadius);
 
         if (focusTarget == null) { EnemyAIStateMachine.Patrolling(this); }
         else { EnemyAIStateMachine.Hunting(this, focusTarget); }
-
-        //Класс-состояние после окончания всех своих дел вызовет событие, на которое мы подпишемся. 
-        //В событии будет указанно, что нам необходимо опять решить, что нужно делать
     }
 }

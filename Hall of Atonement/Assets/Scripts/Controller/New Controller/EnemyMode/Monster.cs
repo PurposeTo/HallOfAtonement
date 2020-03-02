@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 
-public class MonsterAI : _OldEnemyAI
+//[RequireComponent(typeof(IEnemyMode))]
+public class Monster : MonoBehaviour, IEnemyMode
 {
-    private protected override GameObject SearchingTarget()
+    public GameObject SearchingTarget(float ViewingRadius)
     {
         GameObject target = null;
 
         //Если игрок рядом, то отдать ему приоритет. Если далеко, то сражаться с монстрами
-        if (Vector2.Distance(GameManager.instance.player.transform.position, transform.position) <= LookRadius)
+        if (Vector2.Distance(GameManager.instance.player.transform.position, transform.position) <= ViewingRadius)
         {
             target = GameManager.instance.player;
         }
         else
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), LookRadius);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), ViewingRadius);
 
             float distance;
 
@@ -61,17 +62,6 @@ public class MonsterAI : _OldEnemyAI
             {
                 target = null;
             }
-        }
-
-
-        //Если цель найдена, идти к ней И атаковать ее, если она достаточно близко
-
-        //плавное сглаживание вектора
-        InputVector = Vector2.MoveTowards(InputVector, GetMovingVectorOnHunting(target), 10f * Time.fixedDeltaTime);
-
-        if (target != null)
-        {
-            Combat.SearchingTargetToAttack(target);
         }
 
 
