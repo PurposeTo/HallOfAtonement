@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 //[RequireComponent(typeof(IEnemyMode))]
-public class Guardian : MonoBehaviour, IEnemyMode
+public class Guardian : MonoBehaviour, IEnemyType
 {
     public GameObject SearchingTarget(float ViewingRadius)
     {

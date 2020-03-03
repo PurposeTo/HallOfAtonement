@@ -2,28 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAIHunting : EnemyAIStateMachine
+public class EnemyAIFighting : EnemyAIStateMachine
 {
     private float timer = 3f;
 
-    private Coroutine huntingRoutine;
+    private Coroutine fightingRoutine;
 
 
-    public override void Hunting(EnemyAI enemyAI, GameObject focusTarget)
+    public override void Fighting(EnemyAI enemyAI, GameObject focusTarget)
     {
-        if (huntingRoutine == null)
+        if (fightingRoutine == null)
         {
-            huntingRoutine = StartCoroutine(HuntingEnumerator(enemyAI, focusTarget));
+            fightingRoutine = StartCoroutine(FightingEnumerator(enemyAI, focusTarget));
         }
     }
 
 
     public override void Patrolling(EnemyAI enemyAI)
     {
-        if (huntingRoutine != null)
+        if (fightingRoutine != null)
         {
-            huntingRoutine = null;
-            StopCoroutine(huntingRoutine);
+            fightingRoutine = null;
+            StopCoroutine(fightingRoutine);
         }
 
         enemyAI.EnemyAIStateMachine = enemyAI.EnemyAIPatrolling;
@@ -31,7 +31,7 @@ public class EnemyAIHunting : EnemyAIStateMachine
     }
 
 
-    private IEnumerator HuntingEnumerator(EnemyAI enemyAI, GameObject focusTarget) //Хочу потом переопределять этот метод, в зависимости от типа атаки
+    private IEnumerator FightingEnumerator(EnemyAI enemyAI, GameObject focusTarget) //Хочу потом переопределять этот метод, в зависимости от типа атаки
     {
         float timerCounter = timer;
 
@@ -53,8 +53,9 @@ public class EnemyAIHunting : EnemyAIStateMachine
             timerCounter -= Time.deltaTime;
         }
 
-        huntingRoutine = null;
-
+        //Обязательно подождать кадр, что бы избежать багов при бесконечном цикле!
+        yield return null;
+        fightingRoutine = null;
         //Когда закончим, вызвать метод, говорящее о том, что мы закончили
         enemyAI.DecideWhatToDo();
     }

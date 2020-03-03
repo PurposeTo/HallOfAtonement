@@ -10,5 +10,5 @@ public abstract class EnemyAIStateMachine : MonoBehaviour
 
     // Преследует и атакует. Позже - (в зависимости от типа боя). Сейчас логика внутри класса-состояния. 
     // Сейчас НЕ зависит от типа боя
-    public abstract void Hunting(EnemyAI enemyAI, GameObject focusTarget); 
+    public abstract void Fighting(EnemyAI enemyAI, GameObject focusTarget); 
 }

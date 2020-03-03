@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public interface IEnemyMode
+public interface IEnemyType
 {
     GameObject SearchingTarget(float ViewingRadius);
 }
