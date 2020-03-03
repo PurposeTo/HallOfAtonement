@@ -18,15 +18,15 @@ public class MeleeEnemyLogic : EnemyCombat, IEnemyAttackType
         enemyAI.InputVector = GetMovingVectorOnFighting(enemyAI, focusTarget);
 
         // Как/когда нужно атаковать?
-        AttackTheTarget(focusTarget);
+        PreAttack(focusTarget);
     }
 
 
-    private protected override void AttackTheTarget(GameObject target)
+    private protected override void PreAttack(GameObject target)
     {
         if (Vector2.Distance(target.transform.position, transform.position) <= meleeAttacker.MeleeAttackRange)
         {
-            base.AttackTheTarget(target);
+            base.PreAttack(target);
         }
         else
         {

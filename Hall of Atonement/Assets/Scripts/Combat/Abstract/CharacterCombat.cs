@@ -38,9 +38,11 @@ public abstract class CharacterCombat : MonoBehaviour
     }
 
 
-    private protected virtual void PreAttack()
+    private protected virtual void PreAttack(GameObject target)
     {
-        if (targetToAttack != null)
+        targetToAttack = target;
+
+        if (target != null)
         {
             //Посмотреть на цель
             if (controller.TurnFaceToTarget(targetToAttack, myStats.rotationSpeed.GetValue(), myStats.faceEuler))

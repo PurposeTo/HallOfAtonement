@@ -29,7 +29,7 @@ public abstract class PlayerCombat : CharacterCombat
     }
 
 
-    public void SearchingTargetToAttack(GameObject target)
+    public void SearchingTarget(GameObject target)
     {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, attackZone, 0f);
 
@@ -81,6 +81,9 @@ public abstract class PlayerCombat : CharacterCombat
         }
 
         targetToAttack = target;
-        PreAttack();
+        PreAttack(target);
+
     }
+
+
 }

@@ -8,7 +8,7 @@ public class RangedEnemyLogic : EnemyCombat, IEnemyAttackType
         enemyAI.InputVector = GetMovingVectorOnFighting(enemyAI, focusTarget);
 
         // Как/когда нужно атаковать?
-        AttackTheTarget(focusTarget);
+        PreAttack(focusTarget);
     }
 
 

@@ -5,8 +5,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(PlayerStats))]
 public class PlayerController : CharacterController
 {
-    private bool isWantToAttack = false;
-
     [SerializeField] private Joystick joystick;
     [SerializeField] private Button attackButton;
     private PlayerCombat playerCombat;
@@ -18,11 +16,11 @@ public class PlayerController : CharacterController
     {
         base.Start();
         playerCombat = (PlayerCombat)Combat;
-        attackButton.onClick.AddListener(Test);
+        attackButton.onClick.AddListener(ClickOnTestAttackButton);
     }
 
 
-    private void Test()
+    private void ClickOnTestAttackButton()
     {
         print("Кря");
     }
@@ -34,25 +32,12 @@ public class PlayerController : CharacterController
 
         if (Input.GetKey(KeyCode.Space)) //Если нажата кнопка атаки
         {
-            isWantToAttack = true;
+            playerCombat.SearchingTarget(Combat.targetToAttack);
         }
         else //Если НЕ нажата кнопка атаки
         {
-            isWantToAttack = false;
             Combat.targetToAttack = null;
         }
-    }
-
-
-    private protected override void FixedUpdate()
-    {
-        if (isWantToAttack)
-        {
-            //Искать цель
-            playerCombat.SearchingTargetToAttack(Combat.targetToAttack);
-        }
-
-        base.FixedUpdate();
     }
 
 
