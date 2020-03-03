@@ -83,6 +83,7 @@
     <Compile Include="Assets\AssetStoreTools\Tilemap\Tiles\Weighted Random Tile\WeightedRandomTile.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Combat\Abstract\CharacterCombat.cs" />
+    <Compile Include="Assets\Scripts\Combat\Abstract\EnemyCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\Abstract\PlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\Interface\IAttacker.cs" />
     <Compile Include="Assets\Scripts\Combat\Interface\MeleeCombat.cs" />

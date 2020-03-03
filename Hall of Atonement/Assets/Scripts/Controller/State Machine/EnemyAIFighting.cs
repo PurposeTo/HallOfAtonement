@@ -21,7 +21,7 @@ public class EnemyAIFighting : EnemyAIStateMachine
     {
         if (fightingRoutine == null)
         {
-            fightingRoutine = StartCoroutine(FightingLogic(enemyAI, focusTarget));
+            fightingRoutine = StartCoroutine(FightingEnumerator(enemyAI, focusTarget));
         }
     }
 
@@ -33,14 +33,15 @@ public class EnemyAIFighting : EnemyAIStateMachine
             fightingRoutine = null;
             StopCoroutine(fightingRoutine);
         }
-
+        enemyAI.Combat.targetToAttack = null;
         enemyAI.EnemyAIStateMachine = enemyAI.EnemyAIPatrolling;
         enemyAI.EnemyAIStateMachine.Patrolling(enemyAI);
     }
 
 
-    private IEnumerator FightingLogic(EnemyAI enemyAI, GameObject focusTarget) //Хочу потом переопределять этот метод, в зависимости от типа атаки
+    private IEnumerator FightingEnumerator(EnemyAI enemyAI, GameObject focusTarget) //Хочу потом переопределять этот метод, в зависимости от типа атаки
     {
+
         float timerCounter = timer;
         yield return null;
         timerCounter -= Time.deltaTime;
@@ -48,21 +49,14 @@ public class EnemyAIFighting : EnemyAIStateMachine
 
         while (timerCounter > 0f
             && focusTarget != null
-            && (Vector2.Distance(GameManager.instance.player.transform.position, transform.position) <= enemyAI.MyEnemyStats.ViewingRadius))
+            && (Vector2.Distance(focusTarget.transform.position, transform.position) <= enemyAI.MyEnemyStats.ViewingRadius))
         {
-
-            //Если цель найдена, идти к ней И атаковать ее, если она достаточно близко
-
-            // Плавное сглаживание вектора. Как нужно двигаться в драке?
-            enemyAI.InputVector = Vector2.MoveTowards(enemyAI.InputVector,
-                enemyAttackType.GetMovingVectorOnFighting(enemyAI, focusTarget), 10f * Time.fixedDeltaTime);
-
-            // Как/когда нужно атаковать?
-            enemyAttackType.AttackTheTarget(focusTarget);
+            enemyAttackType.GetEnemyFightingLogic(enemyAI, focusTarget);
 
             yield return null;
             timerCounter -= Time.deltaTime;
         }
+
 
         //Обязательно подождать кадр, что бы избежать багов при бесконечном цикле!
         yield return null;

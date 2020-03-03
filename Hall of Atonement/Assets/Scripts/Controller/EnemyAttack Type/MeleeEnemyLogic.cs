@@ -2,7 +2,7 @@
 
 
 [RequireComponent(typeof(MeleeCombat))]
-public class MeleeEnemyLogic : CharacterCombat, IEnemyAttackType
+public class MeleeEnemyLogic : EnemyCombat, IEnemyAttackType
 {
     private IMelee meleeAttacker;
 
@@ -12,16 +12,30 @@ public class MeleeEnemyLogic : CharacterCombat, IEnemyAttackType
         meleeAttacker = (IMelee)Attacker;
     }
 
-    void IEnemyAttackType.AttackTheTarget(GameObject target)
+
+    void IEnemyAttackType.GetEnemyFightingLogic(EnemyAI enemyAI, GameObject focusTarget)
+    {
+        enemyAI.InputVector = GetMovingVectorOnFighting(enemyAI, focusTarget);
+
+        // Как/когда нужно атаковать?
+        AttackTheTarget(focusTarget);
+    }
+
+
+    private protected override void AttackTheTarget(GameObject target)
     {
         if (Vector2.Distance(target.transform.position, transform.position) <= meleeAttacker.MeleeAttackRange)
         {
-            targetToAttack = target;
-            PreAttack();
+            base.AttackTheTarget(target);
+        }
+        else
+        {
+            targetToAttack = null;
         }
     }
 
-    Vector2 IEnemyAttackType.GetMovingVectorOnFighting(EnemyAI enemyAI, GameObject focusTarget)
+
+    private protected override Vector2 GetMovingVectorOnFighting(EnemyAI enemyAI, GameObject focusTarget)
     {
         Vector2 newInputVector;
 

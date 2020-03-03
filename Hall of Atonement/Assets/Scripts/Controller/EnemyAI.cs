@@ -4,7 +4,6 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(EnemyStats))]
-//[RequireComponent(typeof(EnemyCombat))]
 [RequireComponent(typeof(EnemyAIPatrolling))]
 [RequireComponent(typeof(EnemyAIFighting))]
 public class EnemyAI : CharacterController
@@ -42,7 +41,6 @@ public class EnemyAI : CharacterController
     {
 
         focusTarget = EnemyType.SearchingTarget(MyEnemyStats.ViewingRadius);
-        Combat.targetToAttack = focusTarget; // Сейчас, если ты не в радиусе атаки но враги тебя видят, то они двигаются НЕ лицом к тебе
 
         if (focusTarget == null) { EnemyAIStateMachine.Patrolling(this); }
         else { EnemyAIStateMachine.Fighting(this, focusTarget); }

@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(RangedCombat))]
-public class RangedEnemyLogic : CharacterCombat, IEnemyAttackType
+public class RangedEnemyLogic : EnemyCombat, IEnemyAttackType
 {
-    void IEnemyAttackType.AttackTheTarget(GameObject target)
+    void IEnemyAttackType.GetEnemyFightingLogic(EnemyAI enemyAI, GameObject focusTarget)
     {
-        targetToAttack = target;
-        PreAttack();
+        enemyAI.InputVector = GetMovingVectorOnFighting(enemyAI, focusTarget);
+
+        // Как/когда нужно атаковать?
+        AttackTheTarget(focusTarget);
     }
 
 
-    Vector2 IEnemyAttackType.GetMovingVectorOnFighting(EnemyAI enemyAI, GameObject focusTarget)
+    private protected override Vector2 GetMovingVectorOnFighting(EnemyAI enemyAI, GameObject focusTarget)
     {
         Vector2 newInputVector;
 
