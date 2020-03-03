@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-//[RequireComponent(typeof(IEnemyMode))]
 public class Monster : MonoBehaviour, IEnemyType
 {
-    public GameObject SearchingTarget(float ViewingRadius)
+    GameObject IEnemyType.SearchingTarget(float ViewingRadius)
     {
         GameObject target = null;
 

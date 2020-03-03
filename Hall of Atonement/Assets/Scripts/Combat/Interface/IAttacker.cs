@@ -6,7 +6,7 @@
 
 public interface IMelee : IAttacker
 {
-
+    float MeleeAttackRange { get; set; }
 }
 
 

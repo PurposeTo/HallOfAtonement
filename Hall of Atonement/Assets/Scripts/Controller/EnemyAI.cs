@@ -12,7 +12,7 @@ public class EnemyAI : CharacterController
     private GameObject focusTarget;
 
     public EnemyStats MyEnemyStats { get; private protected set; }
-    public IEnemyType EnemyMode { get; private set; } // Ищет цель в зависимости от Monster/Guardian
+    public IEnemyType EnemyType { get; private set; } // Ищет цель в зависимости от Monster/Guardian
     public EnemyAIStateMachine EnemyAIStateMachine { get; set; }
     public EnemyAIPatrolling EnemyAIPatrolling { get; private set; }
     public EnemyAIFighting EnemyAIHunting { get; private set; }
@@ -29,7 +29,7 @@ public class EnemyAI : CharacterController
 
     private void Initialization()
     {
-        EnemyMode = gameObject.GetComponent<IEnemyType>();
+        EnemyType = gameObject.GetComponent<IEnemyType>();
         EnemyAIPatrolling = GetComponent<EnemyAIPatrolling>();
         EnemyAIHunting = GetComponent<EnemyAIFighting>();
 
@@ -41,7 +41,8 @@ public class EnemyAI : CharacterController
     public void DecideWhatToDo()
     {
 
-        focusTarget = EnemyMode.SearchingTarget(MyEnemyStats.ViewingRadius);
+        focusTarget = EnemyType.SearchingTarget(MyEnemyStats.ViewingRadius);
+        Combat.targetToAttack = focusTarget; // Сейчас, если ты не в радиусе атаки но враги тебя видят, то они двигаются НЕ лицом к тебе
 
         if (focusTarget == null) { EnemyAIStateMachine.Patrolling(this); }
         else { EnemyAIStateMachine.Fighting(this, focusTarget); }

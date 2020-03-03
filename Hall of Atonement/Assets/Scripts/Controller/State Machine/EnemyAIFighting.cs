@@ -8,12 +8,20 @@ public class EnemyAIFighting : EnemyAIStateMachine
 
     private Coroutine fightingRoutine;
 
+    private IEnemyAttackType enemyAttackType;
+
+
+    private void Start()
+    {
+        enemyAttackType = gameObject.GetComponent<IEnemyAttackType>();
+    }
+
 
     public override void Fighting(EnemyAI enemyAI, GameObject focusTarget)
     {
         if (fightingRoutine == null)
         {
-            fightingRoutine = StartCoroutine(FightingEnumerator(enemyAI, focusTarget));
+            fightingRoutine = StartCoroutine(FightingLogic(enemyAI, focusTarget));
         }
     }
 
@@ -31,9 +39,12 @@ public class EnemyAIFighting : EnemyAIStateMachine
     }
 
 
-    private IEnumerator FightingEnumerator(EnemyAI enemyAI, GameObject focusTarget) //Хочу потом переопределять этот метод, в зависимости от типа атаки
+    private IEnumerator FightingLogic(EnemyAI enemyAI, GameObject focusTarget) //Хочу потом переопределять этот метод, в зависимости от типа атаки
     {
         float timerCounter = timer;
+        yield return null;
+        timerCounter -= Time.deltaTime;
+
 
         while (timerCounter > 0f
             && focusTarget != null
@@ -42,12 +53,12 @@ public class EnemyAIFighting : EnemyAIStateMachine
 
             //Если цель найдена, идти к ней И атаковать ее, если она достаточно близко
 
-            //плавное сглаживание вектора
+            // Плавное сглаживание вектора. Как нужно двигаться в драке?
             enemyAI.InputVector = Vector2.MoveTowards(enemyAI.InputVector,
-                GetMovingVectorOnHunting(enemyAI, focusTarget), 10f * Time.fixedDeltaTime);
+                enemyAttackType.GetMovingVectorOnFighting(enemyAI, focusTarget), 10f * Time.fixedDeltaTime);
 
-            //Значит все хорошо и можно продолжить охотиться
-            enemyAI.Combat.SearchingTargetToAttack(focusTarget);
+            // Как/когда нужно атаковать?
+            enemyAttackType.AttackTheTarget(focusTarget);
 
             yield return null;
             timerCounter -= Time.deltaTime;
@@ -59,42 +70,4 @@ public class EnemyAIFighting : EnemyAIStateMachine
         //Когда закончим, вызвать метод, говорящее о том, что мы закончили
         enemyAI.DecideWhatToDo();
     }
-
-
-    private protected Vector2 GetMovingVectorOnHunting(EnemyAI enemyAI, GameObject focusTarget) // Логика, как стоит двигаться при атаке
-    {
-        Vector2 newInputVector;
-
-
-        Vector2 direction = (focusTarget.transform.position - transform.position); //Расстояние до цели
-
-        if (enemyAI.Rb2D.velocity.magnitude > 1f)
-        {
-            //Если мы движемся, то двигаться пока расстояние до цели > minStopRadius
-            if (direction.magnitude > (enemyAI.MyEnemyStats.ViewingRadius / 2f))
-            {
-                newInputVector = direction.normalized;
-            }
-            else
-            {
-                newInputVector = Vector2.zero;
-            }
-        }
-        else
-        {
-            //Если мы стоим, то стоять пока расстояние до цели не станет >= maxStopRadius
-            if (direction.magnitude < ((enemyAI.MyEnemyStats.ViewingRadius / 4f) * 3f))
-            {
-                newInputVector = Vector2.zero;
-            }
-            else
-            {
-                newInputVector = direction.normalized;
-            }
-        }
-
-
-        return newInputVector;
-    }
-
 }

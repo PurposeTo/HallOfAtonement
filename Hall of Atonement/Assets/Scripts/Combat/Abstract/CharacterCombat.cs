@@ -10,7 +10,7 @@ public abstract class CharacterCombat : MonoBehaviour
 
     private float attackCooldown;
 
-    private protected IAttacker Attacker { get; set; }
+     public IAttacker Attacker { get; private protected set; }
 
     private IDamageReducerFactory statusEffectFactory;
 
@@ -36,9 +36,6 @@ public abstract class CharacterCombat : MonoBehaviour
             attackCooldown = 0f;
         }
     }
-
-
-    public abstract void SearchingTargetToAttack(GameObject targetAttack);
 
 
     private protected virtual void PreAttack()

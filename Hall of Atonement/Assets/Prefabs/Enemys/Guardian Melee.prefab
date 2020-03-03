@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 4563824010198361239}
-  attackRadius: 0.8
 --- !u!114 &9098174687338242351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23,7 +22,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4563824010806829532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56fecfc1339a8374f8dc2f5418eb780f, type: 3}
+  m_Script: {fileID: 11500000, guid: 71d32a7d78a8e64498b17ea69bcf95ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetToAttack: {fileID: 0}

@@ -29,7 +29,7 @@ public abstract class PlayerCombat : CharacterCombat
     }
 
 
-    public override void SearchingTargetToAttack(GameObject target)
+    public void SearchingTargetToAttack(GameObject target)
     {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, attackZone, 0f);
 

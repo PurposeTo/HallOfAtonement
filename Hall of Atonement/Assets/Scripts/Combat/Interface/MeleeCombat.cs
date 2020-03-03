@@ -3,23 +3,24 @@
 public class MeleeCombat : MonoBehaviour, IMelee
 {
     public Transform attackPoint;
-    public float attackRadius = .8f;
+
+    public float MeleeAttackRange { get; set; } = .8f;
 
 
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null) return;
 
-        Gizmos.color = Color.gray;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, MeleeAttackRange);
     }
 
 
-    public void Attack(CharacterCombat combat)
+    void IAttacker.Attack(CharacterCombat combat)
     {
         print(gameObject.name + " использует ближнюю атаку!");
 
-        Collider2D[] hitUnits = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius);
+        Collider2D[] hitUnits = Physics2D.OverlapCircleAll(attackPoint.position, MeleeAttackRange);
 
         for (int i = 0; i < hitUnits.Length; i++)
         {

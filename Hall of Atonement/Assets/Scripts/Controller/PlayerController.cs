@@ -9,6 +9,7 @@ public class PlayerController : CharacterController
 
     [SerializeField] private Joystick joystick;
     [SerializeField] private Button attackButton;
+    private PlayerCombat playerCombat;
 
     private readonly RuntimePlatform currentRuntimePlatform = Application.platform;
 
@@ -16,6 +17,7 @@ public class PlayerController : CharacterController
     private protected override void Start()
     {
         base.Start();
+        playerCombat = (PlayerCombat)Combat;
         attackButton.onClick.AddListener(Test);
     }
 
@@ -47,7 +49,7 @@ public class PlayerController : CharacterController
         if (isWantToAttack)
         {
             //Искать цель
-            Combat.SearchingTargetToAttack(Combat.targetToAttack);
+            playerCombat.SearchingTargetToAttack(Combat.targetToAttack);
         }
 
         base.FixedUpdate();

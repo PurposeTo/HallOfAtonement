@@ -6,7 +6,7 @@ public class RangedCombat : MonoBehaviour, IRanged
 
     private Ray2D ray;
 
-    public void Attack(CharacterCombat combat)
+    void IAttacker.Attack(CharacterCombat combat)
     {
         print(gameObject.name + " использует дальнюю атаку!");
 
