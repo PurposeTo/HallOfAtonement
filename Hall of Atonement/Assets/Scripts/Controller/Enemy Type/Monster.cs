@@ -6,64 +6,39 @@ public class Monster : MonoBehaviour, IEnemyType
     {
         GameObject target = null;
 
-        //Если игрок рядом, то отдать ему приоритет. Если далеко, то сражаться с монстрами
-        if (Vector2.Distance(GameManager.instance.player.transform.position, transform.position) <= ViewingRadius)
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), ViewingRadius);
+
+        float distance = float.MaxValue;
+
+        for (int i = 0; i < colliders.Length; i++)
         {
-            target = GameManager.instance.player;
-        }
-        else
-        {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), ViewingRadius);
-
-            float distance;
-
-            if (target == null)
+            //if (colliders[i].gameObject != gameObject && !colliders[i].isTrigger) { }
+            if (colliders[i].gameObject != gameObject &&
+                (colliders[i].gameObject.TryGetComponent(out Monster _) || colliders[i].gameObject.TryGetComponent(out PlayerController _)))
+            //Если это игрок или монстр
             {
-                distance = float.MaxValue; //Расстояние до цели
-            }
-            else
-            {
-                distance = Vector2.Distance(target.gameObject.transform.position, transform.position);
-            }
 
-            int enemyCount = 0;
-
-            for (int i = 0; i < colliders.Length; i++)
-            {
-                //if (colliders[i].gameObject != gameObject && !colliders[i].isTrigger) { }
-                if (colliders[i].gameObject != gameObject && colliders[i].gameObject.TryGetComponent(out Monster _)) //Если это персонаж или монстер
+                if (target != null)
                 {
-                    enemyCount++;
-
-                    if (target != null)
+                    float newDistance = Vector2.Distance(colliders[i].gameObject.transform.position, transform.position);
+                    if (newDistance < distance)
                     {
-                        float newDistance = Vector2.Distance(colliders[i].gameObject.transform.position, transform.position);
-                        if ((newDistance + 2f) < distance)
+                        //Если это не та же самая цель
+                        if (colliders[i].gameObject != target)
                         {
-                            //Если это не та же самая цель
-                            if (colliders[i].gameObject != target)
-                            {
-                                target = colliders[i].gameObject;
-
-                            }
-                            distance = newDistance;
+                            target = colliders[i].gameObject;
                         }
-                    }
-                    else
-                    {
-                        target = colliders[i].gameObject;
-                        distance = Vector2.Distance(target.transform.position, transform.position);
+                        distance = newDistance;
                     }
                 }
-            }
-
-            if (enemyCount == 0)
-            {
-                target = null;
+                else
+                {
+                    target = colliders[i].gameObject;
+                    distance = Vector2.Distance(target.transform.position, transform.position);
+                }
             }
         }
-
-
         return target;
     }
 }

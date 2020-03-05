@@ -30,8 +30,8 @@ public class EnemyAIFighting : EnemyAIStateMachine
     {
         if (fightingRoutine != null)
         {
-            fightingRoutine = null;
             StopCoroutine(fightingRoutine);
+            fightingRoutine = null;
         }
         enemyAI.Combat.targetToAttack = null;
         enemyAI.EnemyAIStateMachine = enemyAI.EnemyAIPatrolling;
@@ -41,11 +41,11 @@ public class EnemyAIFighting : EnemyAIStateMachine
 
     private IEnumerator FightingEnumerator(EnemyAI enemyAI, GameObject focusTarget) //Хочу потом переопределять этот метод, в зависимости от типа атаки
     {
+        //Обязательно подождать кадр, что бы избежать бага "бесконечного цикла"!
+        yield return null;
+
 
         float timerCounter = timer;
-        yield return null;
-        timerCounter -= Time.deltaTime;
-
 
         while (timerCounter > 0f
             && focusTarget != null
@@ -57,9 +57,6 @@ public class EnemyAIFighting : EnemyAIStateMachine
             timerCounter -= Time.deltaTime;
         }
 
-
-        //Обязательно подождать кадр, что бы избежать багов при бесконечном цикле!
-        yield return null;
         fightingRoutine = null;
         //Когда закончим, вызвать метод, говорящее о том, что мы закончили
         enemyAI.DecideWhatToDo();

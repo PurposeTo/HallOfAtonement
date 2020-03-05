@@ -6,6 +6,8 @@ public class MeleeEnemyLogic : EnemyCombat, IEnemyAttackType
 {
     private IMelee meleeAttacker;
 
+    public float FA { get; set; }
+
     private protected override void Start()
     {
         base.Start();
@@ -24,7 +26,8 @@ public class MeleeEnemyLogic : EnemyCombat, IEnemyAttackType
 
     private protected override void PreAttack(GameObject target)
     {
-        if (Vector2.Distance(target.transform.position, transform.position) <= meleeAttacker.MeleeAttackRange)
+        if (Vector2.Distance(target.transform.position, transform.position) 
+            <= meleeAttacker.MeleeAttackRange + meleeAttacker.AttackPoint.position.magnitude)
         {
             base.PreAttack(target);
         }

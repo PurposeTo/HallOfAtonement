@@ -1,6 +1,10 @@
-﻿public interface IAttacker
+﻿using UnityEngine;
+
+public interface IAttacker
 {
     void Attack(CharacterCombat combat);
+
+    Transform AttackPoint { get; }
 }
 
 

@@ -5,7 +5,7 @@ public class MeleeCombat : MonoBehaviour, IMelee
     public Transform attackPoint;
 
     public float MeleeAttackRange { get; set; } = .8f;
-
+    Transform IAttacker.AttackPoint => attackPoint;
 
     private void OnDrawGizmosSelected()
     {

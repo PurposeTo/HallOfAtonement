@@ -129,6 +129,7 @@
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\IceDamage.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\PhysicalDamage.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\PoisonDamage.cs" />
+    <Compile Include="Assets\Scripts\UI\AttackButtonEvent.cs" />
     <Compile Include="Assets\Scripts\UI\BillBoard.cs" />
     <Compile Include="Assets\Scripts\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\UI\LvlBar.cs" />

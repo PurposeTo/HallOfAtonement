@@ -11,11 +11,11 @@ public class EnemyAIPatrolling : EnemyAIStateMachine
     {
         if (patrollingRoutine != null)
         {
-            patrollingRoutine = null;
             StopCoroutine(patrollingRoutine);
+            patrollingRoutine = null;
         }
 
-        enemyAI.EnemyAIStateMachine = enemyAI.EnemyAIHunting;
+        enemyAI.EnemyAIStateMachine = enemyAI.EnemyAIFighting;
         enemyAI.EnemyAIStateMachine.Fighting(enemyAI, focusTarget);
     }
 
@@ -29,15 +29,22 @@ public class EnemyAIPatrolling : EnemyAIStateMachine
 
     private IEnumerator patrollingEnumerator(EnemyAI enemyAI)
     {
-        //Патрулировать
-        enemyAI.InputVector = Vector2.zero;
-
-
-        //Обязательно подождать кадр, что бы избежать багов при бесконечном цикле!
+        //Обязательно подождать кадр, что бы избежать бага "бесконечного цикла"!
         yield return null;
-        patrollingRoutine = null;
-        //Когда закончим, вызвать метод, говорящее о том, что мы закончили
-        enemyAI.DecideWhatToDo();
 
+        //Бесконечный цикл потому, что мы можем бесконечно "шастать" по уровню
+        while (true)
+        {
+            //Патрулировать
+            enemyAI.InputVector = Vector2.zero;
+            yield return null;
+
+            //Когда закончим, вызвать метод, говорящее о том, что мы закончили
+            enemyAI.DecideWhatToDo();
+
+        }
+
+        //Выход из цикла есть только при переключении State
+        //patrollingRoutine = null; 
     }
 }

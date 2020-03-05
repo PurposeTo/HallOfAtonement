@@ -3447,12 +3447,12 @@ PrefabInstance:
     - target: {fileID: 5674271863135617171, guid: cd1bf5d50f505bb44bbbaad62fc73fea,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.58
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5674271863135617171, guid: cd1bf5d50f505bb44bbbaad62fc73fea,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5674271863135617171, guid: cd1bf5d50f505bb44bbbaad62fc73fea,
         type: 3}
@@ -5856,6 +5856,7 @@ GameObject:
   - component: {fileID: 1318684516}
   - component: {fileID: 1318684515}
   - component: {fileID: 1318684514}
+  - component: {fileID: 1318684517}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -5962,6 +5963,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318684512}
   m_CullTransparentMesh: 0
+--- !u!114 &1318684517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318684512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b138d09e652a151429fcb24f48c4b321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1344690356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23078,7 +23091,7 @@ PrefabInstance:
         type: 3}
       propertyPath: attackButton
       value: 
-      objectReference: {fileID: 1318684514}
+      objectReference: {fileID: 1318684517}
     - target: {fileID: 8637525892625848058, guid: 6f41073ede2f3664682a2c3825329cab,
         type: 3}
       propertyPath: m_AnchorMax.x

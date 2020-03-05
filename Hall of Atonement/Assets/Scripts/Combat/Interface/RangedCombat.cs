@@ -6,6 +6,8 @@ public class RangedCombat : MonoBehaviour, IRanged
 
     private Ray2D ray;
 
+    Transform IAttacker.AttackPoint => weapon;
+
     void IAttacker.Attack(CharacterCombat combat)
     {
         print(gameObject.name + " использует дальнюю атаку!");

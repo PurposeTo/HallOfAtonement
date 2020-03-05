@@ -14,7 +14,7 @@ public class EnemyAI : CharacterController
     public IEnemyType EnemyType { get; private set; } // Ищет цель в зависимости от Monster/Guardian
     public EnemyAIStateMachine EnemyAIStateMachine { get; set; }
     public EnemyAIPatrolling EnemyAIPatrolling { get; private set; }
-    public EnemyAIFighting EnemyAIHunting { get; private set; }
+    public EnemyAIFighting EnemyAIFighting { get; private set; }
 
 
     private protected override void Start()
@@ -30,7 +30,7 @@ public class EnemyAI : CharacterController
     {
         EnemyType = gameObject.GetComponent<IEnemyType>();
         EnemyAIPatrolling = GetComponent<EnemyAIPatrolling>();
-        EnemyAIHunting = GetComponent<EnemyAIFighting>();
+        EnemyAIFighting = GetComponent<EnemyAIFighting>();
 
         EnemyAIStateMachine = EnemyAIPatrolling;
         EnemyAIStateMachine.Patrolling(this);

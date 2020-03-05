@@ -29,40 +29,29 @@ public abstract class PlayerCombat : CharacterCombat
     }
 
 
-    public void SearchingTarget(GameObject target)
+    public void SearchingTarget()
     {
+        GameObject target = null;
+
         Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, attackZone, 0f);
 
-        float distance;
-
-        if (target == null)
-        {
-            distance = float.MaxValue; //Расстояние от персонажа до цели
-        }
-        else
-        {
-            distance = Vector2.Distance(target.gameObject.transform.position, transform.position);
-        }
-
-        int enemyCount = 0;
+        float distance = float.MaxValue;
 
         for (int i = 0; i < colliders.Length; i++)
         {
             //if (colliders[i].gameObject != gameObject && !colliders[i].isTrigger) { }
             if (colliders[i].gameObject.TryGetComponent(out EnemyAI _)) //Если это враг, то сделать его целью
             {
-                enemyCount++;
 
                 if (target != null)
                 {
                     float newDistance = Vector2.Distance(colliders[i].gameObject.transform.position, transform.position);
-                    if ((newDistance + 2f) < distance)
+                    if (newDistance < distance)
                     {
                         //Если это не та же самая цель
                         if (colliders[i].gameObject != target) 
                         {
                             target = colliders[i].gameObject;
-
                         }
                         distance = newDistance;
                     }
@@ -75,15 +64,7 @@ public abstract class PlayerCombat : CharacterCombat
             }
         }
 
-        if (enemyCount == 0)
-        {
-            target = null;
-        }
-
         targetToAttack = target;
         PreAttack(target);
-
     }
-
-
 }

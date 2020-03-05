@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class EnemyStats : CharacterStats
 {
@@ -7,9 +8,10 @@ public class EnemyStats : CharacterStats
     private readonly float hpRegenForStrenght = 0.3f;
     public Stat healthPointRegen;
 
-    private float strenghtFromLvl = 1f;
-    private float agilityFromLvl = 1f;
-    private float masteryFromLvl = 1f;
+    private float amountOfMutatedPoints = 2f;
+    private float strenghtFromLvl;
+    private float agilityFromLvl;
+    private float masteryFromLvl;
 
     private protected override float BaseMovementSpeed { get; } = 3f;
     private protected override float BaseRotationSpeed { get; } = 360f;
@@ -24,6 +26,7 @@ public class EnemyStats : CharacterStats
 
     private protected override void Start()
     {
+        Mutate(amountOfMutatedPoints, strenghtFromLvl, agilityFromLvl, masteryFromLvl);
         base.Start();
         GameManager.instance.enemys.Add(gameObject);
     }
@@ -32,6 +35,25 @@ public class EnemyStats : CharacterStats
     private protected virtual void Update()
     {
         Healing(healthPointRegen.GetValue() * Time.deltaTime);
+    }
+
+
+    private void Mutate(float amountOfMutatedPoints, params float[] pointsForLvl)
+    {
+        float remainingPointsCounter = amountOfMutatedPoints;
+        for (int i = 0; i < pointsForLvl.Length - 1; i++)
+        {
+            float currentMutatedPoints = UnityEngine.Random.Range(0, remainingPointsCounter);
+            pointsForLvl[i] = (float)Math.Round(currentMutatedPoints, 2);
+            remainingPointsCounter -= currentMutatedPoints;
+
+            print(pointsForLvl[i]);
+
+        }
+
+        //Значение в последнем поинте равно оставшемуся значению в count;
+        pointsForLvl[pointsForLvl.Length - 1] = remainingPointsCounter;
+
     }
 
 

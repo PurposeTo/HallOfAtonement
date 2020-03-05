@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerCombat))]
 [RequireComponent(typeof(PlayerStats))]
 public class PlayerController : CharacterController
 {
     [SerializeField] private Joystick joystick;
-    [SerializeField] private Button attackButton;
+    [SerializeField] private AttackButtonEvent attackButton;
+
     private PlayerCombat playerCombat;
 
     private readonly RuntimePlatform currentRuntimePlatform = Application.platform;
@@ -16,13 +16,18 @@ public class PlayerController : CharacterController
     {
         base.Start();
         playerCombat = (PlayerCombat)Combat;
-        attackButton.onClick.AddListener(ClickOnTestAttackButton);
     }
 
 
-    private void ClickOnTestAttackButton()
+    private void OnEnable()
     {
-        print("Кря");
+        attackButton.OnPressingAttackButton += IsAttacking;
+    }
+
+
+    private void OnDisable()
+    {
+        attackButton.OnPressingAttackButton += IsAttacking;
     }
 
 
@@ -30,11 +35,26 @@ public class PlayerController : CharacterController
     {
         InputVector = GetInputVector();
 
-        if (Input.GetKey(KeyCode.Space)) //Если нажата кнопка атаки
+        //if (Input.GetKey(KeyCode.Space)) //Если нажата кнопка атаки
+        //{
+        //    playerCombat.SearchingTarget();
+        //}
+        //else //Если НЕ нажата кнопка атаки
+        //{
+        //    Combat.targetToAttack = null;
+        //}
+
+        IsAttacking(Input.GetKey(KeyCode.Space));
+    }
+
+
+    public void IsAttacking(bool IsAttacking)
+    {
+        if (IsAttacking)
         {
-            playerCombat.SearchingTarget(Combat.targetToAttack);
+            playerCombat.SearchingTarget();
         }
-        else //Если НЕ нажата кнопка атаки
+        else
         {
             Combat.targetToAttack = null;
         }
