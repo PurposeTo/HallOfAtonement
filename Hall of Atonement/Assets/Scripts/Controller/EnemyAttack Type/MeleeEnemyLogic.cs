@@ -2,25 +2,14 @@
 
 
 [RequireComponent(typeof(MeleeCombat))]
-public class MeleeEnemyLogic : EnemyCombat, IEnemyAttackType
+public class MeleeEnemyLogic : EnemyCombat
 {
     private IMelee meleeAttacker;
-
-    public float FA { get; set; }
 
     private protected override void Start()
     {
         base.Start();
         meleeAttacker = (IMelee)Attacker;
-    }
-
-
-    void IEnemyAttackType.GetEnemyFightingLogic(EnemyAI enemyAI, GameObject focusTarget)
-    {
-        enemyAI.InputVector = GetMovingVectorOnFighting(enemyAI, focusTarget);
-
-        // Как/когда нужно атаковать?
-        PreAttack(focusTarget);
     }
 
 

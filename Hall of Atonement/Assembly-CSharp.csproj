@@ -99,9 +99,12 @@
     <Compile Include="Assets\Scripts\Controller\EnemyAttack Type\MeleeEnemyLogic.cs" />
     <Compile Include="Assets\Scripts\Controller\EnemyAttack Type\RangedEnemyLogic.cs" />
     <Compile Include="Assets\Scripts\Controller\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\Controller\State Machine\EnemyAIFighting.cs" />
-    <Compile Include="Assets\Scripts\Controller\State Machine\EnemyAIPatrolling.cs" />
     <Compile Include="Assets\Scripts\Controller\State Machine\EnemyAIStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Controller\State Machine\EnemyStates\EnemyStateFighting.cs" />
+    <Compile Include="Assets\Scripts\Controller\State Machine\EnemyStates\EnemyStatePatrolling.cs" />
+    <Compile Include="Assets\Scripts\Controller\State Machine\PlayerControllerStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Controller\State Machine\PlayerStates\PlayerStateFighting.cs" />
+    <Compile Include="Assets\Scripts\Controller\State Machine\PlayerStates\PlayerStatePatrolling.cs" />
     <Compile Include="Assets\Scripts\Factory and Products\DamageReducerProduct\EffectDamageReducer.cs" />
     <Compile Include="Assets\Scripts\Factory and Products\DamageReducerProduct\IDamageReducerProduct.cs" />
     <Compile Include="Assets\Scripts\Factory and Products\DamageReducerProduct\PhysicalReducer.cs" />

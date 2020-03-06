@@ -46,9 +46,6 @@ public class EnemyStats : CharacterStats
             float currentMutatedPoints = UnityEngine.Random.Range(0, remainingPointsCounter);
             pointsForLvl[i] = (float)Math.Round(currentMutatedPoints, 2);
             remainingPointsCounter -= currentMutatedPoints;
-
-            print(pointsForLvl[i]);
-
         }
 
         //Значение в последнем поинте равно оставшемуся значению в count;

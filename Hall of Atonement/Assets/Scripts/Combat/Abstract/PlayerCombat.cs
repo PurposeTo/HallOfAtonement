@@ -29,7 +29,13 @@ public abstract class PlayerCombat : CharacterCombat
     }
 
 
-    public void SearchingTarget()
+    public void GetPlayerFightingLogic()
+    {
+        PreAttack(targetToAttack);
+    }
+
+
+    public GameObject SearchingTargetToAttack()
     {
         GameObject target = null;
 
@@ -64,7 +70,6 @@ public abstract class PlayerCombat : CharacterCombat
             }
         }
 
-        targetToAttack = target;
-        PreAttack(target);
+        return target;
     }
 }

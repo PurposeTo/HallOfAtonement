@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAIFighting : EnemyAIStateMachine
+public class EnemyStateFighting : EnemyAIStateMachine
 {
     private float timer = 3f;
 
@@ -34,22 +34,19 @@ public class EnemyAIFighting : EnemyAIStateMachine
             fightingRoutine = null;
         }
         enemyAI.Combat.targetToAttack = null;
-        enemyAI.EnemyAIStateMachine = enemyAI.EnemyAIPatrolling;
+        enemyAI.EnemyAIStateMachine = enemyAI.EnemyStatePatrolling;
         enemyAI.EnemyAIStateMachine.Patrolling(enemyAI);
     }
 
 
-    private IEnumerator FightingEnumerator(EnemyAI enemyAI, GameObject focusTarget) //Хочу потом переопределять этот метод, в зависимости от типа атаки
+    private IEnumerator FightingEnumerator(EnemyAI enemyAI, GameObject focusTarget)
     {
         //Обязательно подождать кадр, что бы избежать бага "бесконечного цикла"!
         yield return null;
 
-
         float timerCounter = timer;
 
-        while (timerCounter > 0f
-            && focusTarget != null
-            && (Vector2.Distance(focusTarget.transform.position, transform.position) <= enemyAI.MyEnemyStats.ViewingRadius))
+        while (timerCounter > 0f && IsTargetAvailable(enemyAI, focusTarget))
         {
             enemyAttackType.GetEnemyFightingLogic(enemyAI, focusTarget);
 
@@ -60,5 +57,12 @@ public class EnemyAIFighting : EnemyAIStateMachine
         fightingRoutine = null;
         //Когда закончим, вызвать метод, говорящее о том, что мы закончили
         enemyAI.DecideWhatToDo();
+    }
+
+
+    private bool IsTargetAvailable(EnemyAI enemyAI, GameObject focusTarget)
+    {
+        return focusTarget != null
+            && (Vector2.Distance(focusTarget.transform.position, transform.position) <= enemyAI.MyEnemyStats.ViewingRadius);
     }
 }

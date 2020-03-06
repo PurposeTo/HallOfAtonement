@@ -2,6 +2,8 @@
 
 [RequireComponent(typeof(PlayerCombat))]
 [RequireComponent(typeof(PlayerStats))]
+[RequireComponent(typeof(PlayerStatePatrolling))]
+[RequireComponent(typeof(PlayerStateFighting))]
 public class PlayerController : CharacterController
 {
     [SerializeField] private Joystick joystick;
@@ -11,11 +13,21 @@ public class PlayerController : CharacterController
 
     private readonly RuntimePlatform currentRuntimePlatform = Application.platform;
 
+    public PlayerControllerStateMachine PlayerControllerStateMachine { get; set; }
+    public PlayerStatePatrolling PlayerStatePatrolling { get; private set; }
+    public PlayerStateFighting PlayerStateFighting { get; private set; }
+
 
     private protected override void Start()
     {
         base.Start();
         playerCombat = (PlayerCombat)Combat;
+
+        PlayerStatePatrolling = GetComponent<PlayerStatePatrolling>();
+        PlayerStateFighting = GetComponent<PlayerStateFighting>();
+
+        PlayerControllerStateMachine = PlayerStatePatrolling;
+        PlayerControllerStateMachine.Patrolling(this);
     }
 
 
@@ -27,7 +39,7 @@ public class PlayerController : CharacterController
 
     private void OnDisable()
     {
-        attackButton.OnPressingAttackButton += IsAttacking;
+        attackButton.OnPressingAttackButton -= IsAttacking;
     }
 
 
@@ -35,16 +47,18 @@ public class PlayerController : CharacterController
     {
         InputVector = GetInputVector();
 
-        //if (Input.GetKey(KeyCode.Space)) //Если нажата кнопка атаки
-        //{
-        //    playerCombat.SearchingTarget();
-        //}
-        //else //Если НЕ нажата кнопка атаки
-        //{
-        //    Combat.targetToAttack = null;
-        //}
 
-        IsAttacking(Input.GetKey(KeyCode.Space));
+        if (currentRuntimePlatform == RuntimePlatform.WindowsEditor)
+        {
+            if (Input.GetKeyDown(KeyCode.Space)) 
+            {
+                IsAttacking(true);
+            }
+            else if (Input.GetKeyUp(KeyCode.Space))
+            {
+                IsAttacking(false);
+            }
+        }
     }
 
 
@@ -52,10 +66,11 @@ public class PlayerController : CharacterController
     {
         if (IsAttacking)
         {
-            playerCombat.SearchingTarget();
+            PlayerControllerStateMachine.Fighting(this);
         }
         else
         {
+            PlayerControllerStateMachine.Patrolling(this);
             Combat.targetToAttack = null;
         }
     }

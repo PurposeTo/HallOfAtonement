@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAIPatrolling : EnemyAIStateMachine
+public class EnemyStatePatrolling : EnemyAIStateMachine
 {
     private Coroutine patrollingRoutine;
 
@@ -15,7 +15,7 @@ public class EnemyAIPatrolling : EnemyAIStateMachine
             patrollingRoutine = null;
         }
 
-        enemyAI.EnemyAIStateMachine = enemyAI.EnemyAIFighting;
+        enemyAI.EnemyAIStateMachine = enemyAI.EnemyStateFighting;
         enemyAI.EnemyAIStateMachine.Fighting(enemyAI, focusTarget);
     }
 

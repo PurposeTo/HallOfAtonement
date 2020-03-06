@@ -4,8 +4,8 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(EnemyStats))]
-[RequireComponent(typeof(EnemyAIPatrolling))]
-[RequireComponent(typeof(EnemyAIFighting))]
+[RequireComponent(typeof(EnemyStatePatrolling))]
+[RequireComponent(typeof(EnemyStateFighting))]
 public class EnemyAI : CharacterController
 {
     private GameObject focusTarget;
@@ -13,8 +13,8 @@ public class EnemyAI : CharacterController
     public EnemyStats MyEnemyStats { get; private protected set; }
     public IEnemyType EnemyType { get; private set; } // Ищет цель в зависимости от Monster/Guardian
     public EnemyAIStateMachine EnemyAIStateMachine { get; set; }
-    public EnemyAIPatrolling EnemyAIPatrolling { get; private set; }
-    public EnemyAIFighting EnemyAIFighting { get; private set; }
+    public EnemyStatePatrolling EnemyStatePatrolling { get; private set; }
+    public EnemyStateFighting EnemyStateFighting { get; private set; }
 
 
     private protected override void Start()
@@ -29,10 +29,10 @@ public class EnemyAI : CharacterController
     private void Initialization()
     {
         EnemyType = gameObject.GetComponent<IEnemyType>();
-        EnemyAIPatrolling = GetComponent<EnemyAIPatrolling>();
-        EnemyAIFighting = GetComponent<EnemyAIFighting>();
+        EnemyStatePatrolling = GetComponent<EnemyStatePatrolling>();
+        EnemyStateFighting = GetComponent<EnemyStateFighting>();
 
-        EnemyAIStateMachine = EnemyAIPatrolling;
+        EnemyAIStateMachine = EnemyStatePatrolling;
         EnemyAIStateMachine.Patrolling(this);
     }
 
