@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyStats : CharacterStats
 {
-    public float ViewingRadius { get; private set; } = 6f;
+    public float ViewingRadius { get; private set; } = 7f;
 
     private readonly float hpRegenForStrenght = 0.3f;
     public Stat healthPointRegen;

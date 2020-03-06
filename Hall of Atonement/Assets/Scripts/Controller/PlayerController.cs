@@ -9,8 +9,6 @@ public class PlayerController : CharacterController
     [SerializeField] private Joystick joystick;
     [SerializeField] private AttackButtonEvent attackButton;
 
-    private PlayerCombat playerCombat;
-
     private readonly RuntimePlatform currentRuntimePlatform = Application.platform;
 
     public PlayerControllerStateMachine PlayerControllerStateMachine { get; set; }
@@ -21,7 +19,6 @@ public class PlayerController : CharacterController
     private protected override void Start()
     {
         base.Start();
-        playerCombat = (PlayerCombat)Combat;
 
         PlayerStatePatrolling = GetComponent<PlayerStatePatrolling>();
         PlayerStateFighting = GetComponent<PlayerStateFighting>();
