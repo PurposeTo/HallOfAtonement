@@ -26,7 +26,7 @@ public class EnemyStats : CharacterStats
 
     private protected override void Start()
     {
-        Mutate(amountOfMutatedPoints, strenghtFromLvl, agilityFromLvl, masteryFromLvl);
+        Mutate(amountOfMutatedPoints);
         base.Start();
         GameManager.instance.enemys.Add(gameObject);
     }
@@ -38,8 +38,10 @@ public class EnemyStats : CharacterStats
     }
 
 
-    private void Mutate(float amountOfMutatedPoints, params float[] pointsForLvl)
+    private void Mutate(float amountOfMutatedPoints)
     {
+        float[] pointsForLvl = new float[3];
+
         float remainingPointsCounter = amountOfMutatedPoints;
         for (int i = 0; i < pointsForLvl.Length - 1; i++)
         {
@@ -51,6 +53,11 @@ public class EnemyStats : CharacterStats
         //Значение в последнем поинте равно оставшемуся значению в count;
         pointsForLvl[pointsForLvl.Length - 1] = remainingPointsCounter;
 
+
+
+        strenghtFromLvl = pointsForLvl[0];
+        agilityFromLvl = pointsForLvl[1];
+        masteryFromLvl = pointsForLvl[2];
     }
 
 
