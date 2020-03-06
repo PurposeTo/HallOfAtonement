@@ -9,15 +9,19 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         player = GameManager.instance.player;
+
+        transform.position = GetTheRightCameraPosition();
     }
 
     // Update is called once per frame
-    private void LateUpdate()
+    private void FixedUpdate()
     {
-        Vector3 neededPosition = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
+        transform.position = Vector3.Lerp(transform.position, GetTheRightCameraPosition(), 0.07f);
+    }
 
-        //transform.position = Vector3.Lerp(transform.position, neededPosition, cameraSpeed * Time.deltaTime);
 
-        transform.position = neededPosition;
+    private Vector3 GetTheRightCameraPosition()
+    {
+        return new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
     }
 }

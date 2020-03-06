@@ -14,25 +14,25 @@ public abstract class CharacterStats : UnitStats
     //Зависимость статов от Силы
     private readonly float hpForStrenght = 20f;
     private readonly float attackDamageForStrenght = 3f;
-    private readonly float attackSpeedForStrenght = -0.05f;
+    private readonly float attackSpeedForStrenght = -0.015f;
     private readonly float movementSpeedForStrenght = -0.15f;
     private readonly float rotationSpeedForStrenght = -20f;
 
 
     //Зависимость статов от Ловковсти
     private readonly float armorForAgility = 0.5f;
-    private readonly float evasionForAgility = 0.05f;
+    private readonly float evasionForAgility = 0.005f;
     private readonly float attackDamageForAgility = 0.75f;
-    private readonly float attackSpeedForAgility = 0.15f;
+    private readonly float attackSpeedForAgility = 0.3f;
     private readonly float movementSpeedForAgility = 0.17f;
     private readonly float rotationSpeedForAgility = 25f;
 
 
 
     //Зависимость статов от Мастерства
-    private readonly float evasionForMastery = 0.1f;
-    private readonly float criticalChanceForMastery = 1f;
-    private readonly float criticalMultiplierForMastery = 10f;
+    private readonly float evasionForMastery = 0.01f;
+    private readonly float criticalChanceForMastery = 0.02f;
+    private readonly float criticalMultiplierForMastery = 0.1f;
     private readonly float experieneMultiplierForMastery = 0.1f;
     //private readonly float улучшение баффов
 
@@ -44,10 +44,10 @@ public abstract class CharacterStats : UnitStats
 
     private readonly float minMovementSpeed = 1.6f; //минимальное значение скорости
     private readonly float maxMovementSpeed = 30f; //максимальное значение скорости
-    private protected virtual float BaseMovementSpeed { get; } = 10f; //базовое значение скорости
+    private protected virtual float BaseMovementSpeed { get; } = 7f; //базовое значение скорости
 
     private readonly float minRotationSpeed = 180f; //минимальное значение скорости поворота
-    private protected virtual float BaseRotationSpeed { get; } = 1080f; //базовое значение скорости поворота
+    private protected virtual float BaseRotationSpeed { get; } = 720f; //базовое значение скорости поворота //Соотносится как ~ 1080 к 10 скорости
 
     private protected virtual float BaseAttackDamage { get; } = 10f; //базовое значение атаки
     private readonly float maxAttackSpeed = 50f; //максимальное значение скорости атаки
@@ -55,7 +55,7 @@ public abstract class CharacterStats : UnitStats
 
     private readonly float minCriticalMultiplier = 1.1f; //минимальное значение множителя критической атаки
     private protected virtual float BaseCriticalMultiplier { get; } = 2f; //базовое значение множителя критической атаки.
-    private protected virtual float BaseCriticalChance { get; } = 1f; //базовое значение скорости поворот
+    private protected virtual float BaseCriticalChance { get; } = 0.01f; //базовое значение скорости поворот
 
 
     //public Stat maxHealthPoint;

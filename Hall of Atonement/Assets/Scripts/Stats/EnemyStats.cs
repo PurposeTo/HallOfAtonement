@@ -5,7 +5,7 @@ public class EnemyStats : CharacterStats
 {
     public float ViewingRadius { get; private set; } = 7f;
 
-    private readonly float hpRegenForStrenght = 0.3f;
+    private readonly float hpRegenForStrenght = 0.25f;
     public Stat healthPointRegen;
 
     private float amountOfMutatedPoints = 2f;
