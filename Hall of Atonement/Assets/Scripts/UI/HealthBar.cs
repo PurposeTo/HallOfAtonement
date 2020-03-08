@@ -36,8 +36,8 @@ public class HealthBar : MonoBehaviour
 
     private void ShowHealthPoinOnText()
     {
-        HealthPointText.text = (int)System.Math.Truncate(MyStats.CurrentHealthPoint) + "/" 
-            + (int)System.Math.Truncate(MyStats.maxHealthPoint.GetValue());
+        HealthPointText.text = Mathf.Round(MyStats.CurrentHealthPoint) + "/" 
+            + Mathf.Round(MyStats.maxHealthPoint.GetValue());
     }
 
 
