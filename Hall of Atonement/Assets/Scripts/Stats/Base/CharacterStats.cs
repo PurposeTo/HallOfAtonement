@@ -28,14 +28,11 @@ public abstract class CharacterStats : UnitStats
     private readonly float rotationSpeedForAgility = 25f;
 
 
-
     //Зависимость статов от Мастерства
-    private readonly float evasionForMastery = 0.01f;
     private readonly float criticalChanceForMastery = 0.02f;
     private readonly float criticalMultiplierForMastery = 0.1f;
     private readonly float experieneMultiplierForMastery = 0.1f;
     //private readonly float улучшение баффов
-
 
 
     private protected override float BaseMaxHealthPoint { get; } = 100f; //базовое значение максимального кол-ва здоровья
@@ -110,7 +107,7 @@ public abstract class CharacterStats : UnitStats
         criticalChance = new PercentStat(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery));
 
         armor = new Stat(agility.GetValue() * armorForAgility);
-        evasionChance = new PercentStat((mastery.GetValue() * evasionForMastery) + agility.GetValue() * evasionForAgility);
+        evasionChance = new PercentStat(agility.GetValue() * evasionForAgility);
     }
 
 
