@@ -20,13 +20,16 @@ public class RangedEnemyLogic : EnemyCombat
 
         Vector2 direction = (focusTarget.transform.position - transform.position); //Расстояние до цели
 
-        //Если расстояние до цели меньше четверти, то нужно отойти
+        // Если расстояние до цели меньше четверти, то нужно отойти
         if (direction.magnitude < (enemyAI.MyEnemyStats.ViewingRadius / 2f))
         {
             getСloser = false;
-            newInputVector = -direction.normalized;
+
+            // Уходить от цели только если это НЕ игрок
+            if (!focusTarget.TryGetComponent(out PlayerController _)) { newInputVector = -direction.normalized; }
+            
         }
-        //Если расстояние до цели больше чем три четверти, то нужно подойти
+        // Если расстояние до цели больше чем три четверти, то нужно подойти
         else if (direction.magnitude >= (enemyAI.MyEnemyStats.ViewingRadius / 2f))
         {
             if (getСloser)
@@ -36,7 +39,7 @@ public class RangedEnemyLogic : EnemyCombat
 
             if (direction.magnitude > ((enemyAI.MyEnemyStats.ViewingRadius / 4f) * 3f))
             {
-                //Если расстояние до цели больше 3/4, то начать подходить
+                // Если расстояние до цели больше 3/4, то начать подходить
                 getСloser = true;
                 newInputVector = direction.normalized;
             }
