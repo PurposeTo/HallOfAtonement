@@ -6,7 +6,7 @@ public abstract class CharacterController : MonoBehaviour
 {
     public Rigidbody2D Rb2D { get; private protected set; }
 
-    public CharacterStats MyStats { get; private protected set; }
+    private protected CharacterStats myStats;
     public CharacterCombat Combat { get; private protected set; }
     public Vector2 InputVector { get => inputVector; set => inputVector = value; }
     private Vector2 inputVector = Vector2.zero;
@@ -16,14 +16,14 @@ public abstract class CharacterController : MonoBehaviour
     {
         Rb2D = GetComponent<Rigidbody2D>();
 
-        MyStats = GetComponent<CharacterStats>();
+        myStats = GetComponent<CharacterStats>();
         Combat = GetComponent<CharacterCombat>();
     }
 
 
     private protected virtual void FixedUpdate()
     {
-        Rb2D.velocity = MoveCharacter(inputVector, MyStats.movementSpeed.GetValue(), MyStats.rotationSpeed.GetValue(), MyStats.faceEuler);
+        Rb2D.velocity = MoveCharacter(inputVector, myStats.movementSpeed.GetValue(), myStats.rotationSpeed.GetValue(), myStats.faceEuler);
     }
 
 

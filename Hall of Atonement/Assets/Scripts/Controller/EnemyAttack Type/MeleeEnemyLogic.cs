@@ -6,24 +6,13 @@ public class MeleeEnemyLogic : EnemyCombat
 {
     private IMelee meleeAttacker;
 
+
     private protected override void Start()
     {
         base.Start();
         meleeAttacker = (IMelee)Attacker;
-    }
+        AttackRange = meleeAttacker.MeleeAttackRadius + meleeAttacker.AttackPoint.localPosition.magnitude;
 
-
-    private protected override void PreAttack(GameObject target)
-    {
-        if (Vector2.Distance(target.transform.position, transform.position) 
-            <= meleeAttacker.MeleeAttackRange + meleeAttacker.AttackPoint.position.magnitude)
-        {
-            base.PreAttack(target);
-        }
-        else
-        {
-            targetToAttack = null;
-        }
     }
 
 
@@ -35,15 +24,17 @@ public class MeleeEnemyLogic : EnemyCombat
         Vector2 direction = (focusTarget.transform.position - transform.position); //Расстояние до цели
 
 
+        newInputVector = direction.normalized;
+
             //Если мы движемся, то двигаться пока расстояние до цели > minStopRadius
-            if (direction.magnitude > meleeAttacker.MeleeAttackRange)
-            {
-                newInputVector = direction.normalized;
-            }
-            else
-            {
-                newInputVector = Vector2.zero;
-            }
+            //if (direction.magnitude > meleeAttacker.MeleeAttackRadius)
+            //{
+            //    newInputVector = direction.normalized;
+            //}
+            //else
+            //{
+            //    newInputVector = Vector2.zero;
+            //}
 
 
         return newInputVector;

@@ -10,7 +10,7 @@ public interface IAttacker
 
 public interface IMelee : IAttacker
 {
-    float MeleeAttackRange { get; set; }
+    float MeleeAttackRadius { get; set; }
 }
 
 

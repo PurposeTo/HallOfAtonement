@@ -15,8 +15,8 @@ public abstract class CharacterStats : UnitStats
     private readonly float hpForStrenght = 20f;
     private readonly float attackDamageForStrenght = 3f;
     private readonly float attackSpeedForStrenght = -0.015f;
-    private readonly float movementSpeedForStrenght = -0.15f;
-    private readonly float rotationSpeedForStrenght = -20f;
+    private readonly float movementSpeedForStrenght = -0.03f;
+    private readonly float rotationSpeedForStrenght = -4f;
 
 
     //Зависимость статов от Ловковсти
@@ -24,8 +24,8 @@ public abstract class CharacterStats : UnitStats
     private readonly float evasionForAgility = 0.005f;
     private readonly float attackDamageForAgility = 0.75f;
     private readonly float attackSpeedForAgility = 0.3f;
-    private readonly float movementSpeedForAgility = 0.17f;
-    private readonly float rotationSpeedForAgility = 25f;
+    private readonly float movementSpeedForAgility = 0.04f;
+    private readonly float rotationSpeedForAgility = 5f;
 
 
     //Зависимость статов от Мастерства
@@ -40,7 +40,7 @@ public abstract class CharacterStats : UnitStats
     //public float CurrentHealthPoint { get; private protected set; }
 
     private readonly float minMovementSpeed = 1.6f; //минимальное значение скорости
-    private readonly float maxMovementSpeed = 30f; //максимальное значение скорости
+    private readonly float maxMovementSpeed = 20f; //максимальное значение скорости
     private protected virtual float BaseMovementSpeed { get; } = 7f; //базовое значение скорости
 
     private readonly float minRotationSpeed = 180f; //минимальное значение скорости поворота
@@ -48,7 +48,7 @@ public abstract class CharacterStats : UnitStats
 
     private protected virtual float BaseAttackDamage { get; } = 10f; //базовое значение атаки
     private readonly float maxAttackSpeed = 50f; //максимальное значение скорости атаки
-    private protected virtual float BaseAttackSpeed { get; } = 0.5f; //базовое значение скорости атаки
+    private protected virtual float BaseAttackSpeed { get; } = 0.75f; //базовое значение скорости атаки
 
     private readonly float minCriticalMultiplier = 1.1f; //минимальное значение множителя критической атаки
     private protected virtual float BaseCriticalMultiplier { get; } = 2f; //базовое значение множителя критической атаки.

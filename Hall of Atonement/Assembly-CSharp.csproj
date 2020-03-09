@@ -101,6 +101,7 @@
     <Compile Include="Assets\Scripts\Controller\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Controller\State Machine\EnemyAIStateMachine.cs" />
     <Compile Include="Assets\Scripts\Controller\State Machine\EnemyStates\EnemyStateFighting.cs" />
+    <Compile Include="Assets\Scripts\Controller\State Machine\EnemyStates\EnemyStateHunting.cs" />
     <Compile Include="Assets\Scripts\Controller\State Machine\EnemyStates\EnemyStatePatrolling.cs" />
     <Compile Include="Assets\Scripts\Controller\State Machine\PlayerControllerStateMachine.cs" />
     <Compile Include="Assets\Scripts\Controller\State Machine\PlayerStates\PlayerStateFighting.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Assets\Scripts\Factory and Products\Factory\DamageReducerFactory.cs" />
     <Compile Include="Assets\Scripts\Factory and Products\Factory\IDamageReducerFactory.cs" />
     <Compile Include="Assets\Scripts\Factory and Products\Factory\StatusEffectFactory.cs" />
+    <Compile Include="Assets\Scripts\GameLogic.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\Attribute.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\CharacterStats.cs" />

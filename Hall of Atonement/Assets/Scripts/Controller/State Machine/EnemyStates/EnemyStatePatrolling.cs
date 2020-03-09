@@ -6,28 +6,35 @@ public class EnemyStatePatrolling : EnemyAIStateMachine
 {
     private Coroutine patrollingRoutine;
 
-
-    public override void Fighting(EnemyAI enemyAI, GameObject focusTarget)
+    private protected override void StopTheAction(EnemyAI enemyAI)
     {
         if (patrollingRoutine != null)
         {
             StopCoroutine(patrollingRoutine);
             patrollingRoutine = null;
         }
-
-        enemyAI.EnemyAIStateMachine = enemyAI.EnemyStateFighting;
-        enemyAI.EnemyAIStateMachine.Fighting(enemyAI, focusTarget);
     }
 
-    public override void Patrolling(EnemyAI enemyAI) //Хочу потом переопределять этот метод, в зависимости от типа Enemy
+
+    public override void Fighting(EnemyAI enemyAI)
+    {
+        StopTheAction(enemyAI);
+
+        enemyAI.EnemyAIStateMachine = enemyAI.EnemyStateFighting;
+        enemyAI.EnemyAIStateMachine.Fighting(enemyAI);
+    }
+
+
+    public override void SeekingBattle(EnemyAI enemyAI) //Хочу потом переопределять этот метод, в зависимости от типа Enemy
     {
         if (patrollingRoutine == null)
         {
-            patrollingRoutine = StartCoroutine(patrollingEnumerator(enemyAI));
+            patrollingRoutine = StartCoroutine(PatrollingEnumerator(enemyAI));
         }
     }
 
-    private IEnumerator patrollingEnumerator(EnemyAI enemyAI)
+
+    private IEnumerator PatrollingEnumerator(EnemyAI enemyAI)
     {
         //Обязательно подождать кадр, что бы избежать бага "бесконечного цикла"!
         yield return null;
@@ -46,5 +53,14 @@ public class EnemyStatePatrolling : EnemyAIStateMachine
 
         //Выход из цикла есть только при переключении State
         //patrollingRoutine = null; 
+    }
+
+
+    public override void BeginTheHunt(EnemyAI enemyAI, GameObject huntingTarget)
+    {
+        StopTheAction(enemyAI);
+
+        enemyAI.EnemyAIStateMachine = enemyAI.EnemyStateHunting;
+        enemyAI.EnemyAIStateMachine.BeginTheHunt(enemyAI, huntingTarget);
     }
 }

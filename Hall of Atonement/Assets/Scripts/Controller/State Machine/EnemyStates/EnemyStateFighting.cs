@@ -17,16 +17,7 @@ public class EnemyStateFighting : EnemyAIStateMachine
     }
 
 
-    public override void Fighting(EnemyAI enemyAI, GameObject focusTarget)
-    {
-        if (fightingRoutine == null)
-        {
-            fightingRoutine = StartCoroutine(FightingEnumerator(enemyAI, focusTarget));
-        }
-    }
-
-
-    public override void Patrolling(EnemyAI enemyAI)
+    private protected override void StopTheAction(EnemyAI enemyAI)
     {
         if (fightingRoutine != null)
         {
@@ -34,8 +25,24 @@ public class EnemyStateFighting : EnemyAIStateMachine
             fightingRoutine = null;
         }
         enemyAI.Combat.targetToAttack = null;
+    }
+
+
+    public override void Fighting(EnemyAI enemyAI)
+    {
+        if (fightingRoutine == null)
+        {
+            fightingRoutine = StartCoroutine(FightingEnumerator(enemyAI, enemyAI.FocusTarget));
+        }
+    }
+
+
+    public override void SeekingBattle(EnemyAI enemyAI)
+    {
+        StopTheAction(enemyAI);
+
         enemyAI.EnemyAIStateMachine = enemyAI.EnemyStatePatrolling;
-        enemyAI.EnemyAIStateMachine.Patrolling(enemyAI);
+        enemyAI.EnemyAIStateMachine.SeekingBattle(enemyAI);
     }
 
 
@@ -64,5 +71,10 @@ public class EnemyStateFighting : EnemyAIStateMachine
     {
         return focusTarget != null
             && (Vector2.Distance(focusTarget.transform.position, transform.position) <= enemyAI.MyEnemyStats.ViewingRadius);
+    }
+
+    public override void BeginTheHunt(EnemyAI enemyAI, GameObject huntingTarget)
+    {
+        // Мы уже сражаемся, ничего не делать
     }
 }

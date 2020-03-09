@@ -3,36 +3,50 @@
 [RequireComponent(typeof(RangedCombat))]
 public class RangedEnemyLogic : EnemyCombat
 {
+    private bool getСloser = false;
+
+
+    private protected override void Start()
+    {
+        base.Start();
+        AttackRange = myEnemyStats.ViewingRadius;
+
+    }
+
+
     private protected override Vector2 GetMovingVectorOnFighting(EnemyAI enemyAI, GameObject focusTarget)
     {
-        Vector2 newInputVector;
-
+        Vector2 newInputVector = Vector2.zero;
 
         Vector2 direction = (focusTarget.transform.position - transform.position); //Расстояние до цели
 
-        if (enemyAI.Rb2D.velocity.magnitude > 1f)
+        //Если расстояние до цели меньше четверти, то нужно отойти
+        if (direction.magnitude < (enemyAI.MyEnemyStats.ViewingRadius / 2f))
         {
-            //Если мы движемся, то двигаться пока расстояние до цели > minStopRadius
-            if (direction.magnitude > (enemyAI.MyEnemyStats.ViewingRadius / 2f))
+            getСloser = false;
+            newInputVector = -direction.normalized;
+        }
+        //Если расстояние до цели больше чем три четверти, то нужно подойти
+        else if (direction.magnitude >= (enemyAI.MyEnemyStats.ViewingRadius / 2f))
+        {
+            if (getСloser)
             {
                 newInputVector = direction.normalized;
             }
-            else
+
+            if (direction.magnitude > ((enemyAI.MyEnemyStats.ViewingRadius / 4f) * 3f))
             {
-                newInputVector = Vector2.zero;
+                //Если расстояние до цели больше 3/4, то начать подходить
+                getСloser = true;
+                newInputVector = direction.normalized;
             }
+
+
         }
         else
         {
-            //Если мы стоим, то стоять пока расстояние до цели не станет >= maxStopRadius
-            if (direction.magnitude < ((enemyAI.MyEnemyStats.ViewingRadius / 4f) * 3f))
-            {
-                newInputVector = Vector2.zero;
-            }
-            else
-            {
-                newInputVector = direction.normalized;
-            }
+            getСloser = false;
+            newInputVector = Vector2.zero;
         }
 
 

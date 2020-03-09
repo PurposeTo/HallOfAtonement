@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class EnemyStats : CharacterStats
 {
-    public float ViewingRadius { get; private set; } = 7f;
+    private EnemyAI myEnemyAI;
+    public float ViewingRadius { get; private set; } = 9f;
 
     private readonly float hpRegenForStrenght = 0.25f;
     public Stat healthPointRegen;
@@ -24,11 +25,25 @@ public class EnemyStats : CharacterStats
     }
 
 
-    private protected override void Start()
+    private protected override void Awake()
     {
         Mutate(amountOfMutatedPoints);
+        base.Awake();
+    }
+
+
+    private protected override void Start()
+    {
         base.Start();
+        myEnemyAI = gameObject.GetComponent<EnemyAI>();
+
         GameManager.instance.enemys.Add(gameObject);
+
+    }
+
+    private void OnDisable()
+    {
+        GameManager.instance.enemys.Remove(gameObject);
     }
 
 
@@ -53,7 +68,7 @@ public class EnemyStats : CharacterStats
         //Значение в последнем поинте равно оставшемуся значению в count;
         pointsForLvl[pointsForLvl.Length - 1] = remainingPointsCounter;
 
-
+        GameLogic.Shuffle(pointsForLvl);
 
         strenghtFromLvl = pointsForLvl[0];
         agilityFromLvl = pointsForLvl[1];
@@ -87,10 +102,26 @@ public class EnemyStats : CharacterStats
     }
 
 
+    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, out bool isEvaded, out bool isBlocked)
+    {
+        float returnDamage = base.TakeDamage(killerStats, damageType, damage, out isEvaded, out isBlocked);
+
+        if (!isEvaded && killerStats != null)
+        {
+            myEnemyAI.EnemyAIStateMachine.BeginTheHunt(myEnemyAI, killerStats.gameObject);
+        }
+
+        return returnDamage;
+
+    }
+
+
     public override void Die(CharacterStats killerStats)
     {
         base.Die(killerStats);
-        GameManager.instance.enemys.Remove(gameObject);
         Destroy(gameObject);
     }
+
+
+
 }
