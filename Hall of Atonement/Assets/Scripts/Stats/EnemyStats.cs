@@ -108,7 +108,7 @@ public class EnemyStats : CharacterStats
 
         if (!isEvaded && killerStats != null)
         {
-            EnemyPresenter.EnemyAI.BeginTheHunt(killerStats.gameObject);
+            EnemyPresenter.EnemyAI.EnemyAIStateMachine.Fighting(EnemyPresenter.EnemyAI, killerStats.gameObject);
         }
 
         return returnDamage;

@@ -36,12 +36,6 @@ public class EnemyAI : CharacterController
     }
 
 
-    public void BeginTheHunt(GameObject huntingTarget)
-    {
-        EnemyAIStateMachine.Fighting(this, huntingTarget);
-    }
-
-
     public void DecideWhatToDo()
     {
         GameObject focusTarget = EnemyType.SearchingTarget(EnemyPresenter.MyEnemyStats.ViewingRadius);
