@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class EnemyStats : CharacterStats
 {
-    private EnemyAI myEnemyAI;
+    public EnemyPresenter EnemyPresenter { get; private protected set; }
+
     public float ViewingRadius { get; private set; } = 9f;
 
     private readonly float hpRegenForStrenght = 0.25f;
@@ -31,14 +32,13 @@ public class EnemyStats : CharacterStats
         base.Awake();
     }
 
-
     private protected override void Start()
     {
         base.Start();
-        myEnemyAI = gameObject.GetComponent<EnemyAI>();
+
+        EnemyPresenter = (EnemyPresenter)CharacterPresenter;
 
         GameManager.instance.enemys.Add(gameObject);
-
     }
 
     private void OnDisable()
@@ -108,7 +108,7 @@ public class EnemyStats : CharacterStats
 
         if (!isEvaded && killerStats != null)
         {
-            myEnemyAI.BeginTheHunt(killerStats.gameObject);
+            EnemyPresenter.EnemyAI.BeginTheHunt(killerStats.gameObject);
         }
 
         return returnDamage;

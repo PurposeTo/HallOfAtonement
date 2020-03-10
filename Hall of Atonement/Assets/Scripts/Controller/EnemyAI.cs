@@ -8,9 +8,8 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyStateFighting))]
 public class EnemyAI : CharacterController
 {
-    public GameObject FocusTarget { get; private set; } //Цель, на которой враг в данный момент сфокусирован
+    public EnemyPresenter EnemyPresenter { get; private protected set; }
 
-    public EnemyStats MyEnemyStats { get; private protected set; }
     public IEnemyType EnemyType { get; private set; } // Ищет цель в зависимости от Monster/Guardian
     public EnemyAIStateMachine EnemyAIStateMachine { get; set; }
     public EnemyStatePatrolling EnemyStatePatrolling { get; private set; }
@@ -20,7 +19,7 @@ public class EnemyAI : CharacterController
     private protected override void Start()
     {
         base.Start();
-        MyEnemyStats = (EnemyStats)myStats;
+        EnemyPresenter = (EnemyPresenter)CharacterPresenter;
 
         Initialization();
     }
@@ -39,24 +38,15 @@ public class EnemyAI : CharacterController
 
     public void BeginTheHunt(GameObject huntingTarget)
     {
-        if (FocusTarget == null)
-        {
-            FocusTarget = huntingTarget;
-            EnemyAIStateMachine.Fighting(this);
-        }
+        EnemyAIStateMachine.Fighting(this, huntingTarget);
     }
 
 
     public void DecideWhatToDo()
     {
-        GameObject tempTarget = EnemyType.SearchingTarget(MyEnemyStats.ViewingRadius);
+        GameObject focusTarget = EnemyType.SearchingTarget(EnemyPresenter.MyEnemyStats.ViewingRadius);
 
-        if (tempTarget != null)
-        {
-            FocusTarget = tempTarget;
-        }
-
-        if (FocusTarget == null) { EnemyAIStateMachine.SeekingBattle(this); }
-        else { EnemyAIStateMachine.Fighting(this); }
+        if (focusTarget == null) { EnemyAIStateMachine.SeekingBattle(this); }
+        else { EnemyAIStateMachine.Fighting(this, focusTarget); }
     }
 }

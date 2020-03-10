@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{4D9B446D-998C-D7A5-5088-1DC043AB813D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -114,6 +113,9 @@
     <Compile Include="Assets\Scripts\Factory and Products\Factory\StatusEffectFactory.cs" />
     <Compile Include="Assets\Scripts\GameLogic.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Presenters\CharacterPresenter.cs" />
+    <Compile Include="Assets\Scripts\Presenters\EnemyPresenter.cs" />
+    <Compile Include="Assets\Scripts\Presenters\PlayerPresenter.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\Attribute.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\LevelSystem.cs" />

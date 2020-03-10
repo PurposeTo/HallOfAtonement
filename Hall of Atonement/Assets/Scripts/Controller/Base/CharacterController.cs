@@ -6,30 +6,37 @@ public abstract class CharacterController : MonoBehaviour
 {
     private protected Rigidbody2D rb2d;
 
-    private protected CharacterStats myStats;
-    public CharacterCombat Combat { get; private protected set; }
+    public CharacterPresenter CharacterPresenter { get; private protected set; }
+
+    //private protected CharacterStats myStats;
+    //public CharacterCombat Combat { get; private protected set; }
     public Vector2 InputVector { get => inputVector; set => inputVector = value; }
     private Vector2 inputVector = Vector2.zero;
 
 
     private protected virtual void Start()
     {
+        CharacterPresenter = GetComponent<CharacterPresenter>();
+
         rb2d = GetComponent<Rigidbody2D>();
 
-        myStats = GetComponent<CharacterStats>();
-        Combat = GetComponent<CharacterCombat>();
+        //myStats = GetComponent<CharacterStats>();
+        //Combat = GetComponent<CharacterCombat>();
     }
 
 
     private protected virtual void FixedUpdate()
     {
-        rb2d.velocity = MoveCharacter(inputVector, myStats.movementSpeed.GetValue(), myStats.rotationSpeed.GetValue(), myStats.faceEuler);
+        rb2d.velocity = MoveCharacter(inputVector,
+                                      CharacterPresenter.MyStats.movementSpeed.GetValue(),
+                                      CharacterPresenter.MyStats.rotationSpeed.GetValue(),
+                                      CharacterPresenter.MyStats.faceEuler);
     }
 
 
     private protected Vector2 MoveCharacter(Vector2 inputVector, float movementSpeed, float rotationSpeed, float faceEuler)
     {
-        if (Combat.targetToAttack == null) //Если нет цели атаки, то двигаться ТОЛЬКО лицом вперед
+        if (CharacterPresenter.Combat.targetToAttack == null) //Если нет цели атаки, то двигаться ТОЛЬКО лицом вперед
         {
             if (TurnFaceToTarget(inputVector, rotationSpeed, faceEuler)) //Повернулся ли персонаж в нужную сторону? См. FaceTarget
             {

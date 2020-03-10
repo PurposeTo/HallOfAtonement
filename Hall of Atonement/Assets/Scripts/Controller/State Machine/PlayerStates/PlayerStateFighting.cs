@@ -33,7 +33,7 @@ public class PlayerStateFighting : PlayerControllerStateMachine
             StopCoroutine(fightingRoutine);
             fightingRoutine = null;
         }
-        controller.Combat.targetToAttack = null;
+        controller.CharacterPresenter.Combat.targetToAttack = null;
         controller.PlayerControllerStateMachine = controller.PlayerStatePatrolling;
         controller.PlayerControllerStateMachine.Patrolling(controller);
     }

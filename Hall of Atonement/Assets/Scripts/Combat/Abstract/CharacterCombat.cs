@@ -3,22 +3,24 @@
 [RequireComponent(typeof(CharacterController))]
 public abstract class CharacterCombat : MonoBehaviour
 {
-    private protected CharacterStats myStats;
-    private protected CharacterController controller;
+    public CharacterPresenter CharacterPresenter { get; private protected set; }
+    //private protected CharacterStats myStats;
+    //private protected CharacterController controller;
 
     [HideInInspector] public GameObject targetToAttack = null;
 
     private float attackCooldown;
 
-     public IAttacker Attacker { get; private protected set; }
+    public IAttacker Attacker { get; private protected set; }
 
     private IDamageReducerFactory statusEffectFactory;
 
 
     private protected virtual void Start()
     {
-        myStats = GetComponent<CharacterStats>();
-        controller = GetComponent<CharacterController>();
+        CharacterPresenter = GetComponent<CharacterPresenter>();
+        //myStats = GetComponent<CharacterStats>();
+        //controller = GetComponent<CharacterController>();
         Attacker = GetComponent<IAttacker>();
         statusEffectFactory = new DamageReducerFactory();
     }
@@ -45,12 +47,14 @@ public abstract class CharacterCombat : MonoBehaviour
         if (target != null)
         {
             //Посмотреть на цель
-            if (controller.TurnFaceToTarget(targetToAttack, myStats.rotationSpeed.GetValue(), myStats.faceEuler))
+            if (CharacterPresenter.Controller.TurnFaceToTarget(
+                targetToAttack, CharacterPresenter.MyStats.rotationSpeed.GetValue(),
+                CharacterPresenter.MyStats.faceEuler))
             {
                 if (attackCooldown <= 0f)
                 {
                     Attacker.Attack(this);
-                    attackCooldown = 1f / myStats.attackSpeed.GetValue(); //После атаки включить кулдаун
+                    attackCooldown = 1f / CharacterPresenter.MyStats.attackSpeed.GetValue(); //После атаки включить кулдаун
                 }
             }
         }
@@ -59,7 +63,7 @@ public abstract class CharacterCombat : MonoBehaviour
             if (attackCooldown <= 0f)
             {
                 Attacker.Attack(this);
-                attackCooldown = 1f / myStats.attackSpeed.GetValue(); //После атаки включить кулдаун
+                attackCooldown = 1f / CharacterPresenter.MyStats.attackSpeed.GetValue(); //После атаки включить кулдаун
             }
         }
     }
@@ -69,27 +73,28 @@ public abstract class CharacterCombat : MonoBehaviour
     public void DoDamage(UnitStats targetStats)
     {
         //Формула, которая повысит урон в случае, если скорость атак будет быстрее чем обновление кадров
-        float attackSpeedMultiplie = (Mathf.Abs(attackCooldown) / (1f/ myStats.attackSpeed.GetValue())) + 1f;
+        float attackSpeedMultiplie = (Mathf.Abs(attackCooldown) / (1f / CharacterPresenter.MyStats.attackSpeed.GetValue())) + 1f;
 
-        float damage = attackSpeedMultiplie * myStats.attackDamage.GetValue();
+        float damage = attackSpeedMultiplie * CharacterPresenter.MyStats.attackDamage.GetValue();
 
         //Если Крит. шанс больше нуля И если рандом говорит о том, что нужно критануть
-        if (myStats.criticalChance.GetValue() > 0f && Random.Range(1f, 100f) <= myStats.criticalChance.GetValue())
+        if (CharacterPresenter.MyStats.criticalChance.GetValue() > 0f && Random.Range(1f, 100f)
+            <= CharacterPresenter.MyStats.criticalChance.GetValue())
         {
-            damage *= myStats.criticalMultiplier.GetValue(); //То увеличить урон
+            damage *= CharacterPresenter.MyStats.criticalMultiplier.GetValue(); //То увеличить урон
         }
 
 
-        targetStats.TakeDamage(myStats, myStats.DamageType, damage, out bool isEvaded, out bool isBlocked);
+        targetStats.TakeDamage(CharacterPresenter.MyStats, CharacterPresenter.MyStats.DamageType, damage, out bool isEvaded, out bool isBlocked);
 
         if (!isEvaded)
         {
             if (!isBlocked) //Если урон не был полностью заблокирован 
             {
-                if (myStats.DamageType is EffectDamage)
+                if (CharacterPresenter.MyStats.DamageType is EffectDamage)
                 {
                     StatusEffectFactory statusEffectFactory = new StatusEffectFactory();
-                    statusEffectFactory.HangStatusEffect(myStats.DamageType, targetStats, myStats);
+                    statusEffectFactory.HangStatusEffect(CharacterPresenter.MyStats.DamageType, targetStats, CharacterPresenter.MyStats);
                 }
             }
 

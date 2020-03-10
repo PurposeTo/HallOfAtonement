@@ -16,12 +16,12 @@ public class EnemyStatePatrolling : EnemyAIStateMachine
     }
 
 
-    public override void Fighting(EnemyAI enemyAI)
+    public override void Fighting(EnemyAI enemyAI, GameObject focusTarget)
     {
         StopTheAction(enemyAI);
 
         enemyAI.EnemyAIStateMachine = enemyAI.EnemyStateFighting;
-        enemyAI.EnemyAIStateMachine.Fighting(enemyAI);
+        enemyAI.EnemyAIStateMachine.Fighting(enemyAI, focusTarget);
     }
 
 
