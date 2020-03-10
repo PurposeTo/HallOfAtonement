@@ -5,7 +5,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(EnemyStats))]
 [RequireComponent(typeof(EnemyStatePatrolling))]
-[RequireComponent(typeof(EnemyStateHunting))]
 [RequireComponent(typeof(EnemyStateFighting))]
 public class EnemyAI : CharacterController
 {
@@ -15,7 +14,6 @@ public class EnemyAI : CharacterController
     public IEnemyType EnemyType { get; private set; } // Ищет цель в зависимости от Monster/Guardian
     public EnemyAIStateMachine EnemyAIStateMachine { get; set; }
     public EnemyStatePatrolling EnemyStatePatrolling { get; private set; }
-    public EnemyStateHunting EnemyStateHunting { get; private set; }
     public EnemyStateFighting EnemyStateFighting { get; private set; }
 
 
@@ -32,7 +30,6 @@ public class EnemyAI : CharacterController
     {
         EnemyType = gameObject.GetComponent<IEnemyType>();
         EnemyStatePatrolling = GetComponent<EnemyStatePatrolling>();
-        EnemyStateHunting = GetComponent<EnemyStateHunting>();
         EnemyStateFighting = GetComponent<EnemyStateFighting>();
 
         EnemyAIStateMachine = EnemyStatePatrolling;
@@ -40,9 +37,24 @@ public class EnemyAI : CharacterController
     }
 
 
+    public void BeginTheHunt(GameObject huntingTarget)
+    {
+        if (FocusTarget == null)
+        {
+            FocusTarget = huntingTarget;
+            EnemyAIStateMachine.Fighting(this);
+        }
+    }
+
+
     public void DecideWhatToDo()
     {
-        FocusTarget = EnemyType.SearchingTarget(MyEnemyStats.ViewingRadius);
+        GameObject tempTarget = EnemyType.SearchingTarget(MyEnemyStats.ViewingRadius);
+
+        if (tempTarget != null)
+        {
+            FocusTarget = tempTarget;
+        }
 
         if (FocusTarget == null) { EnemyAIStateMachine.SeekingBattle(this); }
         else { EnemyAIStateMachine.Fighting(this); }

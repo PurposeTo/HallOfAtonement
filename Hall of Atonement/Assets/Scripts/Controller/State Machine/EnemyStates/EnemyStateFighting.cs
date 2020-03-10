@@ -53,7 +53,7 @@ public class EnemyStateFighting : EnemyAIStateMachine
 
         float timerCounter = timer;
 
-        while (timerCounter > 0f && IsTargetAvailable(enemyAI, focusTarget))
+        while (timerCounter > 0f && focusTarget != null)
         {
             enemyAttackType.GetEnemyFightingLogic(enemyAI, focusTarget);
 
@@ -64,17 +64,5 @@ public class EnemyStateFighting : EnemyAIStateMachine
         fightingRoutine = null;
         //Когда закончим, вызвать метод, говорящее о том, что мы закончили
         enemyAI.DecideWhatToDo();
-    }
-
-
-    private bool IsTargetAvailable(EnemyAI enemyAI, GameObject focusTarget)
-    {
-        return focusTarget != null
-            && (Vector2.Distance(focusTarget.transform.position, transform.position) <= enemyAI.MyEnemyStats.ViewingRadius);
-    }
-
-    public override void BeginTheHunt(EnemyAI enemyAI, GameObject huntingTarget)
-    {
-        // Мы уже сражаемся, ничего не делать
     }
 }

@@ -21,20 +21,17 @@ public class MeleeEnemyLogic : EnemyCombat
         Vector2 newInputVector;
 
 
-        Vector2 direction = (focusTarget.transform.position - transform.position); //Расстояние до цели
+        Vector2 direction = focusTarget.transform.position - transform.position; //Расстояние до цели
 
-
-        newInputVector = direction.normalized;
-
-            //Если мы движемся, то двигаться пока расстояние до цели > minStopRadius
-            //if (direction.magnitude > meleeAttacker.MeleeAttackRadius)
-            //{
-            //    newInputVector = direction.normalized;
-            //}
-            //else
-            //{
-            //    newInputVector = Vector2.zero;
-            //}
+        //Если мы движемся, то двигаться пока расстояние до цели > minStopRadius
+        if (direction.magnitude > meleeAttacker.MeleeAttackRadius)
+        {
+            newInputVector = direction.normalized;
+        }
+        else
+        {
+            newInputVector = Vector2.zero;
+        }
 
 
         return newInputVector;

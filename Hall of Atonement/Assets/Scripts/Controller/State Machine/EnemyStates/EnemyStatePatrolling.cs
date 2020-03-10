@@ -54,13 +54,4 @@ public class EnemyStatePatrolling : EnemyAIStateMachine
         //Выход из цикла есть только при переключении State
         //patrollingRoutine = null; 
     }
-
-
-    public override void BeginTheHunt(EnemyAI enemyAI, GameObject huntingTarget)
-    {
-        StopTheAction(enemyAI);
-
-        enemyAI.EnemyAIStateMachine = enemyAI.EnemyStateHunting;
-        enemyAI.EnemyAIStateMachine.BeginTheHunt(enemyAI, huntingTarget);
-    }
 }

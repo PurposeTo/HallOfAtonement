@@ -4,7 +4,7 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class CharacterController : MonoBehaviour
 {
-    public Rigidbody2D Rb2D { get; private protected set; }
+    private protected Rigidbody2D rb2d;
 
     private protected CharacterStats myStats;
     public CharacterCombat Combat { get; private protected set; }
@@ -14,7 +14,7 @@ public abstract class CharacterController : MonoBehaviour
 
     private protected virtual void Start()
     {
-        Rb2D = GetComponent<Rigidbody2D>();
+        rb2d = GetComponent<Rigidbody2D>();
 
         myStats = GetComponent<CharacterStats>();
         Combat = GetComponent<CharacterCombat>();
@@ -23,7 +23,7 @@ public abstract class CharacterController : MonoBehaviour
 
     private protected virtual void FixedUpdate()
     {
-        Rb2D.velocity = MoveCharacter(inputVector, myStats.movementSpeed.GetValue(), myStats.rotationSpeed.GetValue(), myStats.faceEuler);
+        rb2d.velocity = MoveCharacter(inputVector, myStats.movementSpeed.GetValue(), myStats.rotationSpeed.GetValue(), myStats.faceEuler);
     }
 
 
@@ -58,7 +58,7 @@ public abstract class CharacterController : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: difference);
 
         // Применяем поворот вокруг оси Z        
-        Rb2D.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+        rb2d.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
 
         //Достигли нужного поворота?
         //Если будет разброс:
@@ -80,7 +80,7 @@ public abstract class CharacterController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: difference);
 
             // Применяем поворот вокруг оси Z
-            Rb2D.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+            rb2d.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
 
             //Если достигли нужного поворота к лицевой части существа
             //Если не достигли нужного поворота, то нужно остановиться
@@ -89,7 +89,7 @@ public abstract class CharacterController : MonoBehaviour
         }
         else //Если InputVector ноль, значит игрок остановился и все Ок
         {
-            Rb2D.angularVelocity = 0f;
+            rb2d.angularVelocity = 0f;
             return true;
         }
     }
