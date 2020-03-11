@@ -16,7 +16,7 @@ public abstract class CharacterCombat : MonoBehaviour
 
     private IDamageReducerFactory statusEffectFactory;
 
-    public List<IAttackModifier> attackModifiers;
+    public List<IAttackModifier> attackModifiers = new List<IAttackModifier>();
 
 
     private protected virtual void Start()
@@ -88,7 +88,11 @@ public abstract class CharacterCombat : MonoBehaviour
         }
 
 
-        damage = targetStats.TakeDamage(CharacterPresenter.MyStats, CharacterPresenter.MyStats.DamageType, damage, out bool isEvaded, out bool isBlocked); //лайстилиться от реально нанесенного урона
+        damage = targetStats.TakeDamage(CharacterPresenter.MyStats,
+                                        CharacterPresenter.MyStats.DamageType,
+                                        damage,
+                                        out bool isEvaded,
+                                        out bool isBlocked); //лайстилиться от реально нанесенного урона
 
         if (!isEvaded)
         {
@@ -107,13 +111,13 @@ public abstract class CharacterCombat : MonoBehaviour
              * 
              * Если у цели есть модификатор атаки, который должен навесить дебафф, то сам модификатор проверяет, может ли он это сделать.
              */
-            if (attackModifiers.Count != 0)
+
+
+
+            //attackModifiers.ForEach() //можно применить делегат?
+            for (int i = 0; i < attackModifiers.Count; i++)
             {
-                //attackModifiers.ForEach() //можно применить делегат?
-                foreach (IAttackModifier modifier in attackModifiers)
-                {
-                    modifier.ApplyAttackModifier(damage); //пусть пока останется параметр "damage", но во всех ли модификаторах он нужен?
-                }
+                attackModifiers[i].ApplyAttackModifier(damage);
             }
         }
     }

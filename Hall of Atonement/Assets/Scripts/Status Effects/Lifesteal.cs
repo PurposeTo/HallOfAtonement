@@ -2,22 +2,31 @@
 
 public class Lifesteal : MonoBehaviour, IAttackModifier
 {
-    private CharacterStats ownerStats;
-    private CharacterCombat ownerCombat;
+    //private CharacterStats ownerStats;
+    //private CharacterCombat ownerCombat;
+    private CharacterPresenter characterPresenter;
     private float lifestealValue = 0.05f;
 
 
     public void ApplyAttackModifier(float damage)
     {
-        ownerStats.Healing(damage * lifestealValue);
-        Debug.Log(ownerStats.gameObject.name + ": \"Your life is mine!\"");
+        characterPresenter.MyStats.Healing(damage * lifestealValue);
+        Debug.Log(gameObject.name + ": \"Your life is mine!\"");
     }
 
 
-    void Start()
+    private void Start()
     {
-        ownerStats = gameObject.GetComponent<CharacterStats>();
-        ownerCombat = gameObject.GetComponent<CharacterCombat>();
-        ownerCombat.attackModifiers.Add(this);
+        characterPresenter = gameObject.GetComponent<CharacterPresenter>();
+        //ownerStats = gameObject.GetComponent<CharacterStats>();
+        //ownerCombat = gameObject.GetComponent<CharacterCombat>();
+        characterPresenter.Combat.attackModifiers.Add(this);
     }
+
+
+    private void OnDestroy()
+    {
+        characterPresenter.Combat.attackModifiers.Remove(this);
+    }
+
 }

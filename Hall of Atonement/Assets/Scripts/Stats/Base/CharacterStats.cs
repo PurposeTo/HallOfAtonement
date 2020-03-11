@@ -180,10 +180,10 @@ public abstract class CharacterStats : UnitStats
     public void Healing(float amount)
     {
         CurrentHealthPoint += amount;
-        //if (CurrentHealthPoint > maxHealthPoint.GetValue())
-        //{
-        //    CurrentHealthPoint = maxHealthPoint.GetValue();
-        //}
+        if (CurrentHealthPoint > maxHealthPoint.GetValue())
+        {
+            CurrentHealthPoint = maxHealthPoint.GetValue();
+        }
 
         healthBar.IncreaseHealthBar();
     }
