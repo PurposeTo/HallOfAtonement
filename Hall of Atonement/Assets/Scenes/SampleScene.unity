@@ -3208,6 +3208,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster Melee
       objectReference: {fileID: 0}
+    - target: {fileID: 5674271863135617169, guid: cd1bf5d50f505bb44bbbaad62fc73fea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5674271863135617171, guid: cd1bf5d50f505bb44bbbaad62fc73fea,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4559,6 +4564,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Guardian Ranged
       objectReference: {fileID: 0}
+    - target: {fileID: 7124055157434966158, guid: 5b73c9a243b2841498e8ffcb31ac3546,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b73c9a243b2841498e8ffcb31ac3546, type: 3}
 --- !u!4 &578488127 stripped
@@ -4653,6 +4663,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Guardian Ranged (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124055157434966158, guid: 5b73c9a243b2841498e8ffcb31ac3546,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b73c9a243b2841498e8ffcb31ac3546, type: 3}
@@ -4848,6 +4863,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Guardian Ranged (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124055157434966158, guid: 5b73c9a243b2841498e8ffcb31ac3546,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b73c9a243b2841498e8ffcb31ac3546, type: 3}
@@ -5332,6 +5352,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Monster Melee (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5674271863135617169, guid: cd1bf5d50f505bb44bbbaad62fc73fea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5674271863135617171, guid: cd1bf5d50f505bb44bbbaad62fc73fea,
         type: 3}
@@ -7395,6 +7420,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Guardian Ranged (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7124055157434966158, guid: 5b73c9a243b2841498e8ffcb31ac3546,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b73c9a243b2841498e8ffcb31ac3546, type: 3}
 --- !u!4 &1039310950 stripped
@@ -8089,6 +8119,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Guardian Ranged (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124055157434966158, guid: 5b73c9a243b2841498e8ffcb31ac3546,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b73c9a243b2841498e8ffcb31ac3546, type: 3}
@@ -10911,6 +10946,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Beholder
       objectReference: {fileID: 0}
+    - target: {fileID: 3322675201190978477, guid: f9ccb6b7ddf079e4e817e0298e1d49ba,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3322675201190978479, guid: f9ccb6b7ddf079e4e817e0298e1d49ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12304,6 +12344,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Guardian Ranged (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124055157434966158, guid: 5b73c9a243b2841498e8ffcb31ac3546,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b73c9a243b2841498e8ffcb31ac3546, type: 3}

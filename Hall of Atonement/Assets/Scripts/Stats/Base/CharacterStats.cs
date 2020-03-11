@@ -3,6 +3,8 @@
 
 public abstract class CharacterStats : UnitStats
 {
+    public CharacterPresenter CharacterPresenter { get; private protected set; }
+
     public HealthBar healthBar;
     public LvlBar lvlBar;
 
@@ -81,9 +83,15 @@ public abstract class CharacterStats : UnitStats
     public PercentStat evasionChance; //Нет базового значения
 
 
+    private protected override void Awake()
+    {
+        base.Awake();
+        ChangeDamageType(UnitDamageType);
+    }
+
     private protected virtual void Start()
     {
-        ChangeDamageType(UnitDamageType);
+        CharacterPresenter = GetComponent<CharacterPresenter>();
     }
 
 

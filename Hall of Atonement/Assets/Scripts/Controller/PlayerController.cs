@@ -68,7 +68,7 @@ public class PlayerController : CharacterController
         else
         {
             PlayerControllerStateMachine.Patrolling(this);
-            Combat.targetToAttack = null;
+            CharacterPresenter.Combat.targetToAttack = null;
         }
     }
 

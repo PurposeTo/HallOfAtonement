@@ -4,8 +4,11 @@ using UnityEngine;
 
 public abstract class EnemyCombat : CharacterCombat, IEnemyAttackType
 {
-    private protected EnemyAI enemyAI;
-    private protected EnemyStats myEnemyStats;
+    public EnemyPresenter EnemyPresenter { get; private protected set; }
+
+
+    //private protected EnemyAI enemyAI;
+    //private protected EnemyStats myEnemyStats;
 
     private protected virtual float AttackRange { get; set; }
 
@@ -14,9 +17,7 @@ public abstract class EnemyCombat : CharacterCombat, IEnemyAttackType
     private protected override void Start()
     {
         base.Start();
-
-        enemyAI = (EnemyAI)controller;
-        myEnemyStats = (EnemyStats)myStats;
+        EnemyPresenter = (EnemyPresenter)CharacterPresenter;
     }
 
 

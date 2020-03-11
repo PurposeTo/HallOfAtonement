@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyStateFighting : EnemyAIStateMachine
 {
+    private GameObject focusTarget; //Цель, на которой враг в данный момент сфокусирован
+
     private float timer = 3f;
 
     private Coroutine fightingRoutine;
@@ -24,29 +26,46 @@ public class EnemyStateFighting : EnemyAIStateMachine
             StopCoroutine(fightingRoutine);
             fightingRoutine = null;
         }
-        enemyAI.Combat.targetToAttack = null;
+        enemyAI.EnemyPresenter.Combat.targetToAttack = null;
     }
 
 
-    public override void Fighting(EnemyAI enemyAI)
+    public override void Fighting(EnemyAI enemyAI, GameObject focusTarget)
     {
         if (fightingRoutine == null)
         {
-            fightingRoutine = StartCoroutine(FightingEnumerator(enemyAI, enemyAI.FocusTarget));
+            this.focusTarget = focusTarget;
+
+            fightingRoutine = StartCoroutine(FightingEnumerator(enemyAI));
+        }
+        else
+        {
+            //Если цель слишком далеко или ее вообше нет, то сменить цель на новую предложенную
+            if (Vector2.Distance(this.focusTarget.transform.position, transform.position) <= enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius)
+            {
+                this.focusTarget = focusTarget;
+            }
         }
     }
 
 
     public override void SeekingBattle(EnemyAI enemyAI)
     {
-        StopTheAction(enemyAI);
-
-        enemyAI.EnemyAIStateMachine = enemyAI.EnemyStatePatrolling;
-        enemyAI.EnemyAIStateMachine.SeekingBattle(enemyAI);
+        // Если цель еще жива, то стоит преследовать ее
+        if (focusTarget == null)
+        {
+            StopTheAction(enemyAI);
+            enemyAI.EnemyAIStateMachine = enemyAI.EnemyStatePatrolling;
+            enemyAI.EnemyAIStateMachine.SeekingBattle(enemyAI);
+        }
+        else
+        {
+            fightingRoutine = StartCoroutine(FightingEnumerator(enemyAI));
+        }
     }
 
 
-    private IEnumerator FightingEnumerator(EnemyAI enemyAI, GameObject focusTarget)
+    private IEnumerator FightingEnumerator(EnemyAI enemyAI)
     {
         //Обязательно подождать кадр, что бы избежать бага "бесконечного цикла"!
         yield return null;
