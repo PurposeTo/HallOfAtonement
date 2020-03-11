@@ -41,7 +41,7 @@ public class EnemyStateFighting : EnemyAIStateMachine
         else
         {
             //Если цель слишком далеко или ее вообше нет, то сменить цель на новую предложенную
-            if (Vector2.Distance(this.focusTarget.transform.position, transform.position) <= enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius)
+            if (this.focusTarget == null || Vector2.Distance(this.focusTarget.transform.position, transform.position) <= enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius)
             {
                 this.focusTarget = focusTarget;
             }
