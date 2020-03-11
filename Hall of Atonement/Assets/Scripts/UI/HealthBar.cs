@@ -10,7 +10,7 @@ public class HealthBar : MonoBehaviour
     public Slider decreasingValueSlider;
     public Text HealthPointText;
 
-    private float maxSliderValue = 100f;
+    private float maxSliderValue = 1f;
 
     private readonly float rateOfDecrease = 15f;
     private readonly float delayBeforeChange = 0.3f;
