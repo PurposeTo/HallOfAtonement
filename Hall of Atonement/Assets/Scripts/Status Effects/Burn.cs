@@ -6,10 +6,10 @@ public class Burn : MonoBehaviour, IDamageLogic
     private CharacterStats ownerStats = null;
     private DamageType damageType;
 
-    private readonly float baseDamagePerSecond = 2f;  //возможно перенести в конструктор Burn()
+    private readonly float baseDamagePerSecond = 2f;
     private readonly float baseBurningTime = 3f;
 
-    private float currentDamagePerSecond;
+    private float effectPower;
     private float currentBurningTime;
 
 
@@ -21,7 +21,7 @@ public class Burn : MonoBehaviour, IDamageLogic
 
     void Update()
     {
-        DoStatusEffectDamage(targetStats, ownerStats, damageType);
+        DoStatusEffectDamage(targetStats, ownerStats);
     }
 
 
@@ -39,11 +39,11 @@ public class Burn : MonoBehaviour, IDamageLogic
     }
 
 
-    public void DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats, DamageType fireDamage)
+    public void DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats)
     {
         if(currentBurningTime > 0f)
         {
-            targetStats.TakeDamage(ownerStats, fireDamage, currentDamagePerSecond * Time.deltaTime, out bool _, out bool _);
+            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, out bool _, out bool _);
             currentBurningTime -= Time.deltaTime;
         }
         else
@@ -57,6 +57,14 @@ public class Burn : MonoBehaviour, IDamageLogic
     {
         this.ownerStats = ownerStats;
         currentBurningTime = baseBurningTime;
-        currentDamagePerSecond += baseDamagePerSecond * amplificationAmount;
+        effectPower += amplificationAmount;
+    }
+
+
+    public void SelfDestruction()
+    {
+        float remainingDamage = baseDamagePerSecond * effectPower * currentBurningTime;
+        targetStats.TakeDamage(ownerStats, damageType, remainingDamage, false, out bool _, out bool _);
+        Destroy(this);
     }
 }

@@ -88,11 +88,7 @@ public abstract class CharacterCombat : MonoBehaviour
         }
 
 
-        damage = targetStats.TakeDamage(CharacterPresenter.MyStats,
-                                        CharacterPresenter.MyStats.DamageType,
-                                        damage,
-                                        out bool isEvaded,
-                                        out bool isBlocked); //лайстилиться от реально нанесенного урона
+        damage = targetStats.TakeDamage(CharacterPresenter.MyStats, CharacterPresenter.MyStats.DamageType, damage, true, out bool isEvaded, out bool isBlocked);
 
         if (!isEvaded)
         {
@@ -114,10 +110,9 @@ public abstract class CharacterCombat : MonoBehaviour
 
 
 
-            //attackModifiers.ForEach() //можно применить делегат?
             for (int i = 0; i < attackModifiers.Count; i++)
             {
-                attackModifiers[i].ApplyAttackModifier(damage);
+                attackModifiers[i].ApplyAttackModifier(damage, CharacterPresenter.MyStats.mastery.GetValue());
             }
         }
     }

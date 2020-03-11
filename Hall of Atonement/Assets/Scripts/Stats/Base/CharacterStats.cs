@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using System.Collections.Generic;
 
 public abstract class CharacterStats : UnitStats
 {
@@ -82,6 +82,8 @@ public abstract class CharacterStats : UnitStats
     //public Stat armor; //Нет базового значения
     public PercentStat evasionChance; //Нет базового значения
 
+    private List<IDefenseModifier> defenseModifiers = new List<IDefenseModifier>();
+
 
     private protected override void Awake()
     {
@@ -151,20 +153,25 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, out bool isEvaded, out bool isBlocked)
+    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, out bool isEvaded, out bool isBlocked)
     {
         isEvaded = false;
         isBlocked = false;
 
+        for (int i = 0; i < defenseModifiers.Count; i++)
+        {
+            defenseModifiers[i].ApplyDefenseModifier(killerStats, damageType, damage, out isEvaded, out isBlocked);
+        }
+
         //Если вероятность уворотов больше нуля И если рандом говорит о том, что нужно увернуться
-        if (evasionChance.GetValue() > 0f && Random.Range(1f, 100f) <= evasionChance.GetValue())
+        if (canEvade && (isEvaded || (evasionChance.GetValue() > 0f && Random.Range(1f, 100f) <= evasionChance.GetValue())))
         {
             isEvaded = true;
             Debug.Log(transform.name + " dodge the damage!"); //Задоджили урон!
         }
         else //Получаем урон
         {
-            damage = base.TakeDamage(killerStats, damageType, damage, out isEvaded, out isBlocked);
+            damage = base.TakeDamage(killerStats, damageType, damage, canEvade, out isEvaded, out isBlocked);
 
             if (!isBlocked) 
             {

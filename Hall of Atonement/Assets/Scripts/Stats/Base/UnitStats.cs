@@ -13,7 +13,7 @@ public abstract class UnitStats : MonoBehaviour
     public PercentStat poisonResistance;
     public PercentStat bleedingResistance;
 
-    IDamageReducerFactory damageReducerFactory;
+    private IDamageReducerFactory damageReducerFactory;
 
 
     private protected virtual void Awake()
@@ -30,7 +30,7 @@ public abstract class UnitStats : MonoBehaviour
     }
 
 
-    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, out bool isEvaded, out bool isBlocked)
+    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, out bool isEvaded, out bool isBlocked)
     {
         isEvaded = false;
         isBlocked = false;
