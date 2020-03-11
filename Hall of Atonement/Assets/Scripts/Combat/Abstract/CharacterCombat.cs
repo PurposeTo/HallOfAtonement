@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController))]
 public abstract class CharacterCombat : MonoBehaviour
@@ -14,6 +15,8 @@ public abstract class CharacterCombat : MonoBehaviour
     public IAttacker Attacker { get; private protected set; }
 
     private IDamageReducerFactory statusEffectFactory;
+
+    public List<IAttackModifier> attackModifiers;
 
 
     private protected virtual void Start()
@@ -85,7 +88,7 @@ public abstract class CharacterCombat : MonoBehaviour
         }
 
 
-        targetStats.TakeDamage(CharacterPresenter.MyStats, CharacterPresenter.MyStats.DamageType, damage, out bool isEvaded, out bool isBlocked);
+        damage = targetStats.TakeDamage(CharacterPresenter.MyStats, CharacterPresenter.MyStats.DamageType, damage, out bool isEvaded, out bool isBlocked); //лайстилиться от реально нанесенного урона
 
         if (!isEvaded)
         {
@@ -102,8 +105,16 @@ public abstract class CharacterCombat : MonoBehaviour
             /*
              * Есть ли модификатор атаки?
              * 
-             * Если у цели есть модификатор атаки, который должен навесить дебафф, то сам подификатор проверяет, может ли он это сделать.
+             * Если у цели есть модификатор атаки, который должен навесить дебафф, то сам модификатор проверяет, может ли он это сделать.
              */
+            if (attackModifiers.Count != 0)
+            {
+                //attackModifiers.ForEach() //можно применить делегат?
+                foreach (IAttackModifier modifier in attackModifiers)
+                {
+                    modifier.ApplyAttackModifier(damage); //пусть пока останется параметр "damage", но во всех ли модификаторах он нужен?
+                }
+            }
         }
     }
 }

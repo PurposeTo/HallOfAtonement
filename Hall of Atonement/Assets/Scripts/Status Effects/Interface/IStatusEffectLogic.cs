@@ -1,30 +1,30 @@
-﻿interface IStatusEffectLogic
+﻿public interface IStatusEffectLogic
 {
 }
 
-interface IAttackModifier : IStatusEffectLogic
+public interface IAttackModifier : IStatusEffectLogic
 {
-    void ApplyAttackModifier();
+    void ApplyAttackModifier(float damage);
 }
 
-interface IDefenseModifier : IStatusEffectLogic
-{
-
-}
-
-interface IStatsModifier : IStatusEffectLogic
+public interface IDefenseModifier : IStatusEffectLogic
 {
 
 }
 
-interface IDamageLogic : IStatusEffectLogic
+public interface IStatsModifier : IStatusEffectLogic
+{
+
+}
+
+public interface IDamageLogic : IStatusEffectLogic
 {
     void DoStatusEffectDamage(UnitStats targetStats, CharacterStats killerStats, DamageType damageType);
 
     void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount);
 }
 
-interface IHealLogic : IStatusEffectLogic
+public interface IHealLogic : IStatusEffectLogic
 {
 
 }

@@ -1,23 +1,23 @@
-﻿public class Lifesteal : IAttackModifier
+﻿using UnityEngine;
+
+public class Lifesteal : MonoBehaviour, IAttackModifier
 {
-    private CharacterStats targetStats;
+    private CharacterStats ownerStats;
+    private CharacterCombat ownerCombat;
+    private float lifestealValue = 0.05f;
 
-    public Lifesteal(CharacterStats targetStats)
+
+    public void ApplyAttackModifier(float damage)
     {
-        this.targetStats = targetStats;
+        ownerStats.Healing(damage * lifestealValue);
+        Debug.Log(ownerStats.gameObject.name + ": \"Your life is mine!\"");
     }
 
-    public void ApplyAttackModifier()
-    {
-
-    }
 
     void Start()
     {
-    }
-
-
-    void Update()
-    {
+        ownerStats = gameObject.GetComponent<CharacterStats>();
+        ownerCombat = gameObject.GetComponent<CharacterCombat>();
+        ownerCombat.attackModifiers.Add(this);
     }
 }
