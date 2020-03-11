@@ -1,17 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Lifesteal : MonoBehaviour
+﻿public class Lifesteal : IAttackModifier
 {
+    private CharacterStats targetStats;
+
+    public Lifesteal(CharacterStats targetStats)
+    {
+        this.targetStats = targetStats;
+    }
+
+    public void ApplyAttackModifier()
+    {
+
+    }
+
     void Start()
     {
-        print("Test #2 pull request");
     }
 
 
     void Update()
     {
-        
     }
 }

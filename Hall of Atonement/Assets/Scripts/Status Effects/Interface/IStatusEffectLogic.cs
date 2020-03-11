@@ -3,8 +3,8 @@
 }
 
 interface IAttackModifier : IStatusEffectLogic
-{ 
-
+{
+    void ApplyAttackModifier();
 }
 
 interface IDefenseModifier : IStatusEffectLogic
