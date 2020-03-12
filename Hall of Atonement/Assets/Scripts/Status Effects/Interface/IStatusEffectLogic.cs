@@ -12,9 +12,9 @@ public interface IDefenseModifier : IStatusEffectLogic
     void ApplyDefenseModifier(CharacterStats killerStats, DamageType damageType, float damage, out bool isEvaded, out bool isBlocked);
 }
 
-public interface IStatsModifier : IStatusEffectLogic
+public interface IStatModifier : IStatusEffectLogic
 {
-
+    float ModifierValue { get; }
 }
 
 public interface IDamageLogic : IStatusEffectLogic
