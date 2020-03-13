@@ -49,6 +49,7 @@ public abstract class CharacterStats : UnitStats
     private protected virtual float BaseRotationSpeed { get; } = 720f; //базовое значение скорости поворота //Соотносится как ~ 1080 к 10 скорости
 
     private protected virtual float BaseAttackDamage { get; } = 10f; //базовое значение атаки
+    private readonly float minAttackSpeed = 0.01f; //максимальное значение скорости атаки
     private readonly float maxAttackSpeed = 50f; //максимальное значение скорости атаки
     private protected virtual float BaseAttackSpeed { get; } = 0.75f; //базовое значение скорости атаки
 
@@ -113,12 +114,36 @@ public abstract class CharacterStats : UnitStats
             (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
 
         attackSpeed = new Stat(BaseAttackSpeed +
-            (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility), 0.01f, maxAttackSpeed);
+            (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility), minAttackSpeed, maxAttackSpeed);
         criticalMultiplier = new Stat(BaseCriticalMultiplier + (mastery.GetValue() * criticalMultiplierForMastery), minCriticalMultiplier);
         criticalChance = new PercentStat(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery));
 
         armor = new Stat(agility.GetValue() * armorForAgility);
         evasionChance = new PercentStat(agility.GetValue() * evasionForAgility);
+    }
+
+
+    private protected override void ChangesBaseStatsValue()
+    {
+        base.ChangesBaseStatsValue();
+
+        maxHealthPoint.ChangeBaseValue(BaseMaxHealthPoint + (strength.GetValue() * hpForStrenght));
+
+        movementSpeed.ChangeBaseValue(BaseMovementSpeed +
+            (strength.GetValue() * movementSpeedForStrenght) + (agility.GetValue() * movementSpeedForAgility));
+        rotationSpeed.ChangeBaseValue(BaseRotationSpeed +
+            (strength.GetValue() * rotationSpeedForStrenght) + (agility.GetValue() * rotationSpeedForAgility));
+
+        attackDamage.ChangeBaseValue(BaseAttackDamage +
+            (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
+
+        attackSpeed.ChangeBaseValue(BaseAttackSpeed +
+            (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility));
+        criticalMultiplier.ChangeBaseValue(BaseCriticalMultiplier + (mastery.GetValue() * criticalMultiplierForMastery));
+        criticalChance.ChangeBaseValue(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery));
+
+        armor.ChangeBaseValue(agility.GetValue() * armorForAgility);
+        evasionChance.ChangeBaseValue(agility.GetValue() * evasionForAgility);
     }
 
 

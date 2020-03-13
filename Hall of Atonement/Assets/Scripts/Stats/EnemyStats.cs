@@ -84,7 +84,7 @@ public class EnemyStats : CharacterStats
         //Если уровень повысился
         if (isLvlUp)
         {
-            StatInitialization();
+            ChangesBaseStatsValue();
         }
     }
 
@@ -99,6 +99,17 @@ public class EnemyStats : CharacterStats
 
         base.StatInitialization();
         healthPointRegen = new Stat(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
+    }
+
+
+    private protected override void ChangesBaseStatsValue()
+    {
+        strength.ChangeBaseValue((int)(level.GetLvl() * strenghtFromLvl));
+        agility.ChangeBaseValue((int)(level.GetLvl() * agilityFromLvl));
+        mastery.ChangeBaseValue((int)(level.GetLvl() * masteryFromLvl));
+
+        base.ChangesBaseStatsValue();
+        healthPointRegen.ChangeBaseValue(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
     }
 
 

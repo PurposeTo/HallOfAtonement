@@ -62,4 +62,10 @@ public class Stat
     {
         statModifiers.Remove(modifier);
     }
+
+
+    public virtual void ChangeBaseValue(float newBaseValue)
+    {
+        baseValue = newBaseValue;
+    }
 }

@@ -45,4 +45,10 @@ public class Attribute
 		if (modifier != 0)
 			attributeModifiers.Remove(modifier);
 	}
+
+
+	public virtual void ChangeBaseValue(int newBaseValue)
+	{
+		baseValue = newBaseValue;
+	}
 }
