@@ -39,6 +39,7 @@ public class EffectDamageReducer : IDamageReducerProduct
         if (effectDamageResistance == 1f)
         {
             isBlocked = true;
+            return 0f;
         }
 
         return damage *= (1f - effectDamageResistance);
