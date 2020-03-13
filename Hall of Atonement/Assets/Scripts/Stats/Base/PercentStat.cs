@@ -17,32 +17,37 @@ public class PercentStat : Stat
     {
         float finalValue = 1f - baseValue;
 
-        statModifiers.ForEach(x => finalValue *= 1f - x);
+        for (int i = 0; i < statModifiers.Count; i++)
+        {
+            finalValue *= (1f - statModifiers[i].GetModifierValue());
+        }
 
         finalValue = 1f - finalValue;
 
-        return finalValue >= 0f ? finalValue : 0f;
+        if (finalValue < minValue) { return minValue; }
+        else if (finalValue > maxValue) { return maxValue; }
+        else { return finalValue; }
     }
 
 
-    public override void AddModifier(float modifier)
+    public override void AddModifier(IStatModifier modifier)
     {
-        if (modifier > 1f)
+        if (modifier.GetModifierValue() > 1f)
         {
-            Debug.LogError("Too much modifier to add!");
-            modifier = 1f;
+            Debug.LogWarning("Too much modifier to add!");
         }
+
         base.AddModifier(modifier);
     }
 
 
-    public override void RemoveModifier(float modifier)
+    public override void RemoveModifier(IStatModifier modifier)
     {
-        if (modifier > 1f)
+        if (modifier.GetModifierValue() > 1f)
         {
-            Debug.LogError("Too much modifier to add!");
-            modifier = 1f;
+            Debug.LogWarning("Too much modifier!");
         }
+
         base.RemoveModifier(modifier);
     }
 }

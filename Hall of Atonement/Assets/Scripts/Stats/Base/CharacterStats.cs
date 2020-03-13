@@ -82,7 +82,8 @@ public abstract class CharacterStats : UnitStats
     //public Stat armor; //Нет базового значения
     public PercentStat evasionChance; //Нет базового значения
 
-    private List<IDefenseModifier> defenseModifiers = new List<IDefenseModifier>();
+
+    private protected List<IDefenseModifier> defenseModifiers = new List<IDefenseModifier>();
 
 
     private protected override void Awake()

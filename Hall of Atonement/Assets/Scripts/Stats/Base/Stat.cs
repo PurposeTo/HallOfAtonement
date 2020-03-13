@@ -6,7 +6,12 @@ public class Stat
 {
     [SerializeField] private protected float baseValue;    // Starting value
 
-    private protected List<float> statModifiers = new List<float>();
+
+    private protected float minValue;
+
+    private protected float maxValue;
+
+    private protected List<IStatModifier> statModifiers = new List<IStatModifier>();
 
     public Stat() : this(0f) { }
 
@@ -17,16 +22,27 @@ public class Stat
     public Stat(float baseValue, float minValue, float maxValue)
     {
         //Стата должна быть только положительной. Так же можно задать минимальное и максимальное значение
-        this.baseValue = Mathf.Clamp(baseValue, minValue, maxValue);
+
+        this.minValue = Mathf.Clamp(minValue, 0f, float.MaxValue); //Минимальное значение должно быть больше или равно нулю
+        this.maxValue = Mathf.Clamp(maxValue, minValue, float.MaxValue); //Максимальное значение должно быть больше минимального
+
+        this.baseValue = Mathf.Clamp(baseValue, this.minValue, this.maxValue);
     }
 
 
     public virtual float GetValue()
     {
         float finalValue = baseValue;
-        statModifiers.ForEach(x => finalValue += x);
 
-        return finalValue >= 0f ? finalValue : 0f;
+        for (int i = 0; i < statModifiers.Count; i++)
+        {
+            finalValue += statModifiers[i].GetModifierValue();
+        }
+
+        if (finalValue < minValue) { return minValue; }
+        else if (finalValue > maxValue) { return maxValue; }
+        else { return finalValue; }
+
     }
 
 
@@ -36,16 +52,14 @@ public class Stat
     }
 
 
-    public virtual void AddModifier(float modifier)
+    public virtual void AddModifier(IStatModifier modifier)
     {
-        if (modifier != 0)
-            statModifiers.Add(modifier);
+        statModifiers.Add(modifier);
     }
 
 
-    public virtual void RemoveModifier(float modifier)
+    public virtual void RemoveModifier(IStatModifier modifier)
     {
-        if (modifier != 0)
-            statModifiers.Remove(modifier);
+        statModifiers.Remove(modifier);
     }
 }

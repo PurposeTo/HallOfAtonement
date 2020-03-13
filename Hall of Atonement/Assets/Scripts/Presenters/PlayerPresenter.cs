@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerStats))]
-[RequireComponent(typeof(PlayerCombat))]
+//[RequireComponent(typeof(PlayerCombat))]
 [RequireComponent(typeof(PlayerController))]
 public class PlayerPresenter : CharacterPresenter
 {
