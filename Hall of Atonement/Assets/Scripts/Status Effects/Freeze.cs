@@ -2,21 +2,6 @@
 
 class Freeze : MonoBehaviour, IDamageLogic, IStatModifier
 {
-    float IStatModifier.ModifierValue { get => slowly; }
-
-    private float slowly = -10f; //Временный тест
-
-
-    private void OnEnable()
-    {
-        gameObject.GetComponent<CharacterStats>().attackSpeed.AddModifier(this); //Временный тест
-    }
-
-    private void OnDisable()
-    {
-        gameObject.GetComponent<CharacterStats>().attackSpeed.RemoveModifier(this); //Временный тест
-    }
-
 
     public void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
     {
@@ -32,5 +17,10 @@ class Freeze : MonoBehaviour, IDamageLogic, IStatModifier
     {
         // Нанести весь урон от льда
         Destroy(this);
+    }
+
+    float IStatModifier.GetModifierValue()
+    {
+        throw new System.NotImplementedException();
     }
 }

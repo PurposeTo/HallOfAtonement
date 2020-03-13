@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(PlayerCombat))]
+//[RequireComponent(typeof(PlayerCombat))]
 [RequireComponent(typeof(PlayerStats))]
 [RequireComponent(typeof(PlayerStatePatrolling))]
 [RequireComponent(typeof(PlayerStateFighting))]
