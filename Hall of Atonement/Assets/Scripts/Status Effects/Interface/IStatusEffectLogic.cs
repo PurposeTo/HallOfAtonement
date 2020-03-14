@@ -14,7 +14,7 @@ public interface IDefenseModifier : IStatusEffectLogic
 
 public interface IStatModifier : IStatusEffectLogic
 {
-    float GetModifierValue();
+    float ModifierValue { get; set; }
 }
 
 public interface IDamageLogic : IStatusEffectLogic

@@ -36,7 +36,7 @@ public class Stat
 
         for (int i = 0; i < statModifiers.Count; i++)
         {
-            finalValue += statModifiers[i].GetModifierValue();
+            finalValue += statModifiers[i].ModifierValue;
         }
 
         if (finalValue < minValue) { return minValue; }
