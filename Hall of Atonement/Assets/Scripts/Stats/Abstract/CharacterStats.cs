@@ -13,6 +13,10 @@ public abstract class CharacterStats : UnitStats
     public Attribute agility = new Attribute();
     public Attribute mastery = new Attribute();
 
+    private protected bool isStrenghtchanged;
+    private protected bool isAgilitychanged;
+    private protected bool isMasterychanged;
+
     //Зависимость статов от Силы
     private readonly float hpForStrenght = 20f;
     private readonly float attackDamageForStrenght = 3f;
@@ -93,6 +97,22 @@ public abstract class CharacterStats : UnitStats
         ChangeDamageType(UnitDamageType);
     }
 
+    private void OnEnable()
+    {
+        strength.OnChangeAttribute += IsStrenghtchanged;
+        agility.OnChangeAttribute += IsAgilitychanged;
+        mastery.OnChangeAttribute += IsMasterychanged;
+    }
+
+
+    private void OnDisable()
+    {
+        strength.OnChangeAttribute -= IsStrenghtchanged;
+        agility.OnChangeAttribute -= IsAgilitychanged;
+        mastery.OnChangeAttribute -= IsMasterychanged;
+    }
+
+
     private protected virtual void Start()
     {
         CharacterPresenter = GetComponent<CharacterPresenter>();
@@ -123,27 +143,44 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    private protected override void ChangesBaseStatsValue()
+    private protected override void UpdateBaseStatsValue()
     {
-        base.ChangesBaseStatsValue();
+        base.UpdateBaseStatsValue();
 
-        maxHealthPoint.ChangeBaseValue(BaseMaxHealthPoint + (strength.GetValue() * hpForStrenght));
+        if (isStrenghtchanged || isAgilitychanged)
+        {
+            if (isStrenghtchanged)
+            {
+                maxHealthPoint.ChangeBaseValue(BaseMaxHealthPoint + (strength.GetValue() * hpForStrenght));
+            }
 
-        movementSpeed.ChangeBaseValue(BaseMovementSpeed +
-            (strength.GetValue() * movementSpeedForStrenght) + (agility.GetValue() * movementSpeedForAgility));
-        rotationSpeed.ChangeBaseValue(BaseRotationSpeed +
-            (strength.GetValue() * rotationSpeedForStrenght) + (agility.GetValue() * rotationSpeedForAgility));
+            if (isAgilitychanged) 
+            {
+                armor.ChangeBaseValue(agility.GetValue() * armorForAgility);
+                evasionChance.ChangeBaseValue(agility.GetValue() * evasionForAgility);
+            }
 
-        attackDamage.ChangeBaseValue(BaseAttackDamage +
-            (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
+            movementSpeed.ChangeBaseValue(BaseMovementSpeed + (strength.GetValue() * movementSpeedForStrenght) + (agility.GetValue() * movementSpeedForAgility));
+            rotationSpeed.ChangeBaseValue(BaseRotationSpeed + (strength.GetValue() * rotationSpeedForStrenght) + (agility.GetValue() * rotationSpeedForAgility));
 
-        attackSpeed.ChangeBaseValue(BaseAttackSpeed +
-            (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility));
-        criticalMultiplier.ChangeBaseValue(BaseCriticalMultiplier + (mastery.GetValue() * criticalMultiplierForMastery));
-        criticalChance.ChangeBaseValue(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery));
+            attackDamage.ChangeBaseValue(BaseAttackDamage + (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
 
-        armor.ChangeBaseValue(agility.GetValue() * armorForAgility);
-        evasionChance.ChangeBaseValue(agility.GetValue() * evasionForAgility);
+            attackSpeed.ChangeBaseValue(BaseAttackSpeed + (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility));
+        }
+        else if (isMasterychanged)
+        {
+            criticalMultiplier.ChangeBaseValue(BaseCriticalMultiplier + (mastery.GetValue() * criticalMultiplierForMastery));
+            criticalChance.ChangeBaseValue(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery));
+        }
+        else
+        {
+            Debug.LogError(gameObject.name + " Careful! Smth wrong with UpdateBaseStatsValue!");
+
+        }
+
+        isStrenghtchanged = false;
+        isAgilitychanged = false;
+        isMasterychanged = false;
     }
 
 
@@ -248,4 +285,8 @@ public abstract class CharacterStats : UnitStats
         Debug.Log(transform.name + " Умер!");
     }
 
+
+    private void IsStrenghtchanged() { isStrenghtchanged = true; }
+    private void IsAgilitychanged() { isAgilitychanged = true; }
+    private void IsMasterychanged() { isAgilitychanged = true; }
 }

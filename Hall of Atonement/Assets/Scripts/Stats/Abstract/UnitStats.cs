@@ -30,7 +30,7 @@ public abstract class UnitStats : MonoBehaviour
     }
 
 
-    private protected virtual void ChangesBaseStatsValue()
+    private protected virtual void UpdateBaseStatsValue()
     {
         Debug.Log("Warning! " + gameObject.name + " changed his Stats/Attributes base value!");
     }

@@ -84,7 +84,13 @@ public class EnemyStats : CharacterStats
         //Если уровень повысился
         if (isLvlUp)
         {
-            ChangesBaseStatsValue();
+            strength.ChangeBaseValue((int)(level.GetLvl() * strenghtFromLvl));
+
+            agility.ChangeBaseValue((int)(level.GetLvl() * agilityFromLvl));
+
+            mastery.ChangeBaseValue((int)(level.GetLvl() * masteryFromLvl));
+
+            UpdateBaseStatsValue();
         }
     }
 
@@ -102,14 +108,15 @@ public class EnemyStats : CharacterStats
     }
 
 
-    private protected override void ChangesBaseStatsValue()
+    private protected override void UpdateBaseStatsValue()
     {
-        strength.ChangeBaseValue((int)(level.GetLvl() * strenghtFromLvl));
-        agility.ChangeBaseValue((int)(level.GetLvl() * agilityFromLvl));
-        mastery.ChangeBaseValue((int)(level.GetLvl() * masteryFromLvl));
+        if (isStrenghtchanged) 
+        {
+            healthPointRegen.ChangeBaseValue(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
+        }
 
-        base.ChangesBaseStatsValue();
-        healthPointRegen.ChangeBaseValue(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
+
+        base.UpdateBaseStatsValue(); // В Base происходит обнуление булевых переменных!
     }
 
 
@@ -132,7 +139,4 @@ public class EnemyStats : CharacterStats
         base.Die(killerStats);
         Destroy(gameObject);
     }
-
-
-
 }

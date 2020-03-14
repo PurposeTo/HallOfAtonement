@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Attribute
+
+public delegate void ChangeAttribute();
+[System.Serializable] public class Attribute
 {
-    [SerializeField]
-    private int baseValue;    // Starting value
+    public event ChangeAttribute OnChangeAttribute;
+
+    [SerializeField] private int baseValue;    // Starting value
 
 	private protected List<IParameterModifier<int>> attributeModifiers = new List<IParameterModifier<int>>();
 
@@ -51,5 +53,7 @@ public class Attribute
     public virtual void ChangeBaseValue(int newBaseValue)
     {
         baseValue = newBaseValue;
+
+        if (OnChangeAttribute != null) OnChangeAttribute();
     }
 }
