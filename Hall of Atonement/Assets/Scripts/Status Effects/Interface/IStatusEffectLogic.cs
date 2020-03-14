@@ -11,7 +11,7 @@ public interface IAttackModifier : IStatusEffectLogic
 
 public interface IDefenseModifier : IStatusEffectLogic
 {
-    void ApplyDefenseModifier(CharacterStats killerStats, DamageType damageType, float damage, out bool isEvaded, out bool isBlocked);
+    void ApplyDefenseModifier(CharacterStats killerStats, DamageType damageType, float damage, ref bool isEvaded, ref bool isBlocked);
 }
 
 

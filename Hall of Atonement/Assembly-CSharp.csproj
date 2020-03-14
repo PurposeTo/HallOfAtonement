@@ -127,6 +127,7 @@
     <Compile Include="Assets\Scripts\Stats\EnemyStats.cs" />
     <Compile Include="Assets\Scripts\Stats\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Burn.cs" />
+    <Compile Include="Assets\Scripts\Status Effects\DefenseModifiers\FriendlyFireDefence.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Freeze.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Interface\IStatusEffectLogic.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Lifesteal.cs" />

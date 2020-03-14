@@ -36,10 +36,8 @@ public abstract class UnitStats : MonoBehaviour
     }
 
 
-    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, out bool isEvaded, out bool isBlocked)
+    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, ref bool isEvaded, ref bool isBlocked)
     {
-        isEvaded = false;
-        isBlocked = false;
 
         //снизить урон от определенного типа урона
         IDamageReducerProduct damageReducer = damageReducerFactory.CreateDamageReducerProduct(damageType);

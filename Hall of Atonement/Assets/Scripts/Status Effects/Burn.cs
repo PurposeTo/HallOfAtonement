@@ -41,9 +41,12 @@ public class Burn : MonoBehaviour, IDamageLogic
 
     public void DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats)
     {
+        bool isEvaded = false;
+        bool isBlocked = false;
+
         if(currentBurningTime > 0f)
         {
-            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, out bool _, out bool _);
+            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, ref isEvaded, ref isBlocked);
             currentBurningTime -= Time.deltaTime;
         }
         else
@@ -63,8 +66,11 @@ public class Burn : MonoBehaviour, IDamageLogic
 
     public void SelfDestruction()
     {
+        bool isEvaded = false;
+        bool isBlocked = false;
+
         float remainingDamage = baseDamagePerSecond * effectPower * currentBurningTime;
-        targetStats.TakeDamage(ownerStats, damageType, remainingDamage, false, out bool _, out bool _);
+        targetStats.TakeDamage(ownerStats, damageType, remainingDamage, false, ref isEvaded, ref isBlocked);
         Destroy(this);
     }
 }

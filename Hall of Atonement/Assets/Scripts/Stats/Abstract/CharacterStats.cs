@@ -88,7 +88,7 @@ public abstract class CharacterStats : UnitStats
     public PercentStat evasionChance; //Нет базового значения
 
 
-    private protected List<IDefenseModifier> defenseModifiers = new List<IDefenseModifier>();
+    public List<IDefenseModifier> defenseModifiers = new List<IDefenseModifier>();
 
 
     private protected override void Awake()
@@ -216,14 +216,12 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, out bool isEvaded, out bool isBlocked)
+    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, ref bool isEvaded, ref bool isBlocked)
     {
-        isEvaded = false;
-        isBlocked = false;
 
         for (int i = 0; i < defenseModifiers.Count; i++)
         {
-            defenseModifiers[i].ApplyDefenseModifier(killerStats, damageType, damage, out isEvaded, out isBlocked);
+            defenseModifiers[i].ApplyDefenseModifier(killerStats, damageType, damage, ref isEvaded, ref isBlocked);
         }
 
         //Если вероятность уворотов больше нуля И если рандом говорит о том, что нужно увернуться
@@ -234,7 +232,7 @@ public abstract class CharacterStats : UnitStats
         }
         else //Получаем урон
         {
-            damage = base.TakeDamage(killerStats, damageType, damage, canEvade, out isEvaded, out isBlocked);
+            damage = base.TakeDamage(killerStats, damageType, damage, canEvade, ref isEvaded, ref isBlocked);
 
             if (!isBlocked) 
             {
