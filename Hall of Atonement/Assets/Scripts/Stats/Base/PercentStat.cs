@@ -30,7 +30,7 @@ public class PercentStat : Stat
     }
 
 
-    public override void AddModifier(IStatModifier modifier)
+    public override void AddModifier(IParameterModifier<float> modifier)
     {
         if (modifier.ModifierValue > 1f)
         {
@@ -41,7 +41,7 @@ public class PercentStat : Stat
     }
 
 
-    public override void RemoveModifier(IStatModifier modifier)
+    public override void RemoveModifier(IParameterModifier<float> modifier)
     {
         if (modifier.ModifierValue > 1f)
         {

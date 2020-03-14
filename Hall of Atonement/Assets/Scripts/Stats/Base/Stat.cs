@@ -5,13 +5,10 @@ using UnityEngine;
 public class Stat
 {
     [SerializeField] private protected float baseValue;    // Starting value
-
-
     private protected float minValue;
-
     private protected float maxValue;
 
-    private protected List<IStatModifier> statModifiers = new List<IStatModifier>();
+    private protected List<IParameterModifier<float>> statModifiers = new List<IParameterModifier<float>>();
 
     public Stat() : this(0f) { }
 
@@ -52,13 +49,13 @@ public class Stat
     }
 
 
-    public virtual void AddModifier(IStatModifier modifier)
+    public virtual void AddModifier(IParameterModifier<float> modifier)
     {
         statModifiers.Add(modifier);
     }
 
 
-    public virtual void RemoveModifier(IStatModifier modifier)
+    public virtual void RemoveModifier(IParameterModifier<float> modifier)
     {
         statModifiers.Remove(modifier);
     }

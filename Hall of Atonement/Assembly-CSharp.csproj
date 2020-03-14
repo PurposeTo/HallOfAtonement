@@ -120,9 +120,9 @@
     <Compile Include="Assets\Scripts\Stats\Abstract\UnitStats.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\Attribute.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\LevelSystem.cs" />
+    <Compile Include="Assets\Scripts\Stats\Base\ParameterModifier.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\PercentStat.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\Stat.cs" />
-    <Compile Include="Assets\Scripts\Stats\Base\StatModifier.cs" />
     <Compile Include="Assets\Scripts\Stats\BoxStats.cs" />
     <Compile Include="Assets\Scripts\Stats\EnemyStats.cs" />
     <Compile Include="Assets\Scripts\Stats\PlayerStats.cs" />

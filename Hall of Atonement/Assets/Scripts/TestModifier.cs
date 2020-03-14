@@ -7,9 +7,9 @@ public class TestModifier : MonoBehaviour
     float BasefrozenPercent = 0.6f;
 
 
-    private StatModifier modifierMovementSpeed = new StatModifier();
-    private StatModifier modifierRotationSpeed = new StatModifier();
-    private StatModifier modifierAttackSpeed = new StatModifier();
+    private ParameterModifier<float> modifierMovementSpeed = new ParameterModifier<float>();
+    private ParameterModifier<float> modifierRotationSpeed = new ParameterModifier<float>();
+    private ParameterModifier<float> modifierAttackSpeed = new ParameterModifier<float>();
 
     private UnitStats targetStats;
 
