@@ -17,7 +17,11 @@ public interface IDefenseModifier : IStatusEffectLogic
 
 public interface IParameterModifier<T> : IStatusEffectLogic
 {
-    T ModifierValue { get; set; }
+    event ChangeParameterModifier OnChangeParameterModifier;
+
+    T GetModifierValue();
+
+    void SetModifierValue(T newValue);
 }
 
 

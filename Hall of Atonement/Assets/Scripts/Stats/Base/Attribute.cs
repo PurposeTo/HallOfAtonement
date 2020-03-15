@@ -19,13 +19,13 @@ public delegate void ChangeAttribute();
     }
 
 
-	public int GetValue()
+    public int GetValue()
 	{
 		int finalValue = baseValue;
 
 		for (int i = 0; i < attributeModifiers.Count; i++)
 		{
-			finalValue += attributeModifiers[i].ModifierValue;
+			finalValue += attributeModifiers[i].GetModifierValue();
 		}
 
 		if (finalValue < 0) { return 0; }
@@ -41,12 +41,20 @@ public delegate void ChangeAttribute();
     public virtual void AddModifier(IParameterModifier<int> modifier)
     {
         attributeModifiers.Add(modifier);
+
+        modifier.OnChangeParameterModifier += ReportUpdate;
+
+        ReportUpdate();
     }
 
 
     public virtual void RemoveModifier(IParameterModifier<int> modifier)
     {
         attributeModifiers.Remove(modifier);
+
+        modifier.OnChangeParameterModifier -= ReportUpdate;
+
+        ReportUpdate();
     }
 
 
@@ -54,6 +62,12 @@ public delegate void ChangeAttribute();
     {
         baseValue = newBaseValue;
 
+        ReportUpdate();
+    }
+
+
+    private void ReportUpdate() // Сообщить об обновлении
+    {
         if (OnChangeAttribute != null) OnChangeAttribute();
     }
 }

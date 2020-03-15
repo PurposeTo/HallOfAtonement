@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class PercentStat : Stat
 {
-    //Этот класс всегда в диапазоне от 0 до 100.
+    //Этот класс всегда в диапазоне от 0 до 1
     
     public PercentStat() : this(0f) { }
 
@@ -19,7 +19,7 @@ public class PercentStat : Stat
 
         for (int i = 0; i < statModifiers.Count; i++)
         {
-            finalValue *= (1f - statModifiers[i].ModifierValue);
+            finalValue *= (1f - statModifiers[i].GetModifierValue());
         }
 
         finalValue = 1f - finalValue;
@@ -32,9 +32,9 @@ public class PercentStat : Stat
 
     public override void AddModifier(IParameterModifier<float> modifier)
     {
-        if (modifier.ModifierValue > 1f)
+        if (modifier.GetModifierValue() > 1f)
         {
-            Debug.LogWarning("Too much modifier to add!");
+            Debug.LogWarning("Too much Percent modifier to add!");
         }
 
         base.AddModifier(modifier);
@@ -43,9 +43,9 @@ public class PercentStat : Stat
 
     public override void RemoveModifier(IParameterModifier<float> modifier)
     {
-        if (modifier.ModifierValue > 1f)
+        if (modifier.GetModifierValue() > 1f)
         {
-            Debug.LogWarning("Too much modifier!");
+            Debug.LogWarning("You remove too much Percent modifier!");
         }
 
         base.RemoveModifier(modifier);

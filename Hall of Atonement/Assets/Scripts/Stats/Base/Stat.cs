@@ -1,15 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Stat
+public delegate void ChangeStat();
+[System.Serializable] public class Stat
 {
-    [SerializeField] private protected float baseValue;    // Starting value
-    private protected float minValue;
-    private protected float maxValue;
-
-    private protected List<IParameterModifier<float>> statModifiers = new List<IParameterModifier<float>>();
-
     public Stat() : this(0f) { }
 
     public Stat(float baseValue) :this(baseValue, 0f) { }
@@ -27,13 +21,22 @@ public class Stat
     }
 
 
+    public event ChangeStat OnChangeStat;
+
+    [SerializeField] private protected float baseValue;    // Starting value
+    private protected float minValue;
+    private protected float maxValue;
+
+    private protected List<IParameterModifier<float>> statModifiers = new List<IParameterModifier<float>>();
+
+
     public virtual float GetValue()
     {
         float finalValue = baseValue;
 
         for (int i = 0; i < statModifiers.Count; i++)
         {
-            finalValue += statModifiers[i].ModifierValue;
+            finalValue += statModifiers[i].GetModifierValue();
         }
 
         if (finalValue < minValue) { return minValue; }
@@ -52,17 +55,33 @@ public class Stat
     public virtual void AddModifier(IParameterModifier<float> modifier)
     {
         statModifiers.Add(modifier);
+
+        modifier.OnChangeParameterModifier += ReportUpdate;
+
+        ReportUpdate();
     }
 
 
     public virtual void RemoveModifier(IParameterModifier<float> modifier)
     {
         statModifiers.Remove(modifier);
+
+        modifier.OnChangeParameterModifier -= ReportUpdate;
+
+        ReportUpdate();
     }
 
 
     public virtual void ChangeBaseValue(float newBaseValue)
     {
         baseValue = newBaseValue;
+
+        ReportUpdate();
+    }
+
+
+    private void ReportUpdate() // Сообщить об обновлении
+    {
+        if (OnChangeStat != null) OnChangeStat();
     }
 }
