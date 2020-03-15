@@ -35,7 +35,7 @@ public class EnemyAI : CharacterController
 
     public void DecideWhatToDo()
     {
-        GameObject focusTarget = CharacterPresenter.CharacterType.SearchingTarget(EnemyPresenter.MyEnemyStats.ViewingRadius);
+        GameObject focusTarget = CharacterPresenter.CharacterType.SearchingTarget();
 
         if (focusTarget == null) { EnemyAIStateMachine.SeekingBattle(this); }
         else { EnemyAIStateMachine.Fighting(this, focusTarget); }

@@ -2,12 +2,21 @@
 
 public class MonsterType : MonoBehaviour, ICharacterType
 {
-    GameObject ICharacterType.SearchingTarget(float ViewingRadius)
+    private EnemyPresenter EnemyPresenter;
+
+
+    private void Start()
+    {
+        EnemyPresenter = gameObject.GetComponent<EnemyPresenter>();
+    }
+
+
+    GameObject ICharacterType.SearchingTarget()
     {
         GameObject target = null;
 
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), ViewingRadius);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), EnemyPresenter.MyEnemyStats.ViewingRadius);
 
         float distance = float.MaxValue;
 

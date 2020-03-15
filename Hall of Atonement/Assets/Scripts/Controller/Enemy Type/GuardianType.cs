@@ -2,10 +2,19 @@
 
 public class GuardianType : MonoBehaviour, ICharacterType
 {
-    GameObject ICharacterType.SearchingTarget(float ViewingRadius)
+    private EnemyPresenter EnemyPresenter;
+
+
+    private void Start()
+    {
+        EnemyPresenter = gameObject.GetComponent<EnemyPresenter>();
+    }
+
+
+    GameObject ICharacterType.SearchingTarget()
     {
         GameObject target;
-        if (Vector2.Distance(GameManager.instance.player.transform.position, transform.position) <= ViewingRadius) 
+        if (Vector2.Distance(GameManager.instance.player.transform.position, transform.position) <= EnemyPresenter.MyEnemyStats.ViewingRadius) 
         {
             target = GameManager.instance.player;
         }

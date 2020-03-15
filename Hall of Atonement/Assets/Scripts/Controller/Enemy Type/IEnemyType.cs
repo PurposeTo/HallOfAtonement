@@ -2,5 +2,5 @@
 
 public interface ICharacterType
 {
-    GameObject SearchingTarget(float ViewingRadius);
+    GameObject SearchingTarget();
 }

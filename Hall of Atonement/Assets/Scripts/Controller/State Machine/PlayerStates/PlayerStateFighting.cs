@@ -46,7 +46,7 @@ public class PlayerStateFighting : PlayerControllerStateMachine
 
         while (true)
         {
-            playerCombat.targetToAttack = controller.CharacterPresenter.CharacterType.SearchingTarget(0f);
+            playerCombat.targetToAttack = controller.CharacterPresenter.CharacterType.SearchingTarget();
 
 
             if (playerCombat.targetToAttack != null) //Если цель найдена

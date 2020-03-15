@@ -28,7 +28,7 @@ public class PlayerType : MonoBehaviour, ICharacterType
     }
 
 
-    public GameObject SearchingTarget(float _)
+    public GameObject SearchingTarget()
     {
         GameObject target = null;
 
