@@ -16,10 +16,12 @@ class Freeze : MonoBehaviour, IDamageLogic
     private readonly float defrostPercentTo = 0.75f;
     private float defrostPerSecond;
 
+
     void Start()
     {
         Initialization();
     }
+
 
     void Update()
     {

@@ -19,7 +19,7 @@ public interface IStatModifier : IStatusEffectLogic
 
 public interface IDamageLogic : IStatusEffectLogic
 {
-    void DoStatusEffectDamage(UnitStats targetStats, CharacterStats killerStats);
+    void DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownersStats);
 
     void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount);
 }

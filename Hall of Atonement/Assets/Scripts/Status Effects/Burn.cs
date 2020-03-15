@@ -3,7 +3,7 @@
 public class Burn : MonoBehaviour, IDamageLogic
 {
     private UnitStats targetStats;
-    private CharacterStats ownerStats = null;
+    private CharacterStats ownerStats;
     private DamageType damageType;
 
     private readonly float baseDamagePerSecond = 2f;
