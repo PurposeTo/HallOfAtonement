@@ -43,9 +43,12 @@ class Bleeding : MonoBehaviour, IDamageLogic
 
     public void DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownersStats)
     {
+        bool isEvaded = false;
+        bool isBlocked = false;
+
         if (currentBleedingTime > 0f)
         {
-            targetStats.TakeDamage(ownersStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, out bool _, out bool _);
+            targetStats.TakeDamage(ownersStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, ref isEvaded, ref isBlocked);
             currentBleedingTime -= Time.deltaTime;
         }
         else

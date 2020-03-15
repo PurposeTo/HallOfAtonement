@@ -44,9 +44,12 @@ class Poisoning : MonoBehaviour, IDamageLogic
 
     public void DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats)
     {
+        bool isEvaded = false;
+        bool isBlocked = false;
+
         if (currentPoisoningTime > 0f)
         {
-            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, out bool _, out bool _);
+            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, ref isEvaded, ref isBlocked);
             currentPoisoningTime -= Time.deltaTime;
         }
         else
