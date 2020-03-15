@@ -57,7 +57,6 @@ public abstract class CharacterStats : UnitStats
     private protected virtual float BaseCriticalMultiplier { get; } = 2f; //базовое значение множителя критической атаки.
     private protected virtual float BaseCriticalChance { get; } = 0.01f; //базовое значение скорости поворот
 
-
     //public Stat maxHealthPoint;
     public Stat movementSpeed;
     public Stat rotationSpeed;
