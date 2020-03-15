@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class Monster : MonoBehaviour, IEnemyType
+public class MonsterType : MonoBehaviour, ICharacterType
 {
-    GameObject IEnemyType.SearchingTarget(float ViewingRadius)
+    GameObject ICharacterType.SearchingTarget(float ViewingRadius)
     {
         GameObject target = null;
 
@@ -15,7 +15,7 @@ public class Monster : MonoBehaviour, IEnemyType
         {
             //if (colliders[i].gameObject != gameObject && !colliders[i].isTrigger) { }
             if (colliders[i].gameObject != gameObject &&
-                (colliders[i].gameObject.TryGetComponent(out Monster _) || colliders[i].gameObject.TryGetComponent(out PlayerController _)))
+                (colliders[i].gameObject.TryGetComponent(out MonsterType _) || colliders[i].gameObject.TryGetComponent(out PlayerController _)))
             //Если это игрок или монстр
             {
 

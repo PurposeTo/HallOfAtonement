@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class Guardian : MonoBehaviour, IEnemyType
+public class GuardianType : MonoBehaviour, ICharacterType
 {
-    GameObject IEnemyType.SearchingTarget(float ViewingRadius)
+    GameObject ICharacterType.SearchingTarget(float ViewingRadius)
     {
         GameObject target;
         if (Vector2.Distance(GameManager.instance.player.transform.position, transform.position) <= ViewingRadius) 

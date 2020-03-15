@@ -9,8 +9,6 @@ using UnityEngine;
 public class EnemyAI : CharacterController
 {
     public EnemyPresenter EnemyPresenter { get; private protected set; }
-
-    public IEnemyType EnemyType { get; private set; } // Ищет цель в зависимости от Monster/Guardian
     public EnemyAIStateMachine EnemyAIStateMachine { get; set; }
     public EnemyStatePatrolling EnemyStatePatrolling { get; private set; }
     public EnemyStateFighting EnemyStateFighting { get; private set; }
@@ -27,7 +25,6 @@ public class EnemyAI : CharacterController
 
     private void Initialization()
     {
-        EnemyType = gameObject.GetComponent<IEnemyType>();
         EnemyStatePatrolling = GetComponent<EnemyStatePatrolling>();
         EnemyStateFighting = GetComponent<EnemyStateFighting>();
 
@@ -38,7 +35,7 @@ public class EnemyAI : CharacterController
 
     public void DecideWhatToDo()
     {
-        GameObject focusTarget = EnemyType.SearchingTarget(EnemyPresenter.MyEnemyStats.ViewingRadius);
+        GameObject focusTarget = CharacterPresenter.CharacterType.SearchingTarget(EnemyPresenter.MyEnemyStats.ViewingRadius);
 
         if (focusTarget == null) { EnemyAIStateMachine.SeekingBattle(this); }
         else { EnemyAIStateMachine.Fighting(this, focusTarget); }

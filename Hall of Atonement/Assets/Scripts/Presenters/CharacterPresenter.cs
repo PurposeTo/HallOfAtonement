@@ -10,11 +10,14 @@ public class CharacterPresenter : MonoBehaviour
 
     public CharacterController Controller { get; private protected set; }
 
+    public ICharacterType CharacterType { get; private set; }
+
 
     private protected virtual void Awake()
     {
         MyStats = GetComponent<CharacterStats>();
         Combat = GetComponent<CharacterCombat>();
         Controller = GetComponent<CharacterController>();
+        CharacterType = GetComponent<ICharacterType>();
     }
 }
