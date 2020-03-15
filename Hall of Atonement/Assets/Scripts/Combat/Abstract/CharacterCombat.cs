@@ -75,6 +75,9 @@ public abstract class CharacterCombat : MonoBehaviour
     //Статы врага нужны, что бы можно было нанести урон. Свои статы нужны, что бы можно было получить опыт
     public void DoDamage(UnitStats targetStats)
     {
+        bool isEvaded = false;
+        bool isBlocked = false;
+
         //Формула, которая повысит урон в случае, если скорость атак будет быстрее чем обновление кадров
         float attackSpeedMultiplie = (Mathf.Abs(attackCooldown) / (1f / CharacterPresenter.MyStats.attackSpeed.GetValue())) + 1f;
 
@@ -88,7 +91,7 @@ public abstract class CharacterCombat : MonoBehaviour
         }
 
 
-        damage = targetStats.TakeDamage(CharacterPresenter.MyStats, CharacterPresenter.MyStats.DamageType, damage, true, out bool isEvaded, out bool isBlocked);
+        damage = targetStats.TakeDamage(CharacterPresenter.MyStats, CharacterPresenter.MyStats.DamageType, damage, true, ref isEvaded, ref isBlocked);
 
         if (!isEvaded)
         {

@@ -13,6 +13,10 @@ public abstract class CharacterStats : UnitStats
     public Attribute agility = new Attribute();
     public Attribute mastery = new Attribute();
 
+    private protected bool isStrenghtchanged;
+    private protected bool isAgilitychanged;
+    private protected bool isMasterychanged;
+
     //Зависимость статов от Силы
     private readonly float hpForStrenght = 20f;
     private readonly float attackDamageForStrenght = 3f;
@@ -49,6 +53,7 @@ public abstract class CharacterStats : UnitStats
     private protected virtual float BaseRotationSpeed { get; } = 720f; //базовое значение скорости поворота //Соотносится как ~ 1080 к 10 скорости
 
     private protected virtual float BaseAttackDamage { get; } = 10f; //базовое значение атаки
+    private readonly float minAttackSpeed = 0.01f; //максимальное значение скорости атаки
     private readonly float maxAttackSpeed = 50f; //максимальное значение скорости атаки
     private protected virtual float BaseAttackSpeed { get; } = 0.75f; //базовое значение скорости атаки
 
@@ -83,7 +88,7 @@ public abstract class CharacterStats : UnitStats
     public PercentStat evasionChance; //Нет базового значения
 
 
-    private protected List<IDefenseModifier> defenseModifiers = new List<IDefenseModifier>();
+    public List<IDefenseModifier> defenseModifiers = new List<IDefenseModifier>();
 
 
     private protected override void Awake()
@@ -91,6 +96,22 @@ public abstract class CharacterStats : UnitStats
         base.Awake();
         ChangeDamageType(UnitDamageType);
     }
+
+    private void OnEnable()
+    {
+        strength.OnChangeAttribute += IsStrenghtchanged;
+        agility.OnChangeAttribute += IsAgilitychanged;
+        mastery.OnChangeAttribute += IsMasterychanged;
+    }
+
+
+    private void OnDisable()
+    {
+        strength.OnChangeAttribute -= IsStrenghtchanged;
+        agility.OnChangeAttribute -= IsAgilitychanged;
+        mastery.OnChangeAttribute -= IsMasterychanged;
+    }
+
 
     private protected virtual void Start()
     {
@@ -113,12 +134,53 @@ public abstract class CharacterStats : UnitStats
             (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
 
         attackSpeed = new Stat(BaseAttackSpeed +
-            (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility), 0.01f, maxAttackSpeed);
+            (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility), minAttackSpeed, maxAttackSpeed);
         criticalMultiplier = new Stat(BaseCriticalMultiplier + (mastery.GetValue() * criticalMultiplierForMastery), minCriticalMultiplier);
         criticalChance = new PercentStat(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery));
 
         armor = new Stat(agility.GetValue() * armorForAgility);
         evasionChance = new PercentStat(agility.GetValue() * evasionForAgility);
+    }
+
+
+    private protected override void UpdateBaseStatsValue()
+    {
+        base.UpdateBaseStatsValue();
+
+        if (isStrenghtchanged || isAgilitychanged)
+        {
+            if (isStrenghtchanged)
+            {
+                maxHealthPoint.ChangeBaseValue(BaseMaxHealthPoint + (strength.GetValue() * hpForStrenght));
+            }
+
+            if (isAgilitychanged) 
+            {
+                armor.ChangeBaseValue(agility.GetValue() * armorForAgility);
+                evasionChance.ChangeBaseValue(agility.GetValue() * evasionForAgility);
+            }
+
+            movementSpeed.ChangeBaseValue(BaseMovementSpeed + (strength.GetValue() * movementSpeedForStrenght) + (agility.GetValue() * movementSpeedForAgility));
+            rotationSpeed.ChangeBaseValue(BaseRotationSpeed + (strength.GetValue() * rotationSpeedForStrenght) + (agility.GetValue() * rotationSpeedForAgility));
+
+            attackDamage.ChangeBaseValue(BaseAttackDamage + (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
+
+            attackSpeed.ChangeBaseValue(BaseAttackSpeed + (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility));
+        }
+        else if (isMasterychanged)
+        {
+            criticalMultiplier.ChangeBaseValue(BaseCriticalMultiplier + (mastery.GetValue() * criticalMultiplierForMastery));
+            criticalChance.ChangeBaseValue(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery));
+        }
+        else
+        {
+            Debug.LogError(gameObject.name + " Careful! Smth wrong with UpdateBaseStatsValue!");
+
+        }
+
+        isStrenghtchanged = false;
+        isAgilitychanged = false;
+        isMasterychanged = false;
     }
 
 
@@ -154,14 +216,12 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, out bool isEvaded, out bool isBlocked)
+    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, ref bool isEvaded, ref bool isBlocked)
     {
-        isEvaded = false;
-        isBlocked = false;
 
         for (int i = 0; i < defenseModifiers.Count; i++)
         {
-            defenseModifiers[i].ApplyDefenseModifier(killerStats, damageType, damage, out isEvaded, out isBlocked);
+            defenseModifiers[i].ApplyDefenseModifier(killerStats, damageType, damage, ref isEvaded, ref isBlocked);
         }
 
         //Если вероятность уворотов больше нуля И если рандом говорит о том, что нужно увернуться
@@ -172,7 +232,7 @@ public abstract class CharacterStats : UnitStats
         }
         else //Получаем урон
         {
-            damage = base.TakeDamage(killerStats, damageType, damage, canEvade, out isEvaded, out isBlocked);
+            damage = base.TakeDamage(killerStats, damageType, damage, canEvade, ref isEvaded, ref isBlocked);
 
             if (!isBlocked) 
             {
@@ -223,4 +283,8 @@ public abstract class CharacterStats : UnitStats
         Debug.Log(transform.name + " Умер!");
     }
 
+
+    private void IsStrenghtchanged() { isStrenghtchanged = true; }
+    private void IsAgilitychanged() { isAgilitychanged = true; }
+    private void IsMasterychanged() { isAgilitychanged = true; }
 }

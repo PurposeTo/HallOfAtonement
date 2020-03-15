@@ -19,7 +19,7 @@ public class PercentStat : Stat
 
         for (int i = 0; i < statModifiers.Count; i++)
         {
-            finalValue *= (1f - statModifiers[i].GetModifierValue());
+            finalValue *= (1f - statModifiers[i].ModifierValue);
         }
 
         finalValue = 1f - finalValue;
@@ -30,9 +30,9 @@ public class PercentStat : Stat
     }
 
 
-    public override void AddModifier(IStatModifier modifier)
+    public override void AddModifier(IParameterModifier<float> modifier)
     {
-        if (modifier.GetModifierValue() > 1f)
+        if (modifier.ModifierValue > 1f)
         {
             Debug.LogWarning("Too much modifier to add!");
         }
@@ -41,9 +41,9 @@ public class PercentStat : Stat
     }
 
 
-    public override void RemoveModifier(IStatModifier modifier)
+    public override void RemoveModifier(IParameterModifier<float> modifier)
     {
-        if (modifier.GetModifierValue() > 1f)
+        if (modifier.ModifierValue > 1f)
         {
             Debug.LogWarning("Too much modifier!");
         }

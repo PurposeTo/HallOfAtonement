@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Attribute
+
+public delegate void ChangeAttribute();
+[System.Serializable] public class Attribute
 {
-    [SerializeField]
-    private int baseValue;    // Starting value
+    public event ChangeAttribute OnChangeAttribute;
 
-    private List<int> attributeModifiers = new List<int>();
+    [SerializeField] private int baseValue;    // Starting value
 
+	private protected List<IParameterModifier<int>> attributeModifiers = new List<IParameterModifier<int>>();
 
-    public Attribute() : this(0) { }
+	public Attribute() : this(0) { }
 
     public Attribute(int baseValue)
     {
@@ -21,9 +22,14 @@ public class Attribute
 	public int GetValue()
 	{
 		int finalValue = baseValue;
-		attributeModifiers.ForEach(x => finalValue += x);
 
-		return finalValue >= 0 ? finalValue : 0;
+		for (int i = 0; i < attributeModifiers.Count; i++)
+		{
+			finalValue += attributeModifiers[i].ModifierValue;
+		}
+
+		if (finalValue < 0) { return 0; }
+		else { return finalValue; }
 	}
 
 
@@ -32,17 +38,22 @@ public class Attribute
 		return baseValue;
 	}
 
-	// Add a new modifier to the list
-	public void AddModifier(int modifier)
-	{
-		if (modifier != 0)
-			attributeModifiers.Add(modifier);
-	}
+    public virtual void AddModifier(IParameterModifier<int> modifier)
+    {
+        attributeModifiers.Add(modifier);
+    }
 
-	// Remove a modifier from the list
-	public void RemoveModifier(int modifier)
-	{
-		if (modifier != 0)
-			attributeModifiers.Remove(modifier);
-	}
+
+    public virtual void RemoveModifier(IParameterModifier<int> modifier)
+    {
+        attributeModifiers.Remove(modifier);
+    }
+
+
+    public virtual void ChangeBaseValue(int newBaseValue)
+    {
+        baseValue = newBaseValue;
+
+        if (OnChangeAttribute != null) OnChangeAttribute();
+    }
 }

@@ -57,7 +57,10 @@ class Freeze : MonoBehaviour, IDamageLogic
     {
         if (currentFreezingTime > 0f)
         {
-            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, out bool _, out bool _);
+            bool isEvaded = false;
+            bool isBlocked = false;
+
+            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, ref isEvaded, ref isBlocked);
             currentFreezingTime -= Time.deltaTime;
         }
         else
@@ -69,8 +72,11 @@ class Freeze : MonoBehaviour, IDamageLogic
 
     public void SelfDestruction()
     {
+        bool isEvaded = false;
+        bool isBlocked = false;
+
         float remainingDamage = baseDamagePerSecond * effectPower * currentFreezingTime;
-        targetStats.TakeDamage(ownerStats, damageType, remainingDamage, false, out bool _, out bool _);
+        targetStats.TakeDamage(ownerStats, damageType, remainingDamage, false, ref isEvaded, ref isBlocked);
         Destroy(this);
     }
 }

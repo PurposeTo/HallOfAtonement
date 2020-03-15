@@ -84,7 +84,13 @@ public class EnemyStats : CharacterStats
         //Если уровень повысился
         if (isLvlUp)
         {
-            StatInitialization();
+            strength.ChangeBaseValue((int)(level.GetLvl() * strenghtFromLvl));
+
+            agility.ChangeBaseValue((int)(level.GetLvl() * agilityFromLvl));
+
+            mastery.ChangeBaseValue((int)(level.GetLvl() * masteryFromLvl));
+
+            UpdateBaseStatsValue();
         }
     }
 
@@ -102,9 +108,21 @@ public class EnemyStats : CharacterStats
     }
 
 
-    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, out bool isEvaded, out bool isBlocked)
+    private protected override void UpdateBaseStatsValue()
     {
-        float returnDamage = base.TakeDamage(killerStats, damageType, damage, canEvade, out isEvaded, out isBlocked);
+        if (isStrenghtchanged) 
+        {
+            healthPointRegen.ChangeBaseValue(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
+        }
+
+
+        base.UpdateBaseStatsValue(); // В Base происходит обнуление булевых переменных!
+    }
+
+
+    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, ref bool isEvaded, ref bool isBlocked)
+    {
+        float returnDamage = base.TakeDamage(killerStats, damageType, damage, canEvade, ref isEvaded, ref isBlocked);
 
         if (!isEvaded && killerStats != null)
         {
@@ -121,7 +139,4 @@ public class EnemyStats : CharacterStats
         base.Die(killerStats);
         Destroy(gameObject);
     }
-
-
-
 }
