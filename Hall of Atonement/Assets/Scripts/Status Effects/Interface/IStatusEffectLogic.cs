@@ -23,7 +23,7 @@ public interface IParameterModifier<T> : IStatusEffectLogic
 
 public interface IDamageLogic : IStatusEffectLogic
 {
-    void DoStatusEffectDamage(UnitStats targetStats, CharacterStats killerStats);
+    void DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats);
 
     void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount);
 }

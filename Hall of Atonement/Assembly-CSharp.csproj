@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{4D9B446D-998C-D7A5-5088-1DC043AB813D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -126,11 +127,13 @@
     <Compile Include="Assets\Scripts\Stats\BoxStats.cs" />
     <Compile Include="Assets\Scripts\Stats\EnemyStats.cs" />
     <Compile Include="Assets\Scripts\Stats\PlayerStats.cs" />
+    <Compile Include="Assets\Scripts\Status Effects\Bleeding.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Burn.cs" />
     <Compile Include="Assets\Scripts\Status Effects\DefenseModifiers\FriendlyFireDefence.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Freeze.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Interface\IStatusEffectLogic.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Lifesteal.cs" />
+    <Compile Include="Assets\Scripts\Status Effects\Poisoning.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\Abstract\DamageType.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\Abstract\EffectDamage.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\BleedingDamage.cs" />
