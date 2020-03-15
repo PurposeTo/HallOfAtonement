@@ -14,13 +14,6 @@ public class TestModifier : MonoBehaviour
     private UnitStats targetStats;
 
 
-    private void Update()
-    {
-        modifierMovementSpeed.ModifierValue -= 0.02f * Time.deltaTime;
-        modifierRotationSpeed.ModifierValue -= 0.02f * Time.deltaTime;
-        modifierAttackSpeed.ModifierValue -= 0.02f * Time.deltaTime;
-    }
-
     private void Start()
     {
         targetStats = gameObject.GetComponent<UnitStats>();

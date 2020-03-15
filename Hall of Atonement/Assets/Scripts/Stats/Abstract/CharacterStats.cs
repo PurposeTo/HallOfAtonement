@@ -41,19 +41,19 @@ public abstract class CharacterStats : UnitStats
     private protected virtual float BaseHealthPointRegen { get; } = 0.5f; //базовое значение регенерации здоровья
     //public float CurrentHealthPoint { get; private protected set; }
 
-    private readonly float minMovementSpeed = 1.6f; //минимальное значение скорости
-    private readonly float maxMovementSpeed = 20f; //максимальное значение скорости
+    private const float minMovementSpeed = 1.6f; //минимальное значение скорости
+    private const float maxMovementSpeed = 20f; //максимальное значение скорости
     private protected virtual float BaseMovementSpeed { get; } = 7f; //базовое значение скорости
 
-    private readonly float minRotationSpeed = 180f; //минимальное значение скорости поворота
+    private const float minRotationSpeed = 180f; //минимальное значение скорости поворота
     private protected virtual float BaseRotationSpeed { get; } = 720f; //базовое значение скорости поворота //Соотносится как ~ 1080 к 10 скорости
 
     private protected virtual float BaseAttackDamage { get; } = 10f; //базовое значение атаки
-    private readonly float minAttackSpeed = 0.01f; //максимальное значение скорости атаки
-    private readonly float maxAttackSpeed = 50f; //максимальное значение скорости атаки
+    private const float minAttackSpeed = 0.01f; //максимальное значение скорости атаки
+    private const float maxAttackSpeed = 50f; //максимальное значение скорости атаки
     private protected virtual float BaseAttackSpeed { get; } = 0.75f; //базовое значение скорости атаки
 
-    private readonly float minCriticalMultiplier = 1.1f; //минимальное значение множителя критической атаки
+    private const float minCriticalMultiplier = 1.1f; //минимальное значение множителя критической атаки
     private protected virtual float BaseCriticalMultiplier { get; } = 2f; //базовое значение множителя критической атаки.
     private protected virtual float BaseCriticalChance { get; } = 0.01f; //базовое значение скорости поворот
 
