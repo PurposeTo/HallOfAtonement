@@ -89,8 +89,6 @@ public class EnemyStats : CharacterStats
             agility.ChangeBaseValue((int)(level.GetLvl() * agilityFromLvl));
 
             mastery.ChangeBaseValue((int)(level.GetLvl() * masteryFromLvl));
-
-            UpdateBaseStatsValue();
         }
     }
 
@@ -108,15 +106,11 @@ public class EnemyStats : CharacterStats
     }
 
 
-    private protected override void UpdateBaseStatsValue()
+    private protected override void UpdateBaseStrenghtStatsValue()
     {
-        if (isStrenghtchanged) 
-        {
-            healthPointRegen.ChangeBaseValue(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
-        }
+        base.UpdateBaseStrenghtStatsValue();
 
-
-        base.UpdateBaseStatsValue(); // В Base происходит обнуление булевых переменных!
+        healthPointRegen.ChangeBaseValue(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
     }
 
 

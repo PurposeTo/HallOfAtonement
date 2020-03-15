@@ -9,7 +9,7 @@ public delegate void ChangeAttribute();
 
     [SerializeField] private int baseValue;    // Starting value
 
-	private protected List<IParameterModifier<int>> attributeModifiers = new List<IParameterModifier<int>>();
+    private protected List<IParameterModifier<int>> attributeModifiers = new List<IParameterModifier<int>>();
 
 	public Attribute() : this(0) { }
 

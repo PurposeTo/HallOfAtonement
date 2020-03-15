@@ -30,12 +30,6 @@ public abstract class UnitStats : MonoBehaviour
     }
 
 
-    private protected virtual void UpdateBaseStatsValue()
-    {
-        Debug.Log("Warning! " + gameObject.name + " changed his Stats/Attributes base value!");
-    }
-
-
     public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, ref bool isEvaded, ref bool isBlocked)
     {
 

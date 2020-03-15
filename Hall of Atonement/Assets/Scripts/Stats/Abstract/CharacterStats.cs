@@ -13,10 +13,6 @@ public abstract class CharacterStats : UnitStats
     public Attribute agility = new Attribute();
     public Attribute mastery = new Attribute();
 
-    private protected bool isStrenghtchanged;
-    private protected bool isAgilitychanged;
-    private protected bool isMasterychanged;
-
     //Зависимость статов от Силы
     private readonly float hpForStrenght = 20f;
     private readonly float attackDamageForStrenght = 3f;
@@ -99,17 +95,17 @@ public abstract class CharacterStats : UnitStats
 
     private void OnEnable()
     {
-        strength.OnChangeAttribute += IsStrenghtchanged;
-        agility.OnChangeAttribute += IsAgilitychanged;
-        mastery.OnChangeAttribute += IsMasterychanged;
+        strength.OnChangeAttribute += UpdateBaseStrenghtStatsValue;
+        agility.OnChangeAttribute += UpdateBaseAgilityStatsValue;
+        mastery.OnChangeAttribute += UpdateBaseMasteryStatsValue;
     }
 
 
     private void OnDisable()
     {
-        strength.OnChangeAttribute -= IsStrenghtchanged;
-        agility.OnChangeAttribute -= IsAgilitychanged;
-        mastery.OnChangeAttribute -= IsMasterychanged;
+        strength.OnChangeAttribute -= UpdateBaseStrenghtStatsValue;
+        agility.OnChangeAttribute -= UpdateBaseAgilityStatsValue;
+        mastery.OnChangeAttribute -= UpdateBaseMasteryStatsValue;
     }
 
 
@@ -143,44 +139,44 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    private protected override void UpdateBaseStatsValue()
+    private protected virtual void UpdateBaseStrenghtStatsValue()
     {
-        base.UpdateBaseStatsValue();
+        Debug.Log("Warning! " + gameObject.name + " changed his BaseStrenghtStats Value!");
 
-        if (isStrenghtchanged || isAgilitychanged)
-        {
-            if (isStrenghtchanged)
-            {
-                maxHealthPoint.ChangeBaseValue(BaseMaxHealthPoint + (strength.GetValue() * hpForStrenght));
-            }
+        maxHealthPoint.ChangeBaseValue(BaseMaxHealthPoint + (strength.GetValue() * hpForStrenght));
 
-            if (isAgilitychanged) 
-            {
-                armor.ChangeBaseValue(agility.GetValue() * armorForAgility);
-                evasionChance.ChangeBaseValue(agility.GetValue() * evasionForAgility);
-            }
+        movementSpeed.ChangeBaseValue(BaseMovementSpeed + (strength.GetValue() * movementSpeedForStrenght) + (agility.GetValue() * movementSpeedForAgility));
+        rotationSpeed.ChangeBaseValue(BaseRotationSpeed + (strength.GetValue() * rotationSpeedForStrenght) + (agility.GetValue() * rotationSpeedForAgility));
 
-            movementSpeed.ChangeBaseValue(BaseMovementSpeed + (strength.GetValue() * movementSpeedForStrenght) + (agility.GetValue() * movementSpeedForAgility));
-            rotationSpeed.ChangeBaseValue(BaseRotationSpeed + (strength.GetValue() * rotationSpeedForStrenght) + (agility.GetValue() * rotationSpeedForAgility));
+        attackDamage.ChangeBaseValue(BaseAttackDamage + (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
 
-            attackDamage.ChangeBaseValue(BaseAttackDamage + (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
+        attackSpeed.ChangeBaseValue(BaseAttackSpeed + (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility));
 
-            attackSpeed.ChangeBaseValue(BaseAttackSpeed + (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility));
-        }
-        else if (isMasterychanged)
-        {
-            criticalMultiplier.ChangeBaseValue(BaseCriticalMultiplier + (mastery.GetValue() * criticalMultiplierForMastery));
-            criticalChance.ChangeBaseValue(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery));
-        }
-        else
-        {
-            Debug.LogError(gameObject.name + " Careful! Smth wrong with UpdateBaseStatsValue!");
+    }
 
-        }
 
-        isStrenghtchanged = false;
-        isAgilitychanged = false;
-        isMasterychanged = false;
+    private protected virtual void UpdateBaseAgilityStatsValue()
+    {
+        Debug.Log("Warning! " + gameObject.name + " changed his BaseAgilityStats Value!");
+
+        movementSpeed.ChangeBaseValue(BaseMovementSpeed + (strength.GetValue() * movementSpeedForStrenght) + (agility.GetValue() * movementSpeedForAgility));
+        rotationSpeed.ChangeBaseValue(BaseRotationSpeed + (strength.GetValue() * rotationSpeedForStrenght) + (agility.GetValue() * rotationSpeedForAgility));
+
+        attackDamage.ChangeBaseValue(BaseAttackDamage + (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
+
+        attackSpeed.ChangeBaseValue(BaseAttackSpeed + (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility));
+
+        armor.ChangeBaseValue(agility.GetValue() * armorForAgility);
+        evasionChance.ChangeBaseValue(agility.GetValue() * evasionForAgility);
+    }
+
+
+    private protected virtual void UpdateBaseMasteryStatsValue()
+    {
+        Debug.Log("Warning! " + gameObject.name + " changed his BaseMasteryStats Value!");
+
+        criticalMultiplier.ChangeBaseValue(BaseCriticalMultiplier + (mastery.GetValue() * criticalMultiplierForMastery));
+        criticalChance.ChangeBaseValue(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery));
     }
 
 
@@ -234,7 +230,7 @@ public abstract class CharacterStats : UnitStats
         {
             damage = base.TakeDamage(killerStats, damageType, damage, canEvade, ref isEvaded, ref isBlocked);
 
-            if (!isBlocked) 
+            if (!isBlocked)
             {
                 healthBar.DecreaseHealthBar();
             }
@@ -282,9 +278,4 @@ public abstract class CharacterStats : UnitStats
 
         Debug.Log(transform.name + " Умер!");
     }
-
-
-    private void IsStrenghtchanged() { isStrenghtchanged = true; }
-    private void IsAgilitychanged() { isAgilitychanged = true; }
-    private void IsMasterychanged() { isAgilitychanged = true; }
 }
