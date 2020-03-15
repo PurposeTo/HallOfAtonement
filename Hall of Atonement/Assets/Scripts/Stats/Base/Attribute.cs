@@ -9,7 +9,7 @@ public delegate void ChangeAttribute();
 
     [SerializeField] private int baseValue;    // Starting value
 
-    private protected List<IParameterModifier<int>> attributeModifiers = new List<IParameterModifier<int>>();
+    private protected List<ICharacteristicModifier<int>> attributeModifiers = new List<ICharacteristicModifier<int>>();
 
 	public Attribute() : this(0) { }
 
@@ -38,21 +38,21 @@ public delegate void ChangeAttribute();
 		return baseValue;
 	}
 
-    public virtual void AddModifier(IParameterModifier<int> modifier)
+    public virtual void AddModifier(ICharacteristicModifier<int> modifier)
     {
         attributeModifiers.Add(modifier);
 
-        modifier.OnChangeParameterModifier += ReportUpdate;
+        modifier.OnChangeCharacteristicModifier += ReportUpdate;
 
         ReportUpdate();
     }
 
 
-    public virtual void RemoveModifier(IParameterModifier<int> modifier)
+    public virtual void RemoveModifier(ICharacteristicModifier<int> modifier)
     {
         attributeModifiers.Remove(modifier);
 
-        modifier.OnChangeParameterModifier -= ReportUpdate;
+        modifier.OnChangeCharacteristicModifier -= ReportUpdate;
 
         ReportUpdate();
     }

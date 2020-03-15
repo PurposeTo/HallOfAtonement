@@ -27,7 +27,7 @@ public delegate void ChangeStat();
     private protected float minValue;
     private protected float maxValue;
 
-    private protected List<IParameterModifier<float>> statModifiers = new List<IParameterModifier<float>>();
+    private protected List<ICharacteristicModifier<float>> statModifiers = new List<ICharacteristicModifier<float>>();
 
 
     public virtual float GetValue()
@@ -52,21 +52,21 @@ public delegate void ChangeStat();
     }
 
 
-    public virtual void AddModifier(IParameterModifier<float> modifier)
+    public virtual void AddModifier(ICharacteristicModifier<float> modifier)
     {
         statModifiers.Add(modifier);
 
-        modifier.OnChangeParameterModifier += ReportUpdate;
+        modifier.OnChangeCharacteristicModifier += ReportUpdate;
 
         ReportUpdate();
     }
 
 
-    public virtual void RemoveModifier(IParameterModifier<float> modifier)
+    public virtual void RemoveModifier(ICharacteristicModifier<float> modifier)
     {
         statModifiers.Remove(modifier);
 
-        modifier.OnChangeParameterModifier -= ReportUpdate;
+        modifier.OnChangeCharacteristicModifier -= ReportUpdate;
 
         ReportUpdate();
     }

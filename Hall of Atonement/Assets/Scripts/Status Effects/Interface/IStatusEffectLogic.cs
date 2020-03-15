@@ -15,9 +15,9 @@ public interface IDefenseModifier : IStatusEffectLogic
 }
 
 
-public interface IParameterModifier<T> : IStatusEffectLogic
+public interface ICharacteristicModifier<T> : IStatusEffectLogic
 {
-    event ChangeParameterModifier OnChangeParameterModifier;
+    event ChangeCharacteristicModifier OnChangeCharacteristicModifier;
 
     T GetModifierValue();
 
