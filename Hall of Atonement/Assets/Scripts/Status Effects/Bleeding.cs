@@ -45,7 +45,7 @@ class Bleeding : MonoBehaviour, IDamageLogic
     {
         if (currentBleedingTime > 0f)
         {
-            targetStats.TakeDamage(ownersStats, damageType, baseDamagePerSecond * Time.deltaTime, false, out bool _, out bool _);
+            targetStats.TakeDamage(ownersStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, out bool _, out bool _);
             currentBleedingTime -= Time.deltaTime;
         }
         else
