@@ -8,7 +8,7 @@ public class DamageReducerFactory : IDamageReducerFactory
         else if (damageType is EffectDamage) { return new EffectDamageReducer((EffectDamage)damageType); }
         else
         {
-            Debug.LogError("Try to use unknown damage type");
+            Debug.LogError("Try to use unknown damage type: " + damageType);
             return null;
         }
     }

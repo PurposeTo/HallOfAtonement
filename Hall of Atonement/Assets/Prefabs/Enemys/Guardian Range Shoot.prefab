@@ -113,7 +113,7 @@ PrefabInstance:
     - target: {fileID: 4999696950017868006, guid: 03bdd5a1e2149cf419a3f64740e1ce96,
         type: 3}
       propertyPath: m_Name
-      value: Guardian Range Gun
+      value: Guardian Range Shoot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03bdd5a1e2149cf419a3f64740e1ce96, type: 3}
