@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(RangedCombat))]
+//[RequireComponent(typeof(RangedLaserCombat))]
 public class RangedEnemyLogic : EnemyCombat
 {
     private bool getСloser = false;
@@ -9,7 +9,7 @@ public class RangedEnemyLogic : EnemyCombat
     private protected override void Start()
     {
         base.Start();
-        print(EnemyPresenter);
+
         AttackRange = EnemyPresenter.MyEnemyStats.ViewingRadius;
 
     }

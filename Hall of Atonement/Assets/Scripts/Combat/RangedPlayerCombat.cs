@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(RangedCombat))]
+[RequireComponent(typeof(RangedLaserCombat))]
 public class RangedPlayerCombat : PlayerCombat
 {
     //Этот класс необходим ради [RequireComponent(typeof(RangedCombat))]

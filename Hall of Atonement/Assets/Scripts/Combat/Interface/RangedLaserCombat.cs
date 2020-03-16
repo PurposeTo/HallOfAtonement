@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class RangedCombat : MonoBehaviour, IRanged
+public class RangedLaserCombat : MonoBehaviour, IRanged
 {
     public Transform weapon;
 

@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5072003625416647462}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -132,5 +132,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4e5831a7d1ff940a13bc0343802235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunCombat: {fileID: 0}
+  RangedGunCombat: {fileID: 0}
   combat: {fileID: 0}
