@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public interface IStatusEffectLogic
 {
@@ -12,7 +13,7 @@ public class ItemHarding : MonoBehaviour
 }
 
 
-public interface IAttackModifier : IStatusEffectLogic
+public interface IAttackModifier : IStatusEffectLogic, ICloneable
 {
     void ApplyAttackModifier(float damage, int mastery);
 }

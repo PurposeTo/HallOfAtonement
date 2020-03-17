@@ -15,20 +15,19 @@ public class UnitCombat : MonoBehaviour
         //float attackSpeedMultiplie = (Mathf.Abs(attackCooldown) / (1f / ownerStats.attackSpeed.GetValue())) + 1f;
 
         //float damage = attackSpeedMultiplie * attackDamage;
-        float damage = attackDamage;
 
         //Если Крит. шанс больше нуля И если рандом говорит о том, что нужно критануть
         if (criticalChance > 0f && Random.Range(1f, 100f)
             <= criticalChance)
         {
-            damage *= criticalMultiplie; //То увеличить урон
+            attackDamage *= criticalMultiplie; //То увеличить урон
         }
 
 
         bool isEvaded = false;
         bool isBlocked = false;
 
-        damage = targetStats.TakeDamage(ownerStats, damageType, damage, true, ref isEvaded, ref isBlocked);
+        attackDamage = targetStats.TakeDamage(ownerStats, damageType, attackDamage, true, ref isEvaded, ref isBlocked);
 
         if (!isEvaded)
         {
@@ -37,7 +36,7 @@ public class UnitCombat : MonoBehaviour
                 if (damageType is EffectDamage)
                 {
                     StatusEffectFactory statusEffectFactory = new StatusEffectFactory();
-                    statusEffectFactory.HangStatusEffect(damageType, targetStats, ownerStats);
+                    statusEffectFactory.HangStatusEffect(damageType, targetStats, ownerStats, attackDamage / 10f);
                 }
             }
 
@@ -52,7 +51,7 @@ public class UnitCombat : MonoBehaviour
 
             for (int i = 0; i < attackModifiers.Count; i++)
             {
-                attackModifiers[i].ApplyAttackModifier(damage, ownerMastery);
+                attackModifiers[i].ApplyAttackModifier(attackDamage, ownerMastery);
             }
         }
 
