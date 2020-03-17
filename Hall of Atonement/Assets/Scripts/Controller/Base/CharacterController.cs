@@ -59,26 +59,33 @@ public abstract class CharacterController : MonoBehaviour
     //Если есть цель, то игрок должен повернуться лицом к цели, прежде чем начнет атаковть.
     public bool TurnFaceToTarget(GameObject focusTarget, float rotationSpeed, float faceEuler)
     {
-        Vector3 difference = (focusTarget.transform.position - transform.position).normalized;
+        if (focusTarget != null) 
+        {
+            Vector3 difference = (focusTarget.transform.position - transform.position).normalized;
 
-        // Вычисляем кватерион нужного поворота. Вектор forward говорит вокруг какой оси поворачиваться
-        Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: difference);
+            // Вычисляем кватерион нужного поворота. Вектор forward говорит вокруг какой оси поворачиваться
+            Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: difference);
 
-        // Применяем поворот вокруг оси Z        
-        rb2d.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+            // Применяем поворот вокруг оси Z        
+            rb2d.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
 
-        //Достигли нужного поворота?
-        //Если будет разброс:
-        return Mathf.Abs(targetRotation.eulerAngles.z - transform.rotation.eulerAngles.z) <= (faceEuler / 12f);
+            //Достигли нужного поворота?
+            //Если будет разброс:
+            return Mathf.Abs(targetRotation.eulerAngles.z - transform.rotation.eulerAngles.z) <= (faceEuler / 12f);
 
-        //Если разброса нет:
-        //return Mathf.Approximately(targetRotation.eulerAngles.z,transform.rotation.eulerAngles.z);
+            //Если разброса нет:
+            //return Mathf.Approximately(targetRotation.eulerAngles.z,transform.rotation.eulerAngles.z);
+        }
+        else
+        {
+            return true;
+        }
+        
     }
 
 
     private protected bool TurnFaceToTarget(Vector2 inputVector, float rotationSpeed, float faceEuler)
     {
-
         Vector3 difference = inputVector.normalized; //Вектор разницы, который определяет, нужно ли игроку повернуться
 
         if (difference != Vector3.zero) //если InputVector не ноль, значит игрок куда то движется!

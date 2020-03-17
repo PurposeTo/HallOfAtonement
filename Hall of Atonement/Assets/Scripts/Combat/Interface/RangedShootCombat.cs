@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class RangedShootCombat : MonoBehaviour, IRanged
 {
@@ -10,7 +11,7 @@ public class RangedShootCombat : MonoBehaviour, IRanged
 
     private float bullerForce = 20f;
 
-    public void Attack(CharacterCombat combat)
+    public void Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         print(gameObject.name + " использует пушку!");
 
@@ -28,8 +29,7 @@ public class RangedShootCombat : MonoBehaviour, IRanged
             Bullet bulletScript = bullet.GetComponent<Bullet>();
             bulletScript.bulletRb2d.AddForce(weapon.up * bullerForce, ForceMode2D.Impulse);
 
-
-            bulletScript.BulletInitialization(gameObject, combat.CharacterPresenter.MyStats, combat);
+            bulletScript.BulletInitialization(gameObject, ownerStats, damageType, criticalChance, criticalMultiplie, attackDamage, ownerMastery, attackModifiers);
         }
     }
 }

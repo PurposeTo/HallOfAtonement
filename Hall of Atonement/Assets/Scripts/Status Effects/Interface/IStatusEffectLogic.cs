@@ -1,9 +1,11 @@
-﻿public interface IStatusEffectLogic
+﻿using System;
+
+public interface IStatusEffectLogic
 {
 }
 
 
-public interface IAttackModifier : IStatusEffectLogic
+public interface IAttackModifier : IStatusEffectLogic, ICloneable
 {
     void ApplyAttackModifier(float damage, int mastery);
 }

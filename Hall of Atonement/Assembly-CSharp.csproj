@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\Combat\Abstract\CharacterCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\Abstract\EnemyCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\Abstract\PlayerCombat.cs" />
+    <Compile Include="Assets\Scripts\Combat\Abstract\UnitCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\Bullet.cs" />
     <Compile Include="Assets\Scripts\Combat\Interface\IAttacker.cs" />
     <Compile Include="Assets\Scripts\Combat\Interface\MeleeCombat.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Assets\Scripts\GameLogic.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\IPooledObject.cs" />
+    <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\ObjectPooler.cs" />
     <Compile Include="Assets\Scripts\Presenters\CharacterPresenter.cs" />
     <Compile Include="Assets\Scripts\Presenters\EnemyPresenter.cs" />

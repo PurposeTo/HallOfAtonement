@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5072003625416647457}
   - component: {fileID: 5072003625416647456}
   - component: {fileID: 5072003625416647463}
+  - component: {fileID: 4269278265688689217}
   - component: {fileID: -4739004767803533172}
   m_Layer: 0
   m_Name: EmptyBuller
@@ -120,6 +121,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &4269278265688689217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5072003625416647462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e81e2545f09c543b15265216faf81b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-4739004767803533172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,5 +145,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4e5831a7d1ff940a13bc0343802235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RangedGunCombat: {fileID: 0}
-  combat: {fileID: 0}
