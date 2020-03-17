@@ -7,6 +7,8 @@ public class EnemyStats : CharacterStats
 
     public float ViewingRadius { get; private set; } = 9f;
 
+    private readonly float baseHealthPointRegen = 0.5f; //базовое значение регенерации здоровья
+
     private readonly float hpRegenForStrenght = 0.25f;
     public Stat healthPointRegen;
 
@@ -102,7 +104,7 @@ public class EnemyStats : CharacterStats
         mastery = new Attribute((int)(level.GetLvl() * masteryFromLvl));
 
         base.StatInitialization();
-        healthPointRegen = new Stat(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
+        healthPointRegen = new Stat(baseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
     }
 
 
@@ -110,7 +112,7 @@ public class EnemyStats : CharacterStats
     {
         base.UpdateBaseStrenghtStatsValue();
 
-        healthPointRegen.ChangeBaseValue(BaseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
+        healthPointRegen.ChangeBaseValue(baseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
     }
 
 

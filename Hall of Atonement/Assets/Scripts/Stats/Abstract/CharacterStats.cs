@@ -38,7 +38,6 @@ public abstract class CharacterStats : UnitStats
 
 
     private protected override float BaseMaxHealthPoint { get; } = 100f; //базовое значение максимального кол-ва здоровья
-    private protected virtual float BaseHealthPointRegen { get; } = 0.5f; //базовое значение регенерации здоровья
     //public float CurrentHealthPoint { get; private protected set; }
 
     private const float minMovementSpeed = 1.6f; //минимальное значение скорости
@@ -67,9 +66,7 @@ public abstract class CharacterStats : UnitStats
     {
         PhysicalDamage,
         FireDamage,
-        IceDamage,
-        BleedingDamage,
-        PoisonDamage
+        IceDamage
     }
 
     public ContainerDamageTypes UnitDamageType;
@@ -194,19 +191,20 @@ public abstract class CharacterStats : UnitStats
             case ContainerDamageTypes.IceDamage:
                 Debug.Log(gameObject.name + " choise the IceDamage!");
                 DamageType = new IceDamage();
-
-                break;
-            case ContainerDamageTypes.BleedingDamage:
-                Debug.Log(gameObject.name + " choise the BleedingDamage!");
-                DamageType = new BleedingDamage();
-                break;
-            case ContainerDamageTypes.PoisonDamage:
-                Debug.Log(gameObject.name + " choise the PoisonDamage!");
-                DamageType = new PoisonDamage();
                 break;
             default:
                 Debug.LogError(gameObject.name + " : error in Damage Type!");
                 break;
+
+                // Нельзя выбрать данные типы урона в качестве атаки!
+                //case ContainerDamageTypes.BleedingDamage:
+                //    Debug.Log(gameObject.name + " choise the BleedingDamage!");
+                //    DamageType = new BleedingDamage();
+                //    break;
+                //case ContainerDamageTypes.PoisonDamage:
+                //    Debug.Log(gameObject.name + " choise the PoisonDamage!");
+                //    DamageType = new PoisonDamage();
+                //    break;
         }
     }
 
