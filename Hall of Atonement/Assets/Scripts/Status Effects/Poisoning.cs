@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-class Poisoning : MonoBehaviour, IDamageLogic
+class Poisoning : ItemHarding, IDamageLogic
 {
     private UnitStats targetStats;
     private CharacterStats ownerStats;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-class Bleeding : MonoBehaviour, IDamageLogic
+class Bleeding : ItemHarding, IDamageLogic
 {
     private DamageType damageType;
     private UnitStats targetStats;

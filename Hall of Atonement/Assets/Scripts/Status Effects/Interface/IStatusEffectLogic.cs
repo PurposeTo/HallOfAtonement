@@ -1,5 +1,14 @@
-﻿public interface IStatusEffectLogic
+﻿using UnityEngine;
+
+public interface IStatusEffectLogic
 {
+
+}
+
+
+public class ItemHarding : MonoBehaviour
+{
+
 }
 
 

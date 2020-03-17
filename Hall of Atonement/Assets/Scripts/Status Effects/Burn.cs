@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class Burn : MonoBehaviour, IDamageLogic
+public class Burn : ItemHarding, IDamageLogic
 {
     private UnitStats targetStats;
     private CharacterStats ownerStats;
-    private DamageType damageType;
+    public DamageType damageType;
 
     private readonly float baseDamagePerSecond = 2f;
     private readonly float baseBurningTime = 3f;

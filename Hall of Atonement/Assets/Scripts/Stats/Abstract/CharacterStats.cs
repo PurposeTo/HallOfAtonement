@@ -48,7 +48,7 @@ public abstract class CharacterStats : UnitStats
     private const float minRotationSpeed = 180f; //минимальное значение скорости поворота
     private protected virtual float BaseRotationSpeed { get; } = 720f; //базовое значение скорости поворота //Соотносится как ~ 1080 к 10 скорости
 
-    private protected virtual float BaseAttackDamage { get; } = 10f; //базовое значение атаки
+    public virtual float BaseAttackDamage { get; } = 10f; //базовое значение атаки
     private const float minAttackSpeed = 0.01f; //максимальное значение скорости атаки
     private const float maxAttackSpeed = 50f; //максимальное значение скорости атаки
     private protected virtual float BaseAttackSpeed { get; } = 0.75f; //базовое значение скорости атаки

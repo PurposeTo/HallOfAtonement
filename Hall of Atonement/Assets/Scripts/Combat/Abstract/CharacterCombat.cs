@@ -100,7 +100,7 @@ public abstract class CharacterCombat : MonoBehaviour
                 if (CharacterPresenter.MyStats.DamageType is EffectDamage)
                 {
                     StatusEffectFactory statusEffectFactory = new StatusEffectFactory();
-                    statusEffectFactory.HangStatusEffect(CharacterPresenter.MyStats.DamageType, targetStats, CharacterPresenter.MyStats);
+                    statusEffectFactory.HangStatusEffect(CharacterPresenter.MyStats.DamageType, targetStats, CharacterPresenter.MyStats, CharacterPresenter.MyStats.attackDamage.GetValue() / CharacterPresenter.MyStats.BaseAttackDamage);
                 }
             }
 

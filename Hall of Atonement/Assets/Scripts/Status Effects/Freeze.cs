@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-class Freeze : MonoBehaviour, IDamageLogic
+class Freeze : ItemHarding, IDamageLogic
 {
     private DamageType damageType;
     private UnitStats targetStats;
