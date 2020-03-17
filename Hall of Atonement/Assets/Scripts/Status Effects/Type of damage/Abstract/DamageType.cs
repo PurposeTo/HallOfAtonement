@@ -1,3 +1,9 @@
-﻿public abstract class DamageType
+﻿using System;
+
+public abstract class DamageType : ICloneable
 {
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 }

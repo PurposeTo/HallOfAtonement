@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Lifesteal : MonoBehaviour, IAttackModifier
 {
@@ -29,4 +30,9 @@ public class Lifesteal : MonoBehaviour, IAttackModifier
         characterPresenter.Combat.attackModifiers.Remove(this);
     }
 
+
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 }

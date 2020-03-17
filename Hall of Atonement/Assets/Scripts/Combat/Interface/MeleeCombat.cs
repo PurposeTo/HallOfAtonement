@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class MeleeCombat : MonoBehaviour, IMelee
 {
@@ -16,7 +17,7 @@ public class MeleeCombat : MonoBehaviour, IMelee
     }
 
 
-    void IAttacker.Attack(CharacterCombat combat)
+    void IAttacker.Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         print(gameObject.name + " использует ближнюю атаку!");
 
@@ -26,7 +27,7 @@ public class MeleeCombat : MonoBehaviour, IMelee
         {
             if (hitUnits[i].gameObject != gameObject && hitUnits[i].TryGetComponent(out UnitStats targetStats))
             {
-                combat.DoDamage(targetStats);
+                combat.DoDamage(targetStats, ownerStats, damageType, criticalChance, criticalMultiplie, attackDamage, ownerMastery, attackModifiers);
             }
         }
     }

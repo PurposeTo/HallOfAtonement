@@ -1,13 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public static class GameLogic
 {
+    public static IList<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
+    {
+        return listToClone.Select(item => (T)item.Clone()).ToList();
+    }
+
+
     public static void Shuffle<T> (T[] deck)
     {
         for (int i = 0; i < deck.Length; i++)
         {
             T temp = deck[i];
-            int randomIndex = Random.Range(0, deck.Length);
+            int randomIndex = UnityEngine.Random.Range(0, deck.Length);
             deck[i] = deck[randomIndex];
             deck[randomIndex] = temp;
         }

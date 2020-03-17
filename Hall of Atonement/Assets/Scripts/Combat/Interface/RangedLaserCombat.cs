@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class RangedLaserCombat : MonoBehaviour, IRanged
 {
@@ -8,7 +9,8 @@ public class RangedLaserCombat : MonoBehaviour, IRanged
 
     Transform IAttacker.AttackPoint => weapon;
 
-    void IAttacker.Attack(CharacterCombat combat)
+
+    void IAttacker.Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         print(gameObject.name + " использует дальнюю атаку!");
 
@@ -31,7 +33,7 @@ public class RangedLaserCombat : MonoBehaviour, IRanged
             //Это что то имеет Статы?
             if (hit.collider.gameObject.TryGetComponent(out UnitStats targetStats))
             {
-                combat.DoDamage(targetStats);
+                combat.DoDamage(targetStats, ownerStats, damageType, criticalChance, criticalMultiplie, attackDamage, ownerMastery, attackModifiers);
             }
         }
         //}
