@@ -10,7 +10,7 @@ class Freeze : HangingEffect, IDamageLogic
     private readonly float baseFreezingTime = 3f;
 
     private float currentFreezingTime;
-    private float effectPower;
+    private float effectPower = 1f;
 
     private readonly float decelerationPercent = 0.6f;
     private readonly float defrostPercentTo = 0.75f;

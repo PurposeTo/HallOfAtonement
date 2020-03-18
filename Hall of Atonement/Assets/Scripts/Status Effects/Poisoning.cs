@@ -11,7 +11,7 @@ class Poisoning : HangingEffect, IDamageLogic
     private readonly float effectTimeUpdating = 1.5f;
 
     private float currentPoisoningTime;
-    private float effectPower;
+    private float effectPower = 1f;
 
 
     void Start()

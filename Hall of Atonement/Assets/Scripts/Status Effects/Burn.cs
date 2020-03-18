@@ -9,7 +9,7 @@ public class Burn : HangingEffect, IDamageLogic
     private readonly float baseDamagePerSecond = 2f;
     private readonly float baseBurningTime = 3f;
 
-    private float effectPower;
+    private float effectPower = 1f;
     private float currentBurningTime;
 
 

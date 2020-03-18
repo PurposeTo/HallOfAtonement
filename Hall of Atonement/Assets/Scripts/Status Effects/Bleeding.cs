@@ -10,7 +10,7 @@ class Bleeding : HangingEffect, IDamageLogic
     private readonly float baseBleedingTime = 2f;
 
     private float currentBleedingTime;
-    private float effectPower;
+    private float effectPower = 1f;
 
 
     void Start()
