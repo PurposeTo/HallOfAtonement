@@ -12,7 +12,7 @@ public class EnemyStats : CharacterStats
     private readonly float hpRegenForStrenght = 0.25f;
     public Stat healthPointRegen;
 
-    private float amountOfMutatedPoints = 2f;
+    private float amountOfMutatedPoints = 1.2f;
     private float strenghtFromLvl;
     private float agilityFromLvl;
     private float masteryFromLvl;
