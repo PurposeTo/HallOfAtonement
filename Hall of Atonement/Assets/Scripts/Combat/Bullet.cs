@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour//, IPooledObject
+public class Bullet : MonoBehaviour, IPooledObject
 {
     public Rigidbody2D bulletRb2d { get; private set; }
     private UnitCombat bulletCombat;
@@ -15,12 +16,23 @@ public class Bullet : MonoBehaviour//, IPooledObject
     float attackDamage;
     int ownerMastery;
 
-
+    private Coroutine waitingRoutine;
+    private float lifeTime = 20f;
 
     private void Awake()
     {
         bulletRb2d = GetComponent<Rigidbody2D>();
         bulletCombat = GetComponent<UnitCombat>();
+    }
+
+
+    private void OnDisable()
+    {
+        if (waitingRoutine != null)
+        {
+            StopCoroutine(waitingRoutine);
+            waitingRoutine = null;
+        }
     }
 
 
@@ -48,10 +60,13 @@ public class Bullet : MonoBehaviour//, IPooledObject
     }
 
 
-    //void IPooledObject.OnObjectSpawn()
-    //{
-
-    //}
+    void IPooledObject.OnObjectSpawn()
+    {
+        if(waitingRoutine == null) 
+        { 
+        waitingRoutine = StartCoroutine(WaitingEnumerator(lifeTime));
+        }
+    }
 
 
     public void BulletInitialization(GameObject ownerGameObject, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
@@ -65,5 +80,15 @@ public class Bullet : MonoBehaviour//, IPooledObject
         this.ownerMastery = ownerMastery;
 
         bulletCombat.attackModifiers = (List<IAttackModifier>)GameLogic.Clone(attackModifiers);
+    }
+
+
+    private IEnumerator WaitingEnumerator(float waiting)
+    {
+        yield return new WaitForSeconds(waiting);
+
+        gameObject.SetActive(false);
+
+        waitingRoutine = null;
     }
 }
