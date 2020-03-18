@@ -51,4 +51,10 @@ class WeaponHarding : MonoBehaviour, IAttackModifier
         Poison,
         Bleeding
     }
+
+
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 }
