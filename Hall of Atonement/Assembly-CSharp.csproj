@@ -113,8 +113,9 @@
     <Compile Include="Assets\Scripts\Factory and Products\DamageReducerProduct\IDamageReducerProduct.cs" />
     <Compile Include="Assets\Scripts\Factory and Products\DamageReducerProduct\PhysicalReducer.cs" />
     <Compile Include="Assets\Scripts\Factory and Products\Factory\DamageReducerFactory.cs" />
-    <Compile Include="Assets\Scripts\Factory and Products\Factory\IDamageReducerFactory.cs" />
     <Compile Include="Assets\Scripts\Factory and Products\Factory\StatusEffectFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory and Products\Factory\IDamageReducerFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory and Products\Factory\DamageTypeEffect.cs" />
     <Compile Include="Assets\Scripts\GameLogic.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\IPooledObject.cs" />

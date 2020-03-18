@@ -1,10 +1,10 @@
-﻿public class StatusEffectFactory
+﻿public class DamageTypeEffect
 {
-    public void HangStatusEffect(ItemHarding itemHarding)
+    public void HangDamageTypeEffect(DamageType damageType, UnitStats targetStats, CharacterStats ownerStats, float amplificationAmount)
     {
         IDamageLogic effect = null;
 
-        if (itemHarding is Burn)
+        if (damageType is FireDamage)
         {
             effect = targetStats.gameObject.GetComponent<Burn>();
 
@@ -13,7 +13,7 @@
                 effect = targetStats.gameObject.AddComponent<Burn>();
             }
         }
-        else if(itemHarding is Freeze)
+        else if (damageType is IceDamage)
         {
             effect = targetStats.gameObject.GetComponent<Freeze>();
 

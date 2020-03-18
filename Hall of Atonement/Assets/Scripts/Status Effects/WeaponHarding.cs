@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 
-class WeaponHarding : MonoBehaviour, IAttackModifier
+class WeaponHarding<T> : MonoBehaviour, IAttackModifier where T : ItemHarding
 {
     public HardingType hardingType;
-    private ItemHarding debaff;
+    private T debaff;
     private UnitStats targetStats;
-    private StatusEffectFactory statusEffectFactory = new StatusEffectFactory();
+    private CharacterStats ownerStats;
+    private DamageTypeEffect statusEffectFactory = new DamageTypeEffect();
+    private HardingFactory<T> hardingFactory = new HardingFactory<T>();
 
 
     void Start()
@@ -25,6 +27,8 @@ class WeaponHarding : MonoBehaviour, IAttackModifier
         switch (hardingType)
         {
             case HardingType.Burn:
+                debaff = new Burn();
+                statusEffectFactory.HangDamageTypeEffect(new FireDamage(), targetStats, ownerStats, 1f);
                 break;
             case HardingType.Freeze:
                 break;
@@ -41,7 +45,12 @@ class WeaponHarding : MonoBehaviour, IAttackModifier
 
     public void ApplyAttackModifier(float damage, int mastery)
     {
+        hardingFactory.Foo(debaff, targetStats, ownerStats);
+    }
 
+    public object Clone()
+    {
+        throw new System.NotImplementedException();
     }
 
     public enum HardingType
