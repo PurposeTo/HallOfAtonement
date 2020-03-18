@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-class Poisoning : ItemHarding, IDamageLogic
+class Poisoning : HangingEffect, IDamageLogic
 {
     private UnitStats targetStats;
     private CharacterStats ownerStats;
@@ -34,7 +34,7 @@ class Poisoning : ItemHarding, IDamageLogic
     }
 
 
-    public void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
+    public override void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
     {
         this.ownerStats = ownerStats;
         currentPoisoningTime = basePoisoningTime * effectTimeUpdating; //обновили и увеличили на (1/2)
@@ -49,7 +49,7 @@ class Poisoning : ItemHarding, IDamageLogic
 
         if (currentPoisoningTime > 0f)
         {
-            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, ref isEvaded, ref isBlocked);
+            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
             currentPoisoningTime -= Time.deltaTime;
         }
         else

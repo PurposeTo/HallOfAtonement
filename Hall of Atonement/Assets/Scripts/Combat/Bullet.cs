@@ -64,7 +64,7 @@ public class Bullet : MonoBehaviour, IPooledObject
     {
         if(waitingRoutine == null) 
         { 
-        waitingRoutine = StartCoroutine(WaitingEnumerator(lifeTime));
+            waitingRoutine = StartCoroutine(WaitingEnumerator(lifeTime));
         }
     }
 

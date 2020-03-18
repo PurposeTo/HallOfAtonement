@@ -24,7 +24,7 @@ public class RangedShootCombat : MonoBehaviour, IRanged
         {
             bullet.transform.position = weapon.transform.position;
             bullet.transform.rotation = weapon.transform.rotation;
-            bullet.SetActive(true);
+            //bullet.SetActive(true);
 
             Bullet bulletScript = bullet.GetComponent<Bullet>();
             bulletScript.bulletRb2d.AddForce(weapon.up * bullerForce, ForceMode2D.Impulse);

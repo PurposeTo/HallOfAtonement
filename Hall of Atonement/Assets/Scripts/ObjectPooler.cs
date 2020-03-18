@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -41,6 +40,8 @@ public class ObjectPooler : MonoBehaviour
             {
                 GameObject returnedGameObject = pooledObjects[i];
 
+                returnedGameObject.SetActive(true);
+
                 if (returnedGameObject.TryGetComponent(out IPooledObject pooledObject))
                 {
                     pooledObject.OnObjectSpawn();
@@ -53,6 +54,8 @@ public class ObjectPooler : MonoBehaviour
         if (shouldExpand)
         {
             GameObject returnedGameObject = CreateNewObjectToPool(objectToPool);
+
+            returnedGameObject.SetActive(true);
 
             if(returnedGameObject.TryGetComponent(out IPooledObject pooledObject))
             {

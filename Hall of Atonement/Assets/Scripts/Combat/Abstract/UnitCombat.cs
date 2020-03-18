@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitCombat : MonoBehaviour
 {
-    private float effectPowerConversionCoefficient = 9f;
+    private const float effectPowerConversionCoefficient = 9f;
 
     public List<IAttackModifier> attackModifiers = new List<IAttackModifier>();
 
@@ -29,7 +28,7 @@ public class UnitCombat : MonoBehaviour
         bool isEvaded = false;
         bool isBlocked = false;
 
-        attackDamage = targetStats.TakeDamage(ownerStats, damageType, attackDamage, true, ref isEvaded, ref isBlocked);
+        attackDamage = targetStats.TakeDamage(ownerStats, damageType, attackDamage, ref isEvaded, ref isBlocked);
 
         if (!isEvaded)
         {
@@ -37,8 +36,7 @@ public class UnitCombat : MonoBehaviour
             {
                 if (damageType is EffectDamage)
                 {
-                    StatusEffectFactory statusEffectFactory = new StatusEffectFactory();
-                    statusEffectFactory.HangStatusEffect(damageType, targetStats, ownerStats, attackDamage / effectPowerConversionCoefficient);
+                    new DamageTypeEffect((EffectDamage)damageType, targetStats.gameObject, ownerStats, attackDamage / effectPowerConversionCoefficient);
                 }
             }
 
@@ -53,7 +51,7 @@ public class UnitCombat : MonoBehaviour
 
             for (int i = 0; i < attackModifiers.Count; i++)
             {
-                attackModifiers[i].ApplyAttackModifier(attackDamage, ownerMastery);
+                attackModifiers[i].ApplyAttackModifier(targetStats, attackDamage, ownerMastery);
             }
         }
 

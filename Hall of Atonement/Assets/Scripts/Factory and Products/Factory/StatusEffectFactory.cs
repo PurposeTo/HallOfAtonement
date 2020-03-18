@@ -1,26 +1,14 @@
-﻿public class StatusEffectFactory
+﻿using UnityEngine;
+
+public class StatusEffectFactory<T> where T : HangingEffect
 {
-    public void HangStatusEffect(ItemHarding itemHarding)
+    public StatusEffectFactory(GameObject target, CharacterStats ownerStats, float amplificationAmount)
     {
-        IDamageLogic effect = null;
+        HangingEffect effect = target.GetComponent<T>();
 
-        if (itemHarding is Burn)
+        if (effect == null)
         {
-            effect = targetStats.gameObject.GetComponent<Burn>();
-
-            if (effect == null)
-            {
-                effect = targetStats.gameObject.AddComponent<Burn>();
-            }
-        }
-        else if(itemHarding is Freeze)
-        {
-            effect = targetStats.gameObject.GetComponent<Freeze>();
-
-            if (effect == null)
-            {
-                effect = targetStats.gameObject.AddComponent<Freeze>();
-            }
+            effect = target.AddComponent<T>();
         }
 
         //Сделать зависимость силы эффекта от урона или от mastery

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-class Bleeding : ItemHarding, IDamageLogic
+class Bleeding : HangingEffect, IDamageLogic
 {
     private DamageType damageType;
     private UnitStats targetStats;
@@ -33,7 +33,7 @@ class Bleeding : ItemHarding, IDamageLogic
     }
 
 
-    public void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
+    public override void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
     {
         this.ownerStats = ownerStats;
         currentBleedingTime += baseBleedingTime;
@@ -48,7 +48,7 @@ class Bleeding : ItemHarding, IDamageLogic
 
         if (currentBleedingTime > 0f)
         {
-            targetStats.TakeDamage(ownersStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, ref isEvaded, ref isBlocked);
+            targetStats.TakeDamage(ownersStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
             currentBleedingTime -= Time.deltaTime;
         }
         else

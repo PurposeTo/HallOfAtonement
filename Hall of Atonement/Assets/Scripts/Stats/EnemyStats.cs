@@ -116,9 +116,9 @@ public class EnemyStats : CharacterStats
     }
 
 
-    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, ref bool isEvaded, ref bool isBlocked)
+    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, ref bool isEvaded, ref bool isBlocked, bool canEvade = true)
     {
-        float returnDamage = base.TakeDamage(killerStats, damageType, damage, canEvade, ref isEvaded, ref isBlocked);
+        float returnDamage = base.TakeDamage(killerStats, damageType, damage, ref isEvaded, ref isBlocked, canEvade);
 
         if (!isEvaded && killerStats != null)
         {

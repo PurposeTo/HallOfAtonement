@@ -1,29 +1,16 @@
-﻿public class DamageTypeEffect
-{
-    public void HangDamageTypeEffect(DamageType damageType, UnitStats targetStats, CharacterStats ownerStats, float amplificationAmount)
-    {
-        IDamageLogic effect = null;
+﻿using UnityEngine;
 
+public class DamageTypeEffect
+{
+    public DamageTypeEffect(EffectDamage damageType, GameObject target, CharacterStats ownerStats, float amplificationAmount)
+    {
         if (damageType is FireDamage)
         {
-            effect = targetStats.gameObject.GetComponent<Burn>();
-
-            if (effect == null)
-            {
-                effect = targetStats.gameObject.AddComponent<Burn>();
-            }
+            new StatusEffectFactory<Burn>(target, ownerStats, amplificationAmount);
         }
         else if (damageType is IceDamage)
         {
-            effect = targetStats.gameObject.GetComponent<Freeze>();
-
-            if (effect == null)
-            {
-                effect = targetStats.gameObject.AddComponent<Freeze>();
-            }
+            new StatusEffectFactory<Freeze>(target, ownerStats, amplificationAmount);
         }
-
-        //Сделать зависимость силы эффекта от урона или от mastery
-        effect.AmplifyEffect(ownerStats, amplificationAmount);
     }
 }
