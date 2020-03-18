@@ -7,7 +7,7 @@ public interface IStatusEffectLogic
 }
 
 
-public class ItemHarding : MonoBehaviour
+public abstract class ItemHarding : MonoBehaviour
 {
 
 }

@@ -35,8 +35,8 @@ public class UnitCombat : MonoBehaviour
             {
                 if (damageType is EffectDamage)
                 {
-                    StatusEffectFactory statusEffectFactory = new StatusEffectFactory();
-                    statusEffectFactory.HangStatusEffect(damageType, targetStats, ownerStats, attackDamage / 10f);
+                    DamageTypeEffect statusEffectFactory = new DamageTypeEffect();
+                    statusEffectFactory.HangDamageTypeEffect(damageType, targetStats, ownerStats, attackDamage / 10f);
                 }
             }
 
