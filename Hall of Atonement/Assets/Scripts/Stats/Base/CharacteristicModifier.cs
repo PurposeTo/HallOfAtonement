@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public delegate void ChangeCharacteristicModifier();
+﻿public delegate void ChangeCharacteristicModifier();
 public class CharacteristicModifier<T> : ICharacteristicModifier<T>
 {
     public CharacteristicModifier() : this(default) { }

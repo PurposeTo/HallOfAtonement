@@ -1,40 +1,46 @@
 ﻿using UnityEngine;
 
-class WeaponHarding<T> : MonoBehaviour, IAttackModifier where T : ItemHarding
+class WeaponHarding : MonoBehaviour, IAttackModifier
 {
-    public HardingType hardingType;
-    private T debaff;
-    private UnitStats targetStats;
-    private CharacterStats ownerStats;
-    private DamageTypeEffect statusEffectFactory = new DamageTypeEffect();
-    private HardingFactory<T> hardingFactory = new HardingFactory<T>();
+    [SerializeField] private HardingType hardingType;
+    private CharacterPresenter characterPresenter;
 
 
-    void Start()
+    private void Start()
     {
-        Initialization();
+
+        characterPresenter = gameObject.GetComponent<CharacterPresenter>();
+        characterPresenter.Combat.attackModifiers.Add(this);
     }
 
 
-    void Update()
+    private void OnDestroy()
     {
-        
+        characterPresenter.Combat.attackModifiers.Remove(this);
     }
 
 
-    private void Initialization()
+    public void SetHardingType(HardingType hardingType)
+    {
+        this.hardingType = hardingType;
+    }
+
+
+    public void ApplyAttackModifier(UnitStats targetStats, float damage, int mastery)
     {
         switch (hardingType)
         {
             case HardingType.Burn:
-                debaff = new Burn();
-                statusEffectFactory.HangDamageTypeEffect(new FireDamage(), targetStats, ownerStats, 1f);
+                new StatusEffectFactory<Burn>(targetStats.gameObject, characterPresenter.MyStats, mastery);
                 break;
             case HardingType.Freeze:
+                new StatusEffectFactory<Freeze>(targetStats.gameObject, characterPresenter.MyStats, mastery);
                 break;
             case HardingType.Poison:
+                new StatusEffectFactory<Poisoning>(targetStats.gameObject, characterPresenter.MyStats, mastery);
                 break;
             case HardingType.Bleeding:
+                new StatusEffectFactory<Bleeding>(targetStats.gameObject, characterPresenter.MyStats, mastery);
                 break;
             default:
                 Debug.LogError("Try to use unknown element for harding weapon!");
@@ -43,18 +49,9 @@ class WeaponHarding<T> : MonoBehaviour, IAttackModifier where T : ItemHarding
     }
 
 
-    public void ApplyAttackModifier(float damage, int mastery)
-    {
-        hardingFactory.Foo(debaff, targetStats, ownerStats);
-    }
-
-    public object Clone()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public enum HardingType
     {
+        DefaultState, // Сначала вызвать SetHardingType()
         Burn,
         Freeze,
         Poison,

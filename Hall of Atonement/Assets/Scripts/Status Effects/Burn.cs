@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Burn : ItemHarding, IDamageLogic
+public class Burn : HangingEffect, IDamageLogic
 {
     private UnitStats targetStats;
     private CharacterStats ownerStats;
@@ -46,7 +46,7 @@ public class Burn : ItemHarding, IDamageLogic
 
         if(currentBurningTime > 0f)
         {
-            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, ref isEvaded, ref isBlocked);
+            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
             currentBurningTime -= Time.deltaTime;
         }
         else
@@ -56,7 +56,7 @@ public class Burn : ItemHarding, IDamageLogic
     }
 
 
-    public void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
+    public override void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
     {
         this.ownerStats = ownerStats;
         currentBurningTime = baseBurningTime;
@@ -70,7 +70,7 @@ public class Burn : ItemHarding, IDamageLogic
         bool isBlocked = false;
 
         float remainingDamage = baseDamagePerSecond * effectPower * currentBurningTime;
-        targetStats.TakeDamage(ownerStats, damageType, remainingDamage, false, ref isEvaded, ref isBlocked);
+        targetStats.TakeDamage(ownerStats, damageType, remainingDamage, ref isEvaded, ref isBlocked, false);
         Destroy(this);
     }
 }

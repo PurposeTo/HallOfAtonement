@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-class Freeze : ItemHarding, IDamageLogic
+class Freeze : HangingEffect, IDamageLogic
 {
     private DamageType damageType;
     private UnitStats targetStats;
@@ -44,7 +44,7 @@ class Freeze : ItemHarding, IDamageLogic
     }
 
 
-    public void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
+    public override void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
     {
         this.ownerStats = ownerStats;
         currentFreezingTime += baseFreezingTime; //увеличить время действия на (1)
@@ -60,7 +60,7 @@ class Freeze : ItemHarding, IDamageLogic
             bool isEvaded = false;
             bool isBlocked = false;
 
-            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, false, ref isEvaded, ref isBlocked);
+            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
             currentFreezingTime -= Time.deltaTime;
         }
         else
@@ -76,7 +76,7 @@ class Freeze : ItemHarding, IDamageLogic
         bool isBlocked = false;
 
         float remainingDamage = baseDamagePerSecond * effectPower * currentFreezingTime;
-        targetStats.TakeDamage(ownerStats, damageType, remainingDamage, false, ref isEvaded, ref isBlocked);
+        targetStats.TakeDamage(ownerStats, damageType, remainingDamage, ref isEvaded, ref isBlocked, false);
         Destroy(this);
     }
 }

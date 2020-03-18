@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class UnitStats : MonoBehaviour
 {
@@ -30,9 +28,8 @@ public abstract class UnitStats : MonoBehaviour
     }
 
 
-    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, bool canEvade, ref bool isEvaded, ref bool isBlocked)
+    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, ref bool isEvaded, ref bool isBlocked, bool canEvade = true)
     {
-
         //снизить урон от определенного типа урона
         IDamageReducerProduct damageReducer = damageReducerFactory.CreateDamageReducerProduct(damageType);
         damage = damageReducer.ReduceDamage(this, damage, out isBlocked);

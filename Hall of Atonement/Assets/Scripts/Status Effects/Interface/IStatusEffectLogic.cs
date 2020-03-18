@@ -7,15 +7,15 @@ public interface IStatusEffectLogic
 }
 
 
-public abstract class ItemHarding : MonoBehaviour
+public abstract class HangingEffect : MonoBehaviour
 {
-
+    public abstract void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount);
 }
 
 
 public interface IAttackModifier : IStatusEffectLogic, ICloneable
 {
-    void ApplyAttackModifier(float damage, int mastery);
+    void ApplyAttackModifier(UnitStats targetStats, float damage, int mastery);
 }
 
 
@@ -38,8 +38,6 @@ public interface ICharacteristicModifier<T> : IStatusEffectLogic
 public interface IDamageLogic : IStatusEffectLogic
 {
     void DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats);
-
-    void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount);
 }
 
 
