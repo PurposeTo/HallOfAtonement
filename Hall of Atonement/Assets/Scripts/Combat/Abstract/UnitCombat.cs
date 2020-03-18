@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UnitCombat : MonoBehaviour
 {
+    private float effectPowerConversionCoefficient = 9f;
+
     public List<IAttackModifier> attackModifiers = new List<IAttackModifier>();
 
 
@@ -35,8 +37,8 @@ public class UnitCombat : MonoBehaviour
             {
                 if (damageType is EffectDamage)
                 {
-                    DamageTypeEffect statusEffectFactory = new DamageTypeEffect();
-                    statusEffectFactory.HangDamageTypeEffect(damageType, targetStats, ownerStats, attackDamage / 10f);
+                    StatusEffectFactory statusEffectFactory = new StatusEffectFactory();
+                    statusEffectFactory.HangStatusEffect(damageType, targetStats, ownerStats, attackDamage / effectPowerConversionCoefficient);
                 }
             }
 

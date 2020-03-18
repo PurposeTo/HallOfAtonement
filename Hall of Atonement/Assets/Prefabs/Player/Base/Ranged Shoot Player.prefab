@@ -93,7 +93,7 @@ PrefabInstance:
     - target: {fileID: 5600866755883517750, guid: 07a1bf439219d794a8e3e4dc7acd286e,
         type: 3}
       propertyPath: m_Name
-      value: Gun Player
+      value: Ranged Shoot Player
       objectReference: {fileID: 0}
     - target: {fileID: 7649848837923443827, guid: 07a1bf439219d794a8e3e4dc7acd286e,
         type: 3}

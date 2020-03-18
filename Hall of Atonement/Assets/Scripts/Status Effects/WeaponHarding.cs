@@ -60,4 +60,10 @@ class WeaponHarding<T> : MonoBehaviour, IAttackModifier where T : ItemHarding
         Poison,
         Bleeding
     }
+
+
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 }
