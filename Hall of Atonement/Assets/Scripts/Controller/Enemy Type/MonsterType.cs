@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MonsterType : MonoBehaviour, ICharacterType
+public class MonsterType : CharacterType
 {
     private EnemyPresenter EnemyPresenter;
 
@@ -11,7 +11,7 @@ public class MonsterType : MonoBehaviour, ICharacterType
     }
 
 
-    GameObject ICharacterType.SearchingTarget()
+    public override GameObject SearchingTarget()
     {
         GameObject target = null;
 

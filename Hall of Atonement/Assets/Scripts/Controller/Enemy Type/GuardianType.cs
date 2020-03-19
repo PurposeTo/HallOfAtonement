@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GuardianType : MonoBehaviour, ICharacterType
+public class GuardianType : CharacterType
 {
     private EnemyPresenter EnemyPresenter;
 
@@ -11,7 +11,7 @@ public class GuardianType : MonoBehaviour, ICharacterType
     }
 
 
-    GameObject ICharacterType.SearchingTarget()
+    public override GameObject SearchingTarget()
     {
         GameObject target;
         if (Vector2.Distance(GameManager.instance.player.transform.position, transform.position) <= EnemyPresenter.MyEnemyStats.ViewingRadius) 

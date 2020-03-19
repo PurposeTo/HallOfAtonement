@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerType : MonoBehaviour, ICharacterType
+public class PlayerType : CharacterType
 {
     private GameObject mainCamera;
 
@@ -26,7 +26,7 @@ public class PlayerType : MonoBehaviour, ICharacterType
     }
 
 
-    public GameObject SearchingTarget()
+    public override GameObject SearchingTarget()
     {
         GameObject target = null;
 

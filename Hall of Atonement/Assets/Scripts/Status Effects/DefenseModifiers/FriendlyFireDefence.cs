@@ -6,7 +6,7 @@ public class FriendlyFireDefence : MonoBehaviour, IDefenseModifier
 
     void IDefenseModifier.ApplyDefenseModifier(CharacterStats killerStats, DamageType damageType, float damage, ref bool isEvaded, ref bool isBlocked)
     {
-        if (killerStats == characterPresenter.MyStats) 
+        if (killerStats.CharacterPresenter.CharacterType.GetType() == characterPresenter.CharacterType.GetType())
         {
             isEvaded = true;
         }
