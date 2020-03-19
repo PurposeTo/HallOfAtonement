@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{4D9B446D-998C-D7A5-5088-1DC043AB813D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -95,8 +94,8 @@
     <Compile Include="Assets\Scripts\Combat\RangedPlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\ShootPlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Controller\Base\CharacterController.cs" />
-    <Compile Include="Assets\Scripts\Controller\Enemy Type\GuardianType.cs" />
     <Compile Include="Assets\Scripts\Controller\Enemy Type\CharacterType.cs" />
+    <Compile Include="Assets\Scripts\Controller\Enemy Type\GuardianType.cs" />
     <Compile Include="Assets\Scripts\Controller\Enemy Type\MonsterType.cs" />
     <Compile Include="Assets\Scripts\Controller\Enemy Type\PlayerType.cs" />
     <Compile Include="Assets\Scripts\Controller\EnemyAI.cs" />
