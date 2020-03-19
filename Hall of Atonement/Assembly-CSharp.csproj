@@ -119,8 +119,8 @@
     <Compile Include="Assets\Scripts\GameLogic.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\IPooledObject.cs" />
-    <Compile Include="Assets\Scripts\NewObjectPooler.cs" />
     <Compile Include="Assets\Scripts\ObjectPooler.cs" />
+    <Compile Include="Assets\Scripts\OldObjectPooler.cs" />
     <Compile Include="Assets\Scripts\Presenters\CharacterPresenter.cs" />
     <Compile Include="Assets\Scripts\Presenters\EnemyPresenter.cs" />
     <Compile Include="Assets\Scripts\Presenters\PlayerPresenter.cs" />

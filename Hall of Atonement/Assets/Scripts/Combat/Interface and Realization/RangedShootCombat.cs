@@ -18,7 +18,7 @@ public class RangedShootCombat : MonoBehaviour, IRanged
         //GameObject bullet = Instantiate(BulletPrefab, weapon.position, weapon.rotation);
 
 
-        GameObject bullet = ObjectPooler.SharedInstance.GetPooledObject(weapon.transform.position, weapon.transform.rotation);
+        GameObject bullet = ObjectPooler.SharedInstance.SpawnFromPool(BulletPrefab, weapon.transform.position, weapon.transform.rotation);
 
         if (bullet != null)
         {
