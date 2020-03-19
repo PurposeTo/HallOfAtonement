@@ -26,25 +26,28 @@ class WeaponHarding : MonoBehaviour, IAttackModifier
     }
 
 
-    public void ApplyAttackModifier(UnitStats targetStats, float damage, int mastery)
+    public void ApplyAttackModifier(UnitStats targetStats, DamageType damageType, float damage, int mastery)
     {
-        switch (hardingType)
+        if (damageType is PhysicalDamage)
         {
-            case HardingType.Burn:
-                new StatusEffectFactory<Burn>(targetStats.gameObject, characterPresenter.MyStats, mastery);
-                break;
-            case HardingType.Freeze:
-                new StatusEffectFactory<Freeze>(targetStats.gameObject, characterPresenter.MyStats, mastery);
-                break;
-            case HardingType.Poison:
-                new StatusEffectFactory<Poisoning>(targetStats.gameObject, characterPresenter.MyStats, mastery);
-                break;
-            case HardingType.Bleeding:
-                new StatusEffectFactory<Bleeding>(targetStats.gameObject, characterPresenter.MyStats, mastery);
-                break;
-            default:
-                Debug.LogError("Try to use unknown element for harding weapon!");
-                break;
+            switch (hardingType)
+            {
+                case HardingType.Burn:
+                    new StatusEffectFactory<Burn>(targetStats.gameObject, characterPresenter.MyStats, mastery);
+                    break;
+                case HardingType.Freeze:
+                    new StatusEffectFactory<Freeze>(targetStats.gameObject, characterPresenter.MyStats, mastery);
+                    break;
+                case HardingType.Poison:
+                    new StatusEffectFactory<Poisoning>(targetStats.gameObject, characterPresenter.MyStats, mastery);
+                    break;
+                case HardingType.Bleeding:
+                    new StatusEffectFactory<Bleeding>(targetStats.gameObject, characterPresenter.MyStats, mastery);
+                    break;
+                default:
+                    Debug.LogError("Try to use unknown element for harding weapon!");
+                    break;
+            }
         }
     }
 
