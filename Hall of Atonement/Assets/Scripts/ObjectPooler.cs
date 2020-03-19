@@ -13,7 +13,6 @@ public class ObjectPooler : MonoBehaviour
 
     public bool shouldExpand = true;
 
-
     private void Awake()
     {
         SharedInstance = this;
@@ -31,7 +30,7 @@ public class ObjectPooler : MonoBehaviour
     }
 
 
-    public GameObject GetPooledObject()
+    public GameObject GetPooledObject(Vector3 position, Quaternion rotation)
     {
 
         for (int i = 0; i < pooledObjects.Count; i++)
@@ -40,12 +39,7 @@ public class ObjectPooler : MonoBehaviour
             {
                 GameObject returnedGameObject = pooledObjects[i];
 
-                returnedGameObject.SetActive(true);
-
-                if (returnedGameObject.TryGetComponent(out IPooledObject pooledObject))
-                {
-                    pooledObject.OnObjectSpawn();
-                }
+                SetPooledObjectAtTheWorld(returnedGameObject, position, rotation);
 
                 return returnedGameObject;
             }
@@ -55,12 +49,7 @@ public class ObjectPooler : MonoBehaviour
         {
             GameObject returnedGameObject = CreateNewObjectToPool(objectToPool);
 
-            returnedGameObject.SetActive(true);
-
-            if(returnedGameObject.TryGetComponent(out IPooledObject pooledObject))
-            {
-                pooledObject.OnObjectSpawn();
-            }
+            SetPooledObjectAtTheWorld(returnedGameObject, position, rotation);
 
             return returnedGameObject;
             
@@ -68,6 +57,20 @@ public class ObjectPooler : MonoBehaviour
         else
         {
             return null;
+        }
+    }
+
+
+
+    private void SetPooledObjectAtTheWorld(GameObject returnedGameObject, Vector3 position, Quaternion rotation)
+    {
+        returnedGameObject.transform.position = position;
+        returnedGameObject.transform.rotation = rotation;
+        returnedGameObject.SetActive(true);
+
+        if (returnedGameObject.TryGetComponent(out IPooledObject pooledObject))
+        {
+            pooledObject.OnObjectSpawn();
         }
     }
 

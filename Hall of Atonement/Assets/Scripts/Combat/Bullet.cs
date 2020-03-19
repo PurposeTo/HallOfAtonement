@@ -8,16 +8,16 @@ public class Bullet : MonoBehaviour, IPooledObject
     private UnitCombat bulletCombat;
 
 
-    GameObject ownerGameObject;
-    CharacterStats ownerStats;
-    DamageType damageType;
-    float criticalChance;
-    float criticalMultiplie;
-    float attackDamage;
-    int ownerMastery;
+    private GameObject ownerGameObject;
+    private CharacterStats ownerStats;
+    private DamageType damageType;
+    private float criticalChance;
+    private float criticalMultiplie;
+    private float attackDamage;
+    private int ownerMastery;
 
     private Coroutine waitingRoutine;
-    private float lifeTime = 20f;
+    private readonly float lifeTime = 20f;
 
     private void Awake()
     {

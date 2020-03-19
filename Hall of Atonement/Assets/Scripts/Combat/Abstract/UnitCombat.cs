@@ -51,7 +51,7 @@ public class UnitCombat : MonoBehaviour
 
             for (int i = 0; i < attackModifiers.Count; i++)
             {
-                attackModifiers[i].ApplyAttackModifier(targetStats, attackDamage, ownerMastery);
+                attackModifiers[i].ApplyAttackModifier(targetStats, damageType, attackDamage, ownerMastery);
             }
         }
 

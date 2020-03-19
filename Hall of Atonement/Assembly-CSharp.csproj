@@ -86,10 +86,10 @@
     <Compile Include="Assets\Scripts\Combat\Abstract\PlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\Abstract\UnitCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\Bullet.cs" />
-    <Compile Include="Assets\Scripts\Combat\Interface\IAttacker.cs" />
-    <Compile Include="Assets\Scripts\Combat\Interface\MeleeCombat.cs" />
-    <Compile Include="Assets\Scripts\Combat\Interface\RangedLaserCombat.cs" />
-    <Compile Include="Assets\Scripts\Combat\Interface\RangedShootCombat.cs" />
+    <Compile Include="Assets\Scripts\Combat\Interface and Realization\IAttacker.cs" />
+    <Compile Include="Assets\Scripts\Combat\Interface and Realization\MeleeCombat.cs" />
+    <Compile Include="Assets\Scripts\Combat\Interface and Realization\RangedLaserCombat.cs" />
+    <Compile Include="Assets\Scripts\Combat\Interface and Realization\RangedShootCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\MeleePlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\RangedPlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\ShootPlayerCombat.cs" />

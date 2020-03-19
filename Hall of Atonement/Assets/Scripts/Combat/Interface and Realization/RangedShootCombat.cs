@@ -18,16 +18,16 @@ public class RangedShootCombat : MonoBehaviour, IRanged
         //GameObject bullet = Instantiate(BulletPrefab, weapon.position, weapon.rotation);
 
 
-        GameObject bullet = ObjectPooler.SharedInstance.GetPooledObject();
+        GameObject bullet = ObjectPooler.SharedInstance.GetPooledObject(weapon.transform.position, weapon.transform.rotation);
 
         if (bullet != null)
         {
-            bullet.transform.position = weapon.transform.position;
-            bullet.transform.rotation = weapon.transform.rotation;
+            //bullet.transform.position = weapon.transform.position;
+            //bullet.transform.rotation = weapon.transform.rotation;
             //bullet.SetActive(true);
 
             Bullet bulletScript = bullet.GetComponent<Bullet>();
-            bulletScript.bulletRb2d.AddForce(weapon.up * bullerForce, ForceMode2D.Impulse);
+            bulletScript.bulletRb2d.AddForce(weapon.up * bullerForce, ForceMode2D.Impulse); // Weapon.up указывает на направление полета пули!
 
             bulletScript.BulletInitialization(gameObject, ownerStats, damageType, criticalChance, criticalMultiplie, attackDamage, ownerMastery, attackModifiers);
         }
