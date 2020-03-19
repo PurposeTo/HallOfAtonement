@@ -19,12 +19,9 @@ public class PercentStat : Stat
         {
             finalValue *= (1f - statModifiers[i].GetModifierValue());
         }
-
         finalValue = 1f - finalValue;
 
-        if (finalValue < minValue) { return minValue; }
-        else if (finalValue > maxValue) { return maxValue; }
-        else { return finalValue; }
+        return Mathf.Clamp(finalValue, minValue, maxValue);
     }
 
 

@@ -39,10 +39,7 @@ public delegate void ChangeStat();
             finalValue += statModifiers[i].GetModifierValue();
         }
 
-        if (finalValue < minValue) { return minValue; }
-        else if (finalValue > maxValue) { return maxValue; }
-        else { return finalValue; }
-
+        return Mathf.Clamp(finalValue, minValue, maxValue);
     }
 
 
