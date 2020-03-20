@@ -5,9 +5,12 @@ class Freeze : HangingEffect, IDamageLogic
     private DamageType damageType;
     private UnitStats targetStats;
     private CharacterStats ownerStats;
+    private CharacteristicModifier<float> modifierMovementSpeed = new CharacteristicModifier<float>();
+    private CharacteristicModifier<float> modifierRotationSpeed = new CharacteristicModifier<float>();
+    private CharacteristicModifier<float> modifierAttackSpeed = new CharacteristicModifier<float>();
 
-    private readonly float baseDamagePerSecond = 1f;
-    private readonly float baseFreezingTime = 3f;
+    private readonly float baseDamagePerSecond = 0.25f;
+    private readonly float baseFreezingTime = 4f;
 
     private float currentFreezingTime;
     private float effectPower = 1f;
@@ -25,7 +28,15 @@ class Freeze : HangingEffect, IDamageLogic
 
     void Update()
     {
-        DoStatusEffectDamage(targetStats, ownerStats);
+        if (currentFreezingTime > 0f)
+        {
+            DoStatusEffectDamage(targetStats, ownerStats);
+            currentFreezingTime -= Time.deltaTime;
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 
 
@@ -47,7 +58,7 @@ class Freeze : HangingEffect, IDamageLogic
     public override void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
     {
         this.ownerStats = ownerStats;
-        currentFreezingTime += baseFreezingTime; //увеличить время действия на (1)
+        currentFreezingTime += baseFreezingTime; // Увеличить время действия на (1)
         defrostPerSecond = (decelerationPercent * defrostPercentTo) / currentFreezingTime;
         effectPower += amplificationAmount;
     }
@@ -55,18 +66,10 @@ class Freeze : HangingEffect, IDamageLogic
 
     public void DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats)
     {
-        if (currentFreezingTime > 0f)
-        {
-            bool isEvaded = false;
-            bool isBlocked = false;
+        bool isEvaded = false;
+        bool isBlocked = false;
 
-            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
-            currentFreezingTime -= Time.deltaTime;
-        }
-        else
-        {
-            Destroy(this);
-        }
+        targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
     }
 
 

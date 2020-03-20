@@ -3,6 +3,11 @@
 public abstract class UnitStats : MonoBehaviour
 {
     private protected virtual float BaseMaxHealthPoint { get; } = 50f; //базовое значение максимального кол-ва здоровья
+    private protected virtual float basePoisonResistanceValue { get; }
+    private protected virtual float baseBleedingResistanceValue { get; }
+    private protected virtual float baseFireResistanceValue { get; }
+    private protected virtual float baseIceResistanceValue { get; }
+
     public Stat maxHealthPoint;
     public float CurrentHealthPoint { get; private protected set; }
     public Stat armor; //Нет базового значения
@@ -25,6 +30,11 @@ public abstract class UnitStats : MonoBehaviour
     private protected virtual void StatInitialization()
     {
         maxHealthPoint = new Stat(BaseMaxHealthPoint);
+
+        poisonResistance = new PercentStat(basePoisonResistanceValue);
+        bleedingResistance = new PercentStat(baseBleedingResistanceValue);
+        fireResistance = new PercentStat(baseFireResistanceValue);
+        iceResistance = new PercentStat(baseIceResistanceValue);
     }
 
 
