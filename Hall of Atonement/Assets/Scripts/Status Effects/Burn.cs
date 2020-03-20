@@ -21,7 +21,15 @@ public class Burn : HangingEffect, IDamageLogic
 
     void Update()
     {
-        DoStatusEffectDamage(targetStats, ownerStats);
+        if (currentBurningTime > 0f)
+        {
+            DoStatusEffectDamage(targetStats, ownerStats);
+            currentBurningTime -= Time.deltaTime;
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 
 
@@ -44,15 +52,7 @@ public class Burn : HangingEffect, IDamageLogic
         bool isEvaded = false;
         bool isBlocked = false;
 
-        if(currentBurningTime > 0f)
-        {
-            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
-            currentBurningTime -= Time.deltaTime;
-        }
-        else
-        {
-            Destroy(this);
-        }
+        targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
     }
 
 

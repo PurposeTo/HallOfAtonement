@@ -8,9 +8,9 @@ public class Lifesteal : MonoBehaviour, IAttackModifier
     private float baseLifestealValue = 0.05f;
 
 
-    public void ApplyAttackModifier(UnitStats targetStats, DamageType damageType, float damage, int effectPower)
+    public void ApplyAttackModifier(UnitStats targetStats, DamageType damageType, float damage, int mastery)
     {
-        characterPresenter.MyStats.Healing(damage * baseLifestealValue * effectPower);
+        characterPresenter.MyStats.Healing(damage * baseLifestealValue * mastery);
         Debug.Log(gameObject.name + ": \"Your life is mine!\"");
     }
 

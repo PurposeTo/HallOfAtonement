@@ -91,17 +91,17 @@ public abstract class CharacterStats : UnitStats
 
     private void OnEnable()
     {
-        strength.OnChangeAttribute += UpdateBaseStrenghtStatsValue;
-        agility.OnChangeAttribute += UpdateBaseAgilityStatsValue;
-        mastery.OnChangeAttribute += UpdateBaseMasteryStatsValue;
+        strength.OnChangeAttributeFinalValue += UpdateBaseStrenghtStatsValue;
+        agility.OnChangeAttributeFinalValue += UpdateBaseAgilityStatsValue;
+        mastery.OnChangeAttributeFinalValue += UpdateBaseMasteryStatsValue;
     }
 
 
     private void OnDisable()
     {
-        strength.OnChangeAttribute -= UpdateBaseStrenghtStatsValue;
-        agility.OnChangeAttribute -= UpdateBaseAgilityStatsValue;
-        mastery.OnChangeAttribute -= UpdateBaseMasteryStatsValue;
+        strength.OnChangeAttributeFinalValue -= UpdateBaseStrenghtStatsValue;
+        agility.OnChangeAttributeFinalValue -= UpdateBaseAgilityStatsValue;
+        mastery.OnChangeAttributeFinalValue -= UpdateBaseMasteryStatsValue;
     }
 
 
@@ -132,6 +132,11 @@ public abstract class CharacterStats : UnitStats
 
         armor = new Stat(agility.GetValue() * armorForAgility);
         evasionChance = new PercentStat(agility.GetValue() * evasionForAgility);
+
+        poisonResistance = new PercentStat(basePoisonResistanceValue);
+        bleedingResistance = new PercentStat(baseBleedingResistanceValue);
+        fireResistance = new PercentStat(baseFireResistanceValue);
+        iceResistance = new PercentStat(baseIceResistanceValue);
     }
 
 

@@ -2,10 +2,12 @@
 using UnityEngine;
 
 
-public delegate void ChangeAttribute();
+public delegate void ChangeAttributeBaseValue();
+public delegate void ChangeAttributFinalValue();
 [System.Serializable] public class Attribute
 {
-    public event ChangeAttribute OnChangeAttribute;
+    public event ChangeAttributeBaseValue OnChangeAttributeBaseValue;
+    public event ChangeAttributFinalValue OnChangeAttributeFinalValue;
 
     [SerializeField] private int baseValue;    // Starting value
 
@@ -33,7 +35,7 @@ public delegate void ChangeAttribute();
 	}
 
 
-	public float GetBaseValue()
+	public int GetBaseValue()
 	{
 		return baseValue;
 	}
@@ -42,9 +44,9 @@ public delegate void ChangeAttribute();
     {
         attributeModifiers.Add(modifier);
 
-        modifier.OnChangeCharacteristicModifier += ReportUpdate;
+        modifier.OnChangeCharacteristicModifier += ReportUpdateFinalValue;
 
-        ReportUpdate();
+        ReportUpdateFinalValue();
     }
 
 
@@ -52,9 +54,9 @@ public delegate void ChangeAttribute();
     {
         attributeModifiers.Remove(modifier);
 
-        modifier.OnChangeCharacteristicModifier -= ReportUpdate;
+        modifier.OnChangeCharacteristicModifier -= ReportUpdateFinalValue;
 
-        ReportUpdate();
+        ReportUpdateFinalValue();
     }
 
 
@@ -62,12 +64,25 @@ public delegate void ChangeAttribute();
     {
         baseValue = newBaseValue;
 
-        ReportUpdate();
+        ReportUpdateBaseValue();
     }
 
 
-    private void ReportUpdate() // Сообщить об обновлении
+    private void ReportUpdateFinalValue() // Сообщить об обновлении
     {
-        if (OnChangeAttribute != null) OnChangeAttribute();
+        if (OnChangeAttributeFinalValue != null)
+        {
+            OnChangeAttributeFinalValue();
+        }
+    }
+
+
+    private void ReportUpdateBaseValue()
+    {
+        if (OnChangeAttributeBaseValue != null)
+        {
+            OnChangeAttributeBaseValue();
+            ReportUpdateFinalValue();
+        }
     }
 }

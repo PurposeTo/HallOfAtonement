@@ -5,10 +5,16 @@ class Poisoning : HangingEffect, IDamageLogic
     private UnitStats targetStats;
     private CharacterStats ownerStats;
     private DamageType damageType;
+    private CharacteristicModifier<int> strengthModifierForPoisoning = new CharacteristicModifier<int>();
+    private CharacteristicModifier<int> agilityModifierForPoisoning = new CharacteristicModifier<int>();
+    private CharacteristicModifier<int> masteryModifierForPoisoning = new CharacteristicModifier<int>();
 
-    private readonly float baseDamagePerSecond = 2f;
+    private readonly float baseDamagePerSecond = 0.25f;
     private readonly float basePoisoningTime = 4f;
-    private readonly float effectTimeUpdating = 1.5f;
+
+    private const float attributeModifierPercent = 0.1f;
+    private const float attributeModifierIncrease = 0.01f;
+    private const float decrease = -1f; // от finalValue должно ОТНИМАТЬСЯ значение модификатора характеристик эффекта Poisoning
 
     private float currentPoisoningTime;
     private float effectPower = 1f;
@@ -17,12 +23,49 @@ class Poisoning : HangingEffect, IDamageLogic
     void Start()
     {
         Initialization();
+
+        if (targetStats is CharacterStats)
+        {
+            SetAllModifiersValue();
+
+            ((CharacterStats)targetStats).strength.AddModifier(strengthModifierForPoisoning);
+            ((CharacterStats)targetStats).agility.AddModifier(agilityModifierForPoisoning);
+            ((CharacterStats)targetStats).mastery.AddModifier(masteryModifierForPoisoning);
+
+            // Значение модификатора характеристик эффекта Poisoning меняется в соответствии с базовым значением характеристик
+            ((CharacterStats)targetStats).strength.OnChangeAttributeBaseValue += SetStrengthModifierValue;
+            ((CharacterStats)targetStats).agility.OnChangeAttributeBaseValue += SetAgilityModifierValue;
+            ((CharacterStats)targetStats).mastery.OnChangeAttributeBaseValue += SetMasteryModifierValue;
+        }
+    }
+
+
+    void OnDestroy()
+    {
+        if (targetStats is CharacterStats)
+        {
+            ((CharacterStats)targetStats).strength.RemoveModifier(strengthModifierForPoisoning);
+            ((CharacterStats)targetStats).agility.RemoveModifier(agilityModifierForPoisoning);
+            ((CharacterStats)targetStats).mastery.RemoveModifier(masteryModifierForPoisoning);
+
+            ((CharacterStats)targetStats).strength.OnChangeAttributeBaseValue -= SetStrengthModifierValue;
+            ((CharacterStats)targetStats).agility.OnChangeAttributeBaseValue -= SetAgilityModifierValue;
+            ((CharacterStats)targetStats).mastery.OnChangeAttributeBaseValue -= SetMasteryModifierValue;
+        }
     }
 
 
     void Update()
     {
-        DoStatusEffectDamage(targetStats, ownerStats);
+        if (currentPoisoningTime > 0f)
+        {
+            DoStatusEffectDamage(targetStats, ownerStats);
+            currentPoisoningTime -= Time.deltaTime;
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 
 
@@ -37,8 +80,14 @@ class Poisoning : HangingEffect, IDamageLogic
     public override void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
     {
         this.ownerStats = ownerStats;
-        currentPoisoningTime = basePoisoningTime * effectTimeUpdating; //обновили и увеличили на (1/2)
+        currentPoisoningTime += basePoisoningTime;
         effectPower += amplificationAmount;
+
+        // Чем больше эффектов мы повесиили на цель, тем сильнее действие модификатора характеристик
+        if (targetStats is CharacterStats)
+        {
+            SetAllModifiersValue();
+        }
     }
 
 
@@ -47,14 +96,35 @@ class Poisoning : HangingEffect, IDamageLogic
         bool isEvaded = false;
         bool isBlocked = false;
 
-        if (currentPoisoningTime > 0f)
-        {
-            targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
-            currentPoisoningTime -= Time.deltaTime;
-        }
-        else
-        {
-            Destroy(this);
-        }
+        targetStats.TakeDamage(ownerStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
+    }
+
+
+    private void SetAllModifiersValue()
+    {
+        SetStrengthModifierValue();
+        SetAgilityModifierValue();
+        SetMasteryModifierValue();
+    }
+
+
+    private void SetStrengthModifierValue()
+    {
+        int newValue = (int)(((CharacterStats)targetStats).strength.GetBaseValue() * (attributeModifierPercent + (attributeModifierIncrease * effectPower)) * decrease);
+        strengthModifierForPoisoning.SetModifierValue(newValue);
+    }
+
+
+    private void SetAgilityModifierValue()
+    {
+        int newValue = (int)(((CharacterStats)targetStats).agility.GetBaseValue() * (attributeModifierPercent + (attributeModifierIncrease * effectPower)) * decrease);
+        agilityModifierForPoisoning.SetModifierValue(newValue);
+    }
+
+
+    private void SetMasteryModifierValue()
+    {
+        int newValue = (int)(((CharacterStats)targetStats).mastery.GetBaseValue() * (attributeModifierPercent + (attributeModifierIncrease * effectPower)) * decrease);
+        masteryModifierForPoisoning.SetModifierValue(newValue);
     }
 }
