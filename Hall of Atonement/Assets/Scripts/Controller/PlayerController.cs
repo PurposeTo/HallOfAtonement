@@ -6,8 +6,8 @@
 [RequireComponent(typeof(PlayerStateFighting))]
 public class PlayerController : CharacterController
 {
-    [SerializeField] private Joystick joystick;
-    [SerializeField] private AttackButtonEvent attackButton;
+    private Joystick joystick;
+    private AttackButtonEvent attackButton;
 
     private readonly RuntimePlatform currentRuntimePlatform = Application.platform;
 
@@ -20,6 +20,11 @@ public class PlayerController : CharacterController
     {
         base.Start();
 
+        joystick = GameManager.instance.PlayerJoystick;
+        attackButton = GameManager.instance.PlayerAttackButton;
+        attackButton.OnPressingAttackButton += IsAttacking;
+
+
         PlayerStatePatrolling = GetComponent<PlayerStatePatrolling>();
         PlayerStateFighting = GetComponent<PlayerStateFighting>();
 
@@ -28,13 +33,7 @@ public class PlayerController : CharacterController
     }
 
 
-    private void OnEnable()
-    {
-        attackButton.OnPressingAttackButton += IsAttacking;
-    }
-
-
-    private void OnDisable()
+    private void OnDestroy()
     {
         attackButton.OnPressingAttackButton -= IsAttacking;
     }

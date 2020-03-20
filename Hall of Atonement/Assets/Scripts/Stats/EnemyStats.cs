@@ -78,13 +78,13 @@ public class EnemyStats : CharacterStats
     }
 
 
-    public override void GetExperience(int amount, out bool isLvlUp)
+    public override void GetExperience(int amount, out int numberOfNewLvls)
     {
-        base.GetExperience((int)(amount / 1.5), out isLvlUp);
+        base.GetExperience((int)(amount / 1.5), out numberOfNewLvls);
 
 
         //Если уровень повысился
-        if (isLvlUp)
+        if (numberOfNewLvls > 0)
         {
             strength.ChangeBaseValue((int)(level.GetLvl() * strenghtFromLvl));
 

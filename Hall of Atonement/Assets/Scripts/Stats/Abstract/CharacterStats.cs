@@ -12,6 +12,7 @@ public abstract class CharacterStats : UnitStats
     public Attribute strength = new Attribute();
     public Attribute agility = new Attribute();
     public Attribute mastery = new Attribute();
+    private protected Attribute[] allAttributes; // Инициализация в Awake
 
     //Зависимость статов от Силы
     private readonly float hpForStrenght = 20f;
@@ -87,6 +88,7 @@ public abstract class CharacterStats : UnitStats
     {
         base.Awake();
         ChangeDamageType(UnitDamageType);
+        allAttributes = new Attribute[] { strength, agility, mastery };
     }
 
     private void OnEnable()
@@ -243,7 +245,7 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public void Healing(float amount)
+    public virtual void Healing(float amount)
     {
         CurrentHealthPoint += amount;
         if (CurrentHealthPoint > maxHealthPoint.GetValue())
@@ -255,18 +257,17 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public virtual void GetExperience(int amount, out bool isLvlUp)
+    public virtual void GetExperience(int amount, out int numberOfNewLvls)
     {
-        isLvlUp = false;
-        float currentLvl = level.GetLvl();
+        int currentLvl = level.GetLvl();
 
-        //множитель получаемого опыта
+        // Множитель получаемого опыта
         level.AddExperience((int)(amount * (1 + (mastery.GetValue() * experieneMultiplierForMastery))));
 
-        //Если уровень повысился
-        if (currentLvl < level.GetLvl())
+        numberOfNewLvls = level.GetLvl() - currentLvl;
+        // Если уровень повысился
+        if (numberOfNewLvls > 0)
         {
-            isLvlUp = true;
             lvlBar.ShowLvl();
         }
     }

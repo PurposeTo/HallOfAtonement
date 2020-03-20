@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public Joystick PlayerJoystick;
+    public AttackButtonEvent PlayerAttackButton;
+
     public static GameManager instance;
 
     public GameObject player;

@@ -133,6 +133,7 @@
     <Compile Include="Assets\Scripts\Stats\Base\Stat.cs" />
     <Compile Include="Assets\Scripts\Stats\BoxStats.cs" />
     <Compile Include="Assets\Scripts\Stats\EnemyStats.cs" />
+    <Compile Include="Assets\Scripts\Stats\Heroes Stats\VampireStats.cs" />
     <Compile Include="Assets\Scripts\Stats\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\Status Effects\AttackModifier\Lifesteal.cs" />
     <Compile Include="Assets\Scripts\Status Effects\AttackModifier\WeaponHarding.cs" />
