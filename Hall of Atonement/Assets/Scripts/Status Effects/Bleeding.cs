@@ -5,9 +5,11 @@ class Bleeding : HangingEffect, IDamageLogic
     private DamageType damageType;
     private UnitStats targetStats;
     private CharacterStats ownerStats;
+    private CharacteristicModifier<float> poisonResistanceForBleeding = new CharacteristicModifier<float>(0.1f);
 
-    private readonly float baseDamagePerSecond = 4f;
-    private readonly float baseBleedingTime = 2f;
+    private readonly float baseDamagePerSecond = 0.5f;
+    private readonly float baseBleedingTime = 5f;
+    private const float poisonResistanceIncrease = 0.01f;
 
     private float currentBleedingTime;
     private float effectPower = 1f;
@@ -16,12 +18,27 @@ class Bleeding : HangingEffect, IDamageLogic
     void Start()
     {
         Initialization();
+        targetStats.poisonResistance.AddModifier(poisonResistanceForBleeding);
+    }
+
+
+    void OnDestroy()
+    {
+        targetStats.poisonResistance.RemoveModifier(poisonResistanceForBleeding);
     }
 
 
     void Update()
     {
-        DoStatusEffectDamage(targetStats, ownerStats);
+        if (currentBleedingTime > 0f)
+        {
+            DoStatusEffectDamage(targetStats, ownerStats);
+            currentBleedingTime -= Time.deltaTime;
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 
 
@@ -38,6 +55,7 @@ class Bleeding : HangingEffect, IDamageLogic
         this.ownerStats = ownerStats;
         currentBleedingTime += baseBleedingTime;
         effectPower += amplificationAmount;
+        poisonResistanceForBleeding.SetModifierValue(poisonResistanceForBleeding.GetModifierValue() + poisonResistanceIncrease);
     }
 
 
@@ -46,14 +64,6 @@ class Bleeding : HangingEffect, IDamageLogic
         bool isEvaded = false;
         bool isBlocked = false;
 
-        if (currentBleedingTime > 0f)
-        {
-            targetStats.TakeDamage(ownersStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
-            currentBleedingTime -= Time.deltaTime;
-        }
-        else
-        {
-            Destroy(this);
-        }
+        targetStats.TakeDamage(ownersStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
     }
 }
