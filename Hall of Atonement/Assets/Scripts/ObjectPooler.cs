@@ -1,17 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
 
 public class ObjectPooler : MonoBehaviour
 {
+    [System.Serializable]
+    public class Pool
+    {
+        public GameObject prefab;
+        public int size;
+        // public bool shouldExpand = true; // В данный момент не могу это сделать, так как нет взаимодействия словаря с Pool
+    }
+
     public static ObjectPooler SharedInstance;
 
 
-    public List<GameObject> pooledObjects;
-    public GameObject objectToPool;
-    public int amountToPool;
-
-    public bool shouldExpand = true;
+    public List<Pool> pools;
+    public Dictionary<GameObject, Queue<GameObject>> poolDictionary;
 
     private void Awake()
     {
@@ -19,59 +24,62 @@ public class ObjectPooler : MonoBehaviour
     }
 
 
-    private void Start()
+    void Start()
     {
-        pooledObjects = new List<GameObject>();
 
-        for (int i = 0; i < amountToPool; i++)
+        poolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
+
+        for (int i = 0; i < pools.Count; i++)
         {
-            CreateNewObjectToPool(objectToPool);
+            Queue<GameObject> objectPool = new Queue<GameObject>();
+
+            for (int j = 0; j < pools[i].size; j++)
+            {
+                GameObject newGameObject = CreateNewObjectToPool(pools[i].prefab);
+                objectPool.Enqueue(newGameObject);
+            }
+
+            poolDictionary.Add(pools[i].prefab, objectPool);
         }
     }
 
 
-    public GameObject GetPooledObject(Vector3 position, Quaternion rotation)
+    public GameObject SpawnFromPool(GameObject prefabKey, Vector3 position, Quaternion rotation)
     {
-
-        for (int i = 0; i < pooledObjects.Count; i++)
+        if (!poolDictionary.ContainsKey(prefabKey))
         {
-            if (!pooledObjects[i].activeInHierarchy)
-            {
-                GameObject returnedGameObject = pooledObjects[i];
-
-                SetPooledObjectAtTheWorld(returnedGameObject, position, rotation);
-
-                return returnedGameObject;
-            }
+            Debug.LogError("Pool with prefabKey " + prefabKey + " does not exist");
+            return null;
         }
 
-        if (shouldExpand)
+
+        // Посмотреть на первый обьект в очереди.
+        GameObject objectToSpawn = poolDictionary[prefabKey].Peek();
+
+        if (objectToSpawn.activeInHierarchy) 
         {
-            GameObject returnedGameObject = CreateNewObjectToPool(objectToPool);
-
-            SetPooledObjectAtTheWorld(returnedGameObject, position, rotation);
-
-            return returnedGameObject;
-            
+            // Если включен, то сделать новый.
+            objectToSpawn = CreateNewObjectToPool(prefabKey);
         }
         else
         {
-            return null;
+            // Если он выключен, то можно использовать. 
+            objectToSpawn = poolDictionary[prefabKey].Dequeue();
         }
-    }
 
+        objectToSpawn.transform.position = position;
+        objectToSpawn.transform.rotation = rotation;
+        objectToSpawn.SetActive(true);
 
-
-    private void SetPooledObjectAtTheWorld(GameObject returnedGameObject, Vector3 position, Quaternion rotation)
-    {
-        returnedGameObject.transform.position = position;
-        returnedGameObject.transform.rotation = rotation;
-        returnedGameObject.SetActive(true);
-
-        if (returnedGameObject.TryGetComponent(out IPooledObject pooledObject))
+        if (objectToSpawn.TryGetComponent(out IPooledObject pooledObject))
         {
             pooledObject.OnObjectSpawn();
         }
+
+        poolDictionary[prefabKey].Enqueue(objectToSpawn);
+
+
+        return objectToSpawn;
     }
 
 
@@ -80,7 +88,6 @@ public class ObjectPooler : MonoBehaviour
         newGameObject = Instantiate(newGameObject);
         newGameObject.transform.SetParent(gameObject.transform);
         newGameObject.SetActive(false);
-        pooledObjects.Add(newGameObject);
 
         return newGameObject;
     }
