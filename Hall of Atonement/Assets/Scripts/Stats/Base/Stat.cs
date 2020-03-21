@@ -21,7 +21,8 @@ public delegate void ChangeStat();
     }
 
 
-    public event ChangeStat OnChangeStat;
+    public event ChangeStat OnChangeStatBaseValue;
+    public event ChangeStat OnChangeStatFinalValue;
 
     [SerializeField] private protected float baseValue;    // Starting value
     private protected float minValue;
@@ -53,9 +54,9 @@ public delegate void ChangeStat();
     {
         statModifiers.Add(modifier);
 
-        modifier.OnChangeCharacteristicModifier += ReportUpdate;
+        modifier.OnChangeCharacteristicModifier += ReportUpdateFinalValue;
 
-        ReportUpdate();
+        ReportUpdateFinalValue();
     }
 
 
@@ -63,9 +64,9 @@ public delegate void ChangeStat();
     {
         statModifiers.Remove(modifier);
 
-        modifier.OnChangeCharacteristicModifier -= ReportUpdate;
+        modifier.OnChangeCharacteristicModifier -= ReportUpdateFinalValue;
 
-        ReportUpdate();
+        ReportUpdateFinalValue();
     }
 
 
@@ -73,12 +74,22 @@ public delegate void ChangeStat();
     {
         baseValue = newBaseValue;
 
-        ReportUpdate();
+        ReportUpdateBaseValue();
     }
 
 
-    private void ReportUpdate() // Сообщить об обновлении
+    private void ReportUpdateFinalValue() // Сообщить об обновлении
     {
-        if (OnChangeStat != null) OnChangeStat();
+        if (OnChangeStatFinalValue != null) OnChangeStatFinalValue();
+    }
+
+
+    private void ReportUpdateBaseValue()
+    {
+        if (OnChangeStatBaseValue != null)
+        {
+            OnChangeStatBaseValue();
+            ReportUpdateFinalValue();
+        }
     }
 }

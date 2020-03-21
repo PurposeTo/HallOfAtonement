@@ -46,7 +46,7 @@ public abstract class UnitStats : MonoBehaviour
 
         damage = Mathf.Clamp(damage, 0f, float.MaxValue);
 
-        Debug.Log(transform.name + " takes " + damage + " " + killerStats.DamageType);
+        Debug.Log(transform.name + " takes " + damage + " " + damageType);
 
         if (CurrentHealthPoint - damage <= 0f) //Если из за полученного урона здоровье будет равно или ниже нуля
         {

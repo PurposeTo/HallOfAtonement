@@ -15,14 +15,47 @@ class Freeze : HangingEffect, IDamageLogic
     private float currentFreezingTime;
     private float effectPower = 1f;
 
-    private readonly float decelerationPercent = 0.6f;
-    private readonly float defrostPercentTo = 0.75f;
+    private const float baseDecelerationModifierValue = 0.6f;
+    private const float decelerationModifierIncrease = 0.1f;
+    private const float defrostPercentTo = 0.75f;
+    private const float decrease = -1f; // от finalValue должно ОТНИМАТЬСЯ значение модификатора характеристик эффекта Freeze
     private float defrostPerSecond;
+    private float decelerationModifierValueAtCurrentTime = baseDecelerationModifierValue;
 
 
     void Start()
     {
         Initialization();
+
+        if (targetStats is CharacterStats)
+        {
+            defrostPerSecond = (baseDecelerationModifierValue * defrostPercentTo) / currentFreezingTime; // Здесь время = максимальное текущее от кол-ва навешанных эффектов
+            SetAllModifiersValue();
+
+            ((CharacterStats)targetStats).movementSpeed.AddModifier(modifierMovementSpeed);
+            ((CharacterStats)targetStats).rotationSpeed.AddModifier(modifierMovementSpeed);
+            ((CharacterStats)targetStats).attackDamage.AddModifier(modifierMovementSpeed);
+
+            // Значение модификатора характеристик эффекта Freeze меняется в соответствии с финальным значением характеристик
+            ((CharacterStats)targetStats).movementSpeed.OnChangeStatBaseValue += SetMovementSpeedModifierValue;
+            ((CharacterStats)targetStats).rotationSpeed.OnChangeStatBaseValue += SetRotationSpeedModifierValue;
+            ((CharacterStats)targetStats).attackDamage.OnChangeStatBaseValue += SetAttackSpeedModifierValue;
+        }
+    }
+
+
+    void OnDestroy()
+    {
+        if (targetStats is CharacterStats)
+        {
+            ((CharacterStats)targetStats).movementSpeed.RemoveModifier(modifierMovementSpeed);
+            ((CharacterStats)targetStats).rotationSpeed.RemoveModifier(modifierMovementSpeed);
+            ((CharacterStats)targetStats).attackDamage.RemoveModifier(modifierMovementSpeed);
+
+            ((CharacterStats)targetStats).movementSpeed.OnChangeStatBaseValue -= SetMovementSpeedModifierValue;
+            ((CharacterStats)targetStats).rotationSpeed.OnChangeStatBaseValue -= SetRotationSpeedModifierValue;
+            ((CharacterStats)targetStats).attackDamage.OnChangeStatBaseValue -= SetAttackSpeedModifierValue;
+        }
     }
 
 
@@ -31,6 +64,11 @@ class Freeze : HangingEffect, IDamageLogic
         if (currentFreezingTime > 0f)
         {
             DoStatusEffectDamage(targetStats, ownerStats);
+            if (targetStats is CharacterStats)
+            {
+                decelerationModifierValueAtCurrentTime -= defrostPerSecond * Time.deltaTime; //Значение уменьшается => при повторном вызове значения хар-к увеличиваются
+                //SetAllModifiersValue(); // Оттаивание
+            }
             currentFreezingTime -= Time.deltaTime;
         }
         else
@@ -59,8 +97,15 @@ class Freeze : HangingEffect, IDamageLogic
     {
         this.ownerStats = ownerStats;
         currentFreezingTime += baseFreezingTime; // Увеличить время действия на (1)
-        defrostPerSecond = (decelerationPercent * defrostPercentTo) / currentFreezingTime;
+
         effectPower += amplificationAmount;
+
+        // Чем больше эффектов мы повесили на цель, тем сильнее действие модификатора характеристик
+        if (targetStats is CharacterStats)
+        {
+            defrostPerSecond = (baseDecelerationModifierValue * defrostPercentTo) / currentFreezingTime; // Здесь время = максимальное текущее от кол-ва навешанных эффектов
+            SetAllModifiersValue();
+        }
     }
 
 
@@ -81,5 +126,34 @@ class Freeze : HangingEffect, IDamageLogic
         float remainingDamage = baseDamagePerSecond * effectPower * currentFreezingTime;
         targetStats.TakeDamage(ownerStats, damageType, remainingDamage, ref isEvaded, ref isBlocked, false);
         Destroy(this);
+    }
+
+
+    private void SetMovementSpeedModifierValue()
+    {
+        float newValue = ((CharacterStats)targetStats).movementSpeed.GetBaseValue() * (decrease * (decelerationModifierValueAtCurrentTime + decelerationModifierIncrease * effectPower)); //!!!!!!!!!!!!!!!!!!!!!!!!!deceleration... не подходит!!!!!!!!!!!!!!!!!!
+        modifierMovementSpeed.SetModifierValue(newValue);
+    }
+
+
+    private void SetRotationSpeedModifierValue()
+    {
+        float newValue = ((CharacterStats)targetStats).rotationSpeed.GetBaseValue() * (decrease * (decelerationModifierValueAtCurrentTime + decelerationModifierIncrease * effectPower)); //!!!!!!!!!!!!!!!!!!!!!!!!!deceleration... не подходит!!!!!!!!!!!!!!!!!!
+        modifierRotationSpeed.SetModifierValue(newValue);
+    }
+
+
+    private void SetAttackSpeedModifierValue()
+    {
+        float newValue = ((CharacterStats)targetStats).attackDamage.GetBaseValue() * (decrease * (decelerationModifierValueAtCurrentTime + decelerationModifierIncrease * effectPower)); //!!!!!!!!!!!!!!!!!!!!!!!!!deceleration... не подходит!!!!!!!!!!!!!!!!!!
+        modifierAttackSpeed.SetModifierValue(newValue);
+    }
+
+
+    private void SetAllModifiersValue()
+    {
+        SetMovementSpeedModifierValue();
+        SetRotationSpeedModifierValue();
+        SetAttackSpeedModifierValue();
     }
 }

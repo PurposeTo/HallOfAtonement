@@ -110,21 +110,21 @@ class Poisoning : HangingEffect, IDamageLogic
 
     private void SetStrengthModifierValue()
     {
-        int newValue = (int)(((CharacterStats)targetStats).strength.GetBaseValue() * (attributeModifierPercent + (attributeModifierIncrease * effectPower)) * decrease);
+        int newValue = (int)(((CharacterStats)targetStats).strength.GetBaseValue() * (decrease * (attributeModifierPercent + attributeModifierIncrease * effectPower)));
         strengthModifierForPoisoning.SetModifierValue(newValue);
     }
 
 
     private void SetAgilityModifierValue()
     {
-        int newValue = (int)(((CharacterStats)targetStats).agility.GetBaseValue() * (attributeModifierPercent + (attributeModifierIncrease * effectPower)) * decrease);
+        int newValue = (int)(((CharacterStats)targetStats).agility.GetBaseValue() * (decrease * (attributeModifierPercent + attributeModifierIncrease * effectPower)));
         agilityModifierForPoisoning.SetModifierValue(newValue);
     }
 
 
     private void SetMasteryModifierValue()
     {
-        int newValue = (int)(((CharacterStats)targetStats).mastery.GetBaseValue() * (attributeModifierPercent + (attributeModifierIncrease * effectPower)) * decrease);
+        int newValue = (int)(((CharacterStats)targetStats).mastery.GetBaseValue() * (decrease * (attributeModifierPercent + attributeModifierIncrease * effectPower)));
         masteryModifierForPoisoning.SetModifierValue(newValue);
     }
 }
