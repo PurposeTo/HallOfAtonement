@@ -15,7 +15,7 @@ public abstract class HangingEffect : MonoBehaviour
 
 public interface IAttackModifier : IStatusEffectLogic, ICloneable
 {
-    void ApplyAttackModifier(UnitStats targetStats, DamageType damageType, float damage, int mastery);
+    void ApplyAttackModifier(UnitStats targetStats, DamageType damageType, float damage, int mastery, bool isCritical = false);
 }
 
 

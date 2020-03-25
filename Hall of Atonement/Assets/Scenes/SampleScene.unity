@@ -6408,6 +6408,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 242119583254015230, guid: 73db80284e7ba4041b0853d491bdae19,
+        type: 3}
+      propertyPath: mastery.baseValue
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5923922427865877912, guid: 73db80284e7ba4041b0853d491bdae19,
         type: 3}
       propertyPath: m_Name

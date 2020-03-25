@@ -253,6 +253,7 @@ public abstract class CharacterStats : UnitStats
             CurrentHealthPoint = maxHealthPoint.GetValue();
         }
 
+        ReportUpdateHealthValue();
         healthBar.IncreaseHealthBar();
     }
 

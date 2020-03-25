@@ -52,7 +52,6 @@ public class EnemyStats : CharacterStats
     private protected virtual void Update()
     {
         Healing(healthPointRegen.GetValue() * Time.deltaTime);
-        //print("@@: " + movementSpeed.GetValue());
     }
 
 
