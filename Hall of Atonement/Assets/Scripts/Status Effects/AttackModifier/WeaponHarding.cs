@@ -26,7 +26,7 @@ class WeaponHarding : MonoBehaviour, IAttackModifier
     }
 
 
-    public void ApplyAttackModifier(UnitStats targetStats, DamageType damageType, float damage, int mastery)
+    public void ApplyAttackModifier(UnitStats targetStats, DamageType damageType, float damage, int mastery, bool isCritical = false)
     {
         if (damageType is PhysicalDamage) // Закалка применима только для физ. типа урона
         {

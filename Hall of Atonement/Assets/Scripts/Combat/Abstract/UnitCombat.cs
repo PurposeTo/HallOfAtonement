@@ -11,6 +11,7 @@ public class UnitCombat : MonoBehaviour
     //Статы врага нужны, что бы можно было нанести урон. Свои статы нужны, что бы можно было получить опыт
     public void DoDamage(UnitStats targetStats, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers) 
     {
+        bool isCritical = false;
 
         //Формула, которая повысит урон в случае, если скорость атак будет быстрее чем обновление кадров
         //float attackSpeedMultiplie = (Mathf.Abs(attackCooldown) / (1f / ownerStats.attackSpeed.GetValue())) + 1f;
@@ -18,10 +19,10 @@ public class UnitCombat : MonoBehaviour
         //float damage = attackSpeedMultiplie * attackDamage;
 
         //Если Крит. шанс больше нуля И если рандом говорит о том, что нужно критануть
-        if (criticalChance > 0f && Random.Range(1f, 100f)
-            <= criticalChance)
+        if (criticalChance > 0f && Random.Range(1f, 100f) <= criticalChance)
         {
             attackDamage *= criticalMultiplie; //То увеличить урон
+            isCritical = true;
         }
 
 
@@ -51,7 +52,7 @@ public class UnitCombat : MonoBehaviour
 
             for (int i = 0; i < attackModifiers.Count; i++)
             {
-                attackModifiers[i].ApplyAttackModifier(targetStats, damageType, attackDamage, ownerMastery);
+                attackModifiers[i].ApplyAttackModifier(targetStats, damageType, attackDamage, ownerMastery, isCritical);
             }
         }
 

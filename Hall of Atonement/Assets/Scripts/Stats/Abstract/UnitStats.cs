@@ -1,7 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+public delegate void ChangeCurrentHealth();
 public abstract class UnitStats : MonoBehaviour
 {
+    public event ChangeCurrentHealth OnChangedCurrentHealth;
+
     private protected virtual float BaseMaxHealthPoint { get; } = 50f; //базовое значение максимального кол-ва здоровья
     private protected virtual float basePoisonResistanceValue { get; }
     private protected virtual float baseBleedingResistanceValue { get; }
@@ -38,6 +42,15 @@ public abstract class UnitStats : MonoBehaviour
     }
 
 
+    private protected void ReportUpdateHealthValue()
+    {
+        if (OnChangedCurrentHealth != null)
+        {
+            OnChangedCurrentHealth();
+        }
+    }
+
+
     public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, ref bool isEvaded, ref bool isBlocked, bool canEvade = true)
     {
         //снизить урон от определенного типа урона
@@ -59,6 +72,8 @@ public abstract class UnitStats : MonoBehaviour
         {
             CurrentHealthPoint -= damage;
         }
+        ReportUpdateHealthValue();
+
         return damage;
     }
 
