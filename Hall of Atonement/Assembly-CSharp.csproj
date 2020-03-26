@@ -130,7 +130,9 @@
     <Compile Include="Assets\Scripts\Stats\Base\LevelSystem.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\PercentStat.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\Stat.cs" />
-    <Compile Include="Assets\Scripts\Stats\BoxStats.cs" />
+    <Compile Include="Assets\Scripts\Stats\Box\BoxStats.cs" />
+    <Compile Include="Assets\Scripts\Stats\Box\SteelBox.cs" />
+    <Compile Include="Assets\Scripts\Stats\Box\WoodenBox.cs" />
     <Compile Include="Assets\Scripts\Stats\EnemyStats.cs" />
     <Compile Include="Assets\Scripts\Stats\Heroes Stats\VampireStats.cs" />
     <Compile Include="Assets\Scripts\Stats\PlayerStats.cs" />

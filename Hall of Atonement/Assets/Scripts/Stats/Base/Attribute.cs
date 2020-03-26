@@ -6,14 +6,7 @@ public delegate void ChangeAttributeBaseValue();
 public delegate void ChangeAttributFinalValue();
 [System.Serializable] public class Attribute
 {
-    public event ChangeAttributeBaseValue OnChangeAttributeBaseValue;
-    public event ChangeAttributFinalValue OnChangeAttributeFinalValue;
-
-    [SerializeField] private int baseValue;    // Starting value
-
-    private protected List<ICharacteristicModifier<int>> attributeModifiers = new List<ICharacteristicModifier<int>>();
-
-	public Attribute() : this(0) { }
+    public Attribute() : this(0) { }
 
     public Attribute(int baseValue)
     {
@@ -21,24 +14,34 @@ public delegate void ChangeAttributFinalValue();
     }
 
 
+    public event ChangeAttributeBaseValue OnChangeAttributeBaseValue;
+    public event ChangeAttributFinalValue OnChangeAttributeFinalValue;
+
+    private int baseValue;    // Starting value
+
+    private protected List<ICharacteristicModifier<int>> attributeModifiers = new List<ICharacteristicModifier<int>>();
+
+    private float massPerAtribute = 1f; // Шанс выпадения атрибута по умолчанию одинаковый
+
+
     public int GetValue()
-	{
-		int finalValue = baseValue;
+    {
+        int finalValue = baseValue;
 
-		for (int i = 0; i < attributeModifiers.Count; i++)
-		{
-			finalValue += attributeModifiers[i].GetModifierValue();
-		}
+        for (int i = 0; i < attributeModifiers.Count; i++)
+        {
+            finalValue += attributeModifiers[i].GetModifierValue();
+        }
 
-		if (finalValue < 0) { return 0; }
-		else { return finalValue; }
-	}
+        if (finalValue < 0) { return 0; }
+        else { return finalValue; }
+    }
 
 
-	public int GetBaseValue()
-	{
-		return baseValue;
-	}
+    public int GetBaseValue()
+    {
+        return baseValue;
+    }
 
     public virtual void AddModifier(ICharacteristicModifier<int> modifier)
     {
@@ -60,9 +63,9 @@ public delegate void ChangeAttributFinalValue();
     }
 
 
-    public virtual void ChangeBaseValue(int newBaseValue)
+    public virtual void ChangeBaseValue(int baseValue)
     {
-        baseValue = newBaseValue;
+        this.baseValue = Mathf.Clamp(baseValue, 0, int.MaxValue);
 
         ReportUpdateBaseValue();
     }
@@ -70,19 +73,27 @@ public delegate void ChangeAttributFinalValue();
 
     private void ReportUpdateFinalValue() // Сообщить об обновлении
     {
-        if (OnChangeAttributeFinalValue != null)
-        {
-            OnChangeAttributeFinalValue();
-        }
+        OnChangeAttributeFinalValue?.Invoke();
     }
 
 
     private void ReportUpdateBaseValue()
     {
-        if (OnChangeAttributeBaseValue != null)
-        {
-            OnChangeAttributeBaseValue();
-            ReportUpdateFinalValue();
-        }
+        OnChangeAttributeBaseValue?.Invoke();
+
+        ReportUpdateFinalValue();
+    }
+
+
+    public void SetMassPerAtribute(float Value)
+    {
+        Debug.Log("Attribute mutated");
+        massPerAtribute = Value;
+    }
+
+
+    public float GetMassPerAtribute()
+    {
+        return massPerAtribute;
     }
 }

@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -7677743799305013995, guid: eb943da3e5007e24dbbd228da425b3de,
     type: 3}
-  m_Color: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -140,10 +140,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 2087143339040961577}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d50a218e805b77c4ca9a3f29a221caea, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d84ed2a9459e1140b9500f33f3815b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealthPoint:
     baseValue: 0
   armor:
+    baseValue: 0
+  fireResistance:
+    baseValue: 0
+  iceResistance:
+    baseValue: 0
+  poisonResistance:
+    baseValue: 0
+  bleedingResistance:
     baseValue: 0

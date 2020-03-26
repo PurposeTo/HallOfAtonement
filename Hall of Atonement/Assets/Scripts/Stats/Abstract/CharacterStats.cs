@@ -12,6 +12,9 @@ public abstract class CharacterStats : UnitStats
     public Attribute strength = new Attribute();
     public Attribute agility = new Attribute();
     public Attribute mastery = new Attribute();
+
+    private const int skillPointsPerLevel = 1;
+    private protected PercentStat chanceToGetAnExtraSkillPoint = new PercentStat();
     private protected Attribute[] allAttributes; // Инициализация в Awake
 
     //Зависимость статов от Силы
@@ -96,6 +99,7 @@ public abstract class CharacterStats : UnitStats
         strength.OnChangeAttributeFinalValue += UpdateBaseStrenghtStatsValue;
         agility.OnChangeAttributeFinalValue += UpdateBaseAgilityStatsValue;
         mastery.OnChangeAttributeFinalValue += UpdateBaseMasteryStatsValue;
+        level.OnLevelUp += UseSkillPoints;
     }
 
 
@@ -104,6 +108,7 @@ public abstract class CharacterStats : UnitStats
         strength.OnChangeAttributeFinalValue -= UpdateBaseStrenghtStatsValue;
         agility.OnChangeAttributeFinalValue -= UpdateBaseAgilityStatsValue;
         mastery.OnChangeAttributeFinalValue -= UpdateBaseMasteryStatsValue;
+        level.OnLevelUp -= UseSkillPoints;
     }
 
 
@@ -132,7 +137,7 @@ public abstract class CharacterStats : UnitStats
         criticalMultiplier = new Stat(BaseCriticalMultiplier + (mastery.GetValue() * criticalMultiplierForMastery), minCriticalMultiplier);
         criticalChance = new PercentStat(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery));
 
-        armor = new Stat(agility.GetValue() * armorForAgility);
+        armor = new Stat(BaseArmor + (agility.GetValue() * armorForAgility));
         evasionChance = new PercentStat(agility.GetValue() * evasionForAgility);
 
         poisonResistance = new PercentStat(basePoisonResistanceValue);
@@ -258,26 +263,91 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public virtual void GetExperience(int amount, out int numberOfNewLvls)
+    public virtual void GetExperience(int amount)
     {
-        int currentLvl = level.GetLvl();
-
         // Множитель получаемого опыта
         level.AddExperience((int)(amount * (1 + (mastery.GetValue() * experieneMultiplierForMastery))));
 
-        numberOfNewLvls = level.GetLvl() - currentLvl;
+        //AmountOfNewLvls = level.GetLvl() - currentLvl;
+        //// Если уровень повысился
+        //if (AmountOfNewLvls > 0)
+        //{
+        //    lvlBar.ShowLvl();
+
+        //    UseSkillPoints(AmountOfNewLvls);
+        //}
+    }
+
+
+    private void UseSkillPoints()
+    {
+        int totalAvailableSkillPoints = GetSkillPoints();
+
         // Если уровень повысился
-        if (numberOfNewLvls > 0)
+        for (int i = 0; i < totalAvailableSkillPoints; i++) // Повысить атрибут на количество скилл-поинтов, которые доступны
         {
-            lvlBar.ShowLvl();
+            RaiseRandomAttribute();
         }
     }
+
+
+    private int GetSkillPoints()
+    {
+        int ExstraSkillPoints = 0;
+
+        // Кэш процентного стата
+        float _chanceToGetAnExtraSkillPoint = chanceToGetAnExtraSkillPoint.GetValue();
+
+        if (_chanceToGetAnExtraSkillPoint > 0f && Random.Range(0f, 1f) < _chanceToGetAnExtraSkillPoint)
+        {
+            Debug.Log("Везунчик! +1 Exstra Skill Point!");
+            ExstraSkillPoints++;
+        }
+
+        int totalAvailableSkillPoints = skillPointsPerLevel + ExstraSkillPoints;
+        return totalAvailableSkillPoints;
+    }
+
+
+    private void RaiseRandomAttribute()
+    {
+        float totalMass = 0; // Общая масса
+
+        for (int i = 0; i < allAttributes.Length; i++) // Вычисление общего шанса-массы всех обьектов
+        {
+            totalMass += allAttributes[i].GetMassPerAtribute(); // Вычисление общей массы объектов
+        }
+
+
+        float Choise = Random.Range(0, totalMass); // Делаем случайный выбор элемента
+
+        float upperLimit = 0; // Число для проверки диапозона
+
+        for (int i = 0; i < allAttributes.Length; i++)  // Пройтись по всем атрибутам и проверить, какой выпал?
+        {
+            upperLimit += allAttributes[i].GetMassPerAtribute(); // Вычисление текущего шанса-массы обьекта
+
+            if (Choise <= upperLimit) // Проверяем, это текущий элемент?
+            {
+                // Это текущий элемент!
+
+                int newAttributeValue = allAttributes[i].GetBaseValue() + 1;
+                allAttributes[i].ChangeBaseValue(newAttributeValue);
+
+                Debug.Log(gameObject.name + " повысил уровень! Получите +1 к случайному атрибуту!");
+
+                return;
+
+            } // Если нет, идем проверять дальше    
+        }
+    }
+
 
     public override void Die(CharacterStats killerStats)
     {
         if (killerStats != null && killerStats != this)
         {
-            killerStats.GetExperience(level.GetAllExperience(), out _); //При смерти отдаем опыт
+            killerStats.GetExperience(level.GetAllExperience()); //При смерти отдаем опыт
         }
 
         Debug.Log(transform.name + " Умер!");

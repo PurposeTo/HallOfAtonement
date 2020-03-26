@@ -9,13 +9,8 @@ public class EnemyStats : CharacterStats
 
     private readonly float baseHealthPointRegen = 0.5f; //базовое значение регенерации здоровья
 
-    private readonly float hpRegenForStrenght = 0.25f;
+    private readonly float hpRegenForStrenght = 0.2f;
     public Stat healthPointRegen;
-
-    private float amountOfMutatedPoints = 1.2f;
-    private float strenghtFromLvl;
-    private float agilityFromLvl;
-    private float masteryFromLvl;
 
     private protected override float BaseMovementSpeed { get; } = 3f;
     private protected override float BaseRotationSpeed { get; } = 360f;
@@ -30,8 +25,9 @@ public class EnemyStats : CharacterStats
 
     private protected override void Awake()
     {
-        Mutate(amountOfMutatedPoints);
+        chanceToGetAnExtraSkillPoint = new PercentStat(0.2f);
         base.Awake();
+        Mutate();
     }
 
     private protected override void Start()
@@ -55,54 +51,40 @@ public class EnemyStats : CharacterStats
     }
 
 
-    private void Mutate(float amountOfMutatedPoints)
+    private void Mutate()
     {
-        float[] pointsForLvl = new float[3];
+        // Данный метод должен изменять массу атрибута
 
-        float remainingPointsCounter = amountOfMutatedPoints;
-        for (int i = 0; i < pointsForLvl.Length - 1; i++)
+        float[] massPerAttribute = new float[allAttributes.Length];
+        float remainingPointsCounter = allAttributes.Length; // Единица на каждый атрибут, для простоты счета
+
+        for (int i = 0; i < massPerAttribute.Length - 1; i++)
         {
             float currentMutatedPoints = UnityEngine.Random.Range(0, remainingPointsCounter);
-            pointsForLvl[i] = (float)Math.Round(currentMutatedPoints, 2);
+            massPerAttribute[i] = (float)Math.Round(currentMutatedPoints, 2);
             remainingPointsCounter -= currentMutatedPoints;
         }
 
         //Значение в последнем поинте равно оставшемуся значению в count;
-        pointsForLvl[pointsForLvl.Length - 1] = remainingPointsCounter;
+        massPerAttribute[massPerAttribute.Length - 1] = (float)Math.Round(remainingPointsCounter, 2);
 
-        GameLogic.Shuffle(pointsForLvl);
+        GameLogic.Shuffle(massPerAttribute);
 
-        strenghtFromLvl = pointsForLvl[0];
-        agilityFromLvl = pointsForLvl[1];
-        masteryFromLvl = pointsForLvl[2];
-    }
-
-
-    public override void GetExperience(int amount, out int numberOfNewLvls)
-    {
-        base.GetExperience((int)(amount / 1.5), out numberOfNewLvls);
-
-
-        //Если уровень повысился
-        if (numberOfNewLvls > 0)
+        for (int i = 0; i < massPerAttribute.Length; i++)
         {
-            strength.ChangeBaseValue((int)(level.GetLvl() * strenghtFromLvl));
-
-            agility.ChangeBaseValue((int)(level.GetLvl() * agilityFromLvl));
-
-            mastery.ChangeBaseValue((int)(level.GetLvl() * masteryFromLvl));
+            allAttributes[i].SetMassPerAtribute(massPerAttribute[i]);
         }
     }
 
 
+    public override void GetExperience(int amount)
+    {
+        base.GetExperience((int)(amount / 1.5));
+    }
+
+
     private protected override void StatInitialization()
-    { 
-        //Зависимость атрибутов от уровня у врагов
-
-        strength = new Attribute((int)(level.GetLvl() * strenghtFromLvl));
-        agility = new Attribute((int)(level.GetLvl() * agilityFromLvl));
-        mastery = new Attribute((int)(level.GetLvl() * masteryFromLvl));
-
+    {
         base.StatInitialization();
         healthPointRegen = new Stat(baseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
     }
