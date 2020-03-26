@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour, IPooledObject, IAttackModifier
+public class Bullet : MonoBehaviour, IPooledObject
 {
     public Rigidbody2D bulletRb2d { get; private set; }
     private UnitCombat bulletCombat;
@@ -33,8 +33,6 @@ public class Bullet : MonoBehaviour, IPooledObject, IAttackModifier
             StopCoroutine(waitingRoutine);
             waitingRoutine = null;
         }
-
-        bulletCombat.attackModifiers.Remove(this);
     }
 
 
@@ -56,6 +54,7 @@ public class Bullet : MonoBehaviour, IPooledObject, IAttackModifier
                 bulletCombat.DoDamage(targetStats, ownerStats, damageType, criticalChance, criticalMultiplie, attackDamage, ownerMastery, bulletCombat.attackModifiers);
             }
 
+            gameObject.SetActive(false);
             //Destroy(mySelf);
         }
     }
@@ -81,10 +80,6 @@ public class Bullet : MonoBehaviour, IPooledObject, IAttackModifier
         this.ownerMastery = ownerMastery;
 
         bulletCombat.attackModifiers = (List<IAttackModifier>)GameLogic.Clone(attackModifiers);
-
-        // Внимание! Модификатор атаки пули должен быть строго в конце списка, так как он отключает пулю!
-        bulletCombat.attackModifiers.Add(this);
-
     }
 
 
@@ -95,18 +90,5 @@ public class Bullet : MonoBehaviour, IPooledObject, IAttackModifier
         gameObject.SetActive(false);
 
         waitingRoutine = null;
-    }
-
-
-    public void ApplyAttackModifier(UnitStats targetStats, DamageType damageType, float damage, int mastery, bool isCritical = false)
-    {
-        gameObject.SetActive(false);
-    }
-
-
-    public object Clone()
-    {
-        return MemberwiseClone();
-
     }
 }
