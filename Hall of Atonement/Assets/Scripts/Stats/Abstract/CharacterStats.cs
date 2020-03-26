@@ -225,7 +225,7 @@ public abstract class CharacterStats : UnitStats
         }
 
         //Если вероятность уворотов больше нуля И если рандом говорит о том, что нужно увернуться
-        if (canEvade && (isEvaded || (evasionChance.GetValue() > 0f && Random.Range(1f, 100f) <= evasionChance.GetValue())))
+        if (canEvade && (isEvaded || (evasionChance.GetValue() > 0f && Random.Range(0f, 1f) <= evasionChance.GetValue())))
         {
             isEvaded = true;
             Debug.Log(transform.name + " dodge the damage!"); //Задоджили урон!
