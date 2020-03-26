@@ -47,6 +47,7 @@ public class Bullet : MonoBehaviour, IPooledObject
         {
             Debug.Log("Пуля " + ownerGameObject + "попала в: " + targetGameObject);
 
+            bool isEvade = false;
 
             //Это что то имеет Статы?
             if (targetGameObject.TryGetComponent(out UnitStats targetStats))
@@ -54,8 +55,12 @@ public class Bullet : MonoBehaviour, IPooledObject
                 bulletCombat.DoDamage(targetStats, ownerStats, damageType, criticalChance, criticalMultiplie, attackDamage, ownerMastery, bulletCombat.attackModifiers);
             }
 
-            gameObject.SetActive(false);
-            //Destroy(mySelf);
+            // Разбить, только если цель НЕ увернулась
+            if (!isEvade)
+            {
+                gameObject.SetActive(false);
+
+            }
         }
     }
 
