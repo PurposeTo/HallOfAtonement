@@ -55,7 +55,7 @@ class Bleeding : HangingEffect, IDamageLogic
         this.ownerStats = ownerStats;
         currentBleedingTime += baseBleedingTime;
         effectPower += amplificationAmount;
-        poisonResistanceForBleeding.SetModifierValue(poisonResistanceForBleeding.GetModifierValue() + poisonResistanceIncrease);
+        poisonResistanceForBleeding.SetModifierValue(poisonResistanceForBleeding.GetModifierValue() + poisonResistanceIncrease * effectPower);
     }
 
 

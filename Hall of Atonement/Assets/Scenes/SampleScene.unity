@@ -6411,7 +6411,7 @@ PrefabInstance:
     - target: {fileID: 242119583254015230, guid: 73db80284e7ba4041b0853d491bdae19,
         type: 3}
       propertyPath: mastery.baseValue
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5923922427865877912, guid: 73db80284e7ba4041b0853d491bdae19,
         type: 3}
@@ -8438,7 +8438,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1461136513}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2018278935
+--- !u!114 &2018278922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8447,10 +8447,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2018278921}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e49f03761ed6bac4d9d2d4930e520804, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e07d4fda794b5e4da629cc9c528f6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hardingType: 2
 --- !u!1 &2050753866
 GameObject:
   m_ObjectHideFlags: 0

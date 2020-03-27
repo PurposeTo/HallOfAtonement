@@ -4,8 +4,9 @@ class FuryBlades : MonoBehaviour, IAttackModifier
 {
     private CharacterPresenter characterPresenter;
     private const float upperBound = 0.9f;
-    private const float modifierIncrease = 0.01f;
     private const float healthIncreaseValue = 0.01f;
+    private const float maxStatModifier = 0.6f;
+    private const float minStatModifier = 0.1f;
 
     private CharacteristicModifier<float> attackSpeedModifier = new CharacteristicModifier<float>(0.1f);
     private CharacteristicModifier<float> criticalChanceModifier = new CharacteristicModifier<float>(0.1f);
@@ -25,6 +26,7 @@ class FuryBlades : MonoBehaviour, IAttackModifier
         characterPresenter.MyStats.attackSpeed.OnChangeStatBaseValue += SetAttackSpeedModifierValue;
         characterPresenter.MyStats.criticalChance.OnChangeStatBaseValue += SetCriticalChanceModifierValue;
         characterPresenter.MyStats.criticalMultiplier.OnChangeStatBaseValue += SetCriticalMultiplierModifierValue;
+
         characterPresenter.MyStats.OnChangedCurrentHealth += SetAllAttackModifiersValue;
     }
 
@@ -40,11 +42,11 @@ class FuryBlades : MonoBehaviour, IAttackModifier
         characterPresenter.MyStats.attackSpeed.OnChangeStatBaseValue -= SetAttackSpeedModifierValue;
         characterPresenter.MyStats.criticalChance.OnChangeStatBaseValue -= SetCriticalChanceModifierValue;
         characterPresenter.MyStats.criticalMultiplier.OnChangeStatBaseValue -= SetCriticalMultiplierModifierValue;
+
         characterPresenter.MyStats.OnChangedCurrentHealth -= SetAllAttackModifiersValue;
     }
 
 
-    // Нужно делать активные и пассивные модификаторы атаки, ведь конкретно этот должен вызываться каждый кадр, а не только при атаке
     public void ApplyAttackModifier(UnitStats targetStats, DamageType damageType, float damage, int mastery, bool isCritical = false)
     {
         if (isCritical)
@@ -54,36 +56,38 @@ class FuryBlades : MonoBehaviour, IAttackModifier
     }
 
 
+    // Изменение характеристик
     private void SetAllAttackModifiersValue()
     {
         if (characterPresenter.MyStats.CurrentHealthPoint < characterPresenter.MyStats.maxHealthPoint.GetValue() * upperBound)
         {
-            // Изменять значение напрямую в зависимости от разницы здоровья в разные моменты времени (без прибавления или уменьшения)
-            attackSpeedModifier.SetModifierValue(attackSpeedModifier.GetModifierValue() + modifierIncrease);
-            criticalChanceModifier.SetModifierValue(criticalChanceModifier.GetModifierValue() + modifierIncrease);
-            criticalPowerModifier.SetModifierValue(criticalPowerModifier.GetModifierValue() + modifierIncrease);
-        }
+            float currentHealthPercent = characterPresenter.MyStats.CurrentHealthPoint / characterPresenter.MyStats.maxHealthPoint.GetValue();
 
+            float statModifierValue = Mathf.Lerp(maxStatModifier, minStatModifier, currentHealthPercent);
+            attackSpeedModifier.SetModifierValue(statModifierValue);
+            criticalChanceModifier.SetModifierValue(statModifierValue);
+            criticalPowerModifier.SetModifierValue(statModifierValue);
+        }
     }
 
 
     private void SetAttackSpeedModifierValue()
     {
-        float newValue = characterPresenter.MyStats.attackSpeed.GetBaseValue() * (attackSpeedModifier.GetModifierValue() + modifierIncrease);
+        float newValue = characterPresenter.MyStats.attackSpeed.GetBaseValue() * attackSpeedModifier.GetModifierValue(); // ?
         attackSpeedModifier.SetModifierValue(newValue);
     }
 
 
     private void SetCriticalChanceModifierValue()
     {
-        float newValue = characterPresenter.MyStats.criticalChance.GetBaseValue() * (criticalChanceModifier.GetModifierValue() + modifierIncrease);
+        float newValue = characterPresenter.MyStats.criticalChance.GetBaseValue() * criticalChanceModifier.GetModifierValue();
         criticalChanceModifier.SetModifierValue(newValue);
     }
 
 
     private void SetCriticalMultiplierModifierValue()
     {
-        float newValue = characterPresenter.MyStats.criticalMultiplier.GetBaseValue() * (criticalPowerModifier.GetModifierValue() + modifierIncrease);
+        float newValue = characterPresenter.MyStats.criticalMultiplier.GetBaseValue() * criticalPowerModifier.GetModifierValue();
         criticalPowerModifier.SetModifierValue(newValue);
     }
 
