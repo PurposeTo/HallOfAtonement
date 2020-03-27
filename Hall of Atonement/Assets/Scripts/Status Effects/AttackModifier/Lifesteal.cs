@@ -4,7 +4,6 @@ public class Lifesteal : MonoBehaviour, IAttackModifier
 {
     private CharacterPresenter characterPresenter;
     private const float baseLifestealValue = 0.15f;
-    private int baseEffectPower = 1; // Эффект работает даже при 0-ом мастерстве
 
     private const int masteryPointsForBleeding = 5;
     private const float increaseForMastery = 0.01f;
@@ -25,9 +24,8 @@ public class Lifesteal : MonoBehaviour, IAttackModifier
 
     public void ApplyAttackModifier(UnitStats targetStats, DamageType damageType, float damage, int mastery, bool isCritical = false)
     {
-        if (targetStats.bleedingResistance.GetValue() >= 100f)
+        if (!Mathf.Approximately(targetStats.bleedingResistance.GetValue(), 1f))
         {
-            mastery += baseEffectPower;
             characterPresenter.MyStats.Healing(damage * (1f - targetStats.bleedingResistance.GetValue()) * (baseLifestealValue + (mastery * increaseForMastery))); // Lifesteal снижается сопротивлением к кровотечению
             BleedingFromLifesteal(targetStats, mastery, damage);
 

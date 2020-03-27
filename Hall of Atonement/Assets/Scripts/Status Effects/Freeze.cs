@@ -18,8 +18,8 @@ class Freeze : HangingEffect, IDamageLogic
 
     private const float baseDecelerationModifierValue = 0.25f;
     private const float decelerationModifierIncrease = 0.01f;
-    private const float defrostPercentTo = 0.75f;
-    private const float decrease = -1f; // от finalValue должно ОТНИМАТЬСЯ значение модификатора характеристик эффекта Freeze
+    private const float defrostPercentTo = 0.9f;
+    private const float decrease = -1f; // От finalValue должно ОТНИМАТЬСЯ значение модификатора характеристик эффекта Freeze
     private float defrostPerSecond;
     private float currentDecelerationModifierValue = baseDecelerationModifierValue;
 

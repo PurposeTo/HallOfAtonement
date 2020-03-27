@@ -118,12 +118,6 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    //private void Update()
-    //{
-    //    print("@@: " + attackSpeed.GetValue());
-    //}
-
-
     //Инициализация статов в зависимости от атрибутов
     private protected override void StatInitialization()
     {
