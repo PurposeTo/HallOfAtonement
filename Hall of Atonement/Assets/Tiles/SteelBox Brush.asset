@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d5751a2c961df945a34295ccf5e576d, type: 3}
-  m_Name: WoodenBoxTile
+  m_Name: SteelBox Brush
   m_EditorClassIdentifier: 
   m_Cells:
-  - m_Tile: {fileID: 0}
+  - m_Tile: {fileID: 11400000, guid: 65988cb86bd3e4d42b480fda6df13bc9, type: 2}
     m_Matrix:
       e00: 1
       e01: 0
@@ -36,7 +36,6 @@ MonoBehaviour:
   m_Pivot: {x: 0, y: 0, z: 0}
   m_CanChangeZPosition: 0
   m_Prefabs:
-  - {fileID: 2087143339040961577, guid: 435d2e81ff0df9e46a9e69ea2d9608df, type: 3}
-  - {fileID: 2087143339040961577, guid: 817183c82424d5a438cbaf2a0245b5f3, type: 3}
+  - {fileID: 3553075125593473385, guid: 96d33d32a9b3dc54ea6110f3bff4a0f4, type: 3}
   m_PerlinScale: 0.5
   m_Z: 0

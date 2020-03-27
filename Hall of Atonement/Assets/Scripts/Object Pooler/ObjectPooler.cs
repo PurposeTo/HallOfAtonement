@@ -9,14 +9,17 @@ public class ObjectPooler : MonoBehaviour
     {
         public GameObject prefab;
         public int size;
-        // public bool shouldExpand = true; // В данный момент не могу это сделать, так как нет взаимодействия словаря с Pool
+        public bool shouldExpand = true; // В данный момент не могу это сделать, так как нет взаимодействия словаря с Pool
+        [HideInInspector] public GameObject PoolParent;
+        [HideInInspector] public Queue<GameObject> objectPoolQueue;
     }
 
     public static ObjectPooler SharedInstance;
 
 
     public List<Pool> pools;
-    public Dictionary<GameObject, Queue<GameObject>> poolDictionary;
+
+    public Dictionary<GameObject, Pool> poolDictionary = new Dictionary<GameObject, Pool>();
 
     private void Awake()
     {
@@ -27,19 +30,24 @@ public class ObjectPooler : MonoBehaviour
     void Start()
     {
 
-        poolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
-
         for (int i = 0; i < pools.Count; i++)
         {
+            GameObject parent = new GameObject(pools[i].prefab.name + " Pool");
+            pools[i].PoolParent = Instantiate(parent);
+            pools[i].PoolParent.transform.SetParent(gameObject.transform);
+
+
             Queue<GameObject> objectPool = new Queue<GameObject>();
 
             for (int j = 0; j < pools[i].size; j++)
             {
-                GameObject newGameObject = CreateNewObjectToPool(pools[i].prefab);
+                GameObject newGameObject = CreateNewObjectToPool(pools[i].prefab, pools[i].PoolParent);
                 objectPool.Enqueue(newGameObject);
             }
 
-            poolDictionary.Add(pools[i].prefab, objectPool);
+            pools[i].objectPoolQueue = objectPool;
+
+            poolDictionary.Add(pools[i].prefab, pools[i]);
         }
     }
 
@@ -52,19 +60,26 @@ public class ObjectPooler : MonoBehaviour
             return null;
         }
 
+        Pool pool = poolDictionary[prefabKey];
 
         // Посмотреть на первый обьект в очереди.
-        GameObject objectToSpawn = poolDictionary[prefabKey].Peek();
+        GameObject objectToSpawn = pool.objectPoolQueue.Peek();
 
-        if (objectToSpawn.activeInHierarchy) 
+        if (objectToSpawn.activeInHierarchy)
         {
-            // Если включен, то сделать новый.
-            objectToSpawn = CreateNewObjectToPool(prefabKey);
+            // Если включен
+            // И можно расширить пул
+            if (pool.shouldExpand)
+            {
+                //То сделать новый объект
+                objectToSpawn = CreateNewObjectToPool(prefabKey, pool.PoolParent);
+            }
+
         }
         else
         {
             // Если он выключен, то можно использовать. 
-            objectToSpawn = poolDictionary[prefabKey].Dequeue();
+            objectToSpawn = pool.objectPoolQueue.Dequeue();
         }
 
         objectToSpawn.transform.position = position;
@@ -76,17 +91,17 @@ public class ObjectPooler : MonoBehaviour
             pooledObject.OnObjectSpawn();
         }
 
-        poolDictionary[prefabKey].Enqueue(objectToSpawn);
+        pool.objectPoolQueue.Enqueue(objectToSpawn);
 
 
         return objectToSpawn;
     }
 
 
-    private GameObject CreateNewObjectToPool(GameObject newGameObject)
+    private GameObject CreateNewObjectToPool(GameObject newGameObject, GameObject poolParent)
     {
         newGameObject = Instantiate(newGameObject);
-        newGameObject.transform.SetParent(gameObject.transform);
+        newGameObject.transform.SetParent(poolParent.transform);
         newGameObject.SetActive(false);
 
         return newGameObject;

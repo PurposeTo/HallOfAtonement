@@ -70,9 +70,9 @@ public delegate void ChangeStat();
     }
 
 
-    public virtual void ChangeBaseValue(float newBaseValue)
+    public virtual void ChangeBaseValue(float baseValue)
     {
-        baseValue = newBaseValue;
+        this.baseValue = Mathf.Clamp(baseValue, this.minValue, this.maxValue);
 
         ReportUpdateBaseValue();
     }
@@ -80,16 +80,15 @@ public delegate void ChangeStat();
 
     private void ReportUpdateFinalValue() // Сообщить об обновлении
     {
-        if (OnChangeStatFinalValue != null) OnChangeStatFinalValue();
+        OnChangeStatFinalValue?.Invoke();
     }
 
 
     private void ReportUpdateBaseValue()
     {
-        if (OnChangeStatBaseValue != null)
-        {
-            OnChangeStatBaseValue();
-            ReportUpdateFinalValue();
-        }
+        OnChangeStatBaseValue?.Invoke();
+
+        ReportUpdateFinalValue();
+
     }
 }

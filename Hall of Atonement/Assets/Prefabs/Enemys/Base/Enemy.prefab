@@ -400,7 +400,7 @@ MonoBehaviour:
   healthBar: {fileID: 596945295824805489}
   lvlBar: {fileID: 3218822476463348776}
   level:
-    level: 1
+    level: 0
     experience: 0
   strength:
     baseValue: 0

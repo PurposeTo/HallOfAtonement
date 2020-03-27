@@ -1,28 +1,59 @@
 ﻿using UnityEngine;
 
+public delegate void LevelUp();
+
 [System.Serializable]
 public class LevelSystem
 {
-    [SerializeField]
+    public LevelSystem()
+    {
+        // Нельзя задавать в конструкторе начальные значения уровня и атрибутов, так как нельзя будет сразу вложить их в атрибуты, так как те не инициализированны!
+
+        experienceToNextLevel = CalculateExperienceToNextLevel(level);
+        experience = experienceToNextLevel / 2; // У всех по дефолту уже есть часть опыта\
+
+    }
+
+
+    //public LevelSystem() :this(0) { }
+
+    //public LevelSystem(int level) :this(level, 0) { }
+
+    //public LevelSystem(int level, int experience)
+    //{
+    //    level = Mathf.Clamp(level, 0, int.MaxValue); //Уровень должен быть только положительным!
+    //    experience = Mathf.Clamp(experience, 0, int.MaxValue); //Опыт должен быть только положительным!
+
+    //    this.level = level;
+    //    this.experience = experience;
+    //    experienceToNextLevel = CalculateExperienceToNextLevel(level);
+    //}
+    
+
     private int level;
-    [SerializeField]
     private int experience;
     private int experienceToNextLevel;
 
-    public LevelSystem() :this(0) { }
+    public event LevelUp OnLevelUp;
 
-    public LevelSystem(int level) :this(level, 0) { }
-
-    public LevelSystem(int level, int experience)
+    public void InitializingLevel(int level)
     {
-        level = Mathf.Clamp(level, 0, int.MaxValue); //Уровень должен быть только положительным!
-        experience = Mathf.Clamp(experience, 0, int.MaxValue); //Опыт должен быть только положительным!
+        if (this.level == 0)
+        {
+            this.level = level;
 
-        this.level = level;
-        this.experience = experience;
-        experienceToNextLevel = CalculateExperienceToNextLevel(level);
+            experienceToNextLevel = CalculateExperienceToNextLevel(level);
+
+            for (int i = 0; i < level; i++)
+            {
+                OnLevelUp?.Invoke();
+            }
+        }
+        else
+        {
+            Debug.LogError("Try to attempt to ReInitialize");
+        }
     }
-
 
     public void AddExperience(int amount)
     {
@@ -32,6 +63,8 @@ public class LevelSystem
             experience -= experienceToNextLevel; //Сначала вычесть, так как experienceToNextLevel зависит от уровня!
             level++;
             experienceToNextLevel = CalculateExperienceToNextLevel(level);
+
+            OnLevelUp?.Invoke();
         }
     }
 

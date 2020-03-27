@@ -6,10 +6,18 @@ public class LvlBar : MonoBehaviour
     public CharacterStats MyStats;
     public Text LvlText;
 
-    void Start()
+    private void Start()
     {
+        MyStats.level.OnLevelUp += ShowLvl;
         ShowLvl();
     }
+
+
+    private void OnDestroy()
+    {
+        MyStats.level.OnLevelUp -= ShowLvl;
+    }
+
 
     public void ShowLvl()
     {

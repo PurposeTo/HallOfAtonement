@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
-public class BoxStats : UnitStats
+public abstract class BoxStats : UnitStats
 {
+    private protected override float BaseMaxHealthPoint { get; } = 40f;
     private protected override float basePoisonResistanceValue { get; } = 1f;
     private protected override float baseBleedingResistanceValue { get; } = 1f;
 

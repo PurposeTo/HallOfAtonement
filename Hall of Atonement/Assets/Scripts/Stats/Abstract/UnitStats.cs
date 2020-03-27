@@ -6,7 +6,10 @@ public abstract class UnitStats : MonoBehaviour
 {
     public event ChangeCurrentHealth OnChangedCurrentHealth;
 
-    private protected virtual float BaseMaxHealthPoint { get; } = 50f; //базовое значение максимального кол-ва здоровья
+    private protected virtual float BaseMaxHealthPoint { get; } = 100f; //базовое значение максимального кол-ва здоровья
+
+    private protected virtual float BaseArmor { get; }
+
     private protected virtual float basePoisonResistanceValue { get; }
     private protected virtual float baseBleedingResistanceValue { get; }
     private protected virtual float baseFireResistanceValue { get; }
@@ -34,6 +37,8 @@ public abstract class UnitStats : MonoBehaviour
     private protected virtual void StatInitialization()
     {
         maxHealthPoint = new Stat(BaseMaxHealthPoint);
+        armor = new Stat(BaseArmor);
+
 
         poisonResistance = new PercentStat(basePoisonResistanceValue);
         bleedingResistance = new PercentStat(baseBleedingResistanceValue);
@@ -44,10 +49,7 @@ public abstract class UnitStats : MonoBehaviour
 
     private protected void ReportUpdateHealthValue()
     {
-        if (OnChangedCurrentHealth != null)
-        {
-            OnChangedCurrentHealth();
-        }
+        OnChangedCurrentHealth?.Invoke();
     }
 
 
