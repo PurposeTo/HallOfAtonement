@@ -28,9 +28,10 @@ public class LevelSystem
     //    this.experience = experience;
     //    experienceToNextLevel = CalculateExperienceToNextLevel(level);
     //}
-    
 
+    [SerializeField]
     private int level;
+    [SerializeField]
     private int experience;
     private int experienceToNextLevel;
 

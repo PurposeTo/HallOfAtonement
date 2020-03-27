@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public abstract class CharacterStats : UnitStats
 {
@@ -13,7 +14,9 @@ public abstract class CharacterStats : UnitStats
     public Attribute agility = new Attribute();
     public Attribute mastery = new Attribute();
 
+    private Coroutine coroutinePutAvailableSkillPoints;
     private const int skillPointsPerLevel = 1;
+    private int totalAvailableSkillPoints;
     private protected PercentStat chanceToGetAnExtraSkillPoint = new PercentStat();
     private protected Attribute[] allAttributes; // Инициализация в Awake
 
@@ -99,7 +102,7 @@ public abstract class CharacterStats : UnitStats
         strength.OnChangeAttributeFinalValue += UpdateBaseStrenghtStatsValue;
         agility.OnChangeAttributeFinalValue += UpdateBaseAgilityStatsValue;
         mastery.OnChangeAttributeFinalValue += UpdateBaseMasteryStatsValue;
-        level.OnLevelUp += UseSkillPoints;
+        level.OnLevelUp += PutSkillPoints;
     }
 
 
@@ -108,7 +111,7 @@ public abstract class CharacterStats : UnitStats
         strength.OnChangeAttributeFinalValue -= UpdateBaseStrenghtStatsValue;
         agility.OnChangeAttributeFinalValue -= UpdateBaseAgilityStatsValue;
         mastery.OnChangeAttributeFinalValue -= UpdateBaseMasteryStatsValue;
-        level.OnLevelUp -= UseSkillPoints;
+        level.OnLevelUp -= PutSkillPoints;
     }
 
 
@@ -279,15 +282,28 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    private void UseSkillPoints()
+    private void PutSkillPoints()
     {
-        int totalAvailableSkillPoints = GetSkillPoints();
+        totalAvailableSkillPoints += GetSkillPoints();
 
-        // Если уровень повысился
-        for (int i = 0; i < totalAvailableSkillPoints; i++) // Повысить атрибут на количество скилл-поинтов, которые доступны
+
+        if(coroutinePutAvailableSkillPoints == null) 
         {
-            RaiseRandomAttribute();
+            coroutinePutAvailableSkillPoints = StartCoroutine(EnumeratorPutAvailableSkillPoints());
         }
+    }
+
+
+    private IEnumerator EnumeratorPutAvailableSkillPoints()
+    {
+        while (totalAvailableSkillPoints > 0)
+        {
+            yield return null;
+            RaiseRandomAttribute(); // Повысить атрибут на количество скилл-поинтов, которые доступны
+            totalAvailableSkillPoints -= 1;
+        }
+
+        coroutinePutAvailableSkillPoints = null;
     }
 
 
