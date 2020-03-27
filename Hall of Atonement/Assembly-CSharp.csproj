@@ -102,6 +102,7 @@
     <Compile Include="Assets\Scripts\Controller\EnemyAttack Type\IEnemyAttackType.cs" />
     <Compile Include="Assets\Scripts\Controller\EnemyAttack Type\MeleeEnemyLogic.cs" />
     <Compile Include="Assets\Scripts\Controller\EnemyAttack Type\RangedEnemyLogic.cs" />
+    <Compile Include="Assets\Scripts\Controller\Heroes\VampireHero.cs" />
     <Compile Include="Assets\Scripts\Controller\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Controller\State Machine\EnemyAIStateMachine.cs" />
     <Compile Include="Assets\Scripts\Controller\State Machine\EnemyStates\EnemyStateFighting.cs" />
@@ -134,7 +135,6 @@
     <Compile Include="Assets\Scripts\Stats\Box\SteelBox.cs" />
     <Compile Include="Assets\Scripts\Stats\Box\WoodenBox.cs" />
     <Compile Include="Assets\Scripts\Stats\EnemyStats.cs" />
-    <Compile Include="Assets\Scripts\Stats\Heroes Stats\VampireStats.cs" />
     <Compile Include="Assets\Scripts\Stats\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\Status Effects\AttackModifier\FuryBlades.cs" />
     <Compile Include="Assets\Scripts\Status Effects\AttackModifier\Lifesteal.cs" />
@@ -152,7 +152,6 @@
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\IceDamage.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\PhysicalDamage.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\PoisonDamage.cs" />
-    <Compile Include="Assets\Scripts\TestModifier.cs" />
     <Compile Include="Assets\Scripts\UI\AttackButtonEvent.cs" />
     <Compile Include="Assets\Scripts\UI\BillBoard.cs" />
     <Compile Include="Assets\Scripts\UI\CameraFollow.cs" />

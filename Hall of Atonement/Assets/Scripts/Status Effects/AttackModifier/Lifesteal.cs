@@ -26,7 +26,7 @@ public class Lifesteal : MonoBehaviour, IAttackModifier
     {
         if (!Mathf.Approximately(targetStats.bleedingResistance.GetValue(), 1f))
         {
-            characterPresenter.MyStats.Healing(damage * (1f - targetStats.bleedingResistance.GetValue()) * (baseLifestealValue + (mastery * increaseForMastery))); // Lifesteal снижается сопротивлением к кровотечению
+            characterPresenter.MyStats.ExtraHealing(damage * (1f - targetStats.bleedingResistance.GetValue()) * (baseLifestealValue + (mastery * increaseForMastery))); // Lifesteal снижается сопротивлением к кровотечению
             BleedingFromLifesteal(targetStats, mastery, damage);
 
             Debug.Log(gameObject.name + ": \"Your life is mine!\"");

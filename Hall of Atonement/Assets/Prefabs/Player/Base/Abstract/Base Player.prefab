@@ -180,12 +180,6 @@ MonoBehaviour:
   level:
     level: 0
     experience: 0
-  strength:
-    baseValue: 0
-  agility:
-    baseValue: 0
-  mastery:
-    baseValue: 0
   movementSpeed:
     baseValue: 0
   rotationSpeed:
@@ -213,8 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6725cec165e5af478e30b1ac266894e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joystick: {fileID: 0}
-  attackButton: {fileID: 0}
 --- !u!114 &5078420098505921415
 MonoBehaviour:
   m_ObjectHideFlags: 0

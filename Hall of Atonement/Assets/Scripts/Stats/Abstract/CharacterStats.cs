@@ -4,6 +4,8 @@ using System.Collections;
 
 public abstract class CharacterStats : UnitStats
 {
+    private protected float healthPointConcentration;
+
     public CharacterPresenter CharacterPresenter { get; private protected set; }
 
     public HealthBar healthBar;
@@ -154,7 +156,9 @@ public abstract class CharacterStats : UnitStats
     {
         Debug.Log("Warning! " + gameObject.name + " changed his BaseStrenghtStats Value!");
 
+        float oldCurrentHealthPercent = CurrentHealthPoint / maxHealthPoint.GetValue();
         maxHealthPoint.ChangeBaseValue(BaseMaxHealthPoint + (strength.GetValue() * hpForStrenght));
+        CurrentHealthPoint = oldCurrentHealthPercent * maxHealthPoint.GetValue();
 
         movementSpeed.ChangeBaseValue(BaseMovementSpeed + (strength.GetValue() * movementSpeedForStrenght) + (agility.GetValue() * movementSpeedForAgility));
         rotationSpeed.ChangeBaseValue(BaseRotationSpeed + (strength.GetValue() * rotationSpeedForStrenght) + (agility.GetValue() * rotationSpeedForAgility));
@@ -162,6 +166,7 @@ public abstract class CharacterStats : UnitStats
         attackDamage.ChangeBaseValue(BaseAttackDamage + (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
 
         attackSpeed.ChangeBaseValue(BaseAttackSpeed + (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility));
+
 
     }
 
@@ -241,11 +246,6 @@ public abstract class CharacterStats : UnitStats
         else //Получаем урон
         {
             damage = base.TakeDamage(killerStats, damageType, damage, ref isEvaded, ref isBlocked, canEvade);
-
-            if (!isBlocked)
-            {
-                healthBar.DecreaseHealthBar();
-            }
         }
 
 
@@ -253,16 +253,27 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public virtual void Healing(float amount)
+    public virtual float Healing(float amount)
     {
+        float UnclaimingHealthPoints = 0f;
+        float _maxHealthPoint = maxHealthPoint.GetValue();
+
         CurrentHealthPoint += amount;
-        if (CurrentHealthPoint > maxHealthPoint.GetValue())
+        if (CurrentHealthPoint > _maxHealthPoint)
         {
-            CurrentHealthPoint = maxHealthPoint.GetValue();
+            UnclaimingHealthPoints = CurrentHealthPoint - _maxHealthPoint;
+            CurrentHealthPoint = _maxHealthPoint;
         }
 
         ReportUpdateHealthValue();
-        healthBar.IncreaseHealthBar();
+
+        return UnclaimingHealthPoints;
+    }
+
+
+    public virtual void ExtraHealing(float amount) 
+    {
+        healthPointConcentration = Healing(amount);
     }
 
 
@@ -316,7 +327,7 @@ public abstract class CharacterStats : UnitStats
 
         if (_chanceToGetAnExtraSkillPoint > 0f && Random.Range(0f, 1f) < _chanceToGetAnExtraSkillPoint)
         {
-            Debug.Log("Везунчик! +1 Exstra Skill Point!");
+            Debug.Log("Везунчик! +1 Extra Skill Point!");
             ExstraSkillPoints++;
         }
 

@@ -11,15 +11,27 @@ public class HealthBar : MonoBehaviour
 
     private float maxSliderValue = 1f;
 
-    private readonly float rateOfDecrease = 15f;
+    private readonly float rateOfDecrease = 0.15f;
     private readonly float delayBeforeChange = 0.3f;
 
     private Coroutine RoutineChangeHealth = null;
 
 
-    public void Start()
+    private void OnEnable()
+    {
+        MyStats.OnChangedCurrentHealth += ChangeHealthBar;
+    }
+
+
+    private void Start()
     {
         Initialization();
+    }
+
+
+    private void OnDisable()
+    {
+        MyStats.OnChangedCurrentHealth -= ChangeHealthBar;
     }
 
 
@@ -40,32 +52,33 @@ public class HealthBar : MonoBehaviour
     }
 
 
-    public void DecreaseHealthBar()
+    public void ChangeHealthBar()
     {
         HealthSlider.value = MyStats.CurrentHealthPoint / MyStats.maxHealthPoint.GetValue() * maxSliderValue;
-
-        if (RoutineChangeHealth == null)
-        {
-            RoutineChangeHealth = StartCoroutine(ChangeHealthFill());
-        }
-    }
-
-
-    public void IncreaseHealthBar()
-    {
-        HealthSlider.value = MyStats.CurrentHealthPoint / MyStats.maxHealthPoint.GetValue() * maxSliderValue;
-
-        if (RoutineChangeHealth == null)
-        {
-            decreasingValueSlider.value = decreasingValueSlider.value;
-        }
 
         ShowHealthPoinOnText();
+
+        if (decreasingValueSlider.value > HealthSlider.value)
+        {
+            if (RoutineChangeHealth == null)
+            {
+                RoutineChangeHealth = StartCoroutine(ChangeHealthFill());
+            }
+        }
+        else
+        {
+            decreasingValueSlider.value = HealthSlider.value;
+        }
     }
+
 
     private IEnumerator ChangeHealthFill()
     {
-        yield return new WaitForSeconds(delayBeforeChange);
+        if (decreasingValueSlider.value > HealthSlider.value)
+        {
+            yield return new WaitForSeconds(delayBeforeChange);
+        }
+
 
         while (true)
         {
@@ -73,16 +86,12 @@ public class HealthBar : MonoBehaviour
             {
                 decreasingValueSlider.value = Mathf.MoveTowards(decreasingValueSlider.value, HealthSlider.value, rateOfDecrease * Time.deltaTime);
             }
-            else if (decreasingValueSlider.value < HealthSlider.value)
-            {
-                decreasingValueSlider.value = decreasingValueSlider.value;
-                break;
-            }
             else
             {
+                decreasingValueSlider.value = HealthSlider.value;
                 break;
             }
-            ShowHealthPoinOnText();
+
             yield return null;
         }
 

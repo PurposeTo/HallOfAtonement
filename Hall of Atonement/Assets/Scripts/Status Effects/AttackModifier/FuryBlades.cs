@@ -43,7 +43,7 @@ class FuryBlades : MonoBehaviour, IAttackModifier
     {
         if (isCritical)
         {
-            characterPresenter.MyStats.Healing(damage * healthIncreaseValue);
+            characterPresenter.MyStats.ExtraHealing(damage * healthIncreaseValue);
         }
     }
 
