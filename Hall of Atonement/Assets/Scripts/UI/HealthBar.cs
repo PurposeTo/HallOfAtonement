@@ -6,7 +6,7 @@ public class HealthBar : MonoBehaviour
 {
     public CharacterStats MyStats;
     public Slider HealthSlider;
-    public Slider decreasingValueSlider;
+    public Slider decreasingHealthSlider;
     public Text HealthPointText;
 
     private float maxSliderValue = 1f;
@@ -39,8 +39,8 @@ public class HealthBar : MonoBehaviour
     {
         HealthSlider.maxValue = maxSliderValue;
         HealthSlider.value = maxSliderValue;
-        decreasingValueSlider.maxValue = maxSliderValue;
-        decreasingValueSlider.value = maxSliderValue;
+        decreasingHealthSlider.maxValue = maxSliderValue;
+        decreasingHealthSlider.value = maxSliderValue;
         ShowHealthPoinOnText();
     }
 
@@ -58,7 +58,7 @@ public class HealthBar : MonoBehaviour
 
         ShowHealthPoinOnText();
 
-        if (decreasingValueSlider.value > HealthSlider.value)
+        if (decreasingHealthSlider.value > HealthSlider.value)
         {
             if (RoutineChangeHealth == null)
             {
@@ -67,7 +67,7 @@ public class HealthBar : MonoBehaviour
         }
         else
         {
-            decreasingValueSlider.value = HealthSlider.value;
+            decreasingHealthSlider.value = HealthSlider.value;
 
             if (RoutineChangeHealth != null)
             {
@@ -86,13 +86,13 @@ public class HealthBar : MonoBehaviour
 
         while (true)
         {
-            if (decreasingValueSlider.value > HealthSlider.value)
+            if (decreasingHealthSlider.value > HealthSlider.value)
             {
-                decreasingValueSlider.value = Mathf.MoveTowards(decreasingValueSlider.value, HealthSlider.value, rateOfDecrease * Time.deltaTime);
+                decreasingHealthSlider.value = Mathf.MoveTowards(decreasingHealthSlider.value, HealthSlider.value, rateOfDecrease * Time.deltaTime);
             }
             else
             {
-                decreasingValueSlider.value = HealthSlider.value;
+                decreasingHealthSlider.value = HealthSlider.value;
                 break;
             }
 
