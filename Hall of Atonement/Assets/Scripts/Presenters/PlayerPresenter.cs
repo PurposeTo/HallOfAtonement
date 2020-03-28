@@ -10,6 +10,8 @@ public class PlayerPresenter : CharacterPresenter
 
     public PlayerController PlayerController { get; private protected set; }
 
+    public PlayerUIPresenter playerUIPresenter { get; private protected set; }
+
 
     private protected override void Awake()
     {
@@ -17,5 +19,20 @@ public class PlayerPresenter : CharacterPresenter
         MyPlayerStats = (PlayerStats)MyStats;
         PlayerCombat = (PlayerCombat)Combat;
         PlayerController = (PlayerController)Controller;
+        playerUIPresenter = gameObject.GetComponent<PlayerUIPresenter>();
+    }
+
+
+    public override void AddStatusEffect(IStatusEffectLogic statusEffect)
+    {
+        base.AddStatusEffect(statusEffect);
+        playerUIPresenter.StatusBar.AddStatusEffectToContaine(statusEffect);
+    }
+
+
+    public override void RemoveStatusEffect(IStatusEffectLogic statusEffect)
+    {
+        base.RemoveStatusEffect(statusEffect);
+        playerUIPresenter.StatusBar.RemoveStatusEffectFromContaine(statusEffect);
     }
 }

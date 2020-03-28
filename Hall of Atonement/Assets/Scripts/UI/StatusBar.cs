@@ -9,8 +9,6 @@ public class StatusBar : MonoBehaviour
 
     private Transform statusBarContain;
 
-    public List<IStatusEffectLogic> StatusEffects { get; private protected set; } = new List<IStatusEffectLogic>();
-
 
     private void Start()
     {
@@ -18,18 +16,17 @@ public class StatusBar : MonoBehaviour
     }
 
 
-    public void AddStatusEffect(IStatusEffectLogic statusEffect, Sprite sprite = null)
+    public void AddStatusEffectToContaine(IStatusEffectLogic statusEffect)
     {
-        StatusEffects.Add(statusEffect);
-        GameObject statusEffectObject = Instantiate(ImagePrefab, statusBarContain);
-        Image statusEffectImage = statusEffectObject.GetComponent<Image>();
-        statusEffectImage.sprite = sprite;
+        //GameObject statusEffectObject = Instantiate(ImagePrefab, statusBarContain);
+        //Image statusEffectImage = statusEffectObject.GetComponent<Image>();
+        //statusEffectImage.sprite = sprite;
 
     }
 
 
-    public void RemoveStatusEffect(IStatusEffectLogic statusEffect)
+    public void RemoveStatusEffectFromContaine(IStatusEffectLogic statusEffect)
     {
-        StatusEffects.Remove(statusEffect);
+
     }
 }

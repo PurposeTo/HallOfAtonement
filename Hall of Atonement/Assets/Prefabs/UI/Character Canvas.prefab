@@ -765,5 +765,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyStats: {fileID: 0}
   HealthSlider: {fileID: 2851902674090285067}
-  decreasingValueSlider: {fileID: 2851902673234704544}
+  decreasingHealthSlider: {fileID: 2851902673234704544}
   HealthPointText: {fileID: 306847207499886435}

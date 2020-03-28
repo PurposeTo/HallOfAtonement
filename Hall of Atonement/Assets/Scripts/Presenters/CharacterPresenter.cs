@@ -11,13 +11,15 @@ public class CharacterPresenter : UnitPresenter
 
     public CharacterController Controller { get; private protected set; }
 
-    public CharacterType CharacterType { get; private set; }
+    public CharacterType CharacterType { get; private protected set; }
 
 
 
 
-    private protected virtual void Awake()
+    private protected override void Awake()
     {
+        base.Awake();
+
         MyStats = (CharacterStats)UnitStats;
         Combat = GetComponent<CharacterCombat>();
         Controller = GetComponent<CharacterController>();
@@ -37,7 +39,6 @@ public class CharacterPresenter : UnitPresenter
         {
             MyStats.defenseModifiers.Add((IDefenseModifier)statusEffect);
         }
-
     }
 
 

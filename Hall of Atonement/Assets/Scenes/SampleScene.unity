@@ -9235,6 +9235,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1499076922}
     m_Modifications:
+    - target: {fileID: 3442109477333287998, guid: c1f8d10cbf730004d84b20907196674d,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3442109477333287998, guid: c1f8d10cbf730004d84b20907196674d,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3442109477730970446, guid: c1f8d10cbf730004d84b20907196674d,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3442109477730970446, guid: c1f8d10cbf730004d84b20907196674d,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4563824010806829532, guid: c1f8d10cbf730004d84b20907196674d,
         type: 3}
       propertyPath: m_Name
@@ -9710,6 +9730,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2710106133184142640, guid: 73db80284e7ba4041b0853d491bdae19,
+        type: 3}
+      propertyPath: StatusBar
+      value: 
+      objectReference: {fileID: 1911345684}
     - target: {fileID: 5923922427865877912, guid: 73db80284e7ba4041b0853d491bdae19,
         type: 3}
       propertyPath: m_Name
@@ -11884,7 +11909,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5779059346864542463}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1911345680
+--- !u!114 &1911345684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11898,7 +11923,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ImagePrefab: {fileID: 7973565382321959831, guid: d3fe9c53f7b00554ca0ded81894832aa,
     type: 3}
-  StatusBarContain: {fileID: 0}
 --- !u!1001 &1917300047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36818,6 +36842,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Monster Range Shoot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589597957524760109, guid: 0c51e2ff9b300974891e684f2cb0d4b5,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589597957524760109, guid: 0c51e2ff9b300974891e684f2cb0d4b5,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589597957663426909, guid: 0c51e2ff9b300974891e684f2cb0d4b5,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589597957663426909, guid: 0c51e2ff9b300974891e684f2cb0d4b5,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c51e2ff9b300974891e684f2cb0d4b5, type: 3}

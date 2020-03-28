@@ -115,6 +115,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster Range Shoot
       objectReference: {fileID: 0}
+    - target: {fileID: 6281496286559766008, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6281496286559766008, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6281496286957447816, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6281496286957447816, guid: 197425a1e958f4a4387d5f714b8adc80,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 197425a1e958f4a4387d5f714b8adc80, type: 3}
 --- !u!1 &7468446209180550095 stripped

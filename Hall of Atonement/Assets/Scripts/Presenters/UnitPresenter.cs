@@ -10,7 +10,7 @@ public class UnitPresenter : MonoBehaviour
     public List<IStatusEffectLogic> StatusEffects { get; private protected set; } = new List<IStatusEffectLogic>();
 
 
-    void Start()
+    private protected virtual void Awake()
     {
         UnitStats = GetComponent<UnitStats>();
     }

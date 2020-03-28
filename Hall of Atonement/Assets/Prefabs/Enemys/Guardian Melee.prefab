@@ -113,6 +113,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Guardian Melee
       objectReference: {fileID: 0}
+    - target: {fileID: 6193395575071024388, guid: 03bdd5a1e2149cf419a3f64740e1ce96,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6193395575071024388, guid: 03bdd5a1e2149cf419a3f64740e1ce96,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6193395575477078644, guid: 03bdd5a1e2149cf419a3f64740e1ce96,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6193395575477078644, guid: 03bdd5a1e2149cf419a3f64740e1ce96,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03bdd5a1e2149cf419a3f64740e1ce96, type: 3}
 --- !u!1 &4563824010806829532 stripped
