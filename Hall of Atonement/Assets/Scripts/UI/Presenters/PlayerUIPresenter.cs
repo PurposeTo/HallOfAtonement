@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerUIPresenter : MonoBehaviour
+public class PlayerUIPresenter : CharacterUIPresenter
 {
     public StatusBar StatusBar;
 }

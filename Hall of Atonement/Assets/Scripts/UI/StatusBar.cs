@@ -9,8 +9,10 @@ public class StatusBar : MonoBehaviour
 
     private Transform statusBarContain;
 
+    private Dictionary<IStatusEffectLogic, GameObject> statusEffectObjects = new Dictionary<IStatusEffectLogic, GameObject>();
 
-    private void Start()
+
+    private void Awake()
     {
         statusBarContain = gameObject.transform;
     }
@@ -18,7 +20,8 @@ public class StatusBar : MonoBehaviour
 
     public void AddStatusEffectToContaine(IStatusEffectLogic statusEffect)
     {
-        //GameObject statusEffectObject = Instantiate(ImagePrefab, statusBarContain);
+        GameObject statusEffectObject = Instantiate(ImagePrefab, statusBarContain);
+        statusEffectObjects.Add(statusEffect, statusEffectObject);
         //Image statusEffectImage = statusEffectObject.GetComponent<Image>();
         //statusEffectImage.sprite = sprite;
 
@@ -27,6 +30,7 @@ public class StatusBar : MonoBehaviour
 
     public void RemoveStatusEffectFromContaine(IStatusEffectLogic statusEffect)
     {
-
+        Destroy(statusEffectObjects[statusEffect]);
+        statusEffectObjects.Remove(statusEffect);
     }
 }

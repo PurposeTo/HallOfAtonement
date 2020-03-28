@@ -81,6 +81,10 @@
     <Compile Include="Assets\AssetStoreTools\Tilemap\Tiles\Rule Tile\Scripts\RuleTile.cs" />
     <Compile Include="Assets\AssetStoreTools\Tilemap\Tiles\Terrain Tile\Scripts\TerrainTile.cs" />
     <Compile Include="Assets\AssetStoreTools\Tilemap\Tiles\Weighted Random Tile\WeightedRandomTile.cs" />
+    <Compile Include="Assets\Scripts\Character Presenters\CharacterPresenter.cs" />
+    <Compile Include="Assets\Scripts\Character Presenters\EnemyPresenter.cs" />
+    <Compile Include="Assets\Scripts\Character Presenters\PlayerPresenter.cs" />
+    <Compile Include="Assets\Scripts\Character Presenters\UnitPresenter.cs" />
     <Compile Include="Assets\Scripts\Combat\Abstract\CharacterCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\Abstract\EnemyCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\Abstract\PlayerCombat.cs" />
@@ -121,11 +125,6 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Object Pooler\IPooledObject.cs" />
     <Compile Include="Assets\Scripts\Object Pooler\ObjectPooler.cs" />
-    <Compile Include="Assets\Scripts\Presenters\CharacterPresenter.cs" />
-    <Compile Include="Assets\Scripts\Presenters\EnemyPresenter.cs" />
-    <Compile Include="Assets\Scripts\Presenters\PlayerPresenter.cs" />
-    <Compile Include="Assets\Scripts\Presenters\PlayerUIPresenter.cs" />
-    <Compile Include="Assets\Scripts\Presenters\UnitPresenter.cs" />
     <Compile Include="Assets\Scripts\Stats\Abstract\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Stats\Abstract\UnitStats.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\Attribute.cs" />
@@ -159,6 +158,8 @@
     <Compile Include="Assets\Scripts\UI\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\UI\LvlBar.cs" />
+    <Compile Include="Assets\Scripts\UI\Presenters\CharacterUIPresenter.cs" />
+    <Compile Include="Assets\Scripts\UI\Presenters\PlayerUIPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\StatusBar.cs" />
     <None Include="Assets\AssetStoreTools\Tilemap\Tiles\Rule Tile\ScriptTemplates\NewCustomRuleTile.cs.txt" />
     <None Include="Assets\AssetStoreTools\Tilemap\Brushes\Tint Brush Smooth\Shaders\TintedTilemap.shader" />

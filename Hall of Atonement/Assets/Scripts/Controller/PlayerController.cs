@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-//[RequireComponent(typeof(PlayerCombat))]
-[RequireComponent(typeof(PlayerStats))]
 [RequireComponent(typeof(PlayerStatePatrolling))]
 [RequireComponent(typeof(PlayerStateFighting))]
 public class PlayerController : CharacterController
