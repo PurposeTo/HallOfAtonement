@@ -35,7 +35,7 @@ public class HealthBar : MonoBehaviour
     }
 
 
-    private void Initialization() 
+    private void Initialization()
     {
         HealthSlider.maxValue = maxSliderValue;
         HealthSlider.value = maxSliderValue;
@@ -47,7 +47,7 @@ public class HealthBar : MonoBehaviour
 
     private void ShowHealthPoinOnText()
     {
-        HealthPointText.text = Mathf.Round(MyStats.CurrentHealthPoint) + "/" 
+        HealthPointText.text = Mathf.Round(MyStats.CurrentHealthPoint) + "/"
             + Mathf.Round(MyStats.maxHealthPoint.GetValue());
     }
 
@@ -68,16 +68,20 @@ public class HealthBar : MonoBehaviour
         else
         {
             decreasingValueSlider.value = HealthSlider.value;
+
+            if (RoutineChangeHealth != null)
+            {
+                StopCoroutine(ChangeHealthFill());
+                RoutineChangeHealth = null;
+            }
         }
     }
 
 
     private IEnumerator ChangeHealthFill()
     {
-        if (decreasingValueSlider.value > HealthSlider.value)
-        {
-            yield return new WaitForSeconds(delayBeforeChange);
-        }
+
+        yield return new WaitForSeconds(delayBeforeChange);
 
 
         while (true)
