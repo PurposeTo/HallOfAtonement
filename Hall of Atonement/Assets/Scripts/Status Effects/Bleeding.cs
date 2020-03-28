@@ -3,7 +3,7 @@
 class Bleeding : HangingEffect, IDamageLogic
 {
     private DamageType damageType;
-    private UnitStats targetStats;
+    private UnitPresenter unitPresenter;
     private CharacterStats ownerStats;
     private CharacteristicModifier<float> poisonResistanceForBleeding = new CharacteristicModifier<float>(0.1f);
 
@@ -18,13 +18,17 @@ class Bleeding : HangingEffect, IDamageLogic
     void Start()
     {
         Initialization();
-        targetStats.poisonResistance.AddModifier(poisonResistanceForBleeding);
+        unitPresenter.AddStatusEffect(this);
+
+        unitPresenter.UnitStats.poisonResistance.AddModifier(poisonResistanceForBleeding);
     }
 
 
     void OnDestroy()
     {
-        targetStats.poisonResistance.RemoveModifier(poisonResistanceForBleeding);
+        unitPresenter.RemoveStatusEffect(this);
+
+        unitPresenter.UnitStats.poisonResistance.RemoveModifier(poisonResistanceForBleeding);
     }
 
 
@@ -32,7 +36,7 @@ class Bleeding : HangingEffect, IDamageLogic
     {
         if (currentBleedingTime > 0f)
         {
-            DoStatusEffectDamage(targetStats, ownerStats);
+            DoStatusEffectDamage(unitPresenter.UnitStats, ownerStats);
             currentBleedingTime -= Time.deltaTime;
         }
         else
@@ -45,7 +49,8 @@ class Bleeding : HangingEffect, IDamageLogic
     private void Initialization()
     {
         damageType = new BleedingDamage();
-        targetStats = gameObject.GetComponent<UnitStats>();
+
+        unitPresenter = gameObject.GetComponent<UnitPresenter>();
         Debug.Log(gameObject.name + @": ""I am bleeding!""");
     }
 

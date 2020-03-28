@@ -2,7 +2,9 @@
 
 class Poisoning : HangingEffect, IDamageLogic
 {
-    private UnitStats targetStats;
+    private UnitPresenter unitPresenter;
+
+    private CharacterStats myStats;
     private CharacterStats ownerStats;
     private DamageType damageType;
     private CharacteristicModifier<int> strengthModifierForPoisoning = new CharacteristicModifier<int>();
@@ -24,33 +26,39 @@ class Poisoning : HangingEffect, IDamageLogic
     {
         Initialization();
 
-        if (targetStats is CharacterStats)
+        unitPresenter.AddStatusEffect(this);
+
+
+        if (unitPresenter.UnitStats is CharacterStats)
         {
+            myStats = (CharacterStats)unitPresenter.UnitStats;
             SetAllModifiersValue();
 
-            ((CharacterStats)targetStats).strength.AddModifier(strengthModifierForPoisoning);
-            ((CharacterStats)targetStats).agility.AddModifier(agilityModifierForPoisoning);
-            ((CharacterStats)targetStats).mastery.AddModifier(masteryModifierForPoisoning);
+            myStats.strength.AddModifier(strengthModifierForPoisoning);
+            myStats.agility.AddModifier(agilityModifierForPoisoning);
+            myStats.mastery.AddModifier(masteryModifierForPoisoning);
 
             // Значение модификатора характеристик эффекта Poisoning меняется в соответствии с базовым значением характеристик
-            ((CharacterStats)targetStats).strength.OnChangeAttributeBaseValue += SetStrengthModifierValue;
-            ((CharacterStats)targetStats).agility.OnChangeAttributeBaseValue += SetAgilityModifierValue;
-            ((CharacterStats)targetStats).mastery.OnChangeAttributeBaseValue += SetMasteryModifierValue;
+            myStats.strength.OnChangeAttributeBaseValue += SetStrengthModifierValue;
+            myStats.agility.OnChangeAttributeBaseValue += SetAgilityModifierValue;
+            myStats.mastery.OnChangeAttributeBaseValue += SetMasteryModifierValue;
         }
     }
 
 
     void OnDestroy()
     {
-        if (targetStats is CharacterStats)
-        {
-            ((CharacterStats)targetStats).strength.RemoveModifier(strengthModifierForPoisoning);
-            ((CharacterStats)targetStats).agility.RemoveModifier(agilityModifierForPoisoning);
-            ((CharacterStats)targetStats).mastery.RemoveModifier(masteryModifierForPoisoning);
+        unitPresenter.RemoveStatusEffect(this);
 
-            ((CharacterStats)targetStats).strength.OnChangeAttributeBaseValue -= SetStrengthModifierValue;
-            ((CharacterStats)targetStats).agility.OnChangeAttributeBaseValue -= SetAgilityModifierValue;
-            ((CharacterStats)targetStats).mastery.OnChangeAttributeBaseValue -= SetMasteryModifierValue;
+        if (myStats != null)
+        {
+            myStats.strength.RemoveModifier(strengthModifierForPoisoning);
+            myStats.agility.RemoveModifier(agilityModifierForPoisoning);
+            myStats.mastery.RemoveModifier(masteryModifierForPoisoning);
+
+            myStats.strength.OnChangeAttributeBaseValue -= SetStrengthModifierValue;
+            myStats.agility.OnChangeAttributeBaseValue -= SetAgilityModifierValue;
+            myStats.mastery.OnChangeAttributeBaseValue -= SetMasteryModifierValue;
         }
     }
 
@@ -59,7 +67,7 @@ class Poisoning : HangingEffect, IDamageLogic
     {
         if (currentPoisoningTime > 0f)
         {
-            DoStatusEffectDamage(targetStats, ownerStats);
+            DoStatusEffectDamage(unitPresenter.UnitStats, ownerStats);
             currentPoisoningTime -= Time.deltaTime;
         }
         else
@@ -72,7 +80,7 @@ class Poisoning : HangingEffect, IDamageLogic
     private void Initialization()
     {
         damageType = new PoisonDamage();
-        targetStats = gameObject.GetComponent<UnitStats>();
+        unitPresenter = gameObject.GetComponent<UnitPresenter>();
         Debug.Log(gameObject.name + @": ""I was poisoned!""");
     }
 
@@ -84,8 +92,9 @@ class Poisoning : HangingEffect, IDamageLogic
         effectPower += amplificationAmount;
 
         // Чем больше эффектов мы повесиили на цель, тем сильнее действие модификатора характеристик
-        if (targetStats is CharacterStats)
+        if (unitPresenter.UnitStats is CharacterStats) // Привожу повторно вместо использования myStats т.к. не знаю, что вызовется сначала - AmplifyEffect или Start
         {
+            myStats = (CharacterStats)unitPresenter.UnitStats;
             SetAllModifiersValue();
         }
     }
@@ -110,21 +119,21 @@ class Poisoning : HangingEffect, IDamageLogic
 
     private void SetStrengthModifierValue()
     {
-        int newValue = (int)(((CharacterStats)targetStats).strength.GetBaseValue() * (decrease * (attributeModifierPercent + attributeModifierIncrease * effectPower)));
+        int newValue = (int)(myStats.strength.GetBaseValue() * (decrease * (attributeModifierPercent + attributeModifierIncrease * effectPower)));
         strengthModifierForPoisoning.SetModifierValue(newValue);
     }
 
 
     private void SetAgilityModifierValue()
     {
-        int newValue = (int)(((CharacterStats)targetStats).agility.GetBaseValue() * (decrease * (attributeModifierPercent + attributeModifierIncrease * effectPower)));
+        int newValue = (int)(myStats.agility.GetBaseValue() * (decrease * (attributeModifierPercent + attributeModifierIncrease * effectPower)));
         agilityModifierForPoisoning.SetModifierValue(newValue);
     }
 
 
     private void SetMasteryModifierValue()
     {
-        int newValue = (int)(((CharacterStats)targetStats).mastery.GetBaseValue() * (decrease * (attributeModifierPercent + attributeModifierIncrease * effectPower)));
+        int newValue = (int)(myStats.mastery.GetBaseValue() * (decrease * (attributeModifierPercent + attributeModifierIncrease * effectPower)));
         masteryModifierForPoisoning.SetModifierValue(newValue);
     }
 }

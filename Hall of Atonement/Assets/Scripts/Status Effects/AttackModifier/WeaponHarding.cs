@@ -10,13 +10,13 @@ class WeaponHarding : MonoBehaviour, IAttackModifier
     {
 
         characterPresenter = gameObject.GetComponent<CharacterPresenter>();
-        characterPresenter.Combat.attackModifiers.Add(this);
+        characterPresenter.AddStatusEffect(this);
     }
 
 
     private void OnDestroy()
     {
-        characterPresenter.Combat.attackModifiers.Remove(this);
+        characterPresenter.RemoveStatusEffect(this);
     }
 
 

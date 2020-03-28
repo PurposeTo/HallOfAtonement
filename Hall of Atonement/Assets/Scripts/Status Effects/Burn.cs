@@ -2,9 +2,9 @@
 
 public class Burn : HangingEffect, IDamageLogic
 {
-    private UnitStats targetStats;
-    private CharacterStats ownerStats;
     public DamageType damageType;
+    private UnitPresenter unitPresenter;
+    private CharacterStats ownerStats;
 
     private readonly float baseDamagePerSecond = 2f;
     private readonly float baseBurningTime = 3f;
@@ -16,6 +16,13 @@ public class Burn : HangingEffect, IDamageLogic
     void Start()
     {
         Initialization();
+        unitPresenter.AddStatusEffect(this);
+    }
+
+
+    void OnDestroy()
+    {
+        unitPresenter.RemoveStatusEffect(this);
     }
 
 
@@ -23,7 +30,7 @@ public class Burn : HangingEffect, IDamageLogic
     {
         if (currentBurningTime > 0f)
         {
-            DoStatusEffectDamage(targetStats, ownerStats);
+            DoStatusEffectDamage(unitPresenter.UnitStats, ownerStats);
             currentBurningTime -= Time.deltaTime;
         }
         else
@@ -37,10 +44,11 @@ public class Burn : HangingEffect, IDamageLogic
     {
         damageType = new FireDamage();
         Debug.Log(gameObject.name + ": \"I am burning!\"");
-        targetStats = gameObject.GetComponent<UnitStats>();
+        unitPresenter = gameObject.GetComponent<UnitPresenter>();
 
-        //Проверить, есть ли на цели лед. Если есть, то разморозить.
-        if (targetStats.gameObject.TryGetComponent(out Freeze freeze))
+
+        // Проверить, есть ли на цели лед. Если есть, то разморозить.
+        if (unitPresenter.UnitStats.gameObject.TryGetComponent(out Freeze freeze))
         {
             freeze.SelfDestruction();
         }
@@ -70,7 +78,7 @@ public class Burn : HangingEffect, IDamageLogic
         bool isBlocked = false;
 
         float remainingDamage = baseDamagePerSecond * effectPower * currentBurningTime;
-        targetStats.TakeDamage(ownerStats, damageType, remainingDamage, ref isEvaded, ref isBlocked, false);
+        unitPresenter.UnitStats.TakeDamage(ownerStats, damageType, remainingDamage, ref isEvaded, ref isBlocked, false);
         Destroy(this);
     }
 }

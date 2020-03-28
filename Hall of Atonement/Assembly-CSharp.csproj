@@ -124,6 +124,7 @@
     <Compile Include="Assets\Scripts\Presenters\CharacterPresenter.cs" />
     <Compile Include="Assets\Scripts\Presenters\EnemyPresenter.cs" />
     <Compile Include="Assets\Scripts\Presenters\PlayerPresenter.cs" />
+    <Compile Include="Assets\Scripts\Presenters\UnitPresenter.cs" />
     <Compile Include="Assets\Scripts\Stats\Abstract\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Stats\Abstract\UnitStats.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\Attribute.cs" />

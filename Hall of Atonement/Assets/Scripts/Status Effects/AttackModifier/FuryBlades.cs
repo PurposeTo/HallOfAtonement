@@ -17,7 +17,7 @@ class FuryBlades : MonoBehaviour, IAttackModifier
     void Start()
     {
         characterPresenter = gameObject.GetComponent<CharacterPresenter>();
-        characterPresenter.Combat.attackModifiers.Add(this);
+        characterPresenter.AddStatusEffect(this);
 
         characterPresenter.MyStats.attackSpeed.AddModifier(attackSpeedModifier);
         characterPresenter.MyStats.criticalChance.AddModifier(criticalChanceModifier);
@@ -29,7 +29,7 @@ class FuryBlades : MonoBehaviour, IAttackModifier
 
     void OnDestroy()
     {
-        characterPresenter.Combat.attackModifiers.Remove(this);
+        characterPresenter.RemoveStatusEffect(this);
 
         characterPresenter.MyStats.attackSpeed.RemoveModifier(attackSpeedModifier);
         characterPresenter.MyStats.criticalChance.RemoveModifier(criticalChanceModifier);

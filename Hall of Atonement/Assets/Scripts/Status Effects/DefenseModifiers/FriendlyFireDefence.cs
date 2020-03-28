@@ -16,12 +16,12 @@ public class FriendlyFireDefence : MonoBehaviour, IDefenseModifier
     {
         characterPresenter = gameObject.GetComponent<CharacterPresenter>();
 
-        characterPresenter.MyStats.defenseModifiers.Add(this);
+        characterPresenter.AddStatusEffect(this);
     }
 
 
     private void OnDestroy()
     {
-        characterPresenter.MyStats.defenseModifiers.Remove(this);
+        characterPresenter.RemoveStatusEffect(this);
     }
 }

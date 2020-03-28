@@ -12,13 +12,13 @@ public class Lifesteal : MonoBehaviour, IAttackModifier
     private void Start()
     {
         characterPresenter = gameObject.GetComponent<CharacterPresenter>();
-        characterPresenter.Combat.attackModifiers.Add(this);
+        characterPresenter.AddStatusEffect(this);
     }
 
 
     private void OnDestroy()
     {
-        characterPresenter.Combat.attackModifiers.Remove(this);
+        characterPresenter.RemoveStatusEffect(this);
     }
 
 
