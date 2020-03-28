@@ -74,7 +74,11 @@ public abstract class UnitStats : MonoBehaviour
         {
             CurrentHealthPoint -= damage;
         }
-        ReportUpdateHealthValue();
+
+        if (!isBlocked)
+        {
+            ReportUpdateHealthValue();
+        }
 
         return damage;
     }

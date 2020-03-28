@@ -245,7 +245,14 @@ public abstract class CharacterStats : UnitStats
         }
         else //Получаем урон
         {
-            damage = base.TakeDamage(killerStats, damageType, damage, ref isEvaded, ref isBlocked, canEvade);
+            if (!isBlocked)
+            {
+                damage = base.TakeDamage(killerStats, damageType, damage, ref isEvaded, ref isBlocked, canEvade);
+            }
+            else
+            {
+                damage = 0f;
+            }
         }
 
 
