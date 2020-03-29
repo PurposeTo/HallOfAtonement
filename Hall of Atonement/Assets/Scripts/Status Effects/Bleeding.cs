@@ -7,7 +7,7 @@ class Bleeding : HangingEffect, IDamageLogic
     private CharacterStats ownerStats;
     private CharacteristicModifier<float> poisonResistanceForBleeding = new CharacteristicModifier<float>(0.1f);
 
-    private readonly float baseDamagePerSecond = 0.5f;
+    private readonly float baseDamagePerSecond = 0.25f;
     private readonly float baseBleedingTime = 5f;
     private const float poisonResistanceIncrease = 0.01f;
 

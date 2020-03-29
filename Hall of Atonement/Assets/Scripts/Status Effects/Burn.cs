@@ -6,7 +6,7 @@ public class Burn : HangingEffect, IDamageLogic
     private UnitPresenter unitPresenter;
     private CharacterStats ownerStats;
 
-    private readonly float baseDamagePerSecond = 2f;
+    private readonly float baseDamagePerSecond = 0.75f;
     private readonly float baseBurningTime = 3f;
 
     private float effectPower = 1f;

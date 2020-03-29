@@ -11,8 +11,8 @@ class Freeze : HangingEffect, IDamageLogic
     private CharacteristicModifier<float> modifierRotationSpeed = new CharacteristicModifier<float>();
     private CharacteristicModifier<float> modifierAttackSpeed = new CharacteristicModifier<float>();
 
-    private const float baseDamagePerSecond = 0.25f;
-    private const float baseFreezingTime = 4f;
+    private const float baseDamagePerSecond = 0.1f;
+    private const float baseFreezingTime = 5f;
 
     private float currentFreezingTime;
     private float effectPower = 1f;

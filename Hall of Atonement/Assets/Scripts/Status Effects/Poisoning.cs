@@ -11,8 +11,8 @@ class Poisoning : HangingEffect, IDamageLogic
     private CharacteristicModifier<int> agilityModifierForPoisoning = new CharacteristicModifier<int>();
     private CharacteristicModifier<int> masteryModifierForPoisoning = new CharacteristicModifier<int>();
 
-    private readonly float baseDamagePerSecond = 0.25f;
-    private readonly float basePoisoningTime = 4f;
+    private readonly float baseDamagePerSecond = 0.1f;
+    private readonly float basePoisoningTime = 5f;
 
     private const float attributeModifierPercent = 0.1f;
     private const float attributeModifierIncrease = 0.01f;

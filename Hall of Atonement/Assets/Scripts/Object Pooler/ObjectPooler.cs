@@ -27,7 +27,7 @@ public class ObjectPooler : MonoBehaviour
     }
 
 
-    void Start()
+    private void OnEnable()
     {
 
         for (int i = 0; i < pools.Count; i++)
@@ -48,6 +48,7 @@ public class ObjectPooler : MonoBehaviour
             pools[i].objectPoolQueue = objectPool;
 
             poolDictionary.Add(pools[i].prefab, pools[i]);
+            Debug.Log("Pool with " + pools[i].prefab.name + "has been created!");
         }
     }
 
@@ -56,16 +57,13 @@ public class ObjectPooler : MonoBehaviour
     {
         if (!poolDictionary.ContainsKey(prefabKey))
         {
-            Debug.LogError("Pool with prefabKey " + prefabKey + " does not exist");
+            Debug.LogError("Pool with prefabKey " + prefabKey.name + " does not exist");
             return null;
         }
 
         Pool pool = poolDictionary[prefabKey];
 
-        if (parent == null)
-        {
-            parent = pool.PoolParent;
-        }
+
 
         // Посмотреть на первый обьект в очереди.
         GameObject objectToSpawn = pool.objectPoolQueue.Peek();
@@ -77,7 +75,7 @@ public class ObjectPooler : MonoBehaviour
             if (pool.shouldExpand)
             {
                 //То сделать новый объект
-                objectToSpawn = CreateNewObjectToPool(prefabKey, parent);
+                objectToSpawn = CreateNewObjectToPool(prefabKey, pool.PoolParent);
             }
 
         }
@@ -89,6 +87,7 @@ public class ObjectPooler : MonoBehaviour
 
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
+        if (parent != null) { objectToSpawn.transform.SetParent(parent); }
         objectToSpawn.SetActive(true);
 
         if (objectToSpawn.TryGetComponent(out IPooledObject pooledObject))
