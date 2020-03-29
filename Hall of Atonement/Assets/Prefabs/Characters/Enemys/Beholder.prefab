@@ -118,5 +118,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Beholder
       objectReference: {fileID: 0}
+    - target: {fileID: 8589597957524760109, guid: 66446eb5b0d35f84693248ff9dc701ec,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589597957524760109, guid: 66446eb5b0d35f84693248ff9dc701ec,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66446eb5b0d35f84693248ff9dc701ec, type: 3}
