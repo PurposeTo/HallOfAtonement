@@ -4,7 +4,9 @@ using UnityEngine.UI;
 
 public class LvlBar : MonoBehaviour
 {
-    public CharacterStats MyStats;
+    public CharacterUIPresenter CharacterUIPresenter;
+
+    private CharacterStats MyStats;
     public Text LvlText;
 
     private Coroutine coroutineLevelUp;
@@ -12,6 +14,8 @@ public class LvlBar : MonoBehaviour
 
     private void Start()
     {
+        MyStats = CharacterUIPresenter.CharacterPresenter.MyStats;
+
         MyStats.level.OnLevelUp += UpdateItem;
         ShowLvl();
     }

@@ -33,7 +33,7 @@ public class ObjectPooler : MonoBehaviour
         for (int i = 0; i < pools.Count; i++)
         {
             GameObject parent = new GameObject(pools[i].prefab.name + " Pool");
-            pools[i].PoolParent = Instantiate(parent).transform;
+            pools[i].PoolParent = parent.transform;
             pools[i].PoolParent.SetParent(gameObject.transform);
 
 

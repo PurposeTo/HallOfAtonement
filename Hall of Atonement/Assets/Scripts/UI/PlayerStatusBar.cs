@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class StatusBar : MonoBehaviour
+public class PlayerStatusBar : MonoBehaviour
 {
     public GameObject ImagePrefab;
 
@@ -25,7 +23,6 @@ public class StatusBar : MonoBehaviour
         statusEffectObjects.Add(statusEffect, statusEffectObject);
         //Image statusEffectImage = statusEffectObject.GetComponent<Image>();
         //statusEffectImage.sprite = sprite;
-
     }
 
 

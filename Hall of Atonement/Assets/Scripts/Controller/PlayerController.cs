@@ -6,6 +6,8 @@ public class PlayerController : CharacterController
 {
     private Joystick joystick;
     private AttackButtonEvent attackButton;
+    public PlayerPresenter PlayerPresenter { get; private protected set; }
+
 
     private readonly RuntimePlatform currentRuntimePlatform = Application.platform;
 
@@ -18,8 +20,9 @@ public class PlayerController : CharacterController
     {
         base.Start();
 
-        joystick = GameManager.instance.PlayerJoystick;
-        attackButton = GameManager.instance.PlayerAttackButton;
+        PlayerPresenter = (PlayerPresenter)CharacterPresenter;
+        joystick = PlayerPresenter.PlayerUIPresenter.PlayerJoystick;
+        attackButton = PlayerPresenter.PlayerUIPresenter.PlayerAttackButton;
         attackButton.OnPressingAttackButton += IsAttacking;
 
 

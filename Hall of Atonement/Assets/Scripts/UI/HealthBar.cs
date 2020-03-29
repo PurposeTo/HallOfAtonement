@@ -4,7 +4,9 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public CharacterStats MyStats;
+    public CharacterUIPresenter CharacterUIPresenter;
+
+    private CharacterStats MyStats;
     public Slider HealthSlider;
     public Slider decreasingHealthSlider;
     public Text HealthPointText;
@@ -17,21 +19,21 @@ public class HealthBar : MonoBehaviour
     private Coroutine RoutineChangeHealth = null;
 
 
-    private void OnEnable()
-    {
-        MyStats.OnChangedCurrentHealth += ChangeHealthBar;
-    }
-
-
     private void Start()
     {
+        MyStats = CharacterUIPresenter.CharacterPresenter.MyStats;
+        MyStats.OnChangedCurrentHealth += ChangeHealthBar;
+        MyStats.strength.OnChangeAttributeFinalValue += ChangeHealthBar;
+
+
         Initialization();
     }
 
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         MyStats.OnChangedCurrentHealth -= ChangeHealthBar;
+        MyStats.strength.OnChangeAttributeFinalValue -= ChangeHealthBar;
     }
 
 

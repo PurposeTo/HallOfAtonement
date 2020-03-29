@@ -158,9 +158,9 @@
     <Compile Include="Assets\Scripts\UI\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\UI\LvlBar.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerStatusBar.cs" />
     <Compile Include="Assets\Scripts\UI\Presenters\CharacterUIPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenters\PlayerUIPresenter.cs" />
-    <Compile Include="Assets\Scripts\UI\StatusBar.cs" />
     <None Include="Assets\AssetStoreTools\Tilemap\Tiles\Rule Tile\ScriptTemplates\NewCustomRuleTile.cs.txt" />
     <None Include="Assets\AssetStoreTools\Tilemap\Brushes\Tint Brush Smooth\Shaders\TintedTilemap.shader" />
     <Reference Include="Unity.Timeline.Editor">

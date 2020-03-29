@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5779059344959062252}
   - component: {fileID: 5779059344959062253}
   - component: {fileID: 5779059344959062254}
+  - component: {fileID: 1911345684}
   m_Layer: 5
   m_Name: Status Bar
   m_TagString: Untagged
@@ -98,6 +99,20 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &1911345684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5779059344959062256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0d62c07835f9243939a6292bbe6f83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImagePrefab: {fileID: 7973565382321959831, guid: d3fe9c53f7b00554ca0ded81894832aa,
+    type: 3}
 --- !u!1 &5779059345428483161
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +333,7 @@ GameObject:
   - component: {fileID: 5779059346267118989}
   - component: {fileID: 5779059346267118990}
   - component: {fileID: 5779059346267118991}
+  - component: {fileID: 5629673193851664297}
   m_Layer: 5
   m_Name: Player Canvas
   m_TagString: Untagged
@@ -407,6 +423,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5629673193851664297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5779059346267118992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a84d26a43fd1a1d44822ed5c8e4b2d91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerJoystick: {fileID: 8689023360651232497}
+  PlayerAttackButton: {fileID: 5779059346018833818}
+  StatusBar: {fileID: 1911345684}
 --- !u!1001 &5779059346191693070
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -532,3 +563,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5779059346191693070}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8689023360651232497 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252,
+    type: 3}
+  m_PrefabInstance: {fileID: 5779059346191693070}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45977bbae16431c46a013576a1aea384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

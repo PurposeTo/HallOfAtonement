@@ -8,9 +8,6 @@ public abstract class CharacterStats : UnitStats
 
     public CharacterPresenter CharacterPresenter { get; private protected set; }
 
-    public HealthBar healthBar;
-    public LvlBar lvlBar;
-
     public LevelSystem level = new LevelSystem();
     public Attribute strength = new Attribute();
     public Attribute agility = new Attribute();

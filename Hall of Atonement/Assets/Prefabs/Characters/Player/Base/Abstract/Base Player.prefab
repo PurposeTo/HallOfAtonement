@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5600866755883517745}
   - component: {fileID: 5600866755883517751}
   - component: {fileID: 5600866755883517743}
-  - component: {fileID: 4183982073731438494}
   - component: {fileID: 3284609873396192099}
   - component: {fileID: -1107570128817425172}
   - component: {fileID: 5600866755883517746}
@@ -128,19 +127,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &4183982073731438494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5600866755883517750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a84d26a43fd1a1d44822ed5c8e4b2d91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StatusBar: {fileID: 0}
 --- !u!114 &3284609873396192099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6340eaa3ccc804397b4a91d142c402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerUIPresenter: {fileID: 0}
 --- !u!114 &-1107570128817425172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,8 +176,6 @@ MonoBehaviour:
     baseValue: 0
   bleedingResistance:
     baseValue: 0
-  healthBar: {fileID: 4406601322378048652}
-  lvlBar: {fileID: 1856661612417677013}
   level:
     level: 0
     experience: 0
@@ -282,6 +267,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5600866755883517744}
     m_Modifications:
+    - target: {fileID: 2576935892156673726, guid: 6edcbcb70f30ef04781fc311313e05e2,
+        type: 3}
+      propertyPath: CharacterPresenter
+      value: 
+      objectReference: {fileID: 3284609873396192099}
     - target: {fileID: 2851902673722379892, guid: 6edcbcb70f30ef04781fc311313e05e2,
         type: 3}
       propertyPath: m_Name
@@ -435,27 +425,3 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5600866755152633498}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1856661612417677013 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6088419495006218319, guid: 6edcbcb70f30ef04781fc311313e05e2,
-    type: 3}
-  m_PrefabInstance: {fileID: 5600866755152633498}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6489e9a6e643f84c89e1668a5e16deb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4406601322378048652 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8114679683082545686, guid: 6edcbcb70f30ef04781fc311313e05e2,
-    type: 3}
-  m_PrefabInstance: {fileID: 5600866755152633498}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc889fdc4988b4f40bca18fb79f34d4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

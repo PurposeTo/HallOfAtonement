@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerUIPresenter : CharacterUIPresenter
+public class PlayerUIPresenter : MonoBehaviour
 {
-    public StatusBar StatusBar;
+    // Не путать! PlayerUIPresenter и CharacterUIPresenter разные вещи!
+    public Joystick PlayerJoystick;
+    public AttackButtonEvent PlayerAttackButton;
+    public PlayerStatusBar StatusBar;
 }
