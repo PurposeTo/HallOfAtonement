@@ -10,7 +10,7 @@ public class ObjectPooler : MonoBehaviour
         public GameObject prefab;
         public int size;
         public bool shouldExpand = true; // В данный момент не могу это сделать, так как нет взаимодействия словаря с Pool
-        [HideInInspector] public GameObject PoolParent;
+        [HideInInspector] public Transform PoolParent;
         [HideInInspector] public Queue<GameObject> objectPoolQueue;
     }
 
@@ -33,8 +33,8 @@ public class ObjectPooler : MonoBehaviour
         for (int i = 0; i < pools.Count; i++)
         {
             GameObject parent = new GameObject(pools[i].prefab.name + " Pool");
-            pools[i].PoolParent = Instantiate(parent);
-            pools[i].PoolParent.transform.SetParent(gameObject.transform);
+            pools[i].PoolParent = Instantiate(parent).transform;
+            pools[i].PoolParent.SetParent(gameObject.transform);
 
 
             Queue<GameObject> objectPool = new Queue<GameObject>();
@@ -52,7 +52,7 @@ public class ObjectPooler : MonoBehaviour
     }
 
 
-    public GameObject SpawnFromPool(GameObject prefabKey, Vector3 position, Quaternion rotation)
+    public GameObject SpawnFromPool(GameObject prefabKey, Vector3 position, Quaternion rotation, Transform parent = null)
     {
         if (!poolDictionary.ContainsKey(prefabKey))
         {
@@ -61,6 +61,11 @@ public class ObjectPooler : MonoBehaviour
         }
 
         Pool pool = poolDictionary[prefabKey];
+
+        if (parent == null)
+        {
+            parent = pool.PoolParent;
+        }
 
         // Посмотреть на первый обьект в очереди.
         GameObject objectToSpawn = pool.objectPoolQueue.Peek();
@@ -72,7 +77,7 @@ public class ObjectPooler : MonoBehaviour
             if (pool.shouldExpand)
             {
                 //То сделать новый объект
-                objectToSpawn = CreateNewObjectToPool(prefabKey, pool.PoolParent);
+                objectToSpawn = CreateNewObjectToPool(prefabKey, parent);
             }
 
         }
@@ -98,10 +103,10 @@ public class ObjectPooler : MonoBehaviour
     }
 
 
-    private GameObject CreateNewObjectToPool(GameObject newGameObject, GameObject poolParent)
+    private GameObject CreateNewObjectToPool(GameObject newGameObject, Transform poolParent)
     {
         newGameObject = Instantiate(newGameObject);
-        newGameObject.transform.SetParent(poolParent.transform);
+        newGameObject.transform.SetParent(poolParent);
         newGameObject.SetActive(false);
 
         return newGameObject;
