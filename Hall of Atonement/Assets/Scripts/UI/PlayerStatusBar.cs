@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStatusBar : MonoBehaviour
 {
@@ -21,8 +22,8 @@ public class PlayerStatusBar : MonoBehaviour
         //GameObject statusEffectObject = Instantiate(ImagePrefab, statusBarContain);
         GameObject statusEffectObject = ObjectPooler.SharedInstance.SpawnFromPool(ImagePrefab, Vector3.zero, Quaternion.identity, statusBarContain);
         statusEffectObjects.Add(statusEffect, statusEffectObject);
-        //Image statusEffectImage = statusEffectObject.GetComponent<Image>();
-        //statusEffectImage.sprite = sprite;
+        Image statusEffectImage = statusEffectObject.GetComponent<Image>();
+        statusEffectImage.sprite = statusEffect.StatusEffectSprite;
     }
 
 

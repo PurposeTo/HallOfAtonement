@@ -3,6 +3,10 @@ using UnityEngine;
 
 class Freeze : HangingEffect, IDamageLogic
 {
+    private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Freeze;
+
+    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+
     private DamageType damageType;
     private UnitPresenter unitPresenter;
     private CharacterStats myStats;

@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 
-class WeaponHarding : MonoBehaviour, IAttackModifier
+class WeaponHarding : StatusEffect, IAttackModifier
 {
+    private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.WeaponHarding;
+
+    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+
     [SerializeField] private HardingType hardingType;
     private CharacterPresenter characterPresenter;
 

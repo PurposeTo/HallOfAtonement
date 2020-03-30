@@ -2,6 +2,10 @@
 
 public class Burn : HangingEffect, IDamageLogic
 {
+    private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Burn;
+
+    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+
     public DamageType damageType;
     private UnitPresenter unitPresenter;
     private CharacterStats ownerStats;

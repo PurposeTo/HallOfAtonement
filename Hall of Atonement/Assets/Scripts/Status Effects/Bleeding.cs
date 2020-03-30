@@ -2,6 +2,10 @@
 
 class Bleeding : HangingEffect, IDamageLogic
 {
+    private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Bleeding;
+
+    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+
     private DamageType damageType;
     private UnitPresenter unitPresenter;
     private CharacterStats ownerStats;
@@ -13,7 +17,6 @@ class Bleeding : HangingEffect, IDamageLogic
 
     private float currentBleedingTime;
     private float effectPower = 1f;
-
 
     void Start()
     {
@@ -70,5 +73,10 @@ class Bleeding : HangingEffect, IDamageLogic
         bool isBlocked = false;
 
         targetStats.TakeDamage(ownersStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
+    }
+
+    void IDamageLogic.DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats)
+    {
+        throw new System.NotImplementedException();
     }
 }

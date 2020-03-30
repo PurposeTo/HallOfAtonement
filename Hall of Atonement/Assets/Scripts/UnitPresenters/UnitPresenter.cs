@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(UnitStats))]
 public class UnitPresenter : MonoBehaviour
 {
     public UnitStats UnitStats { get; private protected set; }

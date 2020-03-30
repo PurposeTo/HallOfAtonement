@@ -2,6 +2,10 @@
 
 class Poisoning : HangingEffect, IDamageLogic
 {
+    private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Poisoning;
+
+    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+
     private UnitPresenter unitPresenter;
 
     private CharacterStats myStats;

@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 
-class FuryBlades : MonoBehaviour, IAttackModifier
+class FuryBlades : StatusEffect, IAttackModifier
 {
+    private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.FuryBlades;
+
+    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+
     private CharacterPresenter characterPresenter;
     private const float upperBound = 0.9f;
     private const float healthIncreaseValue = 0.01f;

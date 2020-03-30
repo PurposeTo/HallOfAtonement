@@ -1,13 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class Lifesteal : MonoBehaviour, IAttackModifier
+public class Lifesteal : StatusEffect, IAttackModifier
 {
+    private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Lifesteal;
+
+    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+
     private CharacterPresenter characterPresenter;
     private const float baseLifestealValue = 0.15f;
 
     private const int masteryPointsForBleeding = 5;
     private const float increaseForMastery = 0.01f;
-
 
     private void Start()
     {
@@ -43,7 +47,7 @@ public class Lifesteal : MonoBehaviour, IAttackModifier
     }
 
 
-    public object Clone()
+    object ICloneable.Clone()
     {
         return MemberwiseClone();
     }

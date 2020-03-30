@@ -3,11 +3,16 @@ using UnityEngine;
 
 public interface IStatusEffectLogic
 {
+    Sprite StatusEffectSprite { get; }
+}
 
+public abstract class StatusEffect : MonoBehaviour
+{
+    private protected abstract ContainerStatusEffects StatusEffectType { get; }
 }
 
 
-public abstract class HangingEffect : MonoBehaviour
+public abstract class HangingEffect : StatusEffect
 {
     public abstract void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount);
 }
@@ -25,7 +30,7 @@ public interface IDefenseModifier : IStatusEffectLogic
 }
 
 
-public interface ICharacteristicModifier<T> : IStatusEffectLogic
+public interface ICharacteristicModifier<T>// : IStatusEffectLogic
 {
     event ChangeCharacteristicModifier OnChangeCharacteristicModifier;
 
