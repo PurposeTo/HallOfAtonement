@@ -23,14 +23,13 @@ public abstract class UnitStats : MonoBehaviour
     public PercentStat poisonResistance;
     public PercentStat bleedingResistance;
 
-    private IDamageReducerFactory damageReducerFactory;
+    private IDamageReducerFactory damageReducerFactory = new DamageReducerFactory();
 
 
     private protected virtual void Awake()
     {
         StatInitialization();
         CurrentHealthPoint = maxHealthPoint.GetValue();
-        damageReducerFactory = new DamageReducerFactory();
     }
 
 

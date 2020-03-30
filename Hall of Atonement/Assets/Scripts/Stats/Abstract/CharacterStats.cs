@@ -16,8 +16,8 @@ public abstract class CharacterStats : UnitStats
     private Coroutine coroutinePutAvailableSkillPoints;
     private const int skillPointsPerLevel = 1;
     private int totalAvailableSkillPoints;
-    private protected PercentStat chanceToGetAnExtraSkillPoint = new PercentStat();
-    private protected Attribute[] allAttributes; // Инициализация в Awake
+    private protected virtual PercentStat chanceToGetAnExtraSkillPoint { get; set; } = new PercentStat();
+    private protected Attribute[] AllAttributes => new Attribute[] { strength, agility, mastery }; // Инициализация в Awake
 
     //Зависимость статов от Силы
     private readonly float hpForStrenght = 20f;
@@ -93,7 +93,6 @@ public abstract class CharacterStats : UnitStats
     {
         base.Awake();
         ChangeDamageType(UnitDamageType);
-        allAttributes = new Attribute[] { strength, agility, mastery };
     }
 
     private void OnEnable()
@@ -344,9 +343,9 @@ public abstract class CharacterStats : UnitStats
     {
         float totalMass = 0; // Общая масса
 
-        for (int i = 0; i < allAttributes.Length; i++) // Вычисление общего шанса-массы всех обьектов
+        for (int i = 0; i < AllAttributes.Length; i++) // Вычисление общего шанса-массы всех обьектов
         {
-            totalMass += allAttributes[i].GetMassPerAtribute(); // Вычисление общей массы объектов
+            totalMass += AllAttributes[i].GetMassPerAtribute(); // Вычисление общей массы объектов
         }
 
 
@@ -354,16 +353,16 @@ public abstract class CharacterStats : UnitStats
 
         float upperLimit = 0; // Число для проверки диапозона
 
-        for (int i = 0; i < allAttributes.Length; i++)  // Пройтись по всем атрибутам и проверить, какой выпал?
+        for (int i = 0; i < AllAttributes.Length; i++)  // Пройтись по всем атрибутам и проверить, какой выпал?
         {
-            upperLimit += allAttributes[i].GetMassPerAtribute(); // Вычисление текущего шанса-массы обьекта
+            upperLimit += AllAttributes[i].GetMassPerAtribute(); // Вычисление текущего шанса-массы обьекта
 
             if (Choise <= upperLimit) // Проверяем, это текущий элемент?
             {
                 // Это текущий элемент!
 
-                int newAttributeValue = allAttributes[i].GetBaseValue() + 1;
-                allAttributes[i].ChangeBaseValue(newAttributeValue);
+                int newAttributeValue = AllAttributes[i].GetBaseValue() + 1;
+                AllAttributes[i].ChangeBaseValue(newAttributeValue);
 
                 Debug.Log(gameObject.name + " повысил уровень! Получите +1 к случайному атрибуту!");
 

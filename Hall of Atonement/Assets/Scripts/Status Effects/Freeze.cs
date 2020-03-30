@@ -29,7 +29,7 @@ class Freeze : HangingEffect, IDamageLogic
     private float currentDecelerationModifierValue = baseDecelerationModifierValue;
 
 
-    void Start()
+    private void Start()
     {
         Initialization();
         unitPresenter.AddStatusEffect(this);
@@ -53,7 +53,7 @@ class Freeze : HangingEffect, IDamageLogic
     }
 
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         unitPresenter.RemoveStatusEffect(this);
 
@@ -70,7 +70,7 @@ class Freeze : HangingEffect, IDamageLogic
     }
 
 
-    void Update()
+    private void Update()
     {
         if (currentFreezingTime > 0f)
         {

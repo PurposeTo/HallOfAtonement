@@ -7,6 +7,9 @@ public class EnemyStats : CharacterStats
 
     public float ViewingRadius { get; private set; } = 9f;
 
+    private protected override PercentStat chanceToGetAnExtraSkillPoint { get; set; } = new PercentStat(0.2f);
+
+
     private readonly float baseHealthPointRegen = 0.5f; //базовое значение регенерации здоровья
 
     private readonly float hpRegenForStrenght = 0.2f;
@@ -25,7 +28,6 @@ public class EnemyStats : CharacterStats
 
     private protected override void Awake()
     {
-        chanceToGetAnExtraSkillPoint = new PercentStat(0.2f);
         base.Awake();
         Mutate();
     }
@@ -55,8 +57,8 @@ public class EnemyStats : CharacterStats
     {
         // Данный метод должен изменять массу атрибута
 
-        float[] massPerAttribute = new float[allAttributes.Length];
-        float remainingPointsCounter = allAttributes.Length; // Единица на каждый атрибут, для простоты счета
+        float[] massPerAttribute = new float[AllAttributes.Length];
+        float remainingPointsCounter = AllAttributes.Length; // Единица на каждый атрибут, для простоты счета
 
         for (int i = 0; i < massPerAttribute.Length - 1; i++)
         {
@@ -72,7 +74,7 @@ public class EnemyStats : CharacterStats
 
         for (int i = 0; i < massPerAttribute.Length; i++)
         {
-            allAttributes[i].SetMassPerAtribute(massPerAttribute[i]);
+            AllAttributes[i].SetMassPerAtribute(massPerAttribute[i]);
         }
     }
 

@@ -26,7 +26,7 @@ class Poisoning : HangingEffect, IDamageLogic
     private float effectPower = 1f;
 
 
-    void Start()
+    private void Start()
     {
         Initialization();
 
@@ -50,7 +50,7 @@ class Poisoning : HangingEffect, IDamageLogic
     }
 
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         unitPresenter.RemoveStatusEffect(this);
 
@@ -67,7 +67,7 @@ class Poisoning : HangingEffect, IDamageLogic
     }
 
 
-    void Update()
+    private void Update()
     {
         if (currentPoisoningTime > 0f)
         {

@@ -18,7 +18,7 @@ class FuryBlades : StatusEffect, IAttackModifier
     private CharacteristicModifier<float> criticalPowerModifier = new CharacteristicModifier<float>();
 
 
-    void Start()
+    private void Start()
     {
         characterPresenter = gameObject.GetComponent<CharacterPresenter>();
         characterPresenter.AddStatusEffect(this);
@@ -31,7 +31,7 @@ class FuryBlades : StatusEffect, IAttackModifier
     }
 
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         characterPresenter.RemoveStatusEffect(this);
 

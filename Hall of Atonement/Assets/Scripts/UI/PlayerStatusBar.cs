@@ -6,21 +6,15 @@ public class PlayerStatusBar : MonoBehaviour
 {
     public GameObject ImagePrefab;
 
-    private Transform statusBarContain;
+    private Transform StatusBarContain => gameObject.transform;
 
     private Dictionary<IStatusEffectLogic, GameObject> statusEffectObjects = new Dictionary<IStatusEffectLogic, GameObject>();
-
-
-    private void Awake()
-    {
-        statusBarContain = gameObject.transform;
-    }
 
 
     public void AddStatusEffectToContaine(IStatusEffectLogic statusEffect)
     {
         //GameObject statusEffectObject = Instantiate(ImagePrefab, statusBarContain);
-        GameObject statusEffectObject = ObjectPooler.SharedInstance.SpawnFromPool(ImagePrefab, Vector3.zero, Quaternion.identity, statusBarContain);
+        GameObject statusEffectObject = ObjectPooler.SharedInstance.SpawnFromPool(ImagePrefab, Vector3.zero, Quaternion.identity, StatusBarContain);
         statusEffectObjects.Add(statusEffect, statusEffectObject);
         Image statusEffectImage = statusEffectObject.GetComponent<Image>();
         statusEffectImage.sprite = statusEffect.StatusEffectSprite;

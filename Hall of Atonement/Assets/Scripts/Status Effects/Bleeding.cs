@@ -18,7 +18,7 @@ class Bleeding : HangingEffect, IDamageLogic
     private float currentBleedingTime;
     private float effectPower = 1f;
 
-    void Start()
+    private void Start()
     {
         Initialization();
         unitPresenter.AddStatusEffect(this);
@@ -27,7 +27,7 @@ class Bleeding : HangingEffect, IDamageLogic
     }
 
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         unitPresenter.RemoveStatusEffect(this);
 
@@ -35,7 +35,7 @@ class Bleeding : HangingEffect, IDamageLogic
     }
 
 
-    void Update()
+    private void Update()
     {
         if (currentBleedingTime > 0f)
         {

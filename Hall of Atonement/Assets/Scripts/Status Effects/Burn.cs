@@ -17,20 +17,20 @@ public class Burn : HangingEffect, IDamageLogic
     private float currentBurningTime;
 
 
-    void Start()
+    private void Start()
     {
         Initialization();
         unitPresenter.AddStatusEffect(this);
     }
 
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         unitPresenter.RemoveStatusEffect(this);
     }
 
 
-    void Update()
+    private void Update()
     {
         if (currentBurningTime > 0f)
         {
