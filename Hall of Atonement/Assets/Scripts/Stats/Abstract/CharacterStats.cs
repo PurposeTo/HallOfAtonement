@@ -237,7 +237,6 @@ public abstract class CharacterStats : UnitStats
         if (canEvade && (isEvaded || (evasionChance.GetValue() > 0f && Random.Range(0f, 1f) <= evasionChance.GetValue())))
         {
             isEvaded = true;
-            Debug.Log(transform.name + " dodge the damage!"); //Задоджили урон!
         }
         else //Получаем урон
         {
@@ -251,8 +250,23 @@ public abstract class CharacterStats : UnitStats
             }
         }
 
+        DisplayDamageTaken(isEvaded, isBlocked, damageType, damage);
 
         return damage;
+    }
+
+
+    private protected override void DisplayDamageTaken(bool isEvaded, bool isBlocked, DamageType damageType, float damage) 
+    {
+        if (isEvaded)
+        {
+            Debug.Log(transform.name + " dodge the damage!"); //Задоджили урон!
+        }
+        else
+        {
+            base.DisplayDamageTaken(isEvaded, isBlocked, damageType, damage);
+        }
+
     }
 
 

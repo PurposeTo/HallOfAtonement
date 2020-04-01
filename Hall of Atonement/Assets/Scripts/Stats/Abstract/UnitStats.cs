@@ -59,8 +59,7 @@ public abstract class UnitStats : MonoBehaviour
         damage = damageReducer.ReduceDamage(this, damage, out isBlocked);
 
         damage = Mathf.Clamp(damage, 0f, float.MaxValue);
-
-        Debug.Log(transform.name + " takes " + damage + " " + damageType);
+        DisplayDamageTaken(isEvaded, isBlocked, damageType, damage);
 
         if (CurrentHealthPoint - damage <= 0f) //Если из за полученного урона здоровье будет равно или ниже нуля
         {
@@ -80,6 +79,19 @@ public abstract class UnitStats : MonoBehaviour
         }
 
         return damage;
+    }
+
+
+    private protected virtual void DisplayDamageTaken(bool isEvaded, bool isBlocked, DamageType damageType, float damage)
+    {
+        if (isBlocked)
+        {
+            Debug.Log(transform.name + " blocked the " + damageType);
+        }
+        else
+        {
+            Debug.Log(transform.name + " takes " + damage + " " + damageType);
+        }
     }
 
 
