@@ -4,9 +4,18 @@ using System.Collections;
 
 public abstract class CharacterStats : UnitStats
 {
+    public enum ContainerDamageTypes
+    {
+        PhysicalDamage,
+        FireDamage,
+        IceDamage
+    }
+
+
     private protected float healthPointConcentration;
 
     public CharacterPresenter CharacterPresenter { get; private protected set; }
+    private CharacterVFX characterVFX;
 
     public LevelSystem level = new LevelSystem();
     public Attribute strength = new Attribute();
@@ -16,8 +25,24 @@ public abstract class CharacterStats : UnitStats
     private Coroutine coroutinePutAvailableSkillPoints;
     private const int skillPointsPerLevel = 1;
     private int totalAvailableSkillPoints;
-    private protected virtual PercentStat chanceToGetAnExtraSkillPoint { get; set; } = new PercentStat();
-    private protected Attribute[] AllAttributes => new Attribute[] { strength, agility, mastery }; // Инициализация в Awake
+    protected virtual float BaseChanceToGetAnExtraSkillPoint { get; } = 0f;
+    private PercentStat chanceToGetAnExtraSkillPoint;
+    private protected Attribute[] AllAttributes => new Attribute[] { strength, agility, mastery };
+
+    //public Stat maxHealthPoint;
+    public Stat movementSpeed;
+    public Stat rotationSpeed;
+    public readonly float faceEuler = 60f; //Угол лицевой стороны существа. Все действия игрок совершает лицом к объекту действий!
+    public virtual DamageType DamageType { get; private protected set; }
+    public ContainerDamageTypes UnitDamageType;
+    public Stat attackDamage;
+    public Stat attackSpeed; //(Кол-во атак в секунду)
+    public Stat criticalMultiplier; //Крит. множитель атаки
+    public PercentStat criticalChance;
+    //public Stat armor; //Нет базового значения
+    public PercentStat evasionChance; //Нет базового значения
+
+    public List<IDefenseModifier> defenseModifiers = new List<IDefenseModifier>();
 
     //Зависимость статов от Силы
     private readonly float hpForStrenght = 20f;
@@ -62,37 +87,13 @@ public abstract class CharacterStats : UnitStats
     private protected virtual float BaseCriticalMultiplier { get; } = 2f; //базовое значение множителя критической атаки.
     private protected virtual float BaseCriticalChance { get; } = 0.01f; //базовое значение скорости поворот
 
-    //public Stat maxHealthPoint;
-    public Stat movementSpeed;
-    public Stat rotationSpeed;
-    public readonly float faceEuler = 60f; //Угол лицевой стороны существа. Все действия игрок совершает лицом к объекту действий!
-    public Stat attackDamage;
-
-    public enum ContainerDamageTypes
-    {
-        PhysicalDamage,
-        FireDamage,
-        IceDamage
-    }
-
-    public ContainerDamageTypes UnitDamageType;
-
-    public virtual DamageType DamageType { get; private protected set; }
-
-    public Stat attackSpeed; //(Кол-во атак в секунду)
-    public Stat criticalMultiplier; //Крит. множитель атаки
-    public PercentStat criticalChance;
-    //public Stat armor; //Нет базового значения
-    public PercentStat evasionChance; //Нет базового значения
-
-
-    public List<IDefenseModifier> defenseModifiers = new List<IDefenseModifier>();
-
 
     private protected override void Awake()
     {
         base.Awake();
         ChangeDamageType(UnitDamageType);
+        chanceToGetAnExtraSkillPoint = new PercentStat(BaseChanceToGetAnExtraSkillPoint);
+        characterVFX = GetComponent<CharacterVFX>();
     }
 
     private void OnEnable()
@@ -250,23 +251,9 @@ public abstract class CharacterStats : UnitStats
             }
         }
 
-        DisplayDamageTaken(isEvaded, isBlocked, damageType, damage);
+        characterVFX.DisplayDamageTaken(isEvaded, isBlocked, damageType, damage);
 
         return damage;
-    }
-
-
-    private protected override void DisplayDamageTaken(bool isEvaded, bool isBlocked, DamageType damageType, float damage) 
-    {
-        if (isEvaded)
-        {
-            Debug.Log(transform.name + " dodge the damage!"); //Задоджили урон!
-        }
-        else
-        {
-            base.DisplayDamageTaken(isEvaded, isBlocked, damageType, damage);
-        }
-
     }
 
 

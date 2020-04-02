@@ -5,9 +5,9 @@ public class EnemyStats : CharacterStats
 {
     public EnemyPresenter EnemyPresenter { get; private protected set; }
 
-    public float ViewingRadius { get; private set; } = 9f;
+    public float ViewingRadius { get; } = 9f;
 
-    private protected override PercentStat chanceToGetAnExtraSkillPoint { get; set; } = new PercentStat(0.2f);
+    protected override float BaseChanceToGetAnExtraSkillPoint { get; } = 0.2f;
 
 
     private readonly float baseHealthPointRegen = 0.5f; //базовое значение регенерации здоровья

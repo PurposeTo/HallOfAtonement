@@ -121,6 +121,7 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Object Pooler\IPooledObject.cs" />
     <Compile Include="Assets\Scripts\Object Pooler\ObjectPooler.cs" />
+    <Compile Include="Assets\Scripts\Object Pooler\UIObjectPooler.cs" />
     <Compile Include="Assets\Scripts\Stats\Abstract\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Stats\Abstract\UnitStats.cs" />
     <Compile Include="Assets\Scripts\Stats\Base\Attribute.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Assets\Scripts\UnitPresenters\EnemyPresenter.cs" />
     <Compile Include="Assets\Scripts\UnitPresenters\PlayerPresenter.cs" />
     <Compile Include="Assets\Scripts\UnitPresenters\UnitPresenter.cs" />
+    <Compile Include="Assets\Scripts\VFX\CharacterVFX.cs" />
     <None Include="Assets\AssetStoreTools\Tilemap\Tiles\Rule Tile\ScriptTemplates\NewCustomRuleTile.cs.txt" />
     <None Include="Assets\AssetStoreTools\Tilemap\Brushes\Tint Brush Smooth\Shaders\TintedTilemap.shader" />
     <Reference Include="Unity.Timeline.Editor">

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ObjectPooler : MonoBehaviour
+public class UIObjectPooler : MonoBehaviour
 {
     [System.Serializable]
     public class Pool
@@ -14,7 +14,7 @@ public class ObjectPooler : MonoBehaviour
         [HideInInspector] public Queue<GameObject> objectPoolQueue;
     }
 
-    public static ObjectPooler SharedInstance;
+    public static UIObjectPooler SharedInstance;
 
     public List<Pool> pools;
 
@@ -32,6 +32,12 @@ public class ObjectPooler : MonoBehaviour
         for (int i = 0; i < pools.Count; i++)
         {
             GameObject parent = new GameObject(pools[i].prefab.name + " Pool");
+
+            // ТУТ! Различие с обычным Object Pooler
+            Canvas canvas = parent.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            parent.AddComponent<CanvasScaler>();
+            parent.AddComponent<GraphicRaycaster>();
 
             pools[i].PoolParent = parent.transform;
             pools[i].PoolParent.SetParent(gameObject.transform);

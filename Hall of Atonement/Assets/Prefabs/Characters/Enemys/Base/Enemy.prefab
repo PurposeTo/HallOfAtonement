@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 4150065117146279403}
   - component: {fileID: 4150065117146279406}
   - component: {fileID: 4150065117146279401}
+  - component: {fileID: -7920872734750394630}
   - component: {fileID: 4399976851302739015}
   - component: {fileID: 4377683164429775710}
   - component: {fileID: 6481844436280406232}
@@ -156,6 +157,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-7920872734750394630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4150065117146279402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa2ff281e938484dba86d9910b7ff9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textPrefab: {fileID: 7973565382321959831, guid: c23c977badebdb24880bbcbe8c6375bd,
+    type: 3}
 --- !u!114 &4399976851302739015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,9 +214,9 @@ MonoBehaviour:
     baseValue: 0
   rotationSpeed:
     baseValue: 0
+  UnitDamageType: 0
   attackDamage:
     baseValue: 0
-  UnitDamageType: 0
   attackSpeed:
     baseValue: 0
   criticalMultiplier:
