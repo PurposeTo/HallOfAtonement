@@ -71,11 +71,11 @@ public abstract class CharacterStats : UnitStats
     private protected override float BaseMaxHealthPoint { get; } = 100f; //базовое значение максимального кол-ва здоровья
     //public float CurrentHealthPoint { get; private protected set; }
 
-    private const float minMovementSpeed = 1.6f; //минимальное значение скорости
+    private const float minMovementSpeed = 1f; //минимальное значение скорости
     private const float maxMovementSpeed = 20f; //максимальное значение скорости
     private protected virtual float BaseMovementSpeed { get; } = 7f; //базовое значение скорости
 
-    private const float minRotationSpeed = 180f; //минимальное значение скорости поворота
+    private const float minRotationSpeed = 90f; //минимальное значение скорости поворота
     private protected virtual float BaseRotationSpeed { get; } = 720f; //базовое значение скорости поворота //Соотносится как ~ 1080 к 10 скорости
 
     public virtual float BaseAttackDamage { get; } = 10f; //базовое значение атаки
@@ -226,7 +226,7 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, ref bool isEvaded, ref bool isBlocked, bool canEvade = true)
+    public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, ref bool isEvaded, ref bool isBlocked, bool canEvade = true, bool isCritical = false, bool displayPopup = false)
     {
 
         for (int i = 0; i < defenseModifiers.Count; i++)
@@ -238,26 +238,52 @@ public abstract class CharacterStats : UnitStats
         if (canEvade && (isEvaded || (evasionChance.GetValue() > 0f && Random.Range(0f, 1f) <= evasionChance.GetValue())))
         {
             isEvaded = true;
+            Debug.Log(transform.name + " dodge the damage!"); //Задоджили урон!
+
+            if (displayPopup)
+            {
+                characterVFX.DisplayPopupText("Dodge");
+            }
         }
         else //Получаем урон
         {
             if (!isBlocked)
             {
-                damage = base.TakeDamage(killerStats, damageType, damage, ref isEvaded, ref isBlocked, canEvade);
+                damage = base.TakeDamage(killerStats, damageType, damage, ref isEvaded, ref isBlocked, canEvade, isCritical, displayPopup);
+
+                if (displayPopup)
+                {
+                    string roadDamageText = ((int)damage).ToString();
+
+                    if (isCritical)
+                    {
+                        characterVFX.DisplayPopupText("-" + roadDamageText, Color.red, 7f);
+                    }
+                    else
+                    {
+                        characterVFX.DisplayPopupText("-" + roadDamageText);
+                    }
+
+                }
             }
             else
             {
                 damage = 0f;
+                Debug.Log(transform.name + " blocked the " + damageType);
+
+                if (displayPopup)
+                {
+                    characterVFX.DisplayPopupText("Blocked the " + damageType);
+                }
+
             }
         }
-
-        characterVFX.DisplayDamageTaken(isEvaded, isBlocked, damageType, damage);
 
         return damage;
     }
 
 
-    public virtual float Healing(float amount)
+    public float Healing(float amount)
     {
         float UnclaimingHealthPoints = 0f;
         float _maxHealthPoint = maxHealthPoint.GetValue();
@@ -271,13 +297,20 @@ public abstract class CharacterStats : UnitStats
 
         ReportUpdateHealthValue();
 
+        
+        //characterVFX.DisplayPopupText(amount.ToString());
+
         return UnclaimingHealthPoints;
     }
 
 
-    public virtual void ExtraHealing(float amount) 
+    public void ExtraHealing(float amount) 
     {
         healthPointConcentration = Healing(amount);
+
+        string roadHealingText = ((int)amount).ToString();
+
+        characterVFX.DisplayPopupText("+" + roadHealingText, Color.green);
     }
 
 

@@ -14,7 +14,7 @@ public class PlayerStatusBar : MonoBehaviour
     public void AddStatusEffectToContaine(IStatusEffectLogic statusEffect)
     {
         //GameObject statusEffectObject = Instantiate(ImagePrefab, statusBarContain);
-        GameObject statusEffectObject = UIObjectPooler.SharedInstance.SpawnFromPool(ImagePrefab, Vector3.zero, Quaternion.identity, StatusBarContain);
+        GameObject statusEffectObject = ObjectPooler.SharedInstance.SpawnFromPool(ImagePrefab, Vector3.zero, Quaternion.identity, StatusBarContain);
         statusEffectObjects.Add(statusEffect, statusEffectObject);
         Image statusEffectImage = statusEffectObject.GetComponent<Image>();
         statusEffectImage.sprite = statusEffect.StatusEffectSprite;

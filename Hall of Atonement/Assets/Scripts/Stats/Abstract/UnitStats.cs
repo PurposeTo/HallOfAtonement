@@ -52,7 +52,7 @@ public abstract class UnitStats : MonoBehaviour
     }
 
 
-    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, ref bool isEvaded, ref bool isBlocked, bool canEvade = true)
+    public virtual float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, ref bool isEvaded, ref bool isBlocked, bool canEvade = true, bool isCritical = false, bool displayPopup = false)
     {
         //снизить урон от определенного типа урона
         IDamageReducerProduct damageReducer = damageReducerFactory.CreateDamageReducerProduct(damageType);
@@ -72,6 +72,8 @@ public abstract class UnitStats : MonoBehaviour
         {
             CurrentHealthPoint -= damage;
         }
+
+        Debug.Log(transform.name + " takes " + damage + " " + damageType);
 
         if (!isBlocked)
         {

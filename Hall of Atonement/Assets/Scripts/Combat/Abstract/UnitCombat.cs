@@ -9,7 +9,7 @@ public class UnitCombat : MonoBehaviour
 
 
     //Статы врага нужны, что бы можно было нанести урон. Свои статы нужны, что бы можно было получить опыт
-    public void DoDamage(UnitStats targetStats, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers) 
+    public void DoDamage(UnitStats targetStats, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         bool isCritical = false;
 
@@ -19,7 +19,7 @@ public class UnitCombat : MonoBehaviour
         //float damage = attackSpeedMultiplie * attackDamage;
 
         //Если Крит. шанс больше нуля И если рандом говорит о том, что нужно критануть
-        if (criticalChance > 0f && Random.Range(1f, 100f) <= criticalChance)
+        if (criticalChance > 0f && Random.Range(0f, 1f) <= criticalChance)
         {
             attackDamage *= criticalMultiplie; //То увеличить урон
             isCritical = true;
@@ -29,7 +29,7 @@ public class UnitCombat : MonoBehaviour
         bool isEvaded = false;
         bool isBlocked = false;
 
-        attackDamage = targetStats.TakeDamage(ownerStats, damageType, attackDamage, ref isEvaded, ref isBlocked);
+        attackDamage = targetStats.TakeDamage(ownerStats, damageType, attackDamage, ref isEvaded, ref isBlocked, isCritical: isCritical, displayPopup: true);
 
         if (!isEvaded)
         {
@@ -55,6 +55,10 @@ public class UnitCombat : MonoBehaviour
                 attackModifiers[i].ApplyAttackModifier(targetStats, damageType, attackDamage, ownerMastery, isCritical);
             }
         }
+
+
+        // Вот тут нужно "дать возможность"  вызвать у цели "Popap text damage taken у цели, если цель is Character" (НО сначала цель должна увернуться/снизить урон)
+
 
     }
 }

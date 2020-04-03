@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc889fdc4988b4f40bca18fb79f34d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyStats: {fileID: 0}
+  CharacterUIPresenter: {fileID: 0}
   HealthSlider: {fileID: 1448606368408272840}
   decreasingHealthSlider: {fileID: 1448606368189685603}
   HealthPointText: {fileID: 4020490052666476704}
