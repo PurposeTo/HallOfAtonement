@@ -166,6 +166,7 @@
     <Compile Include="Assets\Scripts\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\UI\LvlBar.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerStatusBar.cs" />
+    <Compile Include="Assets\Scripts\UI\PopUpTextLife.cs" />
     <Compile Include="Assets\Scripts\UI\Presenters\CharacterUIPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenters\PlayerUIPresenter.cs" />
     <Compile Include="Assets\Scripts\UnitPresenters\CharacterPresenter.cs" />

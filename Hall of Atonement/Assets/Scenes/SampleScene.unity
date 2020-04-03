@@ -9159,7 +9159,7 @@ MonoBehaviour:
   - prefab: {fileID: 7973565382321959831, guid: c23c977badebdb24880bbcbe8c6375bd,
       type: 3}
     size: 20
-    shouldExpand: 0
+    shouldExpand: 1
     PoolParent: {fileID: 0}
 --- !u!1001 &1241756842
 PrefabInstance:
