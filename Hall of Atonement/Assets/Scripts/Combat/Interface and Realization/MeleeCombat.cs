@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class MeleeCombat : MonoBehaviour, IMelee
 {
-    public Transform attackPoint;
+    public Transform weapon;
 
     public float MeleeAttackRadius { get; set; } = .8f;
-    Transform IAttacker.AttackPoint => attackPoint;
+    Transform IAttacker.AttackPoint => weapon;
 
     private void OnDrawGizmosSelected()
     {
-        if (attackPoint == null) return;
+        if (weapon == null) return;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, MeleeAttackRadius);
+        Gizmos.DrawWireSphere(weapon.position, MeleeAttackRadius);
     }
 
 
@@ -21,7 +21,7 @@ public class MeleeCombat : MonoBehaviour, IMelee
     {
         print(gameObject.name + " использует ближнюю атаку!");
 
-        Collider2D[] hitUnits = Physics2D.OverlapCircleAll(attackPoint.position, MeleeAttackRadius);
+        Collider2D[] hitUnits = Physics2D.OverlapCircleAll(weapon.position, MeleeAttackRadius);
 
         for (int i = 0; i < hitUnits.Length; i++)
         {

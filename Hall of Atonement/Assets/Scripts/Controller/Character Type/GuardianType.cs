@@ -1,16 +1,7 @@
 ﻿using UnityEngine;
 
-public class GuardianType : CharacterType
+public class GuardianType : EnemyType
 {
-    private EnemyPresenter EnemyPresenter;
-
-
-    private void Start()
-    {
-        EnemyPresenter = gameObject.GetComponent<EnemyPresenter>();
-    }
-
-
     public override GameObject SearchingTarget()
     {
         GameObject target;

@@ -35,7 +35,7 @@ public abstract class CharacterCombat : UnitCombat
     }
 
 
-    private protected virtual void PreAttack(GameObject target)
+    private protected void PreAttack(GameObject target)
     {
         targetToAttack = target;
 

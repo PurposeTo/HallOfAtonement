@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{4D9B446D-998C-D7A5-5088-1DC043AB813D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -94,22 +95,23 @@
     <Compile Include="Assets\Scripts\Combat\RangedPlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\ShootPlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Controller\Base\CharacterController.cs" />
-    <Compile Include="Assets\Scripts\Controller\Enemy Type\CharacterType.cs" />
-    <Compile Include="Assets\Scripts\Controller\Enemy Type\GuardianType.cs" />
-    <Compile Include="Assets\Scripts\Controller\Enemy Type\MonsterType.cs" />
-    <Compile Include="Assets\Scripts\Controller\Enemy Type\PlayerType.cs" />
+    <Compile Include="Assets\Scripts\Controller\Character Type\CharacterType.cs" />
+    <Compile Include="Assets\Scripts\Controller\Character Type\EnemyType.cs" />
+    <Compile Include="Assets\Scripts\Controller\Character Type\GuardianType.cs" />
+    <Compile Include="Assets\Scripts\Controller\Character Type\MonsterType.cs" />
+    <Compile Include="Assets\Scripts\Controller\Character Type\PlayerType.cs" />
     <Compile Include="Assets\Scripts\Controller\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\Controller\EnemyAttack Type\IEnemyAttackType.cs" />
     <Compile Include="Assets\Scripts\Controller\EnemyAttack Type\MeleeEnemyLogic.cs" />
     <Compile Include="Assets\Scripts\Controller\EnemyAttack Type\RangedEnemyLogic.cs" />
     <Compile Include="Assets\Scripts\Controller\Heroes\VampireHero.cs" />
     <Compile Include="Assets\Scripts\Controller\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\Controller\State Machine\EnemyAIStateMachine.cs" />
-    <Compile Include="Assets\Scripts\Controller\State Machine\EnemyStates\EnemyStateFighting.cs" />
-    <Compile Include="Assets\Scripts\Controller\State Machine\EnemyStates\EnemyStatePatrolling.cs" />
-    <Compile Include="Assets\Scripts\Controller\State Machine\PlayerControllerStateMachine.cs" />
-    <Compile Include="Assets\Scripts\Controller\State Machine\PlayerStates\PlayerStateFighting.cs" />
-    <Compile Include="Assets\Scripts\Controller\State Machine\PlayerStates\PlayerStatePatrolling.cs" />
+    <Compile Include="Assets\Scripts\Controller\Controller State Machine\EnemyAIStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Controller\Controller State Machine\EnemyStates\EnemyStateFighting.cs" />
+    <Compile Include="Assets\Scripts\Controller\Controller State Machine\EnemyStates\EnemyStatePatrolling.cs" />
+    <Compile Include="Assets\Scripts\Controller\Controller State Machine\PlayerControllerStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Controller\Controller State Machine\PlayerStates\PlayerStateFighting.cs" />
+    <Compile Include="Assets\Scripts\Controller\Controller State Machine\PlayerStates\PlayerStatePatrolling.cs" />
     <Compile Include="Assets\Scripts\Factory and Products\DamageReducerProduct\EffectDamageReducer.cs" />
     <Compile Include="Assets\Scripts\Factory and Products\DamageReducerProduct\IDamageReducerProduct.cs" />
     <Compile Include="Assets\Scripts\Factory and Products\DamageReducerProduct\PhysicalReducer.cs" />

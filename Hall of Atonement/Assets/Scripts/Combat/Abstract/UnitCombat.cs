@@ -55,10 +55,5 @@ public class UnitCombat : MonoBehaviour
                 attackModifiers[i].ApplyAttackModifier(targetStats, damageType, attackDamage, ownerMastery, isCritical);
             }
         }
-
-
-        // Вот тут нужно "дать возможность"  вызвать у цели "Popap text damage taken у цели, если цель is Character" (НО сначала цель должна увернуться/снизить урон)
-
-
     }
 }

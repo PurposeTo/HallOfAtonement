@@ -1,16 +1,7 @@
 ﻿using UnityEngine;
 
-public class MonsterType : CharacterType
+public class MonsterType : EnemyType
 {
-    private EnemyPresenter EnemyPresenter;
-
-
-    private void Start()
-    {
-        EnemyPresenter = gameObject.GetComponent<EnemyPresenter>();
-    }
-
-
     public override GameObject SearchingTarget()
     {
         GameObject target = null;
