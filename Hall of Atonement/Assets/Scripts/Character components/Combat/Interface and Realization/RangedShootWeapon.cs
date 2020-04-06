@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RangedShootWeapon : MonoBehaviour, IRanged
 {
-    Transform IAttacker.AttackPoint => weapon;
+    Transform IWeapon.AttackPoint => weapon;
 
     public Transform weapon;
 

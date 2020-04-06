@@ -6,7 +6,7 @@ public class MeleeWeapon : MonoBehaviour, IMelee
     public Transform weapon;
 
     public float MeleeAttackRadius { get; set; } = .8f;
-    Transform IAttacker.AttackPoint => weapon;
+    Transform IWeapon.AttackPoint => weapon;
 
     private void OnDrawGizmosSelected()
     {
@@ -17,7 +17,7 @@ public class MeleeWeapon : MonoBehaviour, IMelee
     }
 
 
-    void IAttacker.Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
+    void IWeapon.Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         print(gameObject.name + " использует ближнюю атаку!");
 

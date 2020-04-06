@@ -86,14 +86,13 @@
     <Compile Include="Assets\Scripts\Character components\Combat\Abstract\PlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Abstract\UnitCombat.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Bullet.cs" />
-    <Compile Include="Assets\Scripts\Character components\Combat\Interface and Realization\IAttacker.cs" />
+    <Compile Include="Assets\Scripts\Character components\Combat\Interface and Realization\IWeapon.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Interface and Realization\MeleeWeapon.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Interface and Realization\RangedLaserWeapon.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Interface and Realization\RangedShootWeapon.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\MeleePlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\RangedPlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\ShootPlayerCombat.cs" />
-    <Compile Include="Assets\Scripts\Character components\Heroes\VampireHero.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\Base\CharacterMovement.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\Character Type\CharacterType.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\Character Type\EnemyType.cs" />

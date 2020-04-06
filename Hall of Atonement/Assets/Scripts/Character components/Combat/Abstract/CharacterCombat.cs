@@ -10,14 +10,14 @@ public abstract class CharacterCombat : UnitCombat
 
     private float attackCooldown;
 
-    public IAttacker Attacker { get; private protected set; }
+    public IWeapon Attacker { get; private protected set; }
 
 
     private protected virtual void Start()
     {
         CharacterPresenter = GetComponent<CharacterPresenter>();
 
-        Attacker = GetComponent<IAttacker>();
+        Attacker = GetComponent<IWeapon>();
     }
 
 

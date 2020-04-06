@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public interface IAttacker
+public interface IWeapon
 {
     void Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers);
 
@@ -9,13 +9,13 @@ public interface IAttacker
 }
 
 
-public interface IMelee : IAttacker
+public interface IMelee : IWeapon
 {
     float MeleeAttackRadius { get; set; }
 }
 
 
-public interface IRanged : IAttacker
+public interface IRanged : IWeapon
 {
 
 }

@@ -7,10 +7,10 @@ public class RangedLaserWeapon : MonoBehaviour, IRanged
 
     private Ray2D ray;
 
-    Transform IAttacker.AttackPoint => weapon;
+    Transform IWeapon.AttackPoint => weapon;
 
 
-    void IAttacker.Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
+    void IWeapon.Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         print(gameObject.name + " использует дальнюю атаку!");
 
