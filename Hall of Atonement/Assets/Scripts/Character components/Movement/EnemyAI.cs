@@ -7,7 +7,7 @@
 public class EnemyAI : CharacterMovement
 {
     public EnemyPresenter EnemyPresenter { get; private protected set; }
-    public EnemyAIStateMachine EnemyAIStateMachine { get; set; }
+    public EnemyStateMachine EnemyStateMachine { get; set; }
     public EnemyStatePatrolling EnemyStatePatrolling { get; private set; }
     public EnemyStateFighting EnemyStateFighting { get; private set; }
 
@@ -26,8 +26,8 @@ public class EnemyAI : CharacterMovement
         EnemyStatePatrolling = GetComponent<EnemyStatePatrolling>();
         EnemyStateFighting = GetComponent<EnemyStateFighting>();
 
-        EnemyAIStateMachine = EnemyStatePatrolling;
-        EnemyAIStateMachine.SeekingBattle(this);
+        EnemyStateMachine = EnemyStatePatrolling;
+        EnemyStateMachine.SeekingBattle(this);
     }
 
 
@@ -35,7 +35,7 @@ public class EnemyAI : CharacterMovement
     {
         GameObject focusTarget = CharacterPresenter.CharacterType.SearchingTarget();
 
-        if (focusTarget == null) { EnemyAIStateMachine.SeekingBattle(this); }
-        else { EnemyAIStateMachine.Fighting(this, focusTarget); }
+        if (focusTarget == null) { EnemyStateMachine.SeekingBattle(this); }
+        else { EnemyStateMachine.Fighting(this, focusTarget); }
     }
 }

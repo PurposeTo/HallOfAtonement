@@ -4,14 +4,13 @@
 [RequireComponent(typeof(PlayerStateFighting))]
 public class PlayerMovement : CharacterMovement
 {
+    private readonly RuntimePlatform currentRuntimePlatform = Application.platform;
+
     private Joystick joystick;
     private AttackButtonEvent attackButton;
     public PlayerPresenter PlayerPresenter { get; private protected set; }
 
-
-    private readonly RuntimePlatform currentRuntimePlatform = Application.platform;
-
-    public PlayerControllerStateMachine PlayerControllerStateMachine { get; set; }
+    public PlayerStateMachine PlayerStateMachine { get; set; }
     public PlayerStatePatrolling PlayerStatePatrolling { get; private set; }
     public PlayerStateFighting PlayerStateFighting { get; private set; }
 
@@ -29,8 +28,8 @@ public class PlayerMovement : CharacterMovement
         PlayerStatePatrolling = GetComponent<PlayerStatePatrolling>();
         PlayerStateFighting = GetComponent<PlayerStateFighting>();
 
-        PlayerControllerStateMachine = PlayerStatePatrolling;
-        PlayerControllerStateMachine.Patrolling(this);
+        PlayerStateMachine = PlayerStatePatrolling;
+        PlayerStateMachine.Patrolling(this);
     }
 
 
@@ -63,11 +62,11 @@ public class PlayerMovement : CharacterMovement
     {
         if (IsAttacking)
         {
-            PlayerControllerStateMachine.Fighting(this);
+            PlayerStateMachine.Fighting(this);
         }
         else
         {
-            PlayerControllerStateMachine.Patrolling(this);
+            PlayerStateMachine.Patrolling(this);
             CharacterPresenter.Combat.targetToAttack = null;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class PlayerStateFighting : PlayerControllerStateMachine
+public class PlayerStateFighting : PlayerStateMachine
 {
     private PlayerCombat playerCombat;
 
@@ -27,33 +27,29 @@ public class PlayerStateFighting : PlayerControllerStateMachine
 
     public override void Patrolling(PlayerMovement controller)
     {
-        if (fightingRoutine != null)
-        {
-            StopCoroutine(fightingRoutine);
-            fightingRoutine = null;
-        }
-        controller.CharacterPresenter.Combat.targetToAttack = null;
-        controller.PlayerControllerStateMachine = controller.PlayerStatePatrolling;
-        controller.PlayerControllerStateMachine.Patrolling(controller);
+        StopTheAction(controller);
+
+        controller.PlayerStateMachine = controller.PlayerStatePatrolling;
+        controller.PlayerStateMachine.Patrolling(controller);
     }
 
 
-    private IEnumerator FightingEnumerator(PlayerMovement controller)
+    private IEnumerator FightingEnumerator(PlayerMovement movement)
     {
-        //Обязательно подождать кадр, что бы избежать бага "бесконечного цикла"!
+        // Обязательно подождать кадр, что бы избежать бага "бесконечного цикла"!
         yield return null;
 
         while (true)
         {
-            playerCombat.targetToAttack = controller.CharacterPresenter.CharacterType.SearchingTarget();
+            playerCombat.targetToAttack = movement.CharacterPresenter.CharacterType.SearchingTarget();
 
 
-            if (playerCombat.targetToAttack != null) //Если цель найдена
+            if (playerCombat.targetToAttack != null) // Если цель найдена
             {
-                //Атаковать цель, пока та доступна
+                // Атаковать цель, пока та доступна
                 float timerCounter = timer;
 
-                while (timerCounter > 0f && IsTargetAvailable(controller))
+                while (timerCounter > 0f && IsTargetAvailable(movement))
                 {
                     playerCombat.GetPlayerFightingLogic();
 
@@ -64,17 +60,26 @@ public class PlayerStateFighting : PlayerControllerStateMachine
             else
             {
                 playerCombat.GetPlayerFightingLogic();
-                //подождать кадр прежде чем искать цель
+                // Подождать кадр прежде чем искать цель
                 yield return null;
             }
         }
     }
 
 
-
-
-    private bool IsTargetAvailable(PlayerMovement controller)
+    private bool IsTargetAvailable(PlayerMovement movement)
     {
         return playerCombat.targetToAttack != null;
+    }
+
+
+    private protected override void StopTheAction(PlayerMovement playerMovement)
+    {
+        if (fightingRoutine != null)
+        {
+            StopCoroutine(fightingRoutine);
+            fightingRoutine = null;
+        }
+        playerMovement.CharacterPresenter.Combat.targetToAttack = null;
     }
 }

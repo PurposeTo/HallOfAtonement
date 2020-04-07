@@ -8,8 +8,6 @@ public abstract class CharacterMovement : MonoBehaviour
 
     public CharacterPresenter CharacterPresenter { get; private protected set; }
 
-    //private protected CharacterStats myStats;
-    //public CharacterCombat Combat { get; private protected set; }
     public Vector2 InputVector { get => inputVector; set => inputVector = value; }
     private Vector2 inputVector = Vector2.zero;
 

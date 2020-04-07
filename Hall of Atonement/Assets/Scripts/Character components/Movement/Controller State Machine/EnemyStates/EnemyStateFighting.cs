@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class EnemyStateFighting : EnemyAIStateMachine
+public class EnemyStateFighting : EnemyStateMachine
 {
     private GameObject focusTarget; //Цель, на которой враг в данный момент сфокусирован
 
@@ -54,8 +54,8 @@ public class EnemyStateFighting : EnemyAIStateMachine
         if (focusTarget == null)
         {
             StopTheAction(enemyAI);
-            enemyAI.EnemyAIStateMachine = enemyAI.EnemyStatePatrolling;
-            enemyAI.EnemyAIStateMachine.SeekingBattle(enemyAI);
+            enemyAI.EnemyStateMachine = enemyAI.EnemyStatePatrolling;
+            enemyAI.EnemyStateMachine.SeekingBattle(enemyAI);
         }
         else
         {

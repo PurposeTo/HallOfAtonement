@@ -1,24 +1,29 @@
 ﻿using UnityEngine;
 
-public class PlayerStatePatrolling : PlayerControllerStateMachine
+public class PlayerStatePatrolling : PlayerStateMachine
 {
     private Coroutine patrollingRoutine;
 
 
-    public override void Fighting(PlayerMovement controller)
+    public override void Fighting(PlayerMovement movement)
+    {
+        StopTheAction(movement);
+
+        movement.PlayerStateMachine = movement.PlayerStateFighting;
+        movement.PlayerStateMachine.Fighting(movement);
+    }
+
+    public override void Patrolling(PlayerMovement movement)
+    {
+        // Тут ничего не должно происходить
+    }
+
+    private protected override void StopTheAction(PlayerMovement playerMovement)
     {
         if (patrollingRoutine != null)
         {
             StopCoroutine(patrollingRoutine);
             patrollingRoutine = null;
         }
-
-        controller.PlayerControllerStateMachine = controller.PlayerStateFighting;
-        controller.PlayerControllerStateMachine.Fighting(controller);
-    }
-
-    public override void Patrolling(PlayerMovement controller)
-    {
-        //Тут ничего не должно происходить
     }
 }
