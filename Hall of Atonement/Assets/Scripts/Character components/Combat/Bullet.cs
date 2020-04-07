@@ -5,16 +5,15 @@ using UnityEngine;
 public class Bullet : MonoBehaviour, IPooledObject
 {
     public Rigidbody2D bulletRb2d { get; private set; }
-    private UnitCombat bulletCombat;
-
+    private DamageUnit damageUnit = new DamageUnit();
 
     private GameObject ownerGameObject;
     private CharacterStats ownerStats;
     private DamageType damageType;
-    private float criticalChance;
-    private float criticalMultiplie;
     private float attackDamage;
+    private bool isCritical;
     private int ownerMastery;
+    List<IAttackModifier> attackModifiers;
 
     private Coroutine waitingRoutine;
     private readonly float lifeTime = 20f;
@@ -22,7 +21,6 @@ public class Bullet : MonoBehaviour, IPooledObject
     private void Awake()
     {
         bulletRb2d = GetComponent<Rigidbody2D>();
-        bulletCombat = GetComponent<UnitCombat>();
     }
 
 
@@ -38,9 +36,6 @@ public class Bullet : MonoBehaviour, IPooledObject
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        //RangedGunCombat.BulletDoDamage(gameObject, collision.gameObject, combat);
-
         GameObject targetGameObject = collision.gameObject;
 
         if (targetGameObject != ownerGameObject && !collision.isTrigger)
@@ -52,7 +47,7 @@ public class Bullet : MonoBehaviour, IPooledObject
             //Это что то имеет Статы?
             if (targetGameObject.TryGetComponent(out UnitStats targetStats))
             {
-                bulletCombat.DoDamage(targetStats, ownerStats, damageType, criticalChance, criticalMultiplie, attackDamage, ownerMastery, bulletCombat.attackModifiers);
+                damageUnit.DoDamage(targetStats, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers); ;
             }
 
             // Разбить, только если цель НЕ увернулась
@@ -74,17 +69,16 @@ public class Bullet : MonoBehaviour, IPooledObject
     }
 
 
-    public void BulletInitialization(GameObject ownerGameObject, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
+    public void BulletInitialization(GameObject ownerGameObject, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         this.ownerGameObject = ownerGameObject;
         this.ownerStats = ownerStats;
         this.damageType = (DamageType)damageType.Clone();
-        this.criticalChance = criticalChance;
-        this.criticalMultiplie = criticalMultiplie;
         this.attackDamage = attackDamage;
+        this.isCritical = isCritical;
         this.ownerMastery = ownerMastery;
 
-        bulletCombat.attackModifiers = (List<IAttackModifier>)GameLogic.Clone(attackModifiers);
+        this.attackModifiers = (List<IAttackModifier>)GameLogic.Clone(attackModifiers);
     }
 
 

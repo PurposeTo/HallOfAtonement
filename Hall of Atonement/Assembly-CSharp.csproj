@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{4D9B446D-998C-D7A5-5088-1DC043AB813D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -85,8 +84,8 @@
     <Compile Include="Assets\Scripts\Character components\Combat\Abstract\CharacterCombat.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Abstract\EnemyCombat.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Abstract\PlayerCombat.cs" />
-    <Compile Include="Assets\Scripts\Character components\Combat\Abstract\UnitCombat.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Character components\Combat\DamageUnit.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Interface and Realization\IWeapon.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Interface and Realization\MeleeWeapon.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Interface and Realization\RangedLaserWeapon.cs" />
@@ -94,18 +93,18 @@
     <Compile Include="Assets\Scripts\Character components\Combat\MeleePlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\RangedPlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\ShootPlayerCombat.cs" />
+    <Compile Include="Assets\Scripts\Character components\Controller State Machine\EnemyStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Character components\Controller State Machine\EnemyStates\EnemyStateFighting.cs" />
+    <Compile Include="Assets\Scripts\Character components\Controller State Machine\EnemyStates\EnemyStatePatrolling.cs" />
+    <Compile Include="Assets\Scripts\Character components\Controller State Machine\PlayerStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Character components\Controller State Machine\PlayerStates\PlayerStateFighting.cs" />
+    <Compile Include="Assets\Scripts\Character components\Controller State Machine\PlayerStates\PlayerStatePatrolling.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\Base\CharacterMovement.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\Character Type\CharacterType.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\Character Type\EnemyType.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\Character Type\GuardianType.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\Character Type\MonsterType.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\Character Type\PlayerType.cs" />
-    <Compile Include="Assets\Scripts\Character components\Movement\Controller State Machine\EnemyStateMachine.cs" />
-    <Compile Include="Assets\Scripts\Character components\Movement\Controller State Machine\EnemyStates\EnemyStateFighting.cs" />
-    <Compile Include="Assets\Scripts\Character components\Movement\Controller State Machine\EnemyStates\EnemyStatePatrolling.cs" />
-    <Compile Include="Assets\Scripts\Character components\Movement\Controller State Machine\PlayerStateMachine.cs" />
-    <Compile Include="Assets\Scripts\Character components\Movement\Controller State Machine\PlayerStates\PlayerStateFighting.cs" />
-    <Compile Include="Assets\Scripts\Character components\Movement\Controller State Machine\PlayerStates\PlayerStatePatrolling.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\EnemyAttack Type\IEnemyAttackType.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\EnemyAttack Type\MeleeEnemyLogic.cs" />
@@ -196,7 +195,6 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="ClassDiagram2.cd" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/firec/Documents/GitHub/HallOfAtonement/Hall of Atonement/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

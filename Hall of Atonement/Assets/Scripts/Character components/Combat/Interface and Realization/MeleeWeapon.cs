@@ -17,7 +17,7 @@ public class MeleeWeapon : MonoBehaviour, IMelee
     }
 
 
-    void IWeapon.Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
+    void IWeapon.Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         print(gameObject.name + " использует ближнюю атаку!");
 
@@ -27,7 +27,7 @@ public class MeleeWeapon : MonoBehaviour, IMelee
         {
             if (hitUnits[i].gameObject != gameObject && hitUnits[i].TryGetComponent(out UnitStats targetStats))
             {
-                combat.DoDamage(targetStats, ownerStats, damageType, criticalChance, criticalMultiplie, attackDamage, ownerMastery, attackModifiers);
+                combat.DamageUnit.DoDamage(targetStats, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
             }
         }
     }

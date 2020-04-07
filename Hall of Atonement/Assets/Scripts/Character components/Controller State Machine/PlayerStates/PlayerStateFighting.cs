@@ -49,7 +49,7 @@ public class PlayerStateFighting : PlayerStateMachine
                 // Атаковать цель, пока та доступна
                 float timerCounter = timer;
 
-                while (timerCounter > 0f && IsTargetAvailable(movement))
+                while (timerCounter > 0f && IsTargetAvailable())
                 {
                     playerCombat.GetPlayerFightingLogic();
 
@@ -67,7 +67,7 @@ public class PlayerStateFighting : PlayerStateMachine
     }
 
 
-    private bool IsTargetAvailable(PlayerMovement movement)
+    private bool IsTargetAvailable()
     {
         return playerCombat.targetToAttack != null;
     }

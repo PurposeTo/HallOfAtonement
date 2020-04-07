@@ -75,6 +75,11 @@ public class EnemyStateFighting : EnemyStateMachine
         {
             enemyAttackType.GetEnemyFightingLogic(enemyAI, focusTarget);
 
+            if (enemyAI.CharacterPresenter.Combat.targetToAttack != null && Vector2.Distance(enemyAI.CharacterPresenter.Combat.targetToAttack.transform.position, transform.position) <= enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius)
+            {
+                enemyAI.CharacterPresenter.Combat.targetToAttack = null;
+            }
+
             yield return null;
             timerCounter -= Time.deltaTime;
         }

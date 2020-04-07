@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterMovement))]
-public abstract class CharacterCombat : UnitCombat
+public abstract class CharacterCombat : MonoBehaviour
 {
     public CharacterPresenter CharacterPresenter { get; private protected set; }
 
-    [HideInInspector] public GameObject targetToAttack = null;
+    //[HideInInspector] 
+    public GameObject targetToAttack = null;
 
+    public DamageUnit DamageUnit { get; private set; } = new DamageUnit();
     private float attackCooldown;
 
     public IWeapon Attacker { get; private protected set; }
 
+    public List<IAttackModifier> attackModifiers = new List<IAttackModifier>();
 
     private protected virtual void Start()
     {
@@ -54,8 +57,15 @@ public abstract class CharacterCombat : UnitCombat
                 int ownerMastery = CharacterPresenter.MyStats.mastery.GetValue();
                 List<IAttackModifier> attackModifiers = this.attackModifiers;
 
+                bool isCritical = false;
+                //Если Крит. шанс больше нуля И если рандом говорит о том, что нужно критануть
+                if (criticalChance > 0f && Random.Range(0f, 1f) <= criticalChance)
+                {
+                    attackDamage *= criticalMultiplie; //То увеличить урон
+                    isCritical = true;
+                }
 
-                Attacker.Attack(this, ownerStats, damageType, criticalChance, criticalMultiplie, attackDamage, ownerMastery, attackModifiers);
+                Attacker.Attack(this, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
 
                 attackCooldown = 1f / CharacterPresenter.MyStats.attackSpeed.GetValue(); //После атаки включить кулдаун
             }

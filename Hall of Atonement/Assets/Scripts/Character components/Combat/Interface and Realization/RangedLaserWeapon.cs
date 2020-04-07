@@ -10,7 +10,7 @@ public class RangedLaserWeapon : MonoBehaviour, IRanged
     Transform IWeapon.AttackPoint => weapon;
 
 
-    void IWeapon.Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
+    void IWeapon.Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         print(gameObject.name + " использует дальнюю атаку!");
 
@@ -33,7 +33,7 @@ public class RangedLaserWeapon : MonoBehaviour, IRanged
             //Это что то имеет Статы?
             if (hit.collider.gameObject.TryGetComponent(out UnitStats targetStats))
             {
-                combat.DoDamage(targetStats, ownerStats, damageType, criticalChance, criticalMultiplie, attackDamage, ownerMastery, attackModifiers);
+                combat.DamageUnit.DoDamage(targetStats, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
             }
         }
         //}

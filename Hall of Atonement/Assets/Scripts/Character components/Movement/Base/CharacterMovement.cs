@@ -17,9 +17,6 @@ public abstract class CharacterMovement : MonoBehaviour
         CharacterPresenter = GetComponent<CharacterPresenter>();
 
         rb2d = GetComponent<Rigidbody2D>();
-
-        //myStats = GetComponent<CharacterStats>();
-        //Combat = GetComponent<CharacterCombat>();
     }
 
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c78f794ea1d02504b99ebb57c648ae99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPoint: {fileID: 5674271862679324122}
+  weapon: {fileID: 5674271862679324122}
 --- !u!114 &6027119630415917019
 MonoBehaviour:
   m_ObjectHideFlags: 0

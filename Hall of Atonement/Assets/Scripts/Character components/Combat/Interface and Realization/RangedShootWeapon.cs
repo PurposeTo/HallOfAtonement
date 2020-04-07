@@ -11,7 +11,7 @@ public class RangedShootWeapon : MonoBehaviour, IRanged
 
     private float bullerForce = 20f;
 
-    public void Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float criticalChance, float criticalMultiplie, float attackDamage, int ownerMastery, List<IAttackModifier> attackModifiers)
+    public void Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         print(gameObject.name + " использует пушку!");
 
@@ -29,7 +29,7 @@ public class RangedShootWeapon : MonoBehaviour, IRanged
             Bullet bulletScript = bullet.GetComponent<Bullet>();
             bulletScript.bulletRb2d.AddForce(weapon.up * bullerForce, ForceMode2D.Impulse); // Weapon.up указывает на направление полета пули!
 
-            bulletScript.BulletInitialization(gameObject, ownerStats, damageType, criticalChance, criticalMultiplie, attackDamage, ownerMastery, attackModifiers);
+            bulletScript.BulletInitialization(gameObject, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
         }
     }
 }
