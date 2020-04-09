@@ -15,30 +15,30 @@ public class RangedEnemyLogic : EnemyCombat
     }
 
 
-    private protected override Vector2 GetMovingVectorOnFighting(EnemyAI enemyAI, GameObject focusTarget)
+    public override Vector2 GetMovingVectorOnFighting(GameObject focusTarget)
     {
         Vector2 newInputVector = Vector2.zero;
 
         Vector2 direction = (focusTarget.transform.position - transform.position); //Расстояние до цели
 
         // Если расстояние до цели меньше четверти, то нужно отойти
-        if (direction.magnitude < (enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius / 2f))
+        if (direction.magnitude < (AttackRange / 2f))
         {
             getСloser = false;
 
             // Уходить от цели только если это НЕ игрок
-            if (!focusTarget.TryGetComponent(out PlayerMovement _)) { newInputVector = -direction.normalized; }
+            if (!focusTarget.TryGetComponent(out PlayerController _)) { newInputVector = -direction.normalized; }
             
         }
         // Если расстояние до цели больше чем три четверти, то нужно подойти
-        else if (direction.magnitude >= (enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius / 2f))
+        else if (direction.magnitude >= (AttackRange / 2f))
         {
             if (getСloser)
             {
                 newInputVector = direction.normalized;
             }
 
-            if (direction.magnitude > ((enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius / 4f) * 3f))
+            if (direction.magnitude > ((AttackRange / 4f) * 3f))
             {
                 // Если расстояние до цели больше 3/4, то начать подходить
                 getСloser = true;

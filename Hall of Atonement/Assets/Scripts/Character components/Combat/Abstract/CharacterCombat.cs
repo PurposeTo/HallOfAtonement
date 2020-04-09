@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(CharacterMovement))]
 public abstract class CharacterCombat : MonoBehaviour
 {
     public CharacterPresenter CharacterPresenter { get; private protected set; }
@@ -43,7 +42,7 @@ public abstract class CharacterCombat : MonoBehaviour
         targetToAttack = target;
 
         //Посмотреть на цель, если она есть
-        if (CharacterPresenter.Controller.TurnFaceToTarget(
+        if (CharacterPresenter.CharacterMovement.TurnFaceToTarget(
             targetToAttack, CharacterPresenter.MyStats.rotationSpeed.GetValue(),
             CharacterPresenter.MyStats.faceEuler))
         {

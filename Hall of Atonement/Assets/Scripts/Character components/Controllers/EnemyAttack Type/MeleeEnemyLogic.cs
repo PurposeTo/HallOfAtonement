@@ -16,10 +16,9 @@ public class MeleeEnemyLogic : EnemyCombat
     }
 
 
-    private protected override Vector2 GetMovingVectorOnFighting(EnemyAI enemyAI, GameObject focusTarget)
+    public override Vector2 GetMovingVectorOnFighting(GameObject focusTarget)
     {
         Vector2 newInputVector;
-
 
         Vector2 direction = focusTarget.transform.position - transform.position; //Расстояние до цели
 

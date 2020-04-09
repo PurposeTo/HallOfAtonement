@@ -5,6 +5,8 @@ public class EnemyStatePatrolling : EnemyStateMachine
 {
     private Coroutine patrollingRoutine;
 
+    private Vector2 inputVector;
+
     private protected override void StopTheAction(EnemyAI enemyAI)
     {
         if (patrollingRoutine != null)
@@ -12,6 +14,8 @@ public class EnemyStatePatrolling : EnemyStateMachine
             StopCoroutine(patrollingRoutine);
             patrollingRoutine = null;
         }
+
+        inputVector = Vector2.zero;
     }
 
 
@@ -42,7 +46,7 @@ public class EnemyStatePatrolling : EnemyStateMachine
         while (true)
         {
             //Патрулировать
-            enemyAI.InputVector = Vector2.zero;
+            inputVector = Vector2.zero;
             yield return null;
 
             //Когда закончим, вызвать метод, говорящее о том, что мы закончили
@@ -52,5 +56,11 @@ public class EnemyStatePatrolling : EnemyStateMachine
 
         //Выход из цикла есть только при переключении State
         //patrollingRoutine = null; 
+    }
+
+
+    public override Vector2 GetInputVector()
+    {
+        return inputVector;
     }
 }

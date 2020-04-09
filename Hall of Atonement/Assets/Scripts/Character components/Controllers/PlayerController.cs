@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(PlayerStatePatrolling))]
-[RequireComponent(typeof(PlayerStateFighting))]
-public class PlayerMovement : CharacterMovement
+public class PlayerController : MonoBehaviour
 {
     private readonly RuntimePlatform currentRuntimePlatform = Application.platform;
 
     private Joystick joystick;
     private AttackButtonEvent attackButton;
+    public CharacterPresenter CharacterPresenter { get; private protected set; }
     public PlayerPresenter PlayerPresenter { get; private protected set; }
 
     public PlayerStateMachine PlayerStateMachine { get; set; }
@@ -15,10 +14,9 @@ public class PlayerMovement : CharacterMovement
     public PlayerStateFighting PlayerStateFighting { get; private set; }
 
 
-    private protected override void Start()
+    private void Start()
     {
-        base.Start();
-
+        CharacterPresenter = gameObject.GetComponent<CharacterPresenter>();
         PlayerPresenter = (PlayerPresenter)CharacterPresenter;
         joystick = PlayerPresenter.PlayerUIPresenter.PlayerJoystick;
         attackButton = PlayerPresenter.PlayerUIPresenter.PlayerAttackButton;
@@ -41,12 +39,9 @@ public class PlayerMovement : CharacterMovement
 
     private protected virtual void Update()
     {
-        InputVector = GetInputVector();
-
-
         if (currentRuntimePlatform == RuntimePlatform.WindowsEditor)
         {
-            if (Input.GetKeyDown(KeyCode.Space)) 
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 IsAttacking(true);
             }
@@ -55,6 +50,12 @@ public class PlayerMovement : CharacterMovement
                 IsAttacking(false);
             }
         }
+    }
+
+
+    private protected virtual void FixedUpdate()
+    {
+        CharacterPresenter.CharacterMovement.MoveCharacter(GetInputVector());
     }
 
 
@@ -96,9 +97,9 @@ public class PlayerMovement : CharacterMovement
                 break;
 
             case RuntimePlatform.WindowsEditor:
-                    horizontalInput = Input.GetAxis("Horizontal");
-                    verticalInput = Input.GetAxis("Vertical");
-                    break;
+                horizontalInput = Input.GetAxis("Horizontal");
+                verticalInput = Input.GetAxis("Vertical");
+                break;
             default:
                 horizontalInput = 0;
                 verticalInput = 0;

@@ -1,14 +1,7 @@
-﻿using UnityEngine;
-
-[RequireComponent(typeof(PlayerStats))]
-//[RequireComponent(typeof(PlayerCombat))]
-[RequireComponent(typeof(PlayerMovement))]
-public class PlayerPresenter : CharacterPresenter
+﻿public class PlayerPresenter : CharacterPresenter
 {
     public PlayerStats MyPlayerStats { get; private protected set; }
     public PlayerCombat PlayerCombat { get; private protected set; }
-
-    public PlayerMovement PlayerController { get; private protected set; }
 
     public PlayerUIPresenter PlayerUIPresenter;
 
@@ -18,7 +11,6 @@ public class PlayerPresenter : CharacterPresenter
         base.Awake();
         MyPlayerStats = (PlayerStats)MyStats;
         PlayerCombat = (PlayerCombat)Combat;
-        PlayerController = (PlayerMovement)Controller;
     }
 
 

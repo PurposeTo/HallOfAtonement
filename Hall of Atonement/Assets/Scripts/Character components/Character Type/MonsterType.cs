@@ -15,7 +15,7 @@ public class MonsterType : EnemyType
         {
             //if (colliders[i].gameObject != gameObject && !colliders[i].isTrigger) { }
             if (colliders[i].gameObject != gameObject &&
-                (colliders[i].gameObject.TryGetComponent(out MonsterType _) || colliders[i].gameObject.TryGetComponent(out PlayerMovement _)))
+                (colliders[i].gameObject.TryGetComponent(out MonsterType _) || colliders[i].gameObject.TryGetComponent(out PlayerController _)))
             //Если это игрок или монстр
             {
 

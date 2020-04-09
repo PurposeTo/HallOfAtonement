@@ -9,13 +9,7 @@ public class EnemyStateFighting : EnemyStateMachine
 
     private Coroutine fightingRoutine;
 
-    private IEnemyAttackType enemyAttackType;
-
-
-    private void Start()
-    {
-        enemyAttackType = gameObject.GetComponent<IEnemyAttackType>();
-    }
+    private Vector2 inputVector;
 
 
     private protected override void StopTheAction(EnemyAI enemyAI)
@@ -26,6 +20,8 @@ public class EnemyStateFighting : EnemyStateMachine
             fightingRoutine = null;
         }
         enemyAI.EnemyPresenter.Combat.targetToAttack = null;
+
+        inputVector = Vector2.zero;
     }
 
 
@@ -73,7 +69,9 @@ public class EnemyStateFighting : EnemyStateMachine
 
         while (timerCounter > 0f && focusTarget != null)
         {
-            enemyAttackType.GetEnemyFightingLogic(enemyAI, focusTarget);
+            enemyAI.EnemyPresenter.EnemyCombat.GetEnemyFightingLogic(focusTarget);
+
+            inputVector = enemyAI.EnemyPresenter.EnemyCombat.GetMovingVectorOnFighting(focusTarget);
 
             if (enemyAI.CharacterPresenter.Combat.targetToAttack != null && Vector2.Distance(enemyAI.CharacterPresenter.Combat.targetToAttack.transform.position, transform.position) <= enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius)
             {
@@ -87,5 +85,10 @@ public class EnemyStateFighting : EnemyStateMachine
         fightingRoutine = null;
         //Когда закончим, вызвать метод, говорящее о том, что мы закончили
         enemyAI.DecideWhatToDo();
+    }
+
+    public override Vector2 GetInputVector()
+    {
+        return inputVector;
     }
 }

@@ -1,23 +1,33 @@
 ﻿using UnityEngine;
 
-
-[RequireComponent(typeof(EnemyStats))]
-[RequireComponent(typeof(EnemyStatePatrolling))]
-[RequireComponent(typeof(EnemyStateFighting))]
-public class EnemyAI : CharacterMovement
+public class EnemyAI : MonoBehaviour
 {
+    public CharacterPresenter CharacterPresenter { get; private protected set; }
     public EnemyPresenter EnemyPresenter { get; private protected set; }
     public EnemyStateMachine EnemyStateMachine { get; set; }
     public EnemyStatePatrolling EnemyStatePatrolling { get; private set; }
     public EnemyStateFighting EnemyStateFighting { get; private set; }
 
 
-    private protected override void Start()
+    private void Start()
     {
-        base.Start();
+        CharacterPresenter = gameObject.GetComponent<CharacterPresenter>();
+
         EnemyPresenter = (EnemyPresenter)CharacterPresenter;
 
         Initialization();
+    }
+
+
+    private protected virtual void FixedUpdate()
+    {
+        CharacterPresenter.CharacterMovement.MoveCharacter(GetInputVector());
+    }
+
+
+    private Vector2 GetInputVector()
+    {
+        return EnemyStateMachine.GetInputVector();
     }
 
 
@@ -39,3 +49,4 @@ public class EnemyAI : CharacterMovement
         else { EnemyStateMachine.Fighting(this, focusTarget); }
     }
 }
+

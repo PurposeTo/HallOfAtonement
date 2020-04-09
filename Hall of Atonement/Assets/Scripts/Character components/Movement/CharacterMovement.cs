@@ -1,36 +1,21 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(CharacterStats))]
-[RequireComponent(typeof(Rigidbody2D))]
-public abstract class CharacterMovement : MonoBehaviour
+public class CharacterMovement : MonoBehaviour
 {
-    private protected Rigidbody2D rb2d;
-
     public CharacterPresenter CharacterPresenter { get; private protected set; }
-
-    public Vector2 InputVector { get => inputVector; set => inputVector = value; }
-    private Vector2 inputVector = Vector2.zero;
-
 
     private protected virtual void Start()
     {
         CharacterPresenter = GetComponent<CharacterPresenter>();
-
-        rb2d = GetComponent<Rigidbody2D>();
     }
 
 
-    private protected virtual void FixedUpdate()
+    public void MoveCharacter(Vector2 inputVector)
     {
-        rb2d.velocity = MoveCharacter(inputVector,
-                                      CharacterPresenter.MyStats.movementSpeed.GetValue(),
-                                      CharacterPresenter.MyStats.rotationSpeed.GetValue(),
-                                      CharacterPresenter.MyStats.faceEuler);
-    }
+        float movementSpeed = CharacterPresenter.MyStats.movementSpeed.GetValue();
+        float rotationSpeed = CharacterPresenter.MyStats.rotationSpeed.GetValue();
+        float faceEuler = CharacterPresenter.MyStats.faceEuler;
 
-
-    private protected Vector2 MoveCharacter(Vector2 inputVector, float movementSpeed, float rotationSpeed, float faceEuler)
-    {
         if (CharacterPresenter.Combat.targetToAttack == null) //Если нет цели атаки, то двигаться ТОЛЬКО лицом вперед
         {
             if (TurnFaceToTarget(inputVector, rotationSpeed, faceEuler)) //Повернулся ли персонаж в нужную сторону? См. FaceTarget
@@ -47,7 +32,9 @@ public abstract class CharacterMovement : MonoBehaviour
             inputVector *= movementSpeed;
         }
 
-         return inputVector;
+
+        CharacterPresenter.Rb2d.velocity = inputVector;
+        //return inputVector;
     }
 
 
@@ -62,7 +49,7 @@ public abstract class CharacterMovement : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: difference);
 
             // Применяем поворот вокруг оси Z        
-            rb2d.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+            CharacterPresenter.Rb2d.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
 
             //Достигли нужного поворота?
             //Если будет разброс:
@@ -89,7 +76,7 @@ public abstract class CharacterMovement : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: difference);
 
             // Применяем поворот вокруг оси Z
-            rb2d.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+            CharacterPresenter.Rb2d.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
 
             //Если достигли нужного поворота к лицевой части существа
             //Если не достигли нужного поворота, то нужно остановиться
@@ -98,7 +85,7 @@ public abstract class CharacterMovement : MonoBehaviour
         }
         else //Если InputVector ноль, значит игрок остановился и все Ок
         {
-            rb2d.angularVelocity = 0f;
+            CharacterPresenter.Rb2d.angularVelocity = 0f;
             return true;
         }
     }

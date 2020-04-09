@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(CharacterStats))]
-//[RequireComponent(typeof(CharacterCombat))]
-[RequireComponent(typeof(CharacterMovement))]
 public class CharacterPresenter : UnitPresenter
 {
     public CharacterStats MyStats { get; private protected set; }
     public CharacterCombat Combat { get; private protected set; }
 
-    public CharacterMovement Controller { get; private protected set; }
+    public CharacterMovement CharacterMovement { get; private protected set; }
 
     public CharacterType CharacterType { get; private protected set; }
+
+    public Rigidbody2D Rb2d { get; private protected set; }
+
 
 
 
@@ -22,8 +21,9 @@ public class CharacterPresenter : UnitPresenter
 
         MyStats = (CharacterStats)UnitStats;
         Combat = GetComponent<CharacterCombat>();
-        Controller = GetComponent<CharacterMovement>();
+        CharacterMovement = GetComponent<CharacterMovement>();
         CharacterType = GetComponent<CharacterType>();
+        Rb2d = GetComponent<Rigidbody2D>();
     }
 
 
