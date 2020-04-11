@@ -25,9 +25,9 @@ public class EnemyAI : MonoBehaviour
     }
 
 
-    private Vector2 GetInputVector()
+    private Vector2 GetInputVector() // Этот метод здесь потому, что подобный есть в PlayerController и их можно вынести в абстрактный класс
     {
-        return EnemyStateMachine.GetInputVector();
+        return EnemyStateMachine.GetInputVector(this);
     }
 
 

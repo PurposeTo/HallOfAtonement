@@ -1,21 +1,20 @@
 ﻿using UnityEngine;
 
-//[RequireComponent(typeof(RangedLaserCombat))]
-public class RangedEnemyLogic : EnemyCombat
+[RequireComponent(typeof(IRanged))]
+public class RangedEnemyLogic : MonoBehaviour, IEnemyAttackBehavior
 {
     private bool getСloser = false;
 
+    //private IRanged rangeWeapon;
+    private float AttackRange;
 
-    private protected override void Start()
+    private void Start()
     {
-        base.Start();
-
-        AttackRange = EnemyPresenter.MyEnemyStats.ViewingRadius;
-
+        AttackRange = gameObject.GetComponent<EnemyPresenter>().MyEnemyStats.ViewingRadius;
     }
 
 
-    public override Vector2 GetMovingVectorOnFighting(GameObject focusTarget)
+    Vector2 IEnemyAttackBehavior.GetMovingVectorOnFighting(GameObject focusTarget)
     {
         Vector2 newInputVector = Vector2.zero;
 
@@ -53,7 +52,12 @@ public class RangedEnemyLogic : EnemyCombat
             newInputVector = Vector2.zero;
         }
 
-
         return newInputVector;
+    }
+
+
+    float IEnemyAttackBehavior.GetAttackRange()
+    {
+        return AttackRange;
     }
 }

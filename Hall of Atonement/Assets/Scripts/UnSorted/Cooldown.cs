@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class Cooldown
+public class Cooldown : MonoBehaviour
 {
-    private bool isReady = false;
+    private bool isReady = true;
+    private float currentCooldownTime;
 
+    private Coroutine counter;
 
     public bool IsReady()
     {
@@ -18,10 +21,35 @@ public class Cooldown
             // Начинаем отсчет
 
             isReady = false;
+
+            if (counter == null)
+            {
+                counter = StartCoroutine(EnumeratorCounter(cooldownTime));
+            }
+            else
+            {
+                Debug.LogWarning("Something wrong with cooldown counter");
+            }
         }
         else
         {
             Debug.Log("Not ready!");
         }
+    }
+
+
+    private IEnumerator EnumeratorCounter(float cooldownTime)
+    {
+        currentCooldownTime = cooldownTime; // Стоит учитывать максимальное время?
+
+        while (currentCooldownTime > 0)
+        {
+            yield return null;
+            currentCooldownTime -= Time.deltaTime;
+        }
+
+        currentCooldownTime = 0f;
+        isReady = true;
+        counter = null;
     }
 }

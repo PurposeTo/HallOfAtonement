@@ -10,7 +10,7 @@ public class RangedLaserWeapon : MonoBehaviour, IRanged
     Transform IWeapon.AttackPoint => weapon;
 
 
-    void IWeapon.Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
+    void IWeapon.UseWeapon(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         print(gameObject.name + " использует дальнюю атаку!");
 
@@ -36,6 +36,9 @@ public class RangedLaserWeapon : MonoBehaviour, IRanged
                 combat.DamageUnit.DoDamage(targetStats, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
             }
         }
+
+
+        combat.EnableAttackCooldown();
         //}
     }
 }

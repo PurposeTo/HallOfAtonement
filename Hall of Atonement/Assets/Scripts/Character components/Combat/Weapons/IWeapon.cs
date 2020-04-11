@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IWeapon
 {
-    void Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers);
+    void UseWeapon(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers);
 
     Transform AttackPoint { get; }
 }

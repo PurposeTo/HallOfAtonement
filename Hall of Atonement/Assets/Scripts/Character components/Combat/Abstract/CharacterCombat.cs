@@ -5,13 +5,14 @@ public abstract class CharacterCombat : MonoBehaviour
 {
     public CharacterPresenter CharacterPresenter { get; private protected set; }
 
-    //[HideInInspector] 
-    public GameObject targetToAttack = null;
+    private protected GameObject targetToAttack = null;
 
     public DamageUnit DamageUnit { get; private set; } = new DamageUnit();
-    private float attackCooldown;
+    //private float attackCooldown;
 
-    public IWeapon Attacker { get; private protected set; }
+    private Cooldown attackCooldown;
+
+    public IWeapon Weapon { get; private protected set; }
 
     public List<IAttackModifier> attackModifiers = new List<IAttackModifier>();
 
@@ -19,25 +20,32 @@ public abstract class CharacterCombat : MonoBehaviour
     {
         CharacterPresenter = GetComponent<CharacterPresenter>();
 
-        Attacker = GetComponent<IWeapon>();
+        Weapon = GetComponent<IWeapon>();
+
+        attackCooldown = gameObject.AddComponent<Cooldown>();
     }
 
 
-    private protected virtual void Update()
-    {
+    //private protected virtual void Update()
+    //{
+    //    if (attackCooldown > 0f) //Если кулдаун больше нуля, то уменьшить
+    //    {
+    //        attackCooldown -= Time.deltaTime;
+    //    }
+    //    else if (targetToAttack == null && attackCooldown < 0f) //Если игрок сейчас НЕ атакует и кулдаун меньше нуля, то сбросить кулдаун
+    //    {
+    //        attackCooldown = 0f;
+    //    }
+    //}
 
-        if (attackCooldown > 0f) //Если кулдаун больше нуля, то уменьшить
-        {
-            attackCooldown -= Time.deltaTime;
-        }
-        else if (targetToAttack == null && attackCooldown < 0f) //Если игрок сейчас НЕ атакует и кулдаун меньше нуля, то сбросить кулдаун
-        {
-            attackCooldown = 0f;
-        }
-    }
+
+    public GameObject GetTargetToAttack() { return targetToAttack; }
 
 
-    private protected void PreAttack(GameObject target)
+    public void SetTargetToAttack(GameObject targetToAttack) { this.targetToAttack = targetToAttack; }
+
+
+    private protected void Attack(GameObject target)
     {
         targetToAttack = target;
 
@@ -46,7 +54,7 @@ public abstract class CharacterCombat : MonoBehaviour
             targetToAttack, CharacterPresenter.MyStats.rotationSpeed.GetValue(),
             CharacterPresenter.MyStats.faceEuler))
         {
-            if (attackCooldown <= 0f)
+            if (attackCooldown.IsReady())
             {
                 CharacterStats ownerStats = CharacterPresenter.MyStats;
                 DamageType damageType = CharacterPresenter.MyStats.DamageType;
@@ -64,10 +72,15 @@ public abstract class CharacterCombat : MonoBehaviour
                     isCritical = true;
                 }
 
-                Attacker.Attack(this, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
+                Weapon.UseWeapon(this, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
 
-                attackCooldown = 1f / CharacterPresenter.MyStats.attackSpeed.GetValue(); //После атаки включить кулдаун
             }
         }
+    }
+
+
+    public void EnableAttackCooldown() // Данный метод вызывается напрямую из оружия!
+    {
+        attackCooldown.SetCooldownTimeAndStart(1f / CharacterPresenter.MyStats.attackSpeed.GetValue());
     }
 }

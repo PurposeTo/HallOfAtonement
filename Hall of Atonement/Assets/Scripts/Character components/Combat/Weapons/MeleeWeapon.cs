@@ -17,7 +17,7 @@ public class MeleeWeapon : MonoBehaviour, IMelee
     }
 
 
-    void IWeapon.Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
+    void IWeapon.UseWeapon(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         print(gameObject.name + " использует ближнюю атаку!");
 
@@ -30,5 +30,8 @@ public class MeleeWeapon : MonoBehaviour, IMelee
                 combat.DamageUnit.DoDamage(targetStats, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
             }
         }
+
+
+        combat.EnableAttackCooldown();
     }
 }

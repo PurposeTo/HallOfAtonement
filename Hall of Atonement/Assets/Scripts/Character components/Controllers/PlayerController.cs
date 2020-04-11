@@ -68,7 +68,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             PlayerStateMachine.Patrolling(this);
-            CharacterPresenter.Combat.targetToAttack = null;
         }
     }
 

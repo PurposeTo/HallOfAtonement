@@ -15,7 +15,6 @@ public abstract class CharacterStats : UnitStats
     private protected float healthPointConcentration;
 
     public CharacterPresenter CharacterPresenter { get; private protected set; }
-    private CharacterVFX characterVFX;
 
     public LevelSystem level = new LevelSystem();
     public Attribute strength = new Attribute();
@@ -93,7 +92,6 @@ public abstract class CharacterStats : UnitStats
         base.Awake();
         ChangeDamageType(UnitDamageType);
         chanceToGetAnExtraSkillPoint = new PercentStat(BaseChanceToGetAnExtraSkillPoint);
-        characterVFX = GetComponent<CharacterVFX>();
     }
 
     private void OnEnable()
@@ -242,7 +240,7 @@ public abstract class CharacterStats : UnitStats
 
             if (displayPopup)
             {
-                characterVFX.DisplayPopupText("Dodge");
+                VFXManager.instance.DisplayPopupText(gameObject.transform.position, "Dodge");
             }
         }
         else //Получаем урон
@@ -250,21 +248,6 @@ public abstract class CharacterStats : UnitStats
             if (!isBlocked)
             {
                 damage = base.TakeDamage(killerStats, damageType, damage, ref isEvaded, ref isBlocked, canEvade, isCritical, displayPopup);
-
-                if (displayPopup)
-                {
-                    string roadDamageText = ((int)damage).ToString();
-
-                    if (isCritical)
-                    {
-                        characterVFX.DisplayPopupText("-" + roadDamageText, Color.red, 7f);
-                    }
-                    else
-                    {
-                        characterVFX.DisplayPopupText("-" + roadDamageText);
-                    }
-
-                }
             }
             else
             {
@@ -273,7 +256,7 @@ public abstract class CharacterStats : UnitStats
 
                 if (displayPopup)
                 {
-                    characterVFX.DisplayPopupText("Blocked the " + damageType);
+                    VFXManager.instance.DisplayPopupText(gameObject.transform.position, "Blocked the " + damageType);
                 }
 
             }
@@ -310,7 +293,7 @@ public abstract class CharacterStats : UnitStats
 
         string roadHealingText = ((int)amount).ToString();
 
-        characterVFX.DisplayPopupText("+" + roadHealingText, Color.green);
+        VFXManager.instance.DisplayPopupText(gameObject.transform.position, "+" + roadHealingText, Color.green);
     }
 
 

@@ -16,7 +16,7 @@ public class CharacterMovement : MonoBehaviour
         float rotationSpeed = CharacterPresenter.MyStats.rotationSpeed.GetValue();
         float faceEuler = CharacterPresenter.MyStats.faceEuler;
 
-        if (CharacterPresenter.Combat.targetToAttack == null) //Если нет цели атаки, то двигаться ТОЛЬКО лицом вперед
+        if (CharacterPresenter.Combat.GetTargetToAttack() == null) //Если нет цели атаки, то двигаться ТОЛЬКО лицом вперед
         {
             if (TurnFaceToTarget(inputVector, rotationSpeed, faceEuler)) //Повернулся ли персонаж в нужную сторону? См. FaceTarget
             {

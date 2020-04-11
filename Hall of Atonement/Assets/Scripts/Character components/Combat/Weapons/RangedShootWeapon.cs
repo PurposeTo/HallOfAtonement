@@ -11,7 +11,7 @@ public class RangedShootWeapon : MonoBehaviour, IRanged
 
     private float bullerForce = 20f;
 
-    public void Attack(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
+    public void UseWeapon(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
         print(gameObject.name + " использует пушку!");
 
@@ -31,5 +31,8 @@ public class RangedShootWeapon : MonoBehaviour, IRanged
 
             bulletScript.BulletInitialization(gameObject, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
         }
+
+
+        combat.EnableAttackCooldown();
     }
 }

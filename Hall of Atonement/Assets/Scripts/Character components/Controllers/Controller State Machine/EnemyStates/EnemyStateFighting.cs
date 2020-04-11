@@ -9,8 +9,6 @@ public class EnemyStateFighting : EnemyStateMachine
 
     private Coroutine fightingRoutine;
 
-    private Vector2 inputVector;
-
 
     private protected override void StopTheAction(EnemyAI enemyAI)
     {
@@ -19,9 +17,7 @@ public class EnemyStateFighting : EnemyStateMachine
             StopCoroutine(fightingRoutine);
             fightingRoutine = null;
         }
-        enemyAI.EnemyPresenter.Combat.targetToAttack = null;
-
-        inputVector = Vector2.zero;
+        enemyAI.EnemyPresenter.Combat.SetTargetToAttack(null);
     }
 
 
@@ -71,11 +67,9 @@ public class EnemyStateFighting : EnemyStateMachine
         {
             enemyAI.EnemyPresenter.EnemyCombat.GetEnemyFightingLogic(focusTarget);
 
-            inputVector = enemyAI.EnemyPresenter.EnemyCombat.GetMovingVectorOnFighting(focusTarget);
-
-            if (enemyAI.CharacterPresenter.Combat.targetToAttack != null && Vector2.Distance(enemyAI.CharacterPresenter.Combat.targetToAttack.transform.position, transform.position) <= enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius)
+            if (enemyAI.CharacterPresenter.Combat.GetTargetToAttack() != null && Vector2.Distance(enemyAI.CharacterPresenter.Combat.GetTargetToAttack().transform.position, transform.position) <= enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius)
             {
-                enemyAI.CharacterPresenter.Combat.targetToAttack = null;
+                enemyAI.CharacterPresenter.Combat.SetTargetToAttack(null);
             }
 
             yield return null;
@@ -86,9 +80,10 @@ public class EnemyStateFighting : EnemyStateMachine
         //Когда закончим, вызвать метод, говорящее о том, что мы закончили
         enemyAI.DecideWhatToDo();
     }
+    
 
-    public override Vector2 GetInputVector()
+    public override Vector2 GetInputVector(EnemyAI enemyAI)
     {
-        return inputVector;
+        return enemyAI.EnemyPresenter.EnemyCombat.EnemyAttackBehavior.GetMovingVectorOnFighting(focusTarget);
     }
 }

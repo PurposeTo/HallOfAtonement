@@ -33,15 +33,15 @@ public class PlayerStateFighting : PlayerStateMachine
 
         while (true)
         {
-            playerController.CharacterPresenter.Combat.targetToAttack = playerController.CharacterPresenter.CharacterType.SearchingTarget();
+            playerController.CharacterPresenter.Combat.SetTargetToAttack(playerController.CharacterPresenter.CharacterType.SearchingTarget());
 
 
-            if (playerController.CharacterPresenter.Combat.targetToAttack != null) // Если цель найдена
+            if (playerController.CharacterPresenter.Combat.GetTargetToAttack() != null) // Если цель найдена
             {
                 // Атаковать цель, пока та доступна
                 float timerCounter = timer;
 
-                while (timerCounter > 0f && playerController.CharacterPresenter.Combat.targetToAttack != null)
+                while (timerCounter > 0f && playerController.CharacterPresenter.Combat.GetTargetToAttack() != null)
                 {
                     playerController.PlayerPresenter.PlayerCombat.GetPlayerFightingLogic();
 
@@ -66,6 +66,6 @@ public class PlayerStateFighting : PlayerStateMachine
             StopCoroutine(fightingRoutine);
             fightingRoutine = null;
         }
-        playerController.CharacterPresenter.Combat.targetToAttack = null;
+        playerController.CharacterPresenter.Combat.SetTargetToAttack(null);
     }
 }

@@ -61,6 +61,20 @@ public abstract class UnitStats : MonoBehaviour
         damage = Mathf.Clamp(damage, 0f, float.MaxValue);
         //DisplayDamageTaken(isEvaded, isBlocked, damageType, damage);
 
+        if (displayPopup)
+        {
+            string roadDamageText = ((int)damage).ToString(); // Отображать урон нужно не учитывая текущее значение здоровья!
+
+            if (isCritical)
+            {
+                VFXManager.instance.DisplayPopupText(gameObject.transform.position, "-" + roadDamageText, Color.red, 7f);
+            }
+            else
+            {
+                VFXManager.instance.DisplayPopupText(gameObject.transform.position, "-" + roadDamageText);
+            }
+        }
+
         if (CurrentHealthPoint - damage <= 0f) //Если из за полученного урона здоровье будет равно или ниже нуля
         {
             damage = CurrentHealthPoint; //Нанесенный урон = оставшемуся здоровью
@@ -72,6 +86,8 @@ public abstract class UnitStats : MonoBehaviour
         {
             CurrentHealthPoint -= damage;
         }
+
+
 
         Debug.Log(transform.name + " takes " + damage + " " + damageType);
 
