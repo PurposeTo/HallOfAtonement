@@ -30,5 +30,10 @@ public class EnemyCombat : CharacterCombat
         {
             Attack(focusTarget);
         }
+        else
+        {
+            // Если TargetToAttack не в зоне поражения оружия, то стоит обнулить его
+            targetToAttack = null;
+        }
     }
 }
