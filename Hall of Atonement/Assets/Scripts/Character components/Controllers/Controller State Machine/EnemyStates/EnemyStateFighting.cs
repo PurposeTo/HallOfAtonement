@@ -5,7 +5,7 @@ public class EnemyStateFighting : EnemyStateMachine
 {
     private GameObject focusTarget; //Цель, на которой враг в данный момент сфокусирован
 
-    private float timer = 3f;
+    private readonly float timer = 3f;
 
     private Coroutine fightingRoutine;
 
@@ -23,6 +23,14 @@ public class EnemyStateFighting : EnemyStateMachine
 
     public override void Fighting(EnemyAI enemyAI, GameObject focusTarget)
     {
+        GameObject oldTargetToAttack = enemyAI.CharacterPresenter.Combat.GetTargetToAttack();
+
+        if (focusTarget != oldTargetToAttack && oldTargetToAttack != null)
+        {
+            // Обнулить targetToAttack, так как у нас новая цель, на которой мы сфокусировались
+            enemyAI.CharacterPresenter.Combat.SetTargetToAttack(null);
+        }
+
         if (fightingRoutine == null)
         {
             this.focusTarget = focusTarget;
@@ -31,8 +39,10 @@ public class EnemyStateFighting : EnemyStateMachine
         }
         else
         {
-            //Если цель слишком далеко или ее вообше нет, то сменить цель на новую предложенную
-            if (this.focusTarget == null || Vector2.Distance(this.focusTarget.transform.position, transform.position) <= enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius)
+            float distanceToOldFocusTarget = Vector2.Distance(this.focusTarget.transform.position, transform.position);
+            float distanceToNewFocusTarget = Vector2.Distance(focusTarget.transform.position, transform.position);
+
+            if ((distanceToOldFocusTarget > enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius) || distanceToNewFocusTarget < distanceToOldFocusTarget)
             {
                 this.focusTarget = focusTarget;
             }
@@ -61,26 +71,18 @@ public class EnemyStateFighting : EnemyStateMachine
         //Обязательно подождать кадр, что бы избежать бага "бесконечного цикла"!
         yield return null;
 
-        float timerCounter = timer;
-
-        while (timerCounter > 0f && focusTarget != null)
+        for (float timerCounter = timer; timerCounter > 0f && focusTarget != null; timerCounter -= Time.deltaTime)
         {
-            enemyAI.EnemyPresenter.EnemyCombat.GetEnemyFightingLogic(focusTarget);
-
-            if (enemyAI.CharacterPresenter.Combat.GetTargetToAttack() != null && Vector2.Distance(enemyAI.CharacterPresenter.Combat.GetTargetToAttack().transform.position, transform.position) <= enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius)
-            {
-                enemyAI.CharacterPresenter.Combat.SetTargetToAttack(null);
-            }
+            enemyAI.EnemyPresenter.EnemyCombat.GetEnemyFightingLogic(focusTarget); // Пробуем атаковать новую цель
 
             yield return null;
-            timerCounter -= Time.deltaTime;
         }
 
         fightingRoutine = null;
         //Когда закончим, вызвать метод, говорящее о том, что мы закончили
         enemyAI.DecideWhatToDo();
     }
-    
+
 
     public override Vector2 GetInputVector(EnemyAI enemyAI)
     {
