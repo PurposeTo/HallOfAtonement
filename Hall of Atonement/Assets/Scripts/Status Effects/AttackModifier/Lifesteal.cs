@@ -5,7 +5,7 @@ public class Lifesteal : StatusEffect, IAttackModifier
 {
     private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Lifesteal;
 
-    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+    public override StatusEffectData StatusEffectData => GameManager.instance.GetStatusEffectData(StatusEffectType);
 
     private CharacterPresenter characterPresenter;
     private const float baseLifestealValue = 0.15f;

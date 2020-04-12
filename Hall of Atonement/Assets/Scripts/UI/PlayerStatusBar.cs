@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerStatusBar : MonoBehaviour
 {
@@ -8,22 +7,54 @@ public class PlayerStatusBar : MonoBehaviour
 
     private Transform StatusBarContain => gameObject.transform;
 
-    private Dictionary<IStatusEffectLogic, GameObject> statusEffectObjects = new Dictionary<IStatusEffectLogic, GameObject>();
+    private Dictionary<StatusEffect, StatusEffectObject> statusEffectObjects = new Dictionary<StatusEffect, StatusEffectObject>();
 
 
-    public void AddStatusEffectToContaine(IStatusEffectLogic statusEffect)
+    private class StatusEffectObject
     {
-        //GameObject statusEffectObject = Instantiate(ImagePrefab, statusBarContain);
-        GameObject statusEffectObject = ObjectPooler.SharedInstance.SpawnFromPool(ImagePrefab, Vector3.zero, Quaternion.identity, StatusBarContain);
-        statusEffectObjects.Add(statusEffect, statusEffectObject);
-        Image statusEffectImage = statusEffectObject.GetComponent<Image>();
-        statusEffectImage.sprite = statusEffect.StatusEffectSprite;
+        public StatusEffectObject(GameObject _gameObject, StatusEffectImage statusEffectImage) 
+        { 
+            this._gameObject = _gameObject;
+            this.statusEffectImage = statusEffectImage;
+        }
+
+
+        private readonly GameObject _gameObject;
+        private readonly StatusEffectImage statusEffectImage;
+
+
+        public GameObject GetGameObject() { return _gameObject; }
+        public StatusEffectImage GetStatusEffectImage() { return statusEffectImage; }
     }
 
 
-    public void RemoveStatusEffectFromContaine(IStatusEffectLogic statusEffect)
+    public void AddStatusEffectToContaine(StatusEffect statusEffect)
     {
-        Destroy(statusEffectObjects[statusEffect]);
+        GameObject statusEffectGameObject = ObjectPooler.SharedInstance.SpawnFromPool(ImagePrefab, Vector3.zero, Quaternion.identity, StatusBarContain);
+        StatusEffectImage statusEffectImage = statusEffectGameObject.GetComponent<StatusEffectImage>();
+
+        StatusEffectObject newStatusEffectObject = new StatusEffectObject(statusEffectGameObject, statusEffectImage);
+        statusEffectObjects.Add(statusEffect, newStatusEffectObject);
+
+        if (statusEffect is ActiveEffect activeStatusEffect)
+        {
+            activeStatusEffect.onChangeDurationStatusEffect += ChangeFillingOutline;
+        }
+
+        statusEffectImage.Set(statusEffect.StatusEffectData.GetStatusEffectSprite(), statusEffect.StatusEffectData.StatusEffectType);
+    }
+
+
+    public void RemoveStatusEffectFromContaine(StatusEffect statusEffect)
+    {
+        Destroy(statusEffectObjects[statusEffect].GetGameObject());
+
         statusEffectObjects.Remove(statusEffect);
+    }
+
+
+    private void ChangeFillingOutline(ActiveEffect ActiveStatusEffect, float filling)
+    {
+        statusEffectObjects[ActiveStatusEffect].GetStatusEffectImage().ChangeFillingOutline(filling);
     }
 }

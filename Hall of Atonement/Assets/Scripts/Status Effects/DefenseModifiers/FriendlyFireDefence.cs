@@ -4,7 +4,8 @@ public class FriendlyFireDefence : StatusEffect, IDefenseModifier
 {
     private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.FriendlyFireDefence;
 
-    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+    public override StatusEffectData StatusEffectData => GameManager.instance.GetStatusEffectData(StatusEffectType);
+
 
     private CharacterPresenter characterPresenter;
 

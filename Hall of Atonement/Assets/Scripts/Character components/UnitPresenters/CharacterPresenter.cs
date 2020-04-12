@@ -26,7 +26,7 @@ public class CharacterPresenter : UnitPresenter
     }
 
 
-    public override void AddStatusEffect(IStatusEffectLogic statusEffect)
+    public override void AddStatusEffect(StatusEffect statusEffect)
     {
         base.AddStatusEffect(statusEffect);
 
@@ -41,7 +41,7 @@ public class CharacterPresenter : UnitPresenter
     }
 
 
-    public override void RemoveStatusEffect(IStatusEffectLogic statusEffect)
+    public override void RemoveStatusEffect(StatusEffect statusEffect)
     {
         base.RemoveStatusEffect(statusEffect);
 

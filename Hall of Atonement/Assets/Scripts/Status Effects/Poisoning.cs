@@ -1,37 +1,33 @@
 ﻿using UnityEngine;
 
-class Poisoning : HangingEffect, IDamageLogic
+class Poisoning : ActiveEffect, IDamageLogic
 {
     private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Poisoning;
 
-    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+    public override StatusEffectData StatusEffectData => GameManager.instance.GetStatusEffectData(StatusEffectType);
 
     private UnitPresenter unitPresenter;
+    private DamageType damageType;
 
     private CharacterStats myStats;
-    private CharacterStats ownerStats;
-    private DamageType damageType;
     private CharacteristicModifier<int> strengthModifierForPoisoning = new CharacteristicModifier<int>();
     private CharacteristicModifier<int> agilityModifierForPoisoning = new CharacteristicModifier<int>();
     private CharacteristicModifier<int> masteryModifierForPoisoning = new CharacteristicModifier<int>();
 
-    private readonly float baseDamagePerSecond = 0.1f;
-    private readonly float basePoisoningTime = 5f;
+    private protected override float BaseDurationTime => 5f;
+    private readonly float baseDamagePerSecond = 0.3f;
 
     private const float attributeModifierPercent = 0.1f;
     private const float attributeModifierIncrease = 0.01f;
     private const float decrease = -1f; // от finalValue должно ОТНИМАТЬСЯ значение модификатора характеристик эффекта Poisoning
 
-    private float currentPoisoningTime;
-    private float effectPower = 1f;
 
-
-    private void Start()
+    private void Awake()
     {
+        // Внимание! Инициализация должна быть строго в Awake, так как он вызывается до AmplifyEffect
         Initialization();
 
         unitPresenter.AddStatusEffect(this);
-
 
         if (unitPresenter.UnitStats is CharacterStats)
         {
@@ -69,10 +65,13 @@ class Poisoning : HangingEffect, IDamageLogic
 
     private void Update()
     {
-        if (currentPoisoningTime > 0f)
+        float currentDurationTime = GetCurrentDurationTime();
+        if (currentDurationTime > 0f)
         {
             DoStatusEffectDamage(unitPresenter.UnitStats, ownerStats);
-            currentPoisoningTime -= Time.deltaTime;
+
+            float newCurrentDurationTime = currentDurationTime - Time.deltaTime;
+            SetCurrentDurationTime(newCurrentDurationTime);
         }
         else
         {
@@ -91,14 +90,14 @@ class Poisoning : HangingEffect, IDamageLogic
 
     public override void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
     {
-        this.ownerStats = ownerStats;
-        currentPoisoningTime += basePoisoningTime;
-        effectPower += amplificationAmount;
+        float newCurrentPoisoningTime = GetCurrentDurationTime() + BaseDurationTime;
+        SetCurrentDurationTime(newCurrentPoisoningTime); // Индивидуально
+
+        base.AmplifyEffect(ownerStats, amplificationAmount);
 
         // Чем больше эффектов мы повесиили на цель, тем сильнее действие модификатора характеристик
-        if (unitPresenter.UnitStats is CharacterStats) // Привожу повторно вместо использования myStats т.к. не знаю, что вызовется сначала - AmplifyEffect или Start
+        if (myStats != null)
         {
-            myStats = (CharacterStats)unitPresenter.UnitStats;
             SetAllModifiersValue();
         }
     }

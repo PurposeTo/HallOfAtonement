@@ -1,25 +1,22 @@
 ﻿using System.Linq.Expressions;
 using UnityEngine;
 
-class Freeze : HangingEffect, IDamageLogic
+class Freeze : ActiveEffect, IDamageLogic
 {
     private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Freeze;
 
-    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+    public override StatusEffectData StatusEffectData => GameManager.instance.GetStatusEffectData(StatusEffectType);
 
-    private DamageType damageType;
     private UnitPresenter unitPresenter;
+    private DamageType damageType;
+
     private CharacterStats myStats;
-    private CharacterStats ownerStats;
     private CharacteristicModifier<float> modifierMovementSpeed = new CharacteristicModifier<float>();
     private CharacteristicModifier<float> modifierRotationSpeed = new CharacteristicModifier<float>();
     private CharacteristicModifier<float> modifierAttackSpeed = new CharacteristicModifier<float>();
 
-    private const float baseDamagePerSecond = 0.1f;
-    private const float baseFreezingTime = 5f;
-
-    private float currentFreezingTime;
-    private float effectPower = 1f;
+    private protected override float BaseDurationTime => 5f;
+    private const float baseDamagePerSecond = 0.3f;
 
     private const float baseDecelerationModifierValue = 0.25f;
     private const float decelerationModifierIncrease = 0.01f;
@@ -29,16 +26,17 @@ class Freeze : HangingEffect, IDamageLogic
     private float currentDecelerationModifierValue = baseDecelerationModifierValue;
 
 
-    private void Start()
+    private void Awake()
     {
+        // Внимание! Инициализация должна быть строго в Awake, так как он вызывается до AmplifyEffect
         Initialization();
+        
         unitPresenter.AddStatusEffect(this);
-
 
         if (unitPresenter.UnitStats is CharacterStats)
         {
             myStats = (CharacterStats)unitPresenter.UnitStats;
-            defrostPerSecond = (baseDecelerationModifierValue * defrostPercentTo) / currentFreezingTime; // Здесь currentFreezingTime = максимальное (эффект только что навесили)
+            defrostPerSecond = (baseDecelerationModifierValue * defrostPercentTo) / GetCurrentDurationTime(); // Здесь currentFreezingTime = максимальное (эффект только что навесили)
             SetAllModifiersValue();
 
             myStats.movementSpeed.AddModifier(modifierMovementSpeed);
@@ -72,15 +70,19 @@ class Freeze : HangingEffect, IDamageLogic
 
     private void Update()
     {
-        if (currentFreezingTime > 0f)
+        float currentDurationTime = GetCurrentDurationTime();
+        if (currentDurationTime > 0f)
         {
             DoStatusEffectDamage(unitPresenter.UnitStats, ownerStats);
+
             if (myStats != null)
             {
                 currentDecelerationModifierValue -= defrostPerSecond * Time.deltaTime; // Значение уменьшается => при повторном вызове значения хар-к увеличиваются
                 SetAllModifiersValue(); // Оттаивание
             }
-            currentFreezingTime -= Time.deltaTime;
+
+            float newCurrentDurationTime = currentDurationTime - Time.deltaTime;
+            SetCurrentDurationTime(newCurrentDurationTime);
         }
         else
         {
@@ -106,15 +108,15 @@ class Freeze : HangingEffect, IDamageLogic
 
     public override void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount) 
     {
-        this.ownerStats = ownerStats;
-        currentFreezingTime += baseFreezingTime; // Увеличить время действия на (1)
-        effectPower += amplificationAmount;
+        float newCurrentPoisoningTime = GetCurrentDurationTime() + BaseDurationTime;
+        SetCurrentDurationTime(newCurrentPoisoningTime); // Индивидуально
+
+        base.AmplifyEffect(ownerStats, amplificationAmount);
 
         // Чем больше эффектов мы повесили на цель, тем сильнее действие модификатора характеристик
-        if (unitPresenter.UnitStats is CharacterStats) // Привожу повторно вместо использования myStats т.к. не знаю, что вызовется сначала - AmplifyEffect или Start
+        if (myStats != null)
         {
-            myStats = (CharacterStats)unitPresenter.UnitStats;
-            defrostPerSecond = (baseDecelerationModifierValue * defrostPercentTo) / currentFreezingTime; // Здесь currentFreezingTime = максимальное текущее от кол-ва навешанных эффектов
+            defrostPerSecond = (baseDecelerationModifierValue * defrostPercentTo) / GetCurrentDurationTime(); // Здесь currentFreezingTime = максимальное текущее от кол-ва навешанных эффектов
             AmplifyAllModifiersValue();
         }
     }
@@ -134,7 +136,7 @@ class Freeze : HangingEffect, IDamageLogic
         bool isEvaded = false;
         bool isBlocked = false;
 
-        float remainingDamage = baseDamagePerSecond * effectPower * currentFreezingTime;
+        float remainingDamage = baseDamagePerSecond * effectPower * GetCurrentDurationTime();
         unitPresenter.UnitStats.TakeDamage(ownerStats, damageType, remainingDamage, ref isEvaded, ref isBlocked, false);
         Destroy(this);
     }

@@ -14,14 +14,14 @@
     }
 
 
-    public override void AddStatusEffect(IStatusEffectLogic statusEffect)
+    public override void AddStatusEffect(StatusEffect statusEffect)
     {
         base.AddStatusEffect(statusEffect);
         PlayerUIPresenter.StatusBar.AddStatusEffectToContaine(statusEffect);
     }
 
 
-    public override void RemoveStatusEffect(IStatusEffectLogic statusEffect)
+    public override void RemoveStatusEffect(StatusEffect statusEffect)
     {
         base.RemoveStatusEffect(statusEffect);
         PlayerUIPresenter.StatusBar.RemoveStatusEffectFromContaine(statusEffect);

@@ -172,6 +172,7 @@
     <Compile Include="Assets\Scripts\UI\PopUpTextLife.cs" />
     <Compile Include="Assets\Scripts\UI\Presenters\CharacterUIPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenters\PlayerUIPresenter.cs" />
+    <Compile Include="Assets\Scripts\UI\StatusEffectImage.cs" />
     <Compile Include="Assets\Scripts\UnSorted\Cooldown.cs" />
     <Compile Include="Assets\Scripts\VFX\VFXManager.cs" />
     <None Include="Assets\AssetStoreTools\Tilemap\Tiles\Rule Tile\ScriptTemplates\NewCustomRuleTile.cs.txt" />

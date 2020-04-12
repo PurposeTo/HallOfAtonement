@@ -4,7 +4,7 @@ class WeaponHarding : StatusEffect, IAttackModifier
 {
     private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.WeaponHarding;
 
-    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+    public override StatusEffectData StatusEffectData => GameManager.instance.GetStatusEffectData(StatusEffectType);
 
     [SerializeField] private HardingType hardingType;
     private CharacterPresenter characterPresenter;

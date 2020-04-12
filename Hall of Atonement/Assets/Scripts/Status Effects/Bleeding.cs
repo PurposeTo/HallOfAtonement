@@ -1,25 +1,24 @@
 ﻿using UnityEngine;
 
-class Bleeding : HangingEffect, IDamageLogic
+class Bleeding : ActiveEffect, IDamageLogic
 {
     private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Bleeding;
 
-    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+    public override StatusEffectData StatusEffectData => GameManager.instance.GetStatusEffectData(StatusEffectType);
 
-    private DamageType damageType;
     private UnitPresenter unitPresenter;
-    private CharacterStats ownerStats;
+    private DamageType damageType;
+
     private CharacteristicModifier<float> poisonResistanceForBleeding = new CharacteristicModifier<float>(0.1f);
 
-    private readonly float baseDamagePerSecond = 0.25f;
-    private readonly float baseBleedingTime = 5f;
+    private protected override float BaseDurationTime => 5f;
+    private readonly float baseDamagePerSecond = 0.5f;
     private const float poisonResistanceIncrease = 0.01f;
 
-    private float currentBleedingTime;
-    private float effectPower = 1f;
 
-    private void Start()
+    private void Awake()
     {
+        // Внимание! Инициализация должна быть строго в Awake, так как он вызывается до AmplifyEffect
         Initialization();
         unitPresenter.AddStatusEffect(this);
 
@@ -37,10 +36,13 @@ class Bleeding : HangingEffect, IDamageLogic
 
     private void Update()
     {
-        if (currentBleedingTime > 0f)
+        float currentDurationTime = GetCurrentDurationTime();
+        if (currentDurationTime > 0f)
         {
             DoStatusEffectDamage(unitPresenter.UnitStats, ownerStats);
-            currentBleedingTime -= Time.deltaTime;
+
+            float newCurrentDurationTime = currentDurationTime - Time.deltaTime;
+            SetCurrentDurationTime(newCurrentDurationTime);
         }
         else
         {
@@ -60,9 +62,11 @@ class Bleeding : HangingEffect, IDamageLogic
 
     public override void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
     {
-        this.ownerStats = ownerStats;
-        currentBleedingTime += baseBleedingTime;
-        effectPower += amplificationAmount;
+        float newCurrentPoisoningTime = GetCurrentDurationTime() + BaseDurationTime;
+        SetCurrentDurationTime(newCurrentPoisoningTime); // Индивидуально
+
+        base.AmplifyEffect(ownerStats, amplificationAmount);
+
         poisonResistanceForBleeding.SetModifierValue(poisonResistanceForBleeding.GetModifierValue() + poisonResistanceIncrease * effectPower);
     }
 
@@ -73,10 +77,5 @@ class Bleeding : HangingEffect, IDamageLogic
         bool isBlocked = false;
 
         targetStats.TakeDamage(ownersStats, damageType, baseDamagePerSecond * effectPower * Time.deltaTime, ref isEvaded, ref isBlocked, false);
-    }
-
-    void IDamageLogic.DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats)
-    {
-        throw new System.NotImplementedException();
     }
 }

@@ -1,24 +1,22 @@
 ﻿using UnityEngine;
 
-public class Burn : HangingEffect, IDamageLogic
+public class Burn : ActiveEffect, IDamageLogic
 {
-    private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Burn;
 
-    Sprite IStatusEffectLogic.StatusEffectSprite => GameManager.instance.GetStatusEffectData(StatusEffectType).StatusEffectSprite;
+    private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Burn;
+    public override StatusEffectData StatusEffectData => GameManager.instance.GetStatusEffectData(StatusEffectType);
+
 
     public DamageType damageType;
     private UnitPresenter unitPresenter;
-    private CharacterStats ownerStats;
 
+    private protected override float BaseDurationTime => 3f;
     private readonly float baseDamagePerSecond = 0.75f;
-    private readonly float baseBurningTime = 3f;
-
-    private float effectPower = 1f;
-    private float currentBurningTime;
 
 
-    private void Start()
+    private void Awake()
     {
+        // Внимание! Инициализация должна быть строго в Awake, так как он вызывается до AmplifyEffect
         Initialization();
         unitPresenter.AddStatusEffect(this);
     }
@@ -32,10 +30,13 @@ public class Burn : HangingEffect, IDamageLogic
 
     private void Update()
     {
-        if (currentBurningTime > 0f)
+        float currentDurationTime = GetCurrentDurationTime();
+        if (currentDurationTime > 0f)
         {
             DoStatusEffectDamage(unitPresenter.UnitStats, ownerStats);
-            currentBurningTime -= Time.deltaTime;
+
+            float newCurrentDurationTime = currentDurationTime - Time.deltaTime;
+            SetCurrentDurationTime(newCurrentDurationTime);
         }
         else
         {
@@ -70,9 +71,9 @@ public class Burn : HangingEffect, IDamageLogic
 
     public override void AmplifyEffect(CharacterStats ownerStats, float amplificationAmount)
     {
-        this.ownerStats = ownerStats;
-        currentBurningTime = baseBurningTime;
-        effectPower += amplificationAmount;
+        SetCurrentDurationTime(BaseDurationTime); // Индивидуально
+
+        base.AmplifyEffect(ownerStats, amplificationAmount);
     }
 
 
@@ -81,7 +82,7 @@ public class Burn : HangingEffect, IDamageLogic
         bool isEvaded = false;
         bool isBlocked = false;
 
-        float remainingDamage = baseDamagePerSecond * effectPower * currentBurningTime;
+        float remainingDamage = baseDamagePerSecond * effectPower * GetCurrentDurationTime();
         unitPresenter.UnitStats.TakeDamage(ownerStats, damageType, remainingDamage, ref isEvaded, ref isBlocked, false);
         Destroy(this);
     }

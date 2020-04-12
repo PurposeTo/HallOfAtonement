@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < StatusEffectDatas.Count; i++)
         {
-            StatusEffectDictionary.Add(StatusEffectDatas[i].StatusEffectType, StatusEffectDatas[i]);
+            StatusEffectDictionary.Add(StatusEffectDatas[i].StatusEffect, StatusEffectDatas[i]);
         }
     }
 

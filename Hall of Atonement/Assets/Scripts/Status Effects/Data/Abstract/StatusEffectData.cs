@@ -15,11 +15,20 @@ public enum ContainerStatusEffects
 
     FriendlyFireDefence
 }
+
+
+public enum ContainerEffectTypes
+{
+    Positive,
+    Negative
+}
+
+
 public abstract class StatusEffectData : ScriptableObject
 {
-    public Sprite StatusEffectSprite;
-    //public StatusEffect StatusEffect; Not Working!
+    [SerializeField] private Sprite StatusEffectSprite;
+    public abstract ContainerStatusEffects StatusEffect { get; }
+    public abstract ContainerEffectTypes StatusEffectType { get; }
 
-    public abstract ContainerStatusEffects StatusEffectType { get; }
-
+    public Sprite GetStatusEffectSprite() { return StatusEffectSprite; }
 }
