@@ -95,10 +95,11 @@
     <Compile Include="Assets\Scripts\Character components\Combat\Weapons\MeleeWeapon.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Weapons\RangedLaserWeapon.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Weapons\RangedShootWeapon.cs" />
+    <Compile Include="Assets\Scripts\Character components\Controllers\CharacterController.cs" />
     <Compile Include="Assets\Scripts\Character components\Controllers\Controller State Machine\EnemyStateMachine.cs" />
     <Compile Include="Assets\Scripts\Character components\Controllers\Controller State Machine\EnemyStates\EnemyStateFighting.cs" />
     <Compile Include="Assets\Scripts\Character components\Controllers\Controller State Machine\EnemyStates\EnemyStatePatrolling.cs" />
-    <Compile Include="Assets\Scripts\Character components\Controllers\Controller State Machine\PlayerStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Character components\Controllers\Controller State Machine\PlayerControllerStateMachine.cs" />
     <Compile Include="Assets\Scripts\Character components\Controllers\Controller State Machine\PlayerStates\PlayerStateFighting.cs" />
     <Compile Include="Assets\Scripts\Character components\Controllers\Controller State Machine\PlayerStates\PlayerStatePatrolling.cs" />
     <Compile Include="Assets\Scripts\Character components\Controllers\EnemyAI.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Assets\Scripts\Character components\Controllers\EnemyAttack Behavior\RangedEnemyLogic.cs" />
     <Compile Include="Assets\Scripts\Character components\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\CharacterMovement.cs" />
+    <Compile Include="Assets\Scripts\Character components\Movement\CharacterMovementStateMachine.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Abstract\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Abstract\UnitStats.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Base\Attribute.cs" />

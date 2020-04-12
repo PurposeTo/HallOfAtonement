@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerStatePatrolling : PlayerStateMachine
+public class PlayerStatePatrolling : PlayerControllerStateMachine
 {
     private Coroutine patrollingRoutine;
 
@@ -9,8 +9,8 @@ public class PlayerStatePatrolling : PlayerStateMachine
     {
         StopTheAction(playerController);
 
-        playerController.PlayerStateMachine = playerController.PlayerStateFighting;
-        playerController.PlayerStateMachine.Fighting(playerController);
+        playerController.PlayerControllerStateMachine = playerController.PlayerStateFighting;
+        playerController.PlayerControllerStateMachine.Fighting(playerController);
     }
 
     public override void Patrolling(PlayerController playerController)

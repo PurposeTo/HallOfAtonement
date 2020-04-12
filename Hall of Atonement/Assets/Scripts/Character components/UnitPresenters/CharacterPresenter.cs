@@ -12,16 +12,15 @@ public class CharacterPresenter : UnitPresenter
     public Rigidbody2D Rb2d { get; private protected set; }
 
 
-
-
-
     private protected override void Awake()
     {
         base.Awake();
 
         MyStats = (CharacterStats)UnitStats;
         Combat = GetComponent<CharacterCombat>();
+
         CharacterMovement = GetComponent<CharacterMovement>();
+
         CharacterType = GetComponent<CharacterType>();
         Rb2d = GetComponent<Rigidbody2D>();
     }

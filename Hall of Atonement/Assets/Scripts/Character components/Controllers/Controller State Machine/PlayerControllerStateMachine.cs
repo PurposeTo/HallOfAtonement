@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class PlayerStateMachine : MonoBehaviour
+public abstract class PlayerControllerStateMachine : MonoBehaviour
 {
     public abstract void Patrolling(PlayerController playerController); 
 

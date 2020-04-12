@@ -8,7 +8,6 @@ public abstract class CharacterCombat : MonoBehaviour
     private protected GameObject targetToAttack = null;
 
     public DamageUnit DamageUnit { get; private set; } = new DamageUnit();
-    //private float attackCooldown;
 
     private Cooldown attackCooldown;
 

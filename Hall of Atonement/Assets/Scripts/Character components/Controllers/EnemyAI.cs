@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : CharacterController
 {
-    public CharacterPresenter CharacterPresenter { get; private protected set; }
     public EnemyPresenter EnemyPresenter { get; private protected set; }
     public EnemyStateMachine EnemyStateMachine { get; set; }
     public EnemyStatePatrolling EnemyStatePatrolling { get; private set; }
     public EnemyStateFighting EnemyStateFighting { get; private set; }
 
 
-    private void Start()
+    private protected override void Start()
     {
-        CharacterPresenter = gameObject.GetComponent<CharacterPresenter>();
+        base.Start();
 
         EnemyPresenter = (EnemyPresenter)CharacterPresenter;
 
@@ -19,13 +18,7 @@ public class EnemyAI : MonoBehaviour
     }
 
 
-    private protected virtual void FixedUpdate()
-    {
-        CharacterPresenter.CharacterMovement.MoveCharacter(GetInputVector());
-    }
-
-
-    private Vector2 GetInputVector() // Этот метод здесь потому, что подобный есть в PlayerController и их можно вынести в абстрактный класс
+    private protected override Vector2 GetInputVector()
     {
         return EnemyStateMachine.GetInputVector(this);
     }

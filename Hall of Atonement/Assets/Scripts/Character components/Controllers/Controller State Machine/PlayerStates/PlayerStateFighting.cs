@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class PlayerStateFighting : PlayerStateMachine
+public class PlayerStateFighting : PlayerControllerStateMachine
 {
     private Coroutine fightingRoutine;
 
@@ -21,8 +21,8 @@ public class PlayerStateFighting : PlayerStateMachine
     {
         StopTheAction(playerController);
 
-        playerController.PlayerStateMachine = playerController.PlayerStatePatrolling;
-        playerController.PlayerStateMachine.Patrolling(playerController);
+        playerController.PlayerControllerStateMachine = playerController.PlayerStatePatrolling;
+        playerController.PlayerControllerStateMachine.Patrolling(playerController);
     }
 
 

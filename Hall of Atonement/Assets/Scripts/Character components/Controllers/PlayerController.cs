@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : CharacterController
 {
     private readonly RuntimePlatform currentRuntimePlatform = Application.platform;
 
     private Joystick joystick;
     private AttackButtonEvent attackButton;
-    public CharacterPresenter CharacterPresenter { get; private protected set; }
     public PlayerPresenter PlayerPresenter { get; private protected set; }
 
-    public PlayerStateMachine PlayerStateMachine { get; set; }
+    public PlayerControllerStateMachine PlayerControllerStateMachine { get; set; }
     public PlayerStatePatrolling PlayerStatePatrolling { get; private set; }
     public PlayerStateFighting PlayerStateFighting { get; private set; }
 
 
-    private void Start()
+    private protected override void Start()
     {
-        CharacterPresenter = gameObject.GetComponent<CharacterPresenter>();
+        base.Start();
+
         PlayerPresenter = (PlayerPresenter)CharacterPresenter;
         joystick = PlayerPresenter.PlayerUIPresenter.PlayerJoystick;
         attackButton = PlayerPresenter.PlayerUIPresenter.PlayerAttackButton;
@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
         PlayerStatePatrolling = GetComponent<PlayerStatePatrolling>();
         PlayerStateFighting = GetComponent<PlayerStateFighting>();
 
-        PlayerStateMachine = PlayerStatePatrolling;
-        PlayerStateMachine.Patrolling(this);
+        PlayerControllerStateMachine = PlayerStatePatrolling;
+        PlayerControllerStateMachine.Patrolling(this);
     }
 
 
@@ -53,26 +53,20 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private protected virtual void FixedUpdate()
-    {
-        CharacterPresenter.CharacterMovement.MoveCharacter(GetInputVector());
-    }
-
-
     public void IsAttacking(bool IsAttacking)
     {
         if (IsAttacking)
         {
-            PlayerStateMachine.Fighting(this);
+            PlayerControllerStateMachine.Fighting(this);
         }
         else
         {
-            PlayerStateMachine.Patrolling(this);
+            PlayerControllerStateMachine.Patrolling(this);
         }
     }
 
 
-    private Vector2 GetInputVector()
+    private protected override Vector2 GetInputVector()
     {
         float horizontalInput;
         float verticalInput;
