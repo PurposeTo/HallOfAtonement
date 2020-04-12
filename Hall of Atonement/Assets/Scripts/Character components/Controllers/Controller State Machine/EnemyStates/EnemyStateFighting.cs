@@ -75,12 +75,6 @@ public class EnemyStateFighting : EnemyStateMachine
         {
             enemyAI.EnemyPresenter.EnemyCombat.GetEnemyFightingLogic(focusTarget); // Пробуем атаковать новую цель
 
-            // Если TargetToAttack не в зоне поражения оружия, то стоит обнулить его
-            if (Vector2.Distance(focusTarget.transform.position, transform.position) > enemyAI.EnemyPresenter.EnemyCombat.EnemyAttackBehavior.GetAttackRange())
-            {
-                enemyAI.CharacterPresenter.Combat.SetTargetToAttack(null);
-            }
-
             yield return null;
         }
 
