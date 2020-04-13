@@ -1,11 +1,4 @@
-﻿using System;
-using UnityEngine;
-
-public interface IStatusEffectLogic
-{
-
-}
-
+﻿using UnityEngine;
 
 public abstract class StatusEffect : MonoBehaviour
 {
@@ -14,7 +7,7 @@ public abstract class StatusEffect : MonoBehaviour
 }
 
 
-public delegate void ChangeDurationStatusEffect(ActiveEffect activeStatusEffect,  float currentPercentDuration);
+public delegate void ChangeDurationStatusEffect(ActiveEffect activeStatusEffect, float currentPercentDuration);
 public abstract class ActiveEffect : StatusEffect
 {
     public event ChangeDurationStatusEffect onChangeDurationStatusEffect;
@@ -66,40 +59,6 @@ public abstract class ActiveEffect : StatusEffect
 
 
 public abstract class Passive : StatusEffect
-{ 
-
-}
-
-
-public interface IAttackModifier : IStatusEffectLogic, ICloneable
-{
-    void ApplyAttackModifier(UnitStats targetStats, DamageType damageType, float damage, int mastery, bool isCritical = false);
-}
-
-
-public interface IDefenseModifier : IStatusEffectLogic
-{
-    void ApplyDefenseModifier(CharacterStats killerStats, DamageType damageType, float damage, ref bool isEvaded, ref bool isBlocked);
-}
-
-
-public interface ICharacteristicModifier<T>// : IStatusEffectLogic
-{
-    event ChangeCharacteristicModifier OnChangeCharacteristicModifier;
-
-    T GetModifierValue();
-
-    void SetModifierValue(T newValue);
-}
-
-
-public interface IDamageLogic : IStatusEffectLogic
-{
-    void DoStatusEffectDamage(UnitStats targetStats, CharacterStats ownerStats);
-}
-
-
-public interface IHealLogic : IStatusEffectLogic
 {
 
 }
