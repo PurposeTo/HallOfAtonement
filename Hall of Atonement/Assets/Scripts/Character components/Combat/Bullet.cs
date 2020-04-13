@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour, IPooledObject
 {
     public Rigidbody2D bulletRb2d { get; private set; }
-    private DamageUnit damageUnit = new DamageUnit();
+    private readonly DamageUnit damageUnit = new DamageUnit();
 
     private GameObject ownerGameObject;
     private CharacterStats ownerStats;

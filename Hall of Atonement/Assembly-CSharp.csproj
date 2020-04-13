@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{4D9B446D-998C-D7A5-5088-1DC043AB813D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -141,6 +140,7 @@
     <Compile Include="Assets\Scripts\Status Effects\AttackModifier\FuryBlades.cs" />
     <Compile Include="Assets\Scripts\Status Effects\AttackModifier\Lifesteal.cs" />
     <Compile Include="Assets\Scripts\Status Effects\AttackModifier\WeaponHarding.cs" />
+    <Compile Include="Assets\Scripts\Status Effects\Base\IStatusEffectLogic.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Base\StatusEffect.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Bleeding.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Burn.cs" />
@@ -156,7 +156,6 @@
     <Compile Include="Assets\Scripts\Status Effects\Data\WeaponHardingData.cs" />
     <Compile Include="Assets\Scripts\Status Effects\DefenseModifiers\FriendlyFireDefence.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Freeze.cs" />
-    <Compile Include="Assets\Scripts\Status Effects\Base\IStatusEffectLogic.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Poisoning.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\Abstract\DamageType.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\Abstract\EffectDamage.cs" />
