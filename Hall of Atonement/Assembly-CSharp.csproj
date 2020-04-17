@@ -134,6 +134,9 @@
     <Compile Include="Assets\Scripts\Factory and Products\Factory\StatusEffectFactory.cs" />
     <Compile Include="Assets\Scripts\GameLogic.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Level Generation\CellFactoryManager.cs" />
+    <Compile Include="Assets\Scripts\Level Generation\MapData.cs" />
+    <Compile Include="Assets\Scripts\Level Generation\SimpleLevelGeneration.cs" />
     <Compile Include="Assets\Scripts\Object Pooler\IPooledObject.cs" />
     <Compile Include="Assets\Scripts\Object Pooler\ObjectPooler.cs" />
     <Compile Include="Assets\Scripts\Object Pooler\UIObjectPooler.cs" />

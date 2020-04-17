@@ -16,21 +16,23 @@ public class MeleeEnemyLogic : MonoBehaviour, IEnemyAttackBehavior
 
     Vector2 IEnemyAttackBehavior.GetMovingVectorOnFighting(GameObject focusTarget)
     {
-        Vector2 newInputVector;
+        Vector2 newInputVector = Vector2.zero;
 
-        Vector2 direction = focusTarget.transform.position - transform.position; //Расстояние до цели
-
-        //Если мы движемся, то двигаться пока расстояние до цели > minStopRadius
-        //if (direction.magnitude > meleeWeapon.MeleeAttackRadius)
-        if (direction.magnitude > AttackRange) // Враг вообще не атакует
+        if (focusTarget != null)
         {
-            newInputVector = direction.normalized;
-        }
-        else
-        {
-            newInputVector = Vector2.zero;
-        }
+            Vector2 direction = focusTarget.transform.position - transform.position; //Расстояние до цели
 
+            //Если мы движемся, то двигаться пока расстояние до цели > minStopRadius
+            //if (direction.magnitude > meleeWeapon.MeleeAttackRadius)
+            if (direction.magnitude > AttackRange) // Враг вообще не атакует
+            {
+                newInputVector = direction.normalized;
+            }
+            else
+            {
+                newInputVector = Vector2.zero;
+            }
+        }
 
         return newInputVector;
     }

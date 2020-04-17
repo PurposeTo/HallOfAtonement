@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void LevelIsClear();
 public class GameManager : MonoBehaviour
 {
+    public event LevelIsClear OnLevelIsClear;
+
     public List<StatusEffectData> StatusEffectDatas = new List<StatusEffectData>();
     private Dictionary<ContainerStatusEffects, StatusEffectData> StatusEffectDictionary = new Dictionary<ContainerStatusEffects, StatusEffectData>();
 
@@ -10,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
 
-    public List<GameObject> enemys = new List<GameObject>();
+    private List<GameObject> enemys = new List<GameObject>();
 
     private void Awake() //делаем объект синглтоном
     {
@@ -40,5 +43,17 @@ public class GameManager : MonoBehaviour
         }
 
         return StatusEffectDictionary[statusEffectKey];
+    }
+
+
+    public void AddEnemyToAllEnemysList(GameObject enemy) { enemys.Add(enemy); }
+    public void RemoveEnemyFromAllEnemysList(GameObject enemy) 
+    { 
+        enemys.Remove(enemy);
+
+        if (enemys.Count == 0)
+        {
+            OnLevelIsClear?.Invoke();
+        }
     }
 }
