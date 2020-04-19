@@ -13,9 +13,17 @@ public class PlayerController : CharacterController
     public PlayerStateFighting PlayerStateFighting { get; private set; }
 
 
-    private void OnEnable()
+    private void Awake()
     {
-        GameManager.Instance.player = gameObject;
+        // Не сработает, если GameManager не инициализирован
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.player = gameObject;
+        }
+        else
+        {
+            Debug.LogWarning("GameManager is not initializing!");
+        }
     }
 
     private protected override void Start()

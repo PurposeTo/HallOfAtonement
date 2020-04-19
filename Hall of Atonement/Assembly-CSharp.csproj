@@ -142,6 +142,7 @@
     <Compile Include="Assets\Scripts\Singleton\Object Pooler\IPooledObject.cs" />
     <Compile Include="Assets\Scripts\Singleton\Object Pooler\ObjectPooler.cs" />
     <Compile Include="Assets\Scripts\Singleton\Object Pooler\UIObjectPooler.cs" />
+    <Compile Include="Assets\Scripts\Singleton\SceneController.cs" />
     <Compile Include="Assets\Scripts\Singleton\Singleton.cs" />
     <Compile Include="Assets\Scripts\Singleton\StatusEffectDataContainer.cs" />
     <Compile Include="Assets\Scripts\Singleton\VFX\VFXManager.cs" />

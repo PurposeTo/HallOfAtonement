@@ -26,8 +26,7 @@ public class Door : MonoBehaviour
     {
         if (collision.TryGetComponent(out PlayerController _))
         {
-            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Additive);
+            SceneController.Instance.ReLoadRoom();
         }
     }
 

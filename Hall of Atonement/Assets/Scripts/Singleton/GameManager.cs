@@ -12,18 +12,6 @@ public class GameManager : Singleton<GameManager>
     private List<GameObject> enemys = new List<GameObject>();
 
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-        }
-    }
-
-
-
-
     public void AddEnemyToAllEnemysList(GameObject enemy) { enemys.Add(enemy); }
     public void RemoveEnemyFromAllEnemysList(GameObject enemy)
     {
