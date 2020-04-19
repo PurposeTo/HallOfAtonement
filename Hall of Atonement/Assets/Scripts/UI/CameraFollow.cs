@@ -8,7 +8,7 @@ public class CameraFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameManager.instance.player;
+        player = GameManager.Instance.player;
 
         transform.position = GetTheRightCameraPosition();
     }

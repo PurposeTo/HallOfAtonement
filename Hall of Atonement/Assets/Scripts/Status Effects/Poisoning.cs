@@ -4,7 +4,7 @@ class Poisoning : ActiveEffect, IDamageLogic
 {
     private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Poisoning;
 
-    public override StatusEffectData StatusEffectData => GameManager.instance.GetStatusEffectData(StatusEffectType);
+    public override StatusEffectData StatusEffectData => StatusEffectDataContainer.Instance.GetStatusEffectData(StatusEffectType);
 
     private UnitPresenter unitPresenter;
     private DamageType damageType;

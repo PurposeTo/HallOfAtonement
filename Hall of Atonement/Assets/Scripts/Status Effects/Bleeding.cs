@@ -4,7 +4,7 @@ class Bleeding : ActiveEffect, IDamageLogic
 {
     private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Bleeding;
 
-    public override StatusEffectData StatusEffectData => GameManager.instance.GetStatusEffectData(StatusEffectType);
+    public override StatusEffectData StatusEffectData => StatusEffectDataContainer.Instance.GetStatusEffectData(StatusEffectType);
 
     private UnitPresenter unitPresenter;
     private DamageType damageType;

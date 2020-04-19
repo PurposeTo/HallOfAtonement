@@ -4,7 +4,7 @@ class FuryBlades : StatusEffect, IAttackModifier
 {
     private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.FuryBlades;
 
-    public override StatusEffectData StatusEffectData => GameManager.instance.GetStatusEffectData(StatusEffectType);
+    public override StatusEffectData StatusEffectData => StatusEffectDataContainer.Instance.GetStatusEffectData(StatusEffectType);
 
     private CharacterPresenter characterPresenter;
     private const float upperBound = 0.9f;

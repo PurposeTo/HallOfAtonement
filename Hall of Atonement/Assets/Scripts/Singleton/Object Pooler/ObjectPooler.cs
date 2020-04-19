@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ObjectPooler : MonoBehaviour
+public class ObjectPooler : Singleton<ObjectPooler>
 {
     [System.Serializable]
     public class Pool
@@ -14,16 +13,10 @@ public class ObjectPooler : MonoBehaviour
         [HideInInspector] public Queue<GameObject> objectPoolQueue;
     }
 
-    public static ObjectPooler SharedInstance;
 
     public List<Pool> pools;
 
     public Dictionary<GameObject, Pool> poolDictionary = new Dictionary<GameObject, Pool>();
-
-    private void Awake()
-    {
-        SharedInstance = this;
-    }
 
 
     private void OnEnable()

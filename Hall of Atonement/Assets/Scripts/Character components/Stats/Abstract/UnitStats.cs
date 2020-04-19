@@ -67,11 +67,11 @@ public abstract class UnitStats : MonoBehaviour
 
             if (isCritical)
             {
-                VFXManager.instance.DisplayPopupText(gameObject.transform.position, "-" + roadDamageText, Color.red, 7f);
+                VFXManager.Instance.DisplayPopupText(gameObject.transform.position, "-" + roadDamageText, Color.red, 7f);
             }
             else
             {
-                VFXManager.instance.DisplayPopupText(gameObject.transform.position, "-" + roadDamageText);
+                VFXManager.Instance.DisplayPopupText(gameObject.transform.position, "-" + roadDamageText);
             }
         }
 

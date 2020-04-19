@@ -13,6 +13,11 @@ public class PlayerController : CharacterController
     public PlayerStateFighting PlayerStateFighting { get; private set; }
 
 
+    private void OnEnable()
+    {
+        GameManager.Instance.player = gameObject;
+    }
+
     private protected override void Start()
     {
         base.Start();

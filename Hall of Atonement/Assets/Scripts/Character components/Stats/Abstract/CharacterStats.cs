@@ -240,7 +240,7 @@ public abstract class CharacterStats : UnitStats
 
             if (displayPopup)
             {
-                VFXManager.instance.DisplayPopupText(gameObject.transform.position, "Dodge");
+                VFXManager.Instance.DisplayPopupText(gameObject.transform.position, "Dodge");
             }
         }
         else //Получаем урон
@@ -256,7 +256,7 @@ public abstract class CharacterStats : UnitStats
 
                 if (displayPopup)
                 {
-                    VFXManager.instance.DisplayPopupText(gameObject.transform.position, "Blocked the " + damageType);
+                    VFXManager.Instance.DisplayPopupText(gameObject.transform.position, "Blocked the " + damageType);
                 }
 
             }
@@ -293,7 +293,7 @@ public abstract class CharacterStats : UnitStats
 
         string roadHealingText = ((int)amount).ToString();
 
-        VFXManager.instance.DisplayPopupText(gameObject.transform.position, "+" + roadHealingText, Color.green);
+        VFXManager.Instance.DisplayPopupText(gameObject.transform.position, "+" + roadHealingText, Color.green);
     }
 
 

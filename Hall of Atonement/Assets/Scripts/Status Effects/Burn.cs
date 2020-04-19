@@ -4,7 +4,7 @@ public class Burn : ActiveEffect, IDamageLogic
 {
 
     private protected override ContainerStatusEffects StatusEffectType { get; } = ContainerStatusEffects.Burn;
-    public override StatusEffectData StatusEffectData => GameManager.instance.GetStatusEffectData(StatusEffectType);
+    public override StatusEffectData StatusEffectData => StatusEffectDataContainer.Instance.GetStatusEffectData(StatusEffectType);
 
 
     public DamageType damageType;

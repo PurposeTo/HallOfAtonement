@@ -23,28 +23,39 @@ public class EnemyStateFighting : EnemyStateMachine
 
     public override void Fighting(EnemyAI enemyAI, GameObject focusTarget)
     {
-        GameObject oldTargetToAttack = enemyAI.CharacterPresenter.Combat.GetTargetToAttack();
-
-        if (focusTarget != oldTargetToAttack && oldTargetToAttack != null)
+        if (focusTarget != null)
         {
-            // Обнулить targetToAttack, так как у нас новая цель, на которой мы сфокусировались
-            enemyAI.CharacterPresenter.Combat.SetTargetToAttack(null);
-        }
 
-        if (fightingRoutine == null)
-        {
-            this.focusTarget = focusTarget;
+            GameObject oldTargetToAttack = enemyAI.CharacterPresenter.Combat.GetTargetToAttack();
 
-            fightingRoutine = StartCoroutine(FightingEnumerator(enemyAI));
-        }
-        else
-        {
-            float distanceToOldFocusTarget = Vector2.Distance(this.focusTarget.transform.position, transform.position);
-            float distanceToNewFocusTarget = Vector2.Distance(focusTarget.transform.position, transform.position);
+            if (focusTarget != oldTargetToAttack && oldTargetToAttack != null)
+            {
+                // Обнулить targetToAttack, так как у нас новая цель, на которой мы сфокусировались
+                enemyAI.CharacterPresenter.Combat.SetTargetToAttack(null);
+            }
 
-            if ((distanceToOldFocusTarget > enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius) || distanceToNewFocusTarget < distanceToOldFocusTarget)
+            if (fightingRoutine == null)
             {
                 this.focusTarget = focusTarget;
+
+                fightingRoutine = StartCoroutine(FightingEnumerator(enemyAI));
+            }
+            else
+            {
+                if (this.focusTarget != null)
+                {
+                    float distanceToOldFocusTarget = Vector2.Distance(this.focusTarget.transform.position, transform.position);
+                    float distanceToNewFocusTarget = Vector2.Distance(focusTarget.transform.position, transform.position);
+
+                    if ((distanceToOldFocusTarget > enemyAI.EnemyPresenter.MyEnemyStats.ViewingRadius) || distanceToNewFocusTarget < distanceToOldFocusTarget)
+                    {
+                        this.focusTarget = focusTarget;
+                    }
+                }
+                else
+                {
+                    this.focusTarget = focusTarget;
+                }
             }
         }
     }
