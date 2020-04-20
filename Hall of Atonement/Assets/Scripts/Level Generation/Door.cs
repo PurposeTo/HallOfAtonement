@@ -12,13 +12,13 @@ public class Door : MonoBehaviour
         _collider2D = gameObject.GetComponent<Collider2D>();
         _collider2D.isTrigger = false;
 
-        LevelController.Instance.OnLevelIsClear += OpenDoor;
+        RoomController.Instance.OnRoomIsClear += OpenDoor;
     }
 
 
     private void OnDestroy()
     {
-        LevelController.Instance.OnLevelIsClear -= OpenDoor;
+        RoomController.Instance.OnRoomIsClear -= OpenDoor;
     }
 
 

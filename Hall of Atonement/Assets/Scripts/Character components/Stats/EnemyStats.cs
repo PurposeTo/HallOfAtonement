@@ -38,12 +38,12 @@ public class EnemyStats : CharacterStats
 
         EnemyPresenter = (EnemyPresenter)CharacterPresenter;
 
-        LevelController.Instance.AddEnemyToAllEnemysList(gameObject);
+        RoomController.Instance.AddEnemyToAllEnemysList(gameObject);
     }
 
     private void OnDisable()
     {
-        LevelController.Instance.RemoveEnemyFromAllEnemysList(gameObject);
+        RoomController.Instance.RemoveEnemyFromAllEnemysList(gameObject);
     }
 
 

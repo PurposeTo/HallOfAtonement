@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public delegate void LevelIsClear();
+public delegate void RoomIsClear();
 public class StatusEffectDataContainer : Singleton<StatusEffectDataContainer>
 {
     [SerializeField] private List<StatusEffectData> StatusEffectDatas = new List<StatusEffectData>();

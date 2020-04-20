@@ -2,9 +2,9 @@
 using UnityEngine;
 
 
-public class LevelController : Singleton<LevelController>
+public class RoomController : Singleton<RoomController>
 {
-    public event LevelIsClear OnLevelIsClear;
+    public event RoomIsClear OnRoomIsClear;
 
     public GameObject player;
 
@@ -18,7 +18,7 @@ public class LevelController : Singleton<LevelController>
 
         if (enemys.Count == 0)
         {
-            OnLevelIsClear?.Invoke();
+            OnRoomIsClear?.Invoke();
         }
     }
 }

@@ -16,9 +16,9 @@ public class PlayerController : CharacterController
     private void Awake()
     {
         // Не сработает, если GameManager не инициализирован
-        if (LevelController.Instance != null)
+        if (RoomController.Instance != null)
         {
-            LevelController.Instance.player = gameObject;
+            RoomController.Instance.player = gameObject;
         }
         else
         {
