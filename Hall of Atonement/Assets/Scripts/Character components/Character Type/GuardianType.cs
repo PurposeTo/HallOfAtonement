@@ -5,9 +5,9 @@ public class GuardianType : EnemyType
     public override GameObject SearchingTarget()
     {
         GameObject target;
-        if (Vector2.Distance(GameManager.Instance.player.transform.position, transform.position) <= EnemyPresenter.MyEnemyStats.ViewingRadius) 
+        if (Vector2.Distance(LevelController.Instance.player.transform.position, transform.position) <= EnemyPresenter.MyEnemyStats.ViewingRadius) 
         {
-            target = GameManager.Instance.player;
+            target = LevelController.Instance.player;
         }
         else
         {

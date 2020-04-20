@@ -1,25 +1,54 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class GameManager : Singleton<GameManager>
 {
-    public event LevelIsClear OnLevelIsClear;
+    private Coroutine ReLoadLvlRoutine;
+    private Coroutine EnterTheHallRoutine;
 
-    public GameObject player;
+    string MainMenuName = "Main Menu";
+    string RoomName = "Test Room";
+    string PlayerSceneName = "Player Scene";
 
-    private List<GameObject> enemys = new List<GameObject>();
 
-
-    public void AddEnemyToAllEnemysList(GameObject enemy) { enemys.Add(enemy); }
-    public void RemoveEnemyFromAllEnemysList(GameObject enemy)
+    public void EnterTheHall()
     {
-        enemys.Remove(enemy);
-
-        if (enemys.Count == 0)
+        if (EnterTheHallRoutine == null)
         {
-            OnLevelIsClear?.Invoke();
+            EnterTheHallRoutine = StartCoroutine(EnterTheHallEnumerator());
         }
+    }
+
+
+    public void ReLoadRoom()
+    {
+        if (ReLoadLvlRoutine == null)
+        {
+            ReLoadLvlRoutine = StartCoroutine(ReLoadRoomEnumerator());
+        }
+    }
+
+
+    private IEnumerator ReLoadRoomEnumerator()
+    {
+        yield return SceneManager.UnloadSceneAsync(RoomName);
+
+        yield return SceneManager.LoadSceneAsync(RoomName, LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(PlayerSceneName));
+
+
+        ReLoadLvlRoutine = null;
+    }
+
+
+    private IEnumerator EnterTheHallEnumerator()
+    {
+        yield return SceneManager.LoadSceneAsync(PlayerSceneName, LoadSceneMode.Single);
+        yield return SceneManager.LoadSceneAsync(RoomName, LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(PlayerSceneName));
+
+        EnterTheHallRoutine = null;
     }
 }

@@ -7,6 +7,7 @@ public class StatusEffectImage : MonoBehaviour
     [SerializeField] private Image statusEffectImage;
     private ContainerEffectTypes EffectType;
 
+
     public void Set(Sprite sprite, ContainerEffectTypes EffectType)
     {
         statusEffectImage.sprite = sprite;
@@ -45,16 +46,6 @@ public class StatusEffectImage : MonoBehaviour
             default:
                 Debug.LogError(gameObject.name + " : error in ContainerEffect Type!");
                 break;
-
-                // Нельзя выбрать данные типы урона в качестве атаки!
-                //case ContainerDamageTypes.BleedingDamage:
-                //    Debug.Log(gameObject.name + " choise the BleedingDamage!");
-                //    DamageType = new BleedingDamage();
-                //    break;
-                //case ContainerDamageTypes.PoisonDamage:
-                //    Debug.Log(gameObject.name + " choise the PoisonDamage!");
-                //    DamageType = new PoisonDamage();
-                //    break;
         }
     }
 

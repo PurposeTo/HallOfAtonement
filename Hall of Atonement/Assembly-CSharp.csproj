@@ -139,10 +139,10 @@
     <Compile Include="Assets\Scripts\Level Generation\MapData.cs" />
     <Compile Include="Assets\Scripts\Level Generation\SimpleLevelGeneration.cs" />
     <Compile Include="Assets\Scripts\Singleton\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Singleton\LevelController.cs" />
     <Compile Include="Assets\Scripts\Singleton\Object Pooler\IPooledObject.cs" />
     <Compile Include="Assets\Scripts\Singleton\Object Pooler\ObjectPooler.cs" />
     <Compile Include="Assets\Scripts\Singleton\Object Pooler\UIObjectPooler.cs" />
-    <Compile Include="Assets\Scripts\Singleton\SceneController.cs" />
     <Compile Include="Assets\Scripts\Singleton\Singleton.cs" />
     <Compile Include="Assets\Scripts\Singleton\StatusEffectDataContainer.cs" />
     <Compile Include="Assets\Scripts\Singleton\VFX\VFXManager.cs" />

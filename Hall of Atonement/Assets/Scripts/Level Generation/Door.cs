@@ -12,13 +12,13 @@ public class Door : MonoBehaviour
         _collider2D = gameObject.GetComponent<Collider2D>();
         _collider2D.isTrigger = false;
 
-        GameManager.Instance.OnLevelIsClear += OpenDoor;
+        LevelController.Instance.OnLevelIsClear += OpenDoor;
     }
 
 
     private void OnDestroy()
     {
-        GameManager.Instance.OnLevelIsClear -= OpenDoor;
+        LevelController.Instance.OnLevelIsClear -= OpenDoor;
     }
 
 
@@ -26,7 +26,7 @@ public class Door : MonoBehaviour
     {
         if (collision.TryGetComponent(out PlayerController _))
         {
-            SceneController.Instance.ReLoadRoom();
+            GameManager.Instance.ReLoadRoom();
         }
     }
 
