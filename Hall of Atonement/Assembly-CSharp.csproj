@@ -138,6 +138,7 @@
     <Compile Include="Assets\Scripts\Level Generation\Door.cs" />
     <Compile Include="Assets\Scripts\Level Generation\MapData.cs" />
     <Compile Include="Assets\Scripts\Level Generation\SimpleLevelGeneration.cs" />
+    <Compile Include="Assets\Scripts\PlayerSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\Singleton\GameManager.cs" />
     <Compile Include="Assets\Scripts\Singleton\Object Pooler\IPooledObject.cs" />
     <Compile Include="Assets\Scripts\Singleton\Object Pooler\ObjectPooler.cs" />

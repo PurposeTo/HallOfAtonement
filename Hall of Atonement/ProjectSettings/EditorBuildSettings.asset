@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 0874a7f5f2d21a44abbdfcf9726e780e
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
     path: Assets/Scenes/Level Generation Anvil.unity
     guid: 2f67489059e0959469cc1b050d931bf7
   - enabled: 1
