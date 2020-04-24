@@ -266,7 +266,7 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public float Healing(float amount)
+    public float Healing(float amount, bool displayPopup = false)
     {
         float UnclaimingHealthPoints = 0f;
         float _maxHealthPoint = maxHealthPoint.GetValue();
@@ -280,8 +280,12 @@ public abstract class CharacterStats : UnitStats
 
         ReportUpdateHealthValue();
 
-        
-        //characterVFX.DisplayPopupText(amount.ToString());
+        if (displayPopup)
+        {
+            string roadHealingText = ((int)amount).ToString();
+
+            VFXManager.Instance.DisplayPopupText(gameObject.transform.position, "+" + roadHealingText, Color.green);
+        }
 
         return UnclaimingHealthPoints;
     }
@@ -289,11 +293,7 @@ public abstract class CharacterStats : UnitStats
 
     public void ExtraHealing(float amount) 
     {
-        healthPointConcentration = Healing(amount);
-
-        string roadHealingText = ((int)amount).ToString();
-
-        VFXManager.Instance.DisplayPopupText(gameObject.transform.position, "+" + roadHealingText, Color.green);
+        healthPointConcentration += Healing(amount, true); // ExtraHealing должен отображать визуально хил всегда
     }
 
 

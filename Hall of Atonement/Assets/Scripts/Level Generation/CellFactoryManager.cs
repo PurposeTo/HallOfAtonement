@@ -23,6 +23,8 @@ public class CellFactoryManager : MonoBehaviour
 
     public TileBase GetTileProduct(CellType cellType)
     {
+        // Здесь можно прописать RuleTile
+
         if (cellType == CellType.None)
         {
             return null;
