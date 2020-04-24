@@ -35,17 +35,16 @@ public class Bullet : MonoBehaviour, IPooledObject
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject targetGameObject = collision.gameObject;
 
         if (!collision.isTrigger)
         {
             //Это что то имеет Статы?
-            targetGameObject.TryGetComponent(out UnitStats targetStats);
+            collision.gameObject.TryGetComponent(out UnitStats targetStats);
 
 
             if (targetStats != ownerStats) // Если мы попали не в себя
             {
-                Debug.Log("Пуля " + ownerStats.gameObject + "попала в: " + targetGameObject);
+                Debug.Log("Пуля " + ownerStats.gameObject + "попала в: " + collision.gameObject);
 
 
                 if (targetStats != null)

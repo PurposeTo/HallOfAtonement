@@ -62,7 +62,7 @@ public class RangedLaserWeapon : BaseWeapon, IRanged
 
         if (targetStats != ownerStats) // Если мы попали не в себя
         {
-            Debug.Log("Лазер " + ownerStats.gameObject + "попал в: " + targetStats.gameObject);
+            Debug.Log("Лазер " + ownerStats.gameObject + "попал в: " + hit.collider.gameObject);
 
 
             if (targetStats != null)

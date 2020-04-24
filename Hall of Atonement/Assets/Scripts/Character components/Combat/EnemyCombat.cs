@@ -25,8 +25,11 @@ public class EnemyCombat : CharacterCombat
 
     public void GetEnemyFightingLogic(GameObject focusTarget)
     {
+        float distance = Vector2.Distance(focusTarget.transform.position, transform.position);
+        float focusTargetScale = focusTarget.transform.localScale.x; // Необходимо брать Stat characterSize в будущем
+
         // Как/когда нужно атаковать?
-        if (Vector2.Distance(focusTarget.transform.position, transform.position) <= EnemyPresenter.EnemyCombat.EnemyAttackBehavior.GetAttackRange())
+        if (distance - (focusTargetScale / 2f) <= EnemyPresenter.EnemyCombat.EnemyAttackBehavior.GetAttackRange())
         {
             Attack(focusTarget);
         }
@@ -34,6 +37,7 @@ public class EnemyCombat : CharacterCombat
         {
             // Если TargetToAttack не в зоне поражения оружия, то стоит обнулить его
             targetToAttack = null;
+
         }
     }
 }

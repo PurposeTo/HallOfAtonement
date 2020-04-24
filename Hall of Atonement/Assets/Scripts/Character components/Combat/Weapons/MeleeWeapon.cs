@@ -24,7 +24,7 @@ public class MeleeWeapon : BaseWeapon, IMelee
 
             if (targetStats != ownerStats) // Если мы попали не в себя
             {
-                Debug.Log("Клинок " + ownerStats.gameObject + "попал в: " + targetStats.gameObject);
+                Debug.Log("Клинок " + ownerStats.gameObject + "попал в: " + hitUnits[i].gameObject);
 
 
                 if (targetStats != null)
