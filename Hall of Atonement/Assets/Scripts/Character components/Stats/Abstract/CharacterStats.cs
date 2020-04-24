@@ -28,6 +28,7 @@ public abstract class CharacterStats : UnitStats
     private PercentStat chanceToGetAnExtraSkillPoint;
     private protected Attribute[] AllAttributes => new Attribute[] { strength, agility, mastery };
 
+    public Stat Size = new Stat(1f);
     //public Stat maxHealthPoint;
     public Stat movementSpeed;
     public Stat rotationSpeed;
@@ -100,6 +101,8 @@ public abstract class CharacterStats : UnitStats
         agility.OnChangeAttributeFinalValue += UpdateBaseAgilityStatsValue;
         mastery.OnChangeAttributeFinalValue += UpdateBaseMasteryStatsValue;
         level.OnLevelUp += PutSkillPoints;
+
+        Size.OnChangeStatFinalValue += UpdateCharacterSize;
     }
 
 
@@ -109,6 +112,8 @@ public abstract class CharacterStats : UnitStats
         agility.OnChangeAttributeFinalValue -= UpdateBaseAgilityStatsValue;
         mastery.OnChangeAttributeFinalValue -= UpdateBaseMasteryStatsValue;
         level.OnLevelUp -= PutSkillPoints;
+
+        Size.OnChangeStatFinalValue -= UpdateCharacterSize;
     }
 
 
@@ -144,6 +149,8 @@ public abstract class CharacterStats : UnitStats
         bleedingResistance = new PercentStat(baseBleedingResistanceValue);
         fireResistance = new PercentStat(baseFireResistanceValue);
         iceResistance = new PercentStat(baseIceResistanceValue);
+
+        UpdateCharacterSize();
     }
 
 
@@ -161,8 +168,6 @@ public abstract class CharacterStats : UnitStats
         attackDamage.ChangeBaseValue(BaseAttackDamage + (strength.GetValue() * attackDamageForStrenght) + (agility.GetValue() * attackDamageForAgility));
 
         attackSpeed.ChangeBaseValue(BaseAttackSpeed + (strength.GetValue() * attackSpeedForStrenght) + (agility.GetValue() * attackSpeedForAgility));
-
-
     }
 
 
@@ -188,6 +193,13 @@ public abstract class CharacterStats : UnitStats
 
         criticalMultiplier.ChangeBaseValue(BaseCriticalMultiplier + (mastery.GetValue() * criticalMultiplierForMastery));
         criticalChance.ChangeBaseValue(BaseCriticalChance + (mastery.GetValue() * criticalChanceForMastery));
+    }
+
+
+    private void UpdateCharacterSize()
+    {
+        float _size = Size.GetValue();
+        transform.localScale = new Vector3(_size, _size, _size);
     }
 
 

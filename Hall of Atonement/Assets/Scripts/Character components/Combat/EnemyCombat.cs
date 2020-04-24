@@ -26,7 +26,7 @@ public class EnemyCombat : CharacterCombat
     public void GetEnemyFightingLogic(GameObject focusTarget)
     {
         float distance = Vector2.Distance(focusTarget.transform.position, transform.position);
-        float focusTargetScale = focusTarget.transform.localScale.x; // Необходимо брать Stat characterSize в будущем
+        float focusTargetScale = focusTarget.transform.localScale.x;
 
         // Как/когда нужно атаковать?
         if (distance - (focusTargetScale / 2f) <= EnemyPresenter.EnemyCombat.EnemyAttackBehavior.GetAttackRange())
