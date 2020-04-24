@@ -2,13 +2,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class RangedLaserWeapon : MonoBehaviour, IRanged
+public class RangedLaserWeapon : BaseWeapon, IRanged
 {
-    public Transform weapon;
-
     private Ray2D ray;
-
-    Transform IWeapon.AttackPoint => weapon;
 
     private Coroutine casteRoutine;
 
@@ -53,7 +49,7 @@ public class RangedLaserWeapon : MonoBehaviour, IRanged
         RaycastHit2D hit;
 
         Quaternion rotation = transform.rotation;
-        ray = new Ray2D(weapon.position, rotation * Vector2.up);
+        ray = new Ray2D(WeaponAttackPoint.position, rotation * Vector2.up);
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow, 0.6f);
 
         //Выстрелить
@@ -62,20 +58,19 @@ public class RangedLaserWeapon : MonoBehaviour, IRanged
         //Лазер попала во что то
         //for (int i = 0; i < hit.Length; i++)
         //{
-        if (hit.collider.gameObject != gameObject)
-        {
-            Debug.Log(gameObject.name + " попал в: " + hit.collider.gameObject.name);
+        hit.collider.TryGetComponent(out UnitStats targetStats);
 
-            //Это что то имеет Статы?
-            if (hit.collider.gameObject.TryGetComponent(out UnitStats targetStats))
+        if (targetStats != ownerStats) // Если мы попали не в себя
+        {
+            Debug.Log("Лазер " + ownerStats.gameObject + "попал в: " + targetStats.gameObject);
+
+
+            if (targetStats != null)
             {
                 combat.DamageUnit.DoDamage(targetStats, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
             }
         }
 
         //}
-
-
-
     }
 }

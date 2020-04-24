@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour, IPooledObject
     public Rigidbody2D bulletRb2d { get; private set; }
     private readonly DamageUnit damageUnit = new DamageUnit();
 
-    private GameObject ownerGameObject;
     private CharacterStats ownerStats;
     private DamageType damageType;
     private float attackDamage;
@@ -38,23 +37,30 @@ public class Bullet : MonoBehaviour, IPooledObject
     {
         GameObject targetGameObject = collision.gameObject;
 
-        if (targetGameObject != ownerGameObject && !collision.isTrigger)
+        if (!collision.isTrigger)
         {
-            Debug.Log("Пуля " + ownerGameObject + "попала в: " + targetGameObject);
-
-            bool isEvade = false;
-
             //Это что то имеет Статы?
-            if (targetGameObject.TryGetComponent(out UnitStats targetStats))
-            {
-                damageUnit.DoDamage(targetStats, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers); ;
-            }
+            targetGameObject.TryGetComponent(out UnitStats targetStats);
 
-            // Разбить, только если цель НЕ увернулась
-            if (!isEvade)
-            {
-                gameObject.SetActive(false);
 
+            if (targetStats != ownerStats) // Если мы попали не в себя
+            {
+                Debug.Log("Пуля " + ownerStats.gameObject + "попала в: " + targetGameObject);
+
+
+                if (targetStats != null)
+                {
+                    damageUnit.DoDamage(targetStats, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
+                }
+
+
+                bool isEvade = false;
+
+                // Разбить, только если цель НЕ увернулась
+                if (!isEvade)
+                {
+                    gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -62,16 +68,15 @@ public class Bullet : MonoBehaviour, IPooledObject
 
     void IPooledObject.OnObjectSpawn()
     {
-        if(waitingRoutine == null) 
-        { 
+        if (waitingRoutine == null)
+        {
             waitingRoutine = StartCoroutine(WaitingEnumerator(lifeTime));
         }
     }
 
 
-    public void BulletInitialization(GameObject ownerGameObject, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
+    public void BulletInitialization(CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
-        this.ownerGameObject = ownerGameObject;
         this.ownerStats = ownerStats;
         this.damageType = (DamageType)damageType.Clone();
         this.attackDamage = attackDamage;

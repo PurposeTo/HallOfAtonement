@@ -14,11 +14,11 @@ public class EnemyCombat : CharacterCombat
         // Проверить, какое оружие имеет данный враг и дать ему соответствующую логику
         if (Weapon is IMelee)
         {
-            EnemyAttackBehavior = gameObject.AddComponent<MeleeEnemyLogic>();
+            EnemyAttackBehavior = gameObject.AddComponent<MeleeEnemyBehaviour>();
         }
         else if (Weapon is IRanged) 
         {
-            EnemyAttackBehavior = gameObject.AddComponent<RangedEnemyLogic>();
+            EnemyAttackBehavior = gameObject.AddComponent<RangedEnemyBehaviour>();
         }
     }
 

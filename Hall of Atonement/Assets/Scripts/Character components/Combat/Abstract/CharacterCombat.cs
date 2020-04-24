@@ -19,7 +19,7 @@ public abstract class CharacterCombat : MonoBehaviour
     {
         CharacterPresenter = GetComponent<CharacterPresenter>();
 
-        Weapon = GetComponent<IWeapon>();
+        Weapon = GetComponentInChildren<IWeapon>();
 
         attackCooldown = gameObject.AddComponent<Cooldown>();
     }

@@ -1,12 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedShootWeapon : MonoBehaviour, IRanged
+public class RangedShootWeapon : BaseWeapon, IRanged
 {
-    Transform IWeapon.AttackPoint => weapon;
-
-    public Transform weapon;
-
     public GameObject BulletPrefab;
 
     private float bullerForce = 20f;
@@ -18,7 +14,7 @@ public class RangedShootWeapon : MonoBehaviour, IRanged
         //GameObject bullet = Instantiate(BulletPrefab, weapon.position, weapon.rotation);
 
 
-        GameObject bullet = ObjectPooler.Instance.SpawnFromPool(BulletPrefab, weapon.transform.position, weapon.transform.rotation);
+        GameObject bullet = ObjectPooler.Instance.SpawnFromPool(BulletPrefab, WeaponAttackPoint.transform.position, WeaponAttackPoint.transform.rotation);
 
         if (bullet != null)
         {
@@ -27,9 +23,9 @@ public class RangedShootWeapon : MonoBehaviour, IRanged
             //bullet.SetActive(true);
 
             Bullet bulletScript = bullet.GetComponent<Bullet>();
-            bulletScript.bulletRb2d.AddForce(weapon.up * bullerForce, ForceMode2D.Impulse); // Weapon.up указывает на направление полета пули!
+            bulletScript.bulletRb2d.AddForce(WeaponAttackPoint.up * bullerForce, ForceMode2D.Impulse); // Weapon.up указывает на направление полета пули!
 
-            bulletScript.BulletInitialization(gameObject, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
+            bulletScript.BulletInitialization(ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
         }
 
 

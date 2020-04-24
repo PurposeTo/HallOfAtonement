@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(IRanged))]
-public class RangedEnemyLogic : MonoBehaviour, IEnemyAttackBehavior
+public class RangedEnemyBehaviour : MonoBehaviour, IEnemyAttackBehavior
 {
-    private bool getСloser = false;
+    private bool getСloser = false; // Флаг - нужно ли подходить 
 
-    //private IRanged rangeWeapon;
     private float AttackRange;
 
     private void Start()

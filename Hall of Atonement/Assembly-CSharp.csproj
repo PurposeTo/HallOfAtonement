@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\Character components\Combat\DamageUnit.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\EnemyCombat.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\PlayerCombat.cs" />
+    <Compile Include="Assets\Scripts\Character components\Combat\Weapons\Abstract\BaseWeapon.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Weapons\IWeapon.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Weapons\MeleeWeapon.cs" />
     <Compile Include="Assets\Scripts\Character components\Combat\Weapons\RangedLaserWeapon.cs" />
@@ -105,8 +106,8 @@
     <Compile Include="Assets\Scripts\Character components\Controllers\Controller State Machine\PlayerStates\PlayerStatePatrolling.cs" />
     <Compile Include="Assets\Scripts\Character components\Controllers\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\Character components\Controllers\EnemyAttack Behavior\IEnemyAttackBehavior.cs" />
-    <Compile Include="Assets\Scripts\Character components\Controllers\EnemyAttack Behavior\MeleeEnemyLogic.cs" />
-    <Compile Include="Assets\Scripts\Character components\Controllers\EnemyAttack Behavior\RangedEnemyLogic.cs" />
+    <Compile Include="Assets\Scripts\Character components\Controllers\EnemyAttack Behavior\MeleeEnemyBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Character components\Controllers\EnemyAttack Behavior\RangedEnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\Character components\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\CharacterMovement.cs" />
     <Compile Include="Assets\Scripts\Character components\Movement\CharacterMovementStateMachine.cs" />

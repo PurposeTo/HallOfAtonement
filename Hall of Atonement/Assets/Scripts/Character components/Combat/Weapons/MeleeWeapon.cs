@@ -1,19 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeWeapon : MonoBehaviour, IMelee
+public class MeleeWeapon : BaseWeapon, IMelee
 {
-    public Transform weapon;
-
-    public float MeleeAttackRadius { get; set; } = .8f;
-    Transform IWeapon.AttackPoint => weapon;
+    public float MeleeAttackRadius { get; } = .8f;
 
     private void OnDrawGizmosSelected()
     {
-        if (weapon == null) return;
-
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(weapon.position, MeleeAttackRadius);
+        Gizmos.DrawWireSphere(WeaponAttackPoint.position, MeleeAttackRadius);
     }
 
 
@@ -21,13 +16,21 @@ public class MeleeWeapon : MonoBehaviour, IMelee
     {
         print(gameObject.name + " использует ближнюю атаку!");
 
-        Collider2D[] hitUnits = Physics2D.OverlapCircleAll(weapon.position, MeleeAttackRadius);
+        Collider2D[] hitUnits = Physics2D.OverlapCircleAll(WeaponAttackPoint.position, MeleeAttackRadius);
 
         for (int i = 0; i < hitUnits.Length; i++)
         {
-            if (hitUnits[i].gameObject != gameObject && hitUnits[i].TryGetComponent(out UnitStats targetStats))
+            hitUnits[i].TryGetComponent(out UnitStats targetStats);
+
+            if (targetStats != ownerStats) // Если мы попали не в себя
             {
-                combat.DamageUnit.DoDamage(targetStats, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
+                Debug.Log("Клинок " + ownerStats.gameObject + "попал в: " + targetStats.gameObject);
+
+
+                if (targetStats != null)
+                {
+                    combat.DamageUnit.DoDamage(targetStats, ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
+                }
             }
         }
 

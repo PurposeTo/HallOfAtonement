@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(IMelee))]
-public class MeleeEnemyLogic : MonoBehaviour, IEnemyAttackBehavior
+public class MeleeEnemyBehaviour : MonoBehaviour, IEnemyAttackBehavior
 {
-    private IMelee meleeWeapon;
     private float AttackRange;
 
     private void Start()
     {
-        meleeWeapon = gameObject.GetComponent<IMelee>();
+        MeleeWeapon meleeWeapon = gameObject.GetComponentInChildren<MeleeWeapon>();
 
-        AttackRange = meleeWeapon.MeleeAttackRadius + meleeWeapon.AttackPoint.localPosition.magnitude;
+        AttackRange = meleeWeapon.MeleeAttackRadius + meleeWeapon.WeaponAttackPoint.localPosition.magnitude;
     }
 
 
