@@ -31,7 +31,6 @@ public class LevelSystem
 
     [SerializeField]
     private int level;
-    [SerializeField]
     private int experience;
     private int experienceToNextLevel;
 

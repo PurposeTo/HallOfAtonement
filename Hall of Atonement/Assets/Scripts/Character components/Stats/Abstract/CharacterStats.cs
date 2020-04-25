@@ -11,8 +11,7 @@ public abstract class CharacterStats : UnitStats
         IceDamage
     }
 
-
-    private protected float healthPointConcentration;
+    private float overflowingHealthPoints;
 
     public CharacterPresenter CharacterPresenter { get; private protected set; }
 
@@ -305,7 +304,26 @@ public abstract class CharacterStats : UnitStats
 
     public void ExtraHealing(float amount) 
     {
-        healthPointConcentration += Healing(amount, true); // ExtraHealing должен отображать визуально хил всегда
+        overflowingHealthPoints += Healing(amount, true); // ExtraHealing должен отображать визуально хил всегда
+    }
+
+
+    public float GetOverflowingHealthPoints()
+    {
+        return overflowingHealthPoints;
+    }
+
+
+    public void SetOverflowingHealthPoints(float value)
+    {
+        if (value >= 0f)
+        {
+            overflowingHealthPoints = value;
+        }
+        else
+        {
+            overflowingHealthPoints = 0f;
+        }
     }
 
 
@@ -313,21 +331,12 @@ public abstract class CharacterStats : UnitStats
     {
         // Множитель получаемого опыта
         level.AddExperience((int)(amount * (1 + (mastery.GetValue() * experieneMultiplierForMastery))));
-
-        //AmountOfNewLvls = level.GetLvl() - currentLvl;
-        //// Если уровень повысился
-        //if (AmountOfNewLvls > 0)
-        //{
-        //    lvlBar.ShowLvl();
-
-        //    UseSkillPoints(AmountOfNewLvls);
-        //}
     }
 
 
     private void PutSkillPoints()
     {
-        totalAvailableSkillPoints += GetSkillPoints();
+        totalAvailableSkillPoints += GetSkillPointsFromLvlUp();
 
 
         if(coroutinePutAvailableSkillPoints == null) 
@@ -350,7 +359,7 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    private int GetSkillPoints()
+    private int GetSkillPointsFromLvlUp()
     {
         int ExstraSkillPoints = 0;
 

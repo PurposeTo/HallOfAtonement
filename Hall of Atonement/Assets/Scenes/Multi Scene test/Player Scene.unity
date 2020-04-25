@@ -239,6 +239,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vampire Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5923922427865877916, guid: 73db80284e7ba4041b0853d491bdae19,
+        type: 3}
+      propertyPath: overflowingHealthPoints
+      value: 10000
+      objectReference: {fileID: 0}
     - target: {fileID: 5923922427865877918, guid: 73db80284e7ba4041b0853d491bdae19,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -328,6 +333,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 348796076}
     - target: {fileID: 1848620848399727688, guid: f7a17973ad2cc3e4d8ab51f57ff1a1de,
         type: 3}
       propertyPath: m_Name
@@ -388,11 +397,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5977882067966330889, guid: f7a17973ad2cc3e4d8ab51f57ff1a1de,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 348796076}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7a17973ad2cc3e4d8ab51f57ff1a1de, type: 3}
 --- !u!1001 &5779059346864542463

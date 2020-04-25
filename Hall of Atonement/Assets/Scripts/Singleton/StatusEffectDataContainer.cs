@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public delegate void RoomIsClear();
 public class StatusEffectDataContainer : Singleton<StatusEffectDataContainer>

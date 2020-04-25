@@ -8,7 +8,7 @@ public class CameraFollow : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        player = RoomController.Instance.player;
+        player = PlayerController.Instance.gameObject;
 
         transform.position = GetTheRightCameraPosition();
     }

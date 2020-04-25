@@ -6,6 +6,9 @@ public class PlayerController : CharacterController
 
     private Joystick joystick;
     private AttackButtonEvent attackButton;
+
+    public static PlayerController Instance { get; private set; }
+
     public PlayerPresenter PlayerPresenter { get; private protected set; }
 
     public PlayerControllerStateMachine PlayerControllerStateMachine { get; set; }
@@ -15,15 +18,7 @@ public class PlayerController : CharacterController
 
     private void Awake()
     {
-        // Не сработает, если GameManager не инициализирован
-        if (RoomController.Instance != null)
-        {
-            RoomController.Instance.player = gameObject;
-        }
-        else
-        {
-            Debug.LogWarning("GameManager is not initializing!");
-        }
+        Instance = this;
     }
 
     private protected override void Start()

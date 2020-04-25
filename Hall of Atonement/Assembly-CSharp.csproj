@@ -167,6 +167,7 @@
     <Compile Include="Assets\Scripts\Status Effects\Data\WeaponHardingData.cs" />
     <Compile Include="Assets\Scripts\Status Effects\DefenseModifiers\FriendlyFireDefence.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Freeze.cs" />
+    <Compile Include="Assets\Scripts\Status Effects\OverflowingLifesteal.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Poisoning.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\Abstract\DamageType.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\Abstract\EffectDamage.cs" />

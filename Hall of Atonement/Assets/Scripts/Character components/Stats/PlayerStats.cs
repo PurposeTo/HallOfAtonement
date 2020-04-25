@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-
-public class PlayerStats : CharacterStats
+﻿public class PlayerStats : CharacterStats
 {
     public override void GetExperience(int amount)
     {
@@ -12,6 +9,6 @@ public class PlayerStats : CharacterStats
     public override void Die(CharacterStats killerStats)
     {
         base.Die(killerStats);
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //ТУТ! смерть!
+        // GameManager.Instance.EnterTheHall(); //ТУТ! смерть!
     }
 }
