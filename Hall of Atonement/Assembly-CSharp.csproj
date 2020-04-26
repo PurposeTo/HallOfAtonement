@@ -122,6 +122,7 @@
     <Compile Include="Assets\Scripts\Character components\Stats\Box\SteelBox.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Box\WoodenBox.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\EnemyStats.cs" />
+    <Compile Include="Assets\Scripts\Character components\Stats\OverflowingHPContainer.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\Character components\UnitPresenters\CharacterPresenter.cs" />
     <Compile Include="Assets\Scripts\Character components\UnitPresenters\EnemyPresenter.cs" />

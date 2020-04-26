@@ -22,7 +22,7 @@ public class StatusEffectDataContainer : Singleton<StatusEffectDataContainer>
         if (!StatusEffectDictionary.ContainsKey(statusEffectKey))
         {
             Debug.LogError("ContainerStatusEffects with statusEffectKey:" + statusEffectKey + " does not exist");
-            return null;
+            return StatusEffectDictionary[ContainerStatusEffects.DefaultStatusEffectData];
         }
 
         return StatusEffectDictionary[statusEffectKey];

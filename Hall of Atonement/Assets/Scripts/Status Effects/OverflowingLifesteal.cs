@@ -10,9 +10,10 @@ using UnityEngine;
  */
 public class OverflowingLifesteal : StatusEffect, IHealLogic
 {
-    private protected override ContainerStatusEffects StatusEffectType => ContainerStatusEffects.Lifesteal; // позже изменить
+    private protected override ContainerStatusEffects StatusEffectType => throw new System.NotImplementedException(); // позже изменить
 
     public override StatusEffectData StatusEffectData => StatusEffectDataContainer.Instance.GetStatusEffectData(StatusEffectType);
+
 
     private CharacterPresenter characterPresenter;
     private CharacterStats myStats;

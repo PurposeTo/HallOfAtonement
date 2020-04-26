@@ -11,7 +11,7 @@ public abstract class CharacterStats : UnitStats
         IceDamage
     }
 
-    private float overflowingHealthPoints;
+    private OverflowingHPContainer overflowingHPContainer = new OverflowingHPContainer();
 
     public CharacterPresenter CharacterPresenter { get; private protected set; }
 
@@ -304,25 +304,13 @@ public abstract class CharacterStats : UnitStats
 
     public void ExtraHealing(float amount) 
     {
-        overflowingHealthPoints += Healing(amount, true); // ExtraHealing должен отображать визуально хил всегда
-    }
+        float newOverflowingHP = Healing(amount, true); // ExtraHealing должен отображать визуально хил всегда
 
-
-    public float GetOverflowingHealthPoints()
-    {
-        return overflowingHealthPoints;
-    }
-
-
-    public void SetOverflowingHealthPoints(float value)
-    {
-        if (value >= 0f)
+        if (newOverflowingHP > 0f)
         {
-            overflowingHealthPoints = value;
-        }
-        else
-        {
-            overflowingHealthPoints = 0f;
+            float currentOverflowingHP = overflowingHPContainer.GetOverflowingHealthPoints();
+
+            overflowingHPContainer.SetOverflowingHealthPoints(currentOverflowingHP + newOverflowingHP);
         }
     }
 
