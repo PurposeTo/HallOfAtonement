@@ -44,7 +44,7 @@ public class Bullet : MonoBehaviour, IPooledObject
 
             if (targetStats != ownerStats) // Если мы попали не в себя
             {
-                Debug.Log("Пуля " + ownerStats.gameObject + "попала в: " + collision.gameObject);
+                Debug.Log("Пуля " + ownerStats + " попала в: " + collision.gameObject);
 
 
                 if (targetStats != null)

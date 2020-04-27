@@ -2,7 +2,7 @@
 
 public class OverflowingHPContainer
 {
-    private const int overflowingHPCoefficient = 6;
+    private const int overflowingHPCoefficient = 10;
 
     private float overflowingHealthPoints;
 
@@ -26,9 +26,8 @@ public class OverflowingHPContainer
             {
                 overflowingHealthPoints -= overflowingHPCoefficient;
                 AttackDamageForOverflowingHP.SetModifierValue(AttackDamageForOverflowingHP.GetModifierValue() + 1f);
-                MaxHPForOverflowingHP.SetModifierValue(MaxHPForOverflowingHP.GetModifierValue() + 1f);
+                MaxHPForOverflowingHP.SetModifierValue(MaxHPForOverflowingHP.GetModifierValue() + 0.1f);
             }
-
         }
         else
         {

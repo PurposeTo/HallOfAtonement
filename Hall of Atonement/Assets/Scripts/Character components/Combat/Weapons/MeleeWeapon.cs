@@ -14,8 +14,6 @@ public class MeleeWeapon : BaseWeapon, IMelee
 
     void IWeapon.UseWeapon(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
-        print(gameObject.name + " использует ближнюю атаку!");
-
         Collider2D[] hitUnits = Physics2D.OverlapCircleAll(WeaponAttackPoint.position, MeleeAttackRadius);
 
         for (int i = 0; i < hitUnits.Length; i++)
@@ -24,7 +22,7 @@ public class MeleeWeapon : BaseWeapon, IMelee
 
             if (targetStats != ownerStats) // Если мы попали не в себя
             {
-                Debug.Log("Клинок " + ownerStats.gameObject + "попал в: " + hitUnits[i].gameObject);
+                Debug.Log("Клинок " + ownerStats + " попал в: " + hitUnits[i].gameObject);
 
 
                 if (targetStats != null)

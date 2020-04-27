@@ -9,11 +9,6 @@ public class RangedShootWeapon : BaseWeapon, IRanged
 
     public void UseWeapon(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
-        print(gameObject.name + " использует пушку!");
-
-        //GameObject bullet = Instantiate(BulletPrefab, weapon.position, weapon.rotation);
-
-
         GameObject bullet = ObjectPooler.Instance.SpawnFromPool(BulletPrefab, WeaponAttackPoint.transform.position, WeaponAttackPoint.transform.rotation);
 
         if (bullet != null)

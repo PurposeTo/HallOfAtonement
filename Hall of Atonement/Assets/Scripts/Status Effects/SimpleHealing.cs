@@ -8,7 +8,7 @@ using UnityEngine;
  * При хиле происходит изменение ХП, которое СРАЗУ же вызывает этот же метод, из за чего цикл становится бесконечным!
  * Баг все еще есть!
  */
-public class OverflowingLifesteal : StatusEffect, IHealLogic
+public class SimpleHealing : StatusEffect, IHealLogic
 {
     private protected override ContainerStatusEffects StatusEffectType => throw new System.NotImplementedException(); // позже изменить
 
@@ -56,13 +56,10 @@ public class OverflowingLifesteal : StatusEffect, IHealLogic
     {
         yield return null; // Не очень понимаю, зачем пропускать кадр?
 
-        while (myStats.GetOverflowingHealthPoints() > 0f && myStats.CurrentHealthPoint < myStats.maxHealthPoint.GetValue())
+        while (myStats.CurrentHealthPoint < myStats.maxHealthPoint.GetValue())
         {
-            float overflowingHealthPoints = myStats.GetOverflowingHealthPoints();
-
             float _healing = healingPerSec * Time.deltaTime;
             myStats.Healing(_healing);
-            myStats.SetOverflowingHealthPoints(overflowingHealthPoints - _healing);
 
             yield return null;
         }

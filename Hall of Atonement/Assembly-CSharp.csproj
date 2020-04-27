@@ -116,13 +116,13 @@
     <Compile Include="Assets\Scripts\Character components\Stats\Base\Attribute.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Base\CharacteristicModifier.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Base\LevelSystem.cs" />
+    <Compile Include="Assets\Scripts\Character components\Stats\Base\OverflowingHPContainer.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Base\PercentStat.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Base\Stat.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Box\BoxStats.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Box\SteelBox.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Box\WoodenBox.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\EnemyStats.cs" />
-    <Compile Include="Assets\Scripts\Character components\Stats\OverflowingHPContainer.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\Character components\UnitPresenters\CharacterPresenter.cs" />
     <Compile Include="Assets\Scripts\Character components\UnitPresenters\EnemyPresenter.cs" />
@@ -168,8 +168,8 @@
     <Compile Include="Assets\Scripts\Status Effects\Data\WeaponHardingData.cs" />
     <Compile Include="Assets\Scripts\Status Effects\DefenseModifiers\FriendlyFireDefence.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Freeze.cs" />
-    <Compile Include="Assets\Scripts\Status Effects\OverflowingLifesteal.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Poisoning.cs" />
+    <Compile Include="Assets\Scripts\Status Effects\SimpleHealing.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\Abstract\DamageType.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\Abstract\EffectDamage.cs" />
     <Compile Include="Assets\Scripts\Status Effects\Type of damage\BleedingDamage.cs" />

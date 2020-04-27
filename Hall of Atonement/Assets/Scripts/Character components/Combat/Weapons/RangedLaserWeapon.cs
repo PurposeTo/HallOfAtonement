@@ -44,8 +44,6 @@ public class RangedLaserWeapon : BaseWeapon, IRanged
         //ТУТ надо запустить корутину ожидания "Накопление энергии", в процессе которой носитель данного оружия будет стоять...
         // Так же необходимо срывать каст по желанию...
 
-        print(gameObject.name + " использует дальнюю атаку!");
-
         RaycastHit2D hit;
 
         Quaternion rotation = transform.rotation;
@@ -62,7 +60,7 @@ public class RangedLaserWeapon : BaseWeapon, IRanged
 
         if (targetStats != ownerStats) // Если мы попали не в себя
         {
-            Debug.Log("Лазер " + ownerStats.gameObject + "попал в: " + hit.collider.gameObject);
+            Debug.Log("Лазер " + ownerStats + " попал в: " + hit.collider.gameObject);
 
 
             if (targetStats != null)
