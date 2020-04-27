@@ -11,7 +11,6 @@ public abstract class CharacterStats : UnitStats
         IceDamage
     }
 
-    private OverflowingHPContainer overflowingHPContainer = new OverflowingHPContainer();
 
     public CharacterPresenter CharacterPresenter { get; private protected set; }
 
@@ -19,20 +18,22 @@ public abstract class CharacterStats : UnitStats
     public Attribute strength = new Attribute();
     public Attribute agility = new Attribute();
     public Attribute mastery = new Attribute();
+    private protected Attribute[] AllAttributes => new Attribute[] { strength, agility, mastery };
+
+    private readonly OverflowingHPContainer overflowingHPContainer = new OverflowingHPContainer();
 
     private Coroutine coroutinePutAvailableSkillPoints;
     private const int skillPointsPerLevel = 1;
     private int totalAvailableSkillPoints;
     protected virtual float BaseChanceToGetAnExtraSkillPoint { get; } = 0f;
     private PercentStat chanceToGetAnExtraSkillPoint;
-    private protected Attribute[] AllAttributes => new Attribute[] { strength, agility, mastery };
 
     public Stat Size = new Stat(1f);
     //public Stat maxHealthPoint;
     public Stat movementSpeed;
     public Stat rotationSpeed;
     public readonly float faceEuler = 60f; //Угол лицевой стороны существа. Все действия игрок совершает лицом к объекту действий!
-    public virtual DamageType DamageType { get; private protected set; }
+    public DamageType DamageType { get; private set; }
     public ContainerDamageTypes UnitDamageType;
     public Stat attackDamage;
     public Stat attackSpeed; //(Кол-во атак в секунду)
@@ -91,7 +92,6 @@ public abstract class CharacterStats : UnitStats
     {
         base.Awake();
         ChangeDamageType(UnitDamageType);
-        chanceToGetAnExtraSkillPoint = new PercentStat(BaseChanceToGetAnExtraSkillPoint);
     }
 
     private void OnEnable()
@@ -102,6 +102,9 @@ public abstract class CharacterStats : UnitStats
         level.OnLevelUp += PutSkillPoints;
 
         Size.OnChangeStatFinalValue += UpdateCharacterSize;
+
+        maxHealthPoint.AddModifier(overflowingHPContainer.MaxHPForOverflowingHP);
+        attackDamage.AddModifier(overflowingHPContainer.AttackDamageForOverflowingHP);
     }
 
 
@@ -148,6 +151,8 @@ public abstract class CharacterStats : UnitStats
         bleedingResistance = new PercentStat(baseBleedingResistanceValue);
         fireResistance = new PercentStat(baseFireResistanceValue);
         iceResistance = new PercentStat(baseIceResistanceValue);
+
+        chanceToGetAnExtraSkillPoint = new PercentStat(BaseChanceToGetAnExtraSkillPoint);
 
         UpdateCharacterSize();
     }
@@ -235,6 +240,42 @@ public abstract class CharacterStats : UnitStats
     }
 
 
+    public float Healing(float amount, bool displayPopup = false)
+    {
+        float UnclaimingHealthPoints = 0f;
+        float _maxHealthPoint = maxHealthPoint.GetValue();
+
+        CurrentHealthPoint += amount;
+        if (CurrentHealthPoint > _maxHealthPoint)
+        {
+            UnclaimingHealthPoints = CurrentHealthPoint - _maxHealthPoint;
+            CurrentHealthPoint = _maxHealthPoint;
+        }
+
+        ReportUpdateHealthValue();
+
+        if (displayPopup)
+        {
+            string roadHealingText = ((int)amount).ToString();
+
+            VFXManager.Instance.DisplayPopupText(gameObject.transform.position, "+" + roadHealingText, Color.green);
+        }
+
+        return UnclaimingHealthPoints;
+    }
+
+
+    public void ExtraHealing(float amount)
+    {
+        float newOverflowingHP = Healing(amount, true); // ExtraHealing должен отображать визуально хил всегда
+
+        if (newOverflowingHP > 0f)
+        {
+            overflowingHPContainer.AddOverflowingHealthPoints(newOverflowingHP);
+        }
+    }
+
+
     public override float TakeDamage(CharacterStats killerStats, DamageType damageType, float damage, ref bool isEvaded, ref bool isBlocked, bool canEvade = true, bool isCritical = false, bool displayPopup = false)
     {
 
@@ -277,41 +318,14 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public float Healing(float amount, bool displayPopup = false)
+    public override void Die(CharacterStats killerStats)
     {
-        float UnclaimingHealthPoints = 0f;
-        float _maxHealthPoint = maxHealthPoint.GetValue();
-
-        CurrentHealthPoint += amount;
-        if (CurrentHealthPoint > _maxHealthPoint)
+        if (killerStats != null && killerStats != this)
         {
-            UnclaimingHealthPoints = CurrentHealthPoint - _maxHealthPoint;
-            CurrentHealthPoint = _maxHealthPoint;
+            killerStats.GetExperience(level.GetAllExperience()); //При смерти отдаем опыт
         }
 
-        ReportUpdateHealthValue();
-
-        if (displayPopup)
-        {
-            string roadHealingText = ((int)amount).ToString();
-
-            VFXManager.Instance.DisplayPopupText(gameObject.transform.position, "+" + roadHealingText, Color.green);
-        }
-
-        return UnclaimingHealthPoints;
-    }
-
-
-    public void ExtraHealing(float amount) 
-    {
-        float newOverflowingHP = Healing(amount, true); // ExtraHealing должен отображать визуально хил всегда
-
-        if (newOverflowingHP > 0f)
-        {
-            float currentOverflowingHP = overflowingHPContainer.GetOverflowingHealthPoints();
-
-            overflowingHPContainer.SetOverflowingHealthPoints(currentOverflowingHP + newOverflowingHP);
-        }
+        Debug.Log(transform.name + " Умер!");
     }
 
 
@@ -334,19 +348,6 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    private IEnumerator EnumeratorPutAvailableSkillPoints()
-    {
-        while (totalAvailableSkillPoints > 0)
-        {
-            yield return null;
-            RaiseRandomAttribute(); // Повысить атрибут на количество скилл-поинтов, которые доступны
-            totalAvailableSkillPoints -= 1;
-        }
-
-        coroutinePutAvailableSkillPoints = null;
-    }
-
-
     private int GetSkillPointsFromLvlUp()
     {
         int ExstraSkillPoints = 0;
@@ -362,6 +363,19 @@ public abstract class CharacterStats : UnitStats
 
         int totalAvailableSkillPoints = skillPointsPerLevel + ExstraSkillPoints;
         return totalAvailableSkillPoints;
+    }
+
+
+    private IEnumerator EnumeratorPutAvailableSkillPoints()
+    {
+        while (totalAvailableSkillPoints > 0)
+        {
+            yield return null;
+            RaiseRandomAttribute(); // Повысить атрибут на количество скилл-поинтов, которые доступны
+            totalAvailableSkillPoints -= 1;
+        }
+
+        coroutinePutAvailableSkillPoints = null;
     }
 
 
@@ -396,16 +410,5 @@ public abstract class CharacterStats : UnitStats
 
             } // Если нет, идем проверять дальше    
         }
-    }
-
-
-    public override void Die(CharacterStats killerStats)
-    {
-        if (killerStats != null && killerStats != this)
-        {
-            killerStats.GetExperience(level.GetAllExperience()); //При смерти отдаем опыт
-        }
-
-        Debug.Log(transform.name + " Умер!");
     }
 }

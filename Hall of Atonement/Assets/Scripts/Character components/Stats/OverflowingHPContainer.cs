@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class OverflowingHPContainer
 {
@@ -8,8 +6,8 @@ public class OverflowingHPContainer
 
     private float overflowingHealthPoints;
 
-    private CharacteristicModifier<float> attackDamageForOverflowingHP = new CharacteristicModifier<float>();
-    private CharacteristicModifier<float> maxHPForOverflowingHP = new CharacteristicModifier<float>();
+    public CharacteristicModifier<float> AttackDamageForOverflowingHP { get; private set; } = new CharacteristicModifier<float>();
+    public CharacteristicModifier<float> MaxHPForOverflowingHP { get; private set; } = new CharacteristicModifier<float>();
 
 
     public float GetOverflowingHealthPoints()
@@ -18,15 +16,23 @@ public class OverflowingHPContainer
     }
 
 
-    public void SetOverflowingHealthPoints(float value)
+    public void AddOverflowingHealthPoints(float value)
     {
         if (value >= 0f)
         {
-            overflowingHealthPoints = value;
+            overflowingHealthPoints += value;
+
+            while (overflowingHealthPoints >= overflowingHPCoefficient)
+            {
+                overflowingHealthPoints -= overflowingHPCoefficient;
+                AttackDamageForOverflowingHP.SetModifierValue(AttackDamageForOverflowingHP.GetModifierValue() + 1f);
+                MaxHPForOverflowingHP.SetModifierValue(MaxHPForOverflowingHP.GetModifierValue() + 1f);
+            }
+
         }
         else
         {
-            overflowingHealthPoints = 0f;
+            Debug.LogWarning("Try to add negative overflowing HealthPoints");
         }
     }
 
