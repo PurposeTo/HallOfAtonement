@@ -46,8 +46,8 @@ public abstract class CharacterStats : UnitStats
     private readonly float hpForStrenght = 20f;
     private readonly float attackDamageForStrenght = 3f;
     private readonly float attackSpeedForStrenght = -0.015f;
-    private readonly float movementSpeedForStrenght = -0.03f;
-    private readonly float rotationSpeedForStrenght = -4f;
+    private readonly float movementSpeedForStrenght = -0.015f;
+    private readonly float rotationSpeedForStrenght = -2f;
 
 
     //Зависимость статов от Ловковсти
@@ -55,8 +55,8 @@ public abstract class CharacterStats : UnitStats
     private readonly float evasionForAgility = 0.005f;
     private readonly float attackDamageForAgility = 0.75f;
     private readonly float attackSpeedForAgility = 0.3f;
-    private readonly float movementSpeedForAgility = 0.04f;
-    private readonly float rotationSpeedForAgility = 5f;
+    private readonly float movementSpeedForAgility = 0.02f;
+    private readonly float rotationSpeedForAgility = 2.5f;
 
 
     //Зависимость статов от Мастерства
