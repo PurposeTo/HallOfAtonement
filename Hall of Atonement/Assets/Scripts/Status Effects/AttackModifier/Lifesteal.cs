@@ -43,7 +43,7 @@ public class Lifesteal : StatusEffect, IAttackModifier
     {
         if (mastery >= 15)
         {
-            new StatusEffectFactory<Bleeding>(targetStats.gameObject, characterPresenter.MyStats, mastery / masteryPointsForBleeding);
+            new StatusEffectFactory<Bleeding>(targetStats, characterPresenter.MyStats, mastery / masteryPointsForBleeding);
         }
     }
 

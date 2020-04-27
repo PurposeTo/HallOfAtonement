@@ -14,11 +14,11 @@ public class DamageUnit
 
         if (!isEvaded)
         {
-            if (!isBlocked) // Если урон не был полностью заблокирован 
+            if (!isBlocked) // Если урон не был полностью заблокирован
             {
                 if (damageType is EffectDamage)
                 {
-                    new DamageTypeEffect((EffectDamage)damageType, targetStats.gameObject, ownerStats, attackDamage / effectPowerConversionCoefficient);
+                    new DamageTypeEffect((EffectDamage)damageType, targetStats, ownerStats, attackDamage / effectPowerConversionCoefficient);
                 }
             }
 
@@ -29,6 +29,7 @@ public class DamageUnit
              * Если у цели есть модификатор атаки, который должен навесить дебафф, то сам модификатор проверяет, может ли он это сделать.
              */
 
+            // Модификатор атаки накладывается даже если цель заблокировала урон (Например, если модификатор отталкивает)
             for (int i = 0; i < attackModifiers.Count; i++)
             {
                 attackModifiers[i].ApplyAttackModifier(targetStats, damageType, attackDamage, ownerMastery, isCritical);

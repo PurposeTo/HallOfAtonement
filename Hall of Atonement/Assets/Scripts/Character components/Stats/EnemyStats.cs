@@ -9,12 +9,6 @@ public class EnemyStats : CharacterStats
 
     protected override float BaseChanceToGetAnExtraSkillPoint { get; } = 0.2f;
 
-
-    private readonly float baseHealthPointRegen = 0.5f; //базовое значение регенерации здоровья
-
-    private readonly float hpRegenForStrenght = 0.2f;
-    public Stat healthPointRegen;
-
     private protected override float BaseMovementSpeed { get; } = 3f;
     private protected override float BaseRotationSpeed { get; } = 360f;
 
@@ -47,12 +41,6 @@ public class EnemyStats : CharacterStats
     }
 
 
-    private protected virtual void Update()
-    {
-        Healing(healthPointRegen.GetValue() * Time.deltaTime);
-    }
-
-
     private void Mutate()
     {
         // Данный метод должен изменять массу атрибута
@@ -82,21 +70,6 @@ public class EnemyStats : CharacterStats
     public override void GetExperience(int amount)
     {
         base.GetExperience((int)(amount / 1.5));
-    }
-
-
-    private protected override void StatInitialization()
-    {
-        base.StatInitialization();
-        healthPointRegen = new Stat(baseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
-    }
-
-
-    private protected override void UpdateBaseStrenghtStatsValue()
-    {
-        base.UpdateBaseStrenghtStatsValue();
-
-        healthPointRegen.ChangeBaseValue(baseHealthPointRegen + (strength.GetValue() * hpRegenForStrenght));
     }
 
 

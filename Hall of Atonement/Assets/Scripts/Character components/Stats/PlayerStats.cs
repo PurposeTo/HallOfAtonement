@@ -2,7 +2,7 @@
 {
     public override void GetExperience(int amount)
     {
-        base.GetExperience(amount / 7);
+        base.GetExperience(amount / 4);
     }
 
 

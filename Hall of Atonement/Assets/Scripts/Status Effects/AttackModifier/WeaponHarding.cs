@@ -37,20 +37,16 @@ class WeaponHarding : StatusEffect, IAttackModifier
             switch (hardingType)
             {
                 case HardingType.Burn:
-                    if (targetStats.fireResistance.GetValue() < 1f)
-                    {
-
-                    }
-                    new StatusEffectFactory<Burn>(targetStats.gameObject, characterPresenter.MyStats, mastery);
+                    new StatusEffectFactory<Burn>(targetStats, characterPresenter.MyStats, mastery);
                     break;
                 case HardingType.Freeze:
-                    new StatusEffectFactory<Freeze>(targetStats.gameObject, characterPresenter.MyStats, mastery);
+                    new StatusEffectFactory<Freeze>(targetStats, characterPresenter.MyStats, mastery);
                     break;
                 case HardingType.Poison:
-                    new StatusEffectFactory<Poisoning>(targetStats.gameObject, characterPresenter.MyStats, mastery);
+                    new StatusEffectFactory<Poisoning>(targetStats, characterPresenter.MyStats, mastery);
                     break;
                 case HardingType.Bleeding:
-                    new StatusEffectFactory<Bleeding>(targetStats.gameObject, characterPresenter.MyStats, mastery);
+                    new StatusEffectFactory<Bleeding>(targetStats, characterPresenter.MyStats, mastery);
                     break;
                 default:
                     Debug.LogError("Try to use unknown element for harding weapon!");

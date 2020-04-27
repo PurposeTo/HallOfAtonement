@@ -126,19 +126,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1461136513}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &348796077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 348796076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e49f03761ed6bac4d9d2d4930e520804, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hardingType: 4
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,11 +305,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vampire Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5923922427865877916, guid: 73db80284e7ba4041b0853d491bdae19,
-        type: 3}
-      propertyPath: overflowingHealthPoints
-      value: 10000
-      objectReference: {fileID: 0}
     - target: {fileID: 5923922427865877918, guid: 73db80284e7ba4041b0853d491bdae19,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -377,11 +359,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5987386395045198564, guid: 73db80284e7ba4041b0853d491bdae19,
-        type: 3}
-      propertyPath: isEnabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8477461496615514541, guid: 73db80284e7ba4041b0853d491bdae19,
         type: 3}
