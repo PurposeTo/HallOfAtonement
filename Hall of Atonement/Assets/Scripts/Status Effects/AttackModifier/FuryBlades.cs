@@ -47,7 +47,7 @@ class FuryBlades : StatusEffect, IAttackModifier
     {
         if (isCritical)
         {
-            characterPresenter.MyStats.ExtraHealing(damage * healthIncreaseValue);
+            characterPresenter.MyStats.Healing(damage * healthIncreaseValue, true);
         }
     }
 

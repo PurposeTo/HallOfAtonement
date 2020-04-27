@@ -20,8 +20,6 @@ public abstract class CharacterStats : UnitStats
     public Attribute mastery = new Attribute();
     private protected Attribute[] AllAttributes => new Attribute[] { strength, agility, mastery };
 
-    private readonly OverflowingHPContainer overflowingHPContainer = new OverflowingHPContainer();
-
     private Coroutine coroutinePutAvailableSkillPoints;
     private const int skillPointsPerLevel = 1;
     private int totalAvailableSkillPoints;
@@ -102,9 +100,6 @@ public abstract class CharacterStats : UnitStats
         level.OnLevelUp += PutSkillPoints;
 
         Size.OnChangeStatFinalValue += UpdateCharacterSize;
-
-        maxHealthPoint.AddModifier(overflowingHPContainer.MaxHPForOverflowingHP);
-        attackDamage.AddModifier(overflowingHPContainer.AttackDamageForOverflowingHP);
     }
 
 
@@ -240,15 +235,13 @@ public abstract class CharacterStats : UnitStats
     }
 
 
-    public float Healing(float amount, bool displayPopup = false)
+    public void Healing(float amount, bool displayPopup = false)
     {
-        float UnclaimingHealthPoints = 0f;
         float _maxHealthPoint = maxHealthPoint.GetValue();
 
         CurrentHealthPoint += amount;
         if (CurrentHealthPoint > _maxHealthPoint)
         {
-            UnclaimingHealthPoints = CurrentHealthPoint - _maxHealthPoint;
             CurrentHealthPoint = _maxHealthPoint;
         }
 
@@ -259,19 +252,6 @@ public abstract class CharacterStats : UnitStats
             string roadHealingText = ((int)amount).ToString();
 
             VFXManager.Instance.DisplayPopupText(gameObject.transform.position, "+" + roadHealingText, Color.green);
-        }
-
-        return UnclaimingHealthPoints;
-    }
-
-
-    public void ExtraHealing(float amount)
-    {
-        float newOverflowingHP = Healing(amount, true); // ExtraHealing должен отображать визуально хил всегда
-
-        if (newOverflowingHP > 0f)
-        {
-            overflowingHPContainer.AddOverflowingHealthPoints(newOverflowingHP);
         }
     }
 

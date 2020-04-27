@@ -30,15 +30,16 @@ public class Lifesteal : StatusEffect, IAttackModifier
     {
         if (!Mathf.Approximately(targetStats.bleedingResistance.GetValue(), 1f))
         {
-            characterPresenter.MyStats.ExtraHealing(damage * (1f - targetStats.bleedingResistance.GetValue()) * (baseLifestealValue + (mastery * increaseForMastery))); // Lifesteal снижается сопротивлением к кровотечению
-            BleedingFromLifesteal(targetStats, mastery, damage);
+            float _healing = damage * (1f - targetStats.bleedingResistance.GetValue()) * (baseLifestealValue + (mastery * increaseForMastery));
+            characterPresenter.MyStats.Healing(_healing, true); // Lifesteal снижается сопротивлением к кровотечению
+            BleedingFromLifesteal(targetStats, mastery);
 
             Debug.Log(gameObject.name + ": \"Your life is mine!\"");
         }
     }
 
 
-    private void BleedingFromLifesteal(UnitStats targetStats, int mastery, float damage)
+    private void BleedingFromLifesteal(UnitStats targetStats, int mastery)
     {
         if (mastery >= 15)
         {

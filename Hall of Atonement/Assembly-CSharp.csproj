@@ -116,7 +116,6 @@
     <Compile Include="Assets\Scripts\Character components\Stats\Base\Attribute.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Base\CharacteristicModifier.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Base\LevelSystem.cs" />
-    <Compile Include="Assets\Scripts\Character components\Stats\Base\OverflowingHPContainer.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Base\PercentStat.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Base\Stat.cs" />
     <Compile Include="Assets\Scripts\Character components\Stats\Box\BoxStats.cs" />
