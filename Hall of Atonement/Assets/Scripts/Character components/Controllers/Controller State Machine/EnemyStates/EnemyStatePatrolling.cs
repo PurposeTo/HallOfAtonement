@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class EnemyStatePatrolling : EnemyStateMachine
+public class EnemyStatePatrolling : EnemyAIStateMachine
 {
     private Coroutine patrollingRoutine;
 
@@ -19,8 +19,8 @@ public class EnemyStatePatrolling : EnemyStateMachine
     {
         StopTheAction(enemyAI);
 
-        enemyAI.EnemyStateMachine = enemyAI.EnemyStateFighting;
-        enemyAI.EnemyStateMachine.Fighting(enemyAI, focusTarget);
+        enemyAI.EnemyAIStateMachine = enemyAI.EnemyStateFighting;
+        enemyAI.EnemyAIStateMachine.Fighting(enemyAI, focusTarget);
     }
 
 

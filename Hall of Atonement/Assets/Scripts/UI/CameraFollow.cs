@@ -5,15 +5,16 @@ public class CameraFollow : MonoBehaviour
     private GameObject player;
 
     private float cameraSpeed = 4f;
-    // Start is called before the first frame update
+
+
     private void Start()
     {
-        player = PlayerController.Instance.gameObject;
+        player = GameManager.Instance.Player;
 
         transform.position = GetTheRightCameraPosition();
     }
 
-    // Update is called once per frame
+
     private void FixedUpdate()
     {
         transform.position = Vector3.Lerp(transform.position, GetTheRightCameraPosition(), 0.07f);

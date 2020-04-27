@@ -3,7 +3,7 @@
 public class EnemyAI : CharacterController
 {
     public EnemyPresenter EnemyPresenter { get; private protected set; }
-    public EnemyStateMachine EnemyStateMachine { get; set; }
+    public EnemyAIStateMachine EnemyAIStateMachine { get; set; }
     public EnemyStatePatrolling EnemyStatePatrolling { get; private set; }
     public EnemyStateFighting EnemyStateFighting { get; private set; }
 
@@ -20,7 +20,7 @@ public class EnemyAI : CharacterController
 
     private protected override Vector2 GetInputVector()
     {
-        return EnemyStateMachine.GetInputVector(this);
+        return EnemyAIStateMachine.GetInputVector(this);
     }
 
 
@@ -29,8 +29,8 @@ public class EnemyAI : CharacterController
         EnemyStatePatrolling = GetComponent<EnemyStatePatrolling>();
         EnemyStateFighting = GetComponent<EnemyStateFighting>();
 
-        EnemyStateMachine = EnemyStatePatrolling;
-        EnemyStateMachine.SeekingBattle(this);
+        EnemyAIStateMachine = EnemyStatePatrolling;
+        EnemyAIStateMachine.SeekingBattle(this);
     }
 
 
@@ -38,8 +38,8 @@ public class EnemyAI : CharacterController
     {
         GameObject focusTarget = CharacterPresenter.CharacterType.SearchingTarget();
 
-        if (focusTarget == null) { EnemyStateMachine.SeekingBattle(this); }
-        else { EnemyStateMachine.Fighting(this, focusTarget); }
+        if (focusTarget == null) { EnemyAIStateMachine.SeekingBattle(this); }
+        else { EnemyAIStateMachine.Fighting(this, focusTarget); }
     }
 }
 

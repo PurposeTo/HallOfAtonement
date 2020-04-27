@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class EnemyStateMachine : MonoBehaviour
+public abstract class EnemyAIStateMachine : MonoBehaviour
 {
     public abstract void SeekingBattle(EnemyAI enemyAI);
 

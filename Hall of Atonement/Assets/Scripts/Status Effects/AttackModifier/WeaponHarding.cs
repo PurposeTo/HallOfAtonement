@@ -37,6 +37,10 @@ class WeaponHarding : StatusEffect, IAttackModifier
             switch (hardingType)
             {
                 case HardingType.Burn:
+                    if (targetStats.fireResistance.GetValue() < 1f)
+                    {
+
+                    }
                     new StatusEffectFactory<Burn>(targetStats.gameObject, characterPresenter.MyStats, mastery);
                     break;
                 case HardingType.Freeze:

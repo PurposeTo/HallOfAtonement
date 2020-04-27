@@ -284,18 +284,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65712551}
   m_CullTransparentMesh: 0
---- !u!114 &68956181 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8559118849726086522, guid: f7a17973ad2cc3e4d8ab51f57ff1a1de,
-    type: 3}
-  m_PrefabInstance: {fileID: 1891203725}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59ef27a526687344bb37c44886ff0587, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &768592759
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,8 +379,9 @@ GameObject:
   - component: {fileID: 993989558}
   - component: {fileID: 993989557}
   - component: {fileID: 993989556}
+  - component: {fileID: 993989560}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Main Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -478,6 +467,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &993989560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993989555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d4cbeb8bd0abef44b8f0879cb7633a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1214939990
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,8 +561,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 68956181}
-        m_MethodName: EnterTheHall
+      - m_Target: {fileID: 993989560}
+        m_MethodName: PlayButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

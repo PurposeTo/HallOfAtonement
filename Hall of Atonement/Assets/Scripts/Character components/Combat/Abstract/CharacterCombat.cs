@@ -25,19 +25,6 @@ public abstract class CharacterCombat : MonoBehaviour
     }
 
 
-    //private protected virtual void Update()
-    //{
-    //    if (attackCooldown > 0f) //Если кулдаун больше нуля, то уменьшить
-    //    {
-    //        attackCooldown -= Time.deltaTime;
-    //    }
-    //    else if (targetToAttack == null && attackCooldown < 0f) //Если игрок сейчас НЕ атакует и кулдаун меньше нуля, то сбросить кулдаун
-    //    {
-    //        attackCooldown = 0f;
-    //    }
-    //}
-
-
     public GameObject GetTargetToAttack() { return targetToAttack; }
 
 
