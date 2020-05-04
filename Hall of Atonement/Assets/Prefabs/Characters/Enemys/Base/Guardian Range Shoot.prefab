@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2814937639181020537
+--- !u!114 &7207772378524070775
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7124055156978410948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e8896f6fd039943b675022623bde76, type: 3}
+  m_Script: {fileID: 11500000, guid: d1e42e81b8ee4534c8658d9ef3697b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BulletPrefab: {fileID: 5072003625416647462, guid: 4c3f4210567ce694cb64426b5b577ee8,
+    type: 3}
 --- !u!1001 &2864227280485884008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97,7 +99,7 @@ PrefabInstance:
     - target: {fileID: 4999696950017868006, guid: 03bdd5a1e2149cf419a3f64740e1ce96,
         type: 3}
       propertyPath: m_Name
-      value: Guardian Range Laser
+      value: Guardian Range Shoot
       objectReference: {fileID: 0}
     - target: {fileID: 6193395575071024388, guid: 03bdd5a1e2149cf419a3f64740e1ce96,
         type: 3}
@@ -121,9 +123,84 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03bdd5a1e2149cf419a3f64740e1ce96, type: 3}
+--- !u!4 &7124055157434966156 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4999696950017868004, guid: 03bdd5a1e2149cf419a3f64740e1ce96,
+    type: 3}
+  m_PrefabInstance: {fileID: 2864227280485884008}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7124055156978410948 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4999696949551875500, guid: 03bdd5a1e2149cf419a3f64740e1ce96,
     type: 3}
   m_PrefabInstance: {fileID: 2864227280485884008}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5678920659863116481
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7124055157434966156}
+    m_Modifications:
+    - target: {fileID: 1159638172987630708, guid: 81f2a6dba0fd6e945b30a9f8eb725084,
+        type: 3}
+      propertyPath: m_Name
+      value: Ranged Shoot Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235614682235474687, guid: 81f2a6dba0fd6e945b30a9f8eb725084,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235614682235474687, guid: 81f2a6dba0fd6e945b30a9f8eb725084,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235614682235474687, guid: 81f2a6dba0fd6e945b30a9f8eb725084,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235614682235474687, guid: 81f2a6dba0fd6e945b30a9f8eb725084,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235614682235474687, guid: 81f2a6dba0fd6e945b30a9f8eb725084,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235614682235474687, guid: 81f2a6dba0fd6e945b30a9f8eb725084,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235614682235474687, guid: 81f2a6dba0fd6e945b30a9f8eb725084,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235614682235474687, guid: 81f2a6dba0fd6e945b30a9f8eb725084,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235614682235474687, guid: 81f2a6dba0fd6e945b30a9f8eb725084,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235614682235474687, guid: 81f2a6dba0fd6e945b30a9f8eb725084,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235614682235474687, guid: 81f2a6dba0fd6e945b30a9f8eb725084,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 81f2a6dba0fd6e945b30a9f8eb725084, type: 3}

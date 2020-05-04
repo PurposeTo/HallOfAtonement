@@ -9,6 +9,6 @@
     public override void Die(CharacterStats killerStats)
     {
         base.Die(killerStats);
-        // GameManager.Instance.EnterTheHall(); //ТУТ! смерть!
+        GameManager.Instance.EnterTheHall(); //ТУТ! смерть!
     }
 }

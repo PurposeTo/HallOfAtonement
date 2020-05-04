@@ -30,6 +30,7 @@ public class Door : MonoBehaviour
 
     private void OpenDoor()
     {
+        gameObject.GetComponent<SpriteRenderer>().color = Color.green;
         _collider2D.isTrigger = true;
         print("The door is open!");
     }

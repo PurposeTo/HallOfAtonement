@@ -5,7 +5,7 @@ public class RangedShootWeapon : BaseWeapon, IRanged
 {
     public GameObject BulletPrefab;
 
-    private float bullerForce = 20f;
+    [SerializeField] private float shotPower = 20f;
 
     public void UseWeapon(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
@@ -13,12 +13,8 @@ public class RangedShootWeapon : BaseWeapon, IRanged
 
         if (bullet != null)
         {
-            //bullet.transform.position = weapon.transform.position;
-            //bullet.transform.rotation = weapon.transform.rotation;
-            //bullet.SetActive(true);
-
             Bullet bulletScript = bullet.GetComponent<Bullet>();
-            bulletScript.bulletRb2d.AddForce(WeaponAttackPoint.up * bullerForce, ForceMode2D.Impulse); // Weapon.up указывает на направление полета пули!
+            bulletScript.bulletRb2d.AddForce(WeaponAttackPoint.up * shotPower, ForceMode2D.Impulse); // Weapon.up указывает на направление полета пули!
 
             bulletScript.BulletInitialization(ownerStats, damageType, attackDamage, isCritical, ownerMastery, attackModifiers);
         }

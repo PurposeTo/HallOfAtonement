@@ -3,18 +3,24 @@ using UnityEngine;
 
 public class MeleeWeapon : BaseWeapon, IMelee
 {
-    public float MeleeAttackRadius { get; } = .8f;
+    [SerializeField]
+    private float meleeAttackRadius = .8f;
+
+    public float GetMeleeAttackRadius()
+    {
+        return meleeAttackRadius;
+    }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(WeaponAttackPoint.position, MeleeAttackRadius);
+        Gizmos.DrawWireSphere(WeaponAttackPoint.position, meleeAttackRadius);
     }
 
 
     void IWeapon.UseWeapon(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)
     {
-        Collider2D[] hitUnits = Physics2D.OverlapCircleAll(WeaponAttackPoint.position, MeleeAttackRadius);
+        Collider2D[] hitUnits = Physics2D.OverlapCircleAll(WeaponAttackPoint.position, meleeAttackRadius);
 
         for (int i = 0; i < hitUnits.Length; i++)
         {

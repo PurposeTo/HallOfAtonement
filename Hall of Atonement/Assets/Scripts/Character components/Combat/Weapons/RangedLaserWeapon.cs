@@ -8,7 +8,7 @@ public class RangedLaserWeapon : BaseWeapon, IRanged
 
     private Coroutine casteRoutine;
 
-    private float delayBeforeUseWeapon = 0.5f;
+    private float delayBeforeUseWeapon = 0.3f;
 
 
     void IWeapon.UseWeapon(CharacterCombat combat, CharacterStats ownerStats, DamageType damageType, float attackDamage, bool isCritical, int ownerMastery, List<IAttackModifier> attackModifiers)

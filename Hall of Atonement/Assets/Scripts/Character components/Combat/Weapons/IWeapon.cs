@@ -8,7 +8,7 @@ public interface IWeapon
 
 public interface IMelee : IWeapon
 {
-    float MeleeAttackRadius { get; }
+    float GetMeleeAttackRadius();
 }
 
 

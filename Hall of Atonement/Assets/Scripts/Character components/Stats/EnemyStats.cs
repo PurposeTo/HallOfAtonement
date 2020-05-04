@@ -9,8 +9,8 @@ public class EnemyStats : CharacterStats
 
     protected override float BaseChanceToGetAnExtraSkillPoint { get; } = 0.2f;
 
-    private protected override float BaseMovementSpeed { get; } = 3f;
-    private protected override float BaseRotationSpeed { get; } = 360f;
+    private protected override float BaseMovementSpeed { get; } = 5f; // 3f
+    private protected override float BaseRotationSpeed { get; } = 520f; // 360f
 
 
     private void OnDrawGizmosSelected()

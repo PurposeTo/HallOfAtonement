@@ -9,7 +9,7 @@ public class MeleeEnemyBehaviour : MonoBehaviour, IEnemyAttackBehavior
     {
         MeleeWeapon meleeWeapon = gameObject.GetComponentInChildren<MeleeWeapon>();
 
-        AttackRange = meleeWeapon.MeleeAttackRadius + meleeWeapon.WeaponAttackPoint.localPosition.magnitude;
+        AttackRange = meleeWeapon.GetMeleeAttackRadius() + meleeWeapon.WeaponAttackPoint.localPosition.magnitude;
     }
 
 

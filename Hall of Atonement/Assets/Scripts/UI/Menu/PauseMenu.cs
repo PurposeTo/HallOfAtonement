@@ -5,14 +5,45 @@ using UnityEngine;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField]
-    private GameObject PauseMenuCanvas;
+    private GameObject playerControllers;
+
+    [SerializeField]
+    private GameObject pauseMenu;
+
+    [SerializeField]
+    private GameObject pauseButton;
 
     private bool pause = false;
 
-    public void TogglePause()
+    public void SetPause()
     {
-        pause = !pause;
+        pause = true;
         SetTime();
+        pauseMenu.SetActive(true);
+
+        pauseButton.SetActive(false);
+        playerControllers.SetActive(false);
+    }
+
+
+
+    public void Resume()
+    {
+        pause = false;
+        SetTime();
+        pauseMenu.SetActive(false);
+
+        pauseButton.SetActive(true);
+        playerControllers.SetActive(true);
+    }
+
+
+    public void ExitToMainMenu()
+    {
+        // Вынести потом отключение паузы в гейм мннеджер, так как она должна отключаться уже ПОСЛЕ выхода в меню
+        pause = false;
+        SetTime();
+        GameManager.Instance.ExitToMainMenu();
     }
 
 
@@ -20,12 +51,10 @@ public class PauseMenu : MonoBehaviour
     {
         if (pause)
         {
-            PauseMenuCanvas.SetActive(true);
             Time.timeScale = 0f;
         }
         else
         {
-            PauseMenuCanvas.SetActive(false);
             Time.timeScale = 1f;
         }
     }

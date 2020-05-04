@@ -4,7 +4,7 @@ public class PlayerType : CharacterType
 {
     private GameObject mainCamera;
 
-    private float cameraSize = 5f; //Размер ортографической камеры
+    private float cameraSize; //Размер ортографической камеры
 
     private Vector2 attackZone = Vector2.zero; //Дальность прицеливания. Зависит от дальности камеры
 
@@ -13,7 +13,7 @@ public class PlayerType : CharacterType
     {
         mainCamera = Camera.main.gameObject;
         //mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, cameraRange);
-        mainCamera.GetComponent<Camera>().orthographicSize = cameraSize;
+        cameraSize = mainCamera.GetComponent<Camera>().orthographicSize;
         //Вычисляем соотношение сторон экрана
         float screenRatio = (float)Screen.width / (float)Screen.height;
         screenRatio = (float)System.Math.Round(screenRatio, 3);
